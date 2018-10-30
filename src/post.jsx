@@ -55,7 +55,7 @@ class Post extends React.Component {
 
 	renderEmpty() {
 		return (
-			<h1>LOADING</h1>
+			<h1>LOADING POST</h1>
 		);
 	}
 

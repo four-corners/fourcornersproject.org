@@ -17,13 +17,13 @@ function four_corners_scripts() {
 		    'url' => array(
 		      'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
 		      'root' => esc_url_raw( $url ),
+		      'theme' => esc_url_raw( get_stylesheet_directory_uri() )
 		    )
 		  )
 	  )
 	) );
 }
 add_action( 'wp_enqueue_scripts', 'four_corners_scripts' );
-
 
 function register_creators() {
 	register_post_type( 'creators',
@@ -43,25 +43,25 @@ function register_creators() {
 add_action( 'init', 'register_creators' );
 
 
-function creators_endpoint( $request_data ) {
+function creators_endpoint( $req ) {
 	$args = array(
 		'post_type' => 'creators',
 		'posts_per_page'=> -1, 
 		'numberposts'=> -1
 	);
-	if( isset( $_GET['slug'] ) ) {
-		$slug = $_GET['slug'];
-		$args['name'] = $slug;
+	if( isset( $_GET['lang'] ) ) {
+		$lang = explode( '-', $_GET['lang'] )[0];
+		$args['lang'] = $lang;
 	}
-	$creators = get_posts($args);
+	$creators = get_posts( $args );
 	foreach( $creators as $key => $creator ) {
 		$creators[$key]->acf = get_fields( $creator->ID );
 	}
 	return $creators;
 }
 
-function creator_endpoint( $request ) {
-	$slug = $request['slug'];
+function creator_endpoint( $req ) {
+	$slug = $req['lang'];
 	$args = array(
 		'post_type' => 'creators',
 		'posts_per_page'=> 1, 
@@ -74,6 +74,19 @@ function creator_endpoint( $request ) {
 	return $creator;
 }
 
+function get_translations_json( $req ) {
+	$lang = $req['lang'];
+	$obj = (object) array(
+		'test' => 'Four Corners'
+	);
+	return $obj;
+}
+
+function get_langs() {
+	return json_encode( pll_languages_list() );
+}
+
+
 add_action( 'rest_api_init', function () {
 
 	register_rest_route( 'wp/v2', '/creators', array(
@@ -81,9 +94,19 @@ add_action( 'rest_api_init', function () {
 		'callback' => 'creators_endpoint'
 	));
 
-	register_rest_route( 'wp/v2', '/creator/(?P<slug>[a-zA-Z0-9-]+)', array(
+	register_rest_route( 'wp/v2', '/creator/(?P<lang>[a-zA-Z0-9-]+)', array(
 		'methods' => 'GET',
 		'callback' => 'creator_endpoint'
+	));
+
+	register_rest_route( 'wp/v2', '/translation/(?P<lang>[a-zA-Z0-9-]+)', array(
+		'methods' => 'GET',
+		'callback' => 'get_translations_json'
+	));
+
+	register_rest_route( 'wp/v2', '/get_langs/', array(
+		'methods' => 'GET',
+		'callback' => 'get_langs'
 	));
 
 });

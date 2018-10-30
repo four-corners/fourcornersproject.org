@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { withNamespaces, NamespacesConsumer, Trans } from 'react-i18next';
+
+import i18n from './i18n';
 import Header from './header';
 
 class App extends Component {

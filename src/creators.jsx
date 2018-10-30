@@ -68,7 +68,7 @@ class Creators extends React.Component {
 
 	render() {
 		if (!this.state.creators.length === 0) {
-			return <h1>LOADING</h1>;
+			return <h1>LOADING CREATORS</h1>;
 		}
 		return (
 			<div>

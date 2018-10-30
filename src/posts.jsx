@@ -68,7 +68,7 @@ class Posts extends React.Component {
 
 	render() {
 		if (!this.state.posts.length === 0) {
-			return <h1>LOADING</h1>;
+			return <h1>LOADING POSTS</h1>;
 		}
 		return (
 			<div>

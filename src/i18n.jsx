@@ -17,7 +17,7 @@ i18n
 			nsMode: 'default',
 		},
 		detection: {
-			order: ['path', 'querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag', 'subdomain'],
+			order: ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag', 'subdomain', 'path'],
 			lookupQuerystring: 'lang',
 			lookupCookie: 'i18n',
 			lookupLocalStorage: 'i18nextLng',

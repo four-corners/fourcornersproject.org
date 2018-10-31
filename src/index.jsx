@@ -27,7 +27,7 @@ const routes = (
 							<Switch>
 								<Route exact path={SiteSettings.path} component={Creator} />
 								<Route exact path={SiteSettings.path+'creator'} component={Creator} />
-								<Route exact path={SiteSettings.path+'creators/:slug'} component={Creator} />
+								<Route exact path={SiteSettings.path+'/creators/es/'} component={Creator} />
 								<Route path="*" component={NotFound} />
 							</Switch>
 							<Footer></Footer>

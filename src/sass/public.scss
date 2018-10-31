@@ -1,3 +1,5 @@
+$blue: #007bff;
+
 html, body {
 	font-family: sans-serif;
 }
@@ -8,11 +10,65 @@ header {
 	margin: 30px auto;
 }
 #creator {
-	form {
+	.card {
 		margin: 0 auto 30px auto;
 		padding: 2em;
 		background-color: #f5f5f5;
 	  border: 1px solid #ccc;
 	  border-radius: 4px;
+	  overflow: hidden;
+	}
+}
+#forms {
+
+}
+#embedder {
+	&.sticky {
+		position: fixed;
+	  top: 0;
+	}
+	#embed.card {
+		width: 100%;
+		position: relative;
+		padding: 0;
+		input {
+			width: 100%;
+		}
+		img {
+			width: 100%;
+			height: auto;
+		}
+		.corner {
+			width: 2em;
+			height: 2em;
+			margin: 1em;
+			border-style: solid;
+			border-color: white;
+			position: absolute;
+			&:hover {
+				border-color: $blue;
+				cursor: pointer;
+			}
+			&.tl {
+				top: 0;
+				left: 0;
+				border-width: .5em 0 0 .5em;
+			}
+			&.tr {
+				top: 0;
+				right: 0;
+				border-width: .5em .5em 0 0;
+			}
+			&.br {
+				bottom: 0;
+				right: 0;
+				border-width: 0 .5em .5em 0;
+			}
+			&.bl {
+				bottom: 0;
+				left: 0;
+				border-width: 0 0 .5em .5em;
+			}
+		}
 	}
 }

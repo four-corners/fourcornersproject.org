@@ -1,10 +1,23 @@
 // https://mozilla-services.github.io/react-jsonschema-form/
+// https://github.com/mozilla-services/react-jsonschema-form/
 
 const Schema = {
+	image: {
+		title: '',
+		type: 'object',
+		required: [],
+		properties: {
+			image: {
+				type: 'string',
+				format: 'uri',
+				default: 'https://d2w9rnfcy7mm78.cloudfront.net/2016402/large_d076af86928411eb384a72cadce9b32c.jpg?1523257223'
+			},
+		}
+	},
 	backstory: {
 		title: '',
 		type: 'object',
-		required: ['title'],
+		required: [],
 		properties: {
 			story: {
 				type: 'string',
@@ -28,11 +41,11 @@ const Schema = {
 	copyright: {
 		title: '',
 		type: 'object',
-		required: ['title'],
+		required: [],
 		properties: {
 			copyright: {
 				type: 'string',
-				enum: []
+				enum: [],
 			},
 			credit: {
 				type: 'string',
@@ -42,7 +55,7 @@ const Schema = {
 			},
 			ethics: {
 				type: 'string',
-				enum: []
+				enum: [],
 			},
 			caption: {
 				type: 'string',
@@ -52,17 +65,31 @@ const Schema = {
 	media: {
 		title: '',
 		type: 'object',
-		required: ['title'],
+		required: [],
 		properties: {
 			media: {
 				type: 'array',
 				items: {
 					type: 'object',
 					properties: {
-						label: {
-							type: 'string'
+						type: {
+							type: 'string',
+							enum: [
+								'image',
+								'youtube',
+								'vimeo',
+							],
+							enumNames: [
+								'Image',
+								'YouTube',
+								'Vimeo',
+							],
 						},
-						desc: {
+						url: {
+							type: 'string',
+							format: 'uri',
+						},
+						credit: {
 							type: 'string'
 						}
 					}
@@ -73,18 +100,20 @@ const Schema = {
 	links: {
 		title: '',
 		type: 'object',
-		required: ['title'],
+		required: [],
 		properties: {
 			links: {
 				type: 'array',
+				minItems: 0,
 				items: {
 					type: 'object',
 					properties: {
-						label: {
+						title: {
 							type: 'string'
 						},
-						desc: {
-							type: 'string'
+						url: {
+							type: 'string',
+							format: 'uri',
 						}
 					}
 				}

@@ -5,7 +5,7 @@ function four_corners_scripts() {
 	// wp_enqueue_script( 'jquery' );
 	// wp_enqueue_script( 'public_script', get_template_directory_uri() . '/assets/public.bundle.js', array(), $ver, true );
 	wp_enqueue_script( 'react_script', get_stylesheet_directory_uri() . '/dist/app.js' , array(), $ver, true );
-	wp_enqueue_style( 'bootstrap_style', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' );
+	wp_enqueue_style( 'bootstrap_style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' );
 	wp_enqueue_style( 'app_style', get_stylesheet_directory_uri() . '/dist/app.css' );
 	$url = trailingslashit( home_url() );
 	$path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );

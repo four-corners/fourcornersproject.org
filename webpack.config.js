@@ -48,11 +48,12 @@ module.exports = {
 					},
 					{
 						loader: 'sass-loader',
-						options: {
-
-						}
 					}
 				]
+			},
+			{
+				test: /\.coffee$/,
+				use: [ 'coffee-loader' ]
 			}
 		]
 	},

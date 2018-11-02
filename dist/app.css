@@ -7,24 +7,33 @@ h1, h2, h3, h4 {
 header {
   margin: 30px auto; }
 
-#creator .card {
-  margin: 0 auto 30px auto;
-  padding: 2em;
-  background-color: #f5f5f5;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: hidden; }
+*[readonly], *[disabled] {
+  background-color: #f5f5f5 !important; }
+
+#creator {
+  margin: 30px auto 0 auto; }
+  #creator .card {
+    margin: 0 auto 30px auto;
+    padding: 2em;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden; }
 
 #embedder.sticky {
   position: fixed;
   top: 0; }
 
+#embedder form input.card {
+  width: 100%;
+  padding: .375rem .75rem; }
+  #embedder form input.card:not([readonly]) {
+    background-color: white; }
+
 #embedder #embed.card {
   width: 100%;
   position: relative;
   padding: 0; }
-  #embedder #embed.card input {
-    width: 100%; }
   #embedder #embed.card img {
     width: 100%;
     height: auto; }
@@ -34,8 +43,13 @@ header {
     margin: 1em;
     border-style: solid;
     border-color: white;
-    position: absolute; }
-    #embedder #embed.card .corner:hover {
+    position: absolute;
+    z-index: 5;
+    -webkit-transition: -webkit-transform 100ms ease-in-out;
+    transition: -webkit-transform 100ms ease-in-out;
+    transition: transform 100ms ease-in-out;
+    transition: transform 100ms ease-in-out, -webkit-transform 100ms ease-in-out; }
+    #embedder #embed.card .corner:hover, #embedder #embed.card .corner.active {
       border-color: #007bff;
       cursor: pointer; }
     #embedder #embed.card .corner.tl {
@@ -54,4 +68,48 @@ header {
       bottom: 0;
       left: 0;
       border-width: 0 0 .5em .5em; }
+  #embedder #embed.card .cornerContent {
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    z-index: 4;
+    background: white;
+    padding: 1em;
+    opacity: 0;
+    pointer-events: none;
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+    -webkit-box-shadow: 0 0 2em 2em transparent;
+            box-shadow: 0 0 2em 2em transparent;
+    -webkit-transition: -webkit-transform 100ms ease-in-out, -webkit-box-shadow 100ms ease-in-out;
+    transition: -webkit-transform 100ms ease-in-out, -webkit-box-shadow 100ms ease-in-out;
+    transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out;
+    transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out, -webkit-transform 100ms ease-in-out, -webkit-box-shadow 100ms ease-in-out; }
+    #embedder #embed.card .cornerContent h1 {
+      margin: 0 0 .5rem 0;
+      font-size: 1.5rem; }
+    #embedder #embed.card .cornerContent.active {
+      opacity: 1;
+      pointer-events: all;
+      -webkit-transform: scale(1);
+              transform: scale(1); }
+  #embedder #embed.card.activeCorner .corner.tl {
+    -webkit-transform: translate3d(-0.5em, -0.5em, 0);
+            transform: translate3d(-0.5em, -0.5em, 0); }
+  #embedder #embed.card.activeCorner .corner.tr {
+    -webkit-transform: translate3d(0.5em, -0.5em, 0);
+            transform: translate3d(0.5em, -0.5em, 0); }
+  #embedder #embed.card.activeCorner .corner.br {
+    -webkit-transform: translate3d(0.5em, 0.5em, 0);
+            transform: translate3d(0.5em, 0.5em, 0); }
+  #embedder #embed.card.activeCorner .corner.bl {
+    -webkit-transform: translate3d(-0.5em, 0.5em, 0);
+            transform: translate3d(-0.5em, 0.5em, 0); }
+  #embedder #embed.card.activeCorner .cornerContent {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+    -webkit-box-shadow: 0 0 2em 2em rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 2em 2em rgba(0, 0, 0, 0.5); }
 

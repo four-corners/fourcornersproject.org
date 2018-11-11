@@ -83,7 +83,21 @@ function get_translations_json( $req ) {
 }
 
 function get_langs() {
-	return json_encode( pll_languages_list() );
+	$args = array(
+		'fields' => 'slug'
+	);
+	$slugs = pll_languages_list( array( 'fields' => 'slug' ) );
+	$locales = pll_languages_list( array( 'fields' => 'locale' ) );
+	$names = pll_languages_list( array( 'fields' => 'name' ) );
+	$langs = array();
+	foreach ( $slugs as $index => $slug ) {
+		$langs[$slug] = array(
+			'local' => $locales[$index],
+			'name' => $names[$index],
+			'url' => pll_home_url( $slug ),
+		);
+	}
+	return json_encode( $langs );
 }
 
 

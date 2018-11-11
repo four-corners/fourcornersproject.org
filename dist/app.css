@@ -1,5 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,vietnamese);
+@charset "UTF-8";
 html, body {
-  font-family: sans-serif; }
+  font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif; }
+
+.rtl, .rtl * {
+  text-align: right; }
 
 h1, h2, h3, h4 {
   margin: 0; }
@@ -14,21 +19,117 @@ header {
   margin: 30px auto 0 auto; }
   #creator .card {
     margin: 0 auto 30px auto;
-    padding: 2em;
+    padding: 2rem;
     background-color: #f5f5f5;
-    border: 1px solid #ccc;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #80bdff;
     border-radius: 4px;
     overflow: hidden; }
+
+section {
+  margin: 0 auto 30px auto; }
+
+form {
+  padding: 0 0 30px 0; }
+
+fieldset .field-object {
+  margin-bottom: 10rem; }
+  fieldset .field-object legend {
+    margin-bottom: 2rem; }
+
+label {
+  width: 100%; }
+
+.form-control {
+  color: #000;
+  border-color: #80bdff;
+  border: 0 0 1px 0;
+  padding: .375rem; }
+  .form-control:focus {
+    color: #000;
+    background-color: #fff;
+    border-width: 1px;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
+input.form-control {
+  border-width: 0 0 1px 0; }
+
+.field-description {
+  color: #000;
+  font-size: .75rem; }
+
+.field-array legend {
+  font-size: inherit; }
+
+.field-array .row {
+  margin-left: 0;
+  margin-right: 0; }
+
+.array-item-list.row {
+  margin-left: 0;
+  margin-right: 0; }
+
+.array-item {
+  width: 100%;
+  margin: 0 auto 30px auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden; }
+
+.btn-group {
+  display: block; }
+
+button.btn {
+  height: 1.5rem;
+  padding: 0 !important;
+  position: relative;
+  -webkit-box-flex: inherit !important;
+      -ms-flex: inherit !important;
+          flex: inherit !important;
+  background-color: transparent;
+  border-color: #ccc;
+  color: #000; }
+  button.btn.btn-add, button.btn.btn-danger {
+    width: 1.5rem; }
+  button.btn:hover {
+    background-color: #ccc;
+    border-color: #ccc;
+    color: #000; }
+
+i.glyphicon {
+  display: none; }
+
+.btn-add::after {
+  content: '+'; }
+
+.array-item-move-up::after {
+  content: 'Move Up'; }
+
+.array-item-move-down::after {
+  content: 'Move Down'; }
+
+.array-item-remove::after {
+  content: '\D7'; }
 
 #embedder.sticky {
   position: fixed;
   top: 0; }
 
-#embedder form input.card {
+#embedder form input.card, #embedder form textarea.card {
   width: 100%;
   padding: .375rem .75rem; }
-  #embedder form input.card:not([readonly]) {
-    background-color: white; }
+  #embedder form input.card:not([readonly]), #embedder form textarea.card:not([readonly]) {
+    background-color: #fff; }
+
+#embedder input:focus, #embedder textarea:focus {
+  background-color: #80bdff; }
+
+#embedder textarea.output {
+  direction: ltr !important; }
 
 #embedder #embed.card {
   width: 100%;
@@ -38,11 +139,11 @@ header {
     width: 100%;
     height: auto; }
   #embedder #embed.card .corner {
-    width: 2em;
-    height: 2em;
-    margin: 1em;
+    width: 2rem;
+    height: 2rem;
+    margin: 1rem;
     border-style: solid;
-    border-color: white;
+    border-color: rgba(255, 255, 255, 0.9);
     position: absolute;
     z-index: 5;
     -webkit-transition: -webkit-transform 100ms ease-in-out;
@@ -50,33 +151,33 @@ header {
     transition: transform 100ms ease-in-out;
     transition: transform 100ms ease-in-out, -webkit-transform 100ms ease-in-out; }
     #embedder #embed.card .corner:hover, #embedder #embed.card .corner.active {
-      border-color: #007bff;
+      border-color: #80bdff !important;
       cursor: pointer; }
     #embedder #embed.card .corner.tl {
-      top: 0;
-      left: 0;
-      border-width: .5em 0 0 .5em; }
+      top: -1.5rem;
+      left: -1.5rem;
+      border-width: .5rem 0 0 .5rem; }
     #embedder #embed.card .corner.tr {
-      top: 0;
-      right: 0;
-      border-width: .5em .5em 0 0; }
+      top: -1.5rem;
+      right: -1.5rem;
+      border-width: .5rem .5rem 0 0; }
     #embedder #embed.card .corner.br {
-      bottom: 0;
-      right: 0;
-      border-width: 0 .5em .5em 0; }
+      bottom: -1.5rem;
+      right: -1.5rem;
+      border-width: 0 .5rem .5rem 0; }
     #embedder #embed.card .corner.bl {
-      bottom: 0;
-      left: 0;
-      border-width: 0 0 .5em .5em; }
+      bottom: -1.5rem;
+      left: -1.5rem;
+      border-width: 0 0 .5rem .5rem; }
   #embedder #embed.card .cornerContent {
-    width: calc(100% - 2em);
-    height: calc(100% - 2em);
+    width: calc(100% - 1rem);
+    height: calc(100% - 1rem);
     position: absolute;
-    left: 1em;
-    top: 1em;
+    left: .5rem;
+    top: .5rem;
     z-index: 4;
-    background: white;
-    padding: 1em;
+    background: #fff;
+    padding: 1rem;
     opacity: 0;
     pointer-events: none;
     -webkit-transform: scale(0.95);
@@ -90,26 +191,45 @@ header {
     #embedder #embed.card .cornerContent h1 {
       margin: 0 0 .5rem 0;
       font-size: 1.5rem; }
+    #embedder #embed.card .cornerContent .empty {
+      display: none; }
+    #embedder #embed.card .cornerContent span.label::after {
+      content: ': ';
+      display: inline; }
     #embedder #embed.card .cornerContent.active {
       opacity: 1;
       pointer-events: all;
       -webkit-transform: scale(1);
               transform: scale(1); }
-  #embedder #embed.card.activeCorner .corner.tl {
-    -webkit-transform: translate3d(-0.5em, -0.5em, 0);
-            transform: translate3d(-0.5em, -0.5em, 0); }
-  #embedder #embed.card.activeCorner .corner.tr {
-    -webkit-transform: translate3d(0.5em, -0.5em, 0);
-            transform: translate3d(0.5em, -0.5em, 0); }
-  #embedder #embed.card.activeCorner .corner.br {
-    -webkit-transform: translate3d(0.5em, 0.5em, 0);
-            transform: translate3d(0.5em, 0.5em, 0); }
-  #embedder #embed.card.activeCorner .corner.bl {
-    -webkit-transform: translate3d(-0.5em, 0.5em, 0);
-            transform: translate3d(-0.5em, 0.5em, 0); }
-  #embedder #embed.card.activeCorner .cornerContent {
+  #embedder #embed.card:hover .corner.tl {
+    -webkit-transform: translate3d(1rem, 1rem, 0);
+            transform: translate3d(1rem, 1rem, 0); }
+  #embedder #embed.card:hover .corner.tr {
+    -webkit-transform: translate3d(-1rem, 1rem, 0);
+            transform: translate3d(-1rem, 1rem, 0); }
+  #embedder #embed.card:hover .corner.br {
+    -webkit-transform: translate3d(-1rem, -1rem, 0);
+            transform: translate3d(-1rem, -1rem, 0); }
+  #embedder #embed.card:hover .corner.bl {
+    -webkit-transform: translate3d(1rem, -1rem, 0);
+            transform: translate3d(1rem, -1rem, 0); }
+  #embedder #embed.card.activeCorner .corner {
+    border-color: rgba(245, 245, 245, 0.5); }
+  #embedder #embed.card.activeCorner .corner.tl, #embedder #embed.card.activeCorner:hover .corner.tl {
+    -webkit-transform: translate3d(0.5rem, 0.5rem, 0);
+            transform: translate3d(0.5rem, 0.5rem, 0); }
+  #embedder #embed.card.activeCorner .corner.tr, #embedder #embed.card.activeCorner:hover .corner.tr {
+    -webkit-transform: translate3d(-0.5rem, 0.5rem, 0);
+            transform: translate3d(-0.5rem, 0.5rem, 0); }
+  #embedder #embed.card.activeCorner .corner.br, #embedder #embed.card.activeCorner:hover .corner.br {
+    -webkit-transform: translate3d(-0.5rem, -0.5rem, 0);
+            transform: translate3d(-0.5rem, -0.5rem, 0); }
+  #embedder #embed.card.activeCorner .corner.bl, #embedder #embed.card.activeCorner:hover .corner.bl {
+    -webkit-transform: translate3d(0.5rem, -0.5rem, 0);
+            transform: translate3d(0.5rem, -0.5rem, 0); }
+  #embedder #embed.card.activeCorner .cornerContent, #embedder #embed.card.activeCorner:hover .cornerContent {
     -webkit-transform: scale(1);
             transform: scale(1);
-    -webkit-box-shadow: 0 0 2em 2em rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 2em 2em rgba(0, 0, 0, 0.5); }
+    -webkit-box-shadow: 0 0 10rem 10rem rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 10rem 10rem rgba(0, 0, 0, 0.5); }
 

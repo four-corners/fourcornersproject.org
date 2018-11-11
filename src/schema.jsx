@@ -2,9 +2,9 @@
 // https://github.com/mozilla-services/react-jsonschema-form/
 
 const Schema = {
-  title: 'Four Corners Creator',
-  type: 'object',
-  properties: {
+	title: '',
+	type: 'object',
+	properties: {
 		backstory: {
 			title: '',
 			type: 'object',

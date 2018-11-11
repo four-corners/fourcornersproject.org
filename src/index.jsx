@@ -9,7 +9,6 @@ import i18n from './i18n';
 import App from './App';
 import Header from './header';
 import Footer from './footer';
-import Creators from './creators';
 import Creator from './creator';
 import CreatorList from './creator-list';
 import NotFound from './not-found';
@@ -27,7 +26,6 @@ const routes = (
 							<Switch>
 								<Route exact path={SiteSettings.path} component={Creator} />
 								<Route exact path={SiteSettings.path+'creator'} component={Creator} />
-								<Route exact path={SiteSettings.path+'/creators/es/'} component={Creator} />
 								<Route path="*" component={NotFound} />
 							</Switch>
 							<Footer></Footer>

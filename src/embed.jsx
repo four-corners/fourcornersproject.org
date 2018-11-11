@@ -54,18 +54,23 @@ class Embed extends React.Component {
 				imgSrc: imgSrc,
 				imageLoaded: true
 			});
-		//   // that.children.props.src = imgSrc;
 		}
 		pseudoImg.onerror = () => {
 			this.setState({
 				imgSrc: placeholderSrc,
 				imageLoaded: false
 			});
-		//   // that.children.props.src = '';
 		}
 		pseudoImg.src = imgSrc;
 	}
 
+	onFocus(e) {
+		e.target.setSelectionRange(0, e.target.value.length);
+	}
+
+	onBlur(e) {
+
+	}
 
 	onSubmit(e) {
 		console.log('Submit', e);
@@ -76,27 +81,28 @@ class Embed extends React.Component {
 	}
 
 	onScroll(e) {
-		// let embedder = this.embedderRef.current;
-		// let colInner = this.colInnerRef.current;
-		// let paddingTop = window.pageYOffset - colInner.offsetParent.offsetTop;
 
-		// if(!paddingTop) {
-			// paddingTop = 0;
-		// }
-		// console.log(paddingTop);
 	}
 
-	createEmbedCode(jsonData) {
-		const stringData = JSON.stringify(jsonData);
+	createEmbedCode(formData) {
+		let auxData = {
+			img: this.state.imageLoaded ? this.state.imgSrc : undefined,
+			lang: this.props.lang
+		}
+		// if(this.state.imageLoaded) {
+		// 	formData.img = this.state.imgSrc;
+		// }
+		Object.assign(formData, auxData);
+		const stringData = JSON.stringify(formData);
 		const stringHtml = renderToStaticMarkup(
-			<div className='four-corners-embedder' data-json={stringData}>
-			</div>
+			<div className='four-corners-embedder' data-fc={stringData}/>
 		);
 		const decodedHtml = stringHtml
 			.replace(/(&quot\;)/g,"\'")
 			.replace(/(&amp\;)/g,"&");
 		return decodedHtml;
 	}
+
 	render() {
 		return(
 			<div className='col-inner' ref={this.colInnerRef}>
@@ -113,19 +119,49 @@ class Embed extends React.Component {
 						<div data-id='links' className='corner bl'></div>
 						<div id='backstory' className='cornerContent'>
 							<h1>Backstory</h1>
-							<div>{this.props.jsonData.backstory.story}</div>
-							<div>{this.props.jsonData.backstory.author}</div>
-							<div>{this.props.jsonData.backstory.publication}</div>
-							<div>{this.props.jsonData.backstory.url}</div>
-							<div>{this.props.jsonData.backstory.date}</div>
+							<div className={this.props.formData.backstory.story ? '':'empty'}>
+								<span className='label'>Story</span>
+								<span className='value'>{this.props.formData.backstory.story}</span>
+							</div>
+							<div className={this.props.formData.backstory.author ? '':'empty'}>
+								<span className='label'>Author</span>
+								<span className='value'>{this.props.formData.backstory.author}</span>
+							</div>
+							<div className={this.props.formData.backstory.publication ? '':'empty'}>
+								<span className='label'>Publication</span>
+								<span className='value'>{this.props.formData.backstory.publication}</span>
+							</div>
+							<div className={this.props.formData.backstory.url ? '':'empty'}>
+								<span className='label'>URL</span>
+								<span className='value'>{this.props.formData.backstory.url}</span>
+							</div>
+							<div className={this.props.formData.backstory.date ? '':'empty'}>
+								<span className='label'>Date</span>
+								<span className='value'>{this.props.formData.backstory.date}</span>
+							</div>
 						</div>
 						<div id='copyright' className='cornerContent'>
 							<h1>Copyright & Licensing</h1>
-							<div>{this.props.jsonData.backstory.copyright}</div>
-							<div>{this.props.jsonData.backstory.credit}</div>
-							<div>{this.props.jsonData.backstory.year}</div>
-							<div>{this.props.jsonData.backstory.ethics}</div>
-							<div>{this.props.jsonData.backstory.caption}</div>
+							<div className={this.props.formData.copyright.copyright ? '':'empty'}>
+								<span className='label'>Copyright</span>
+								<span className='value'>{this.props.formData.copyright.copyright}</span>
+							</div>
+							<div className={this.props.formData.copyright.credit ? '':'empty'}>
+								<span className='label'>Credit</span>
+								<span className='value'>{this.props.formData.copyright.credit}</span>
+							</div>
+							<div className={this.props.formData.copyright.year ? '':'empty'}>
+								<span className='label'>Year</span>
+								<span className='value'>{this.props.formData.copyright.year}</span>
+							</div>
+							<div className={this.props.formData.copyright.ethics ? '':'empty'}>
+								<span className='label'>Ethics</span>
+								<span className='value'>{this.props.formData.copyright.ethics}</span>
+							</div>
+							<div className={this.props.formData.copyright.caption ? '':'empty'}>
+								<span className='label'>Caption</span>
+								<span className='value'>{this.props.formData.copyright.caption}</span>
+							</div>
 						</div>
 						<div id='media' className='cornerContent'>
 							<h1>Related Media</h1>
@@ -135,25 +171,32 @@ class Embed extends React.Component {
 						</div>
 					</div>
 					<form className='image'>
-						<input name='imageSrc'
-							className='form-control card'
+						<input className='form-control card'
+							name='imageSrc'
+							ref={this.inputRef}
 							onChange={this.onChange.bind(this)}
 							onSubmit={this.onChange.bind(this)}
 							onError={this.onError.bind(this)}
-							ref={this.inputRef} />
-						<input
+							onFocus={this.onFocus.bind(this)}
+							onBlur={this.onBlur.bind(this)}
+							/>
+						<textarea className='output form-control card'
+							id='json'
 							readOnly={true}
-							className='form-control card'
-							value='https://d2w9rnfcy7mm78.cloudfront.net/1380519/original_68cb6b97fa36bad871fb18352de81972.jpeg'/>
-					</form>
-					<textarea className='card'
-						readOnly={true}
-						id='json'
-						className='output form-control'
-						ref={this.outputRef}
-						rows={5}
-						value={this.createEmbedCode(this.props.jsonData)}
-						/>
+							ref={this.outputRef}
+							rows={5}
+							value={this.createEmbedCode(this.props.formData)}
+							onFocus={this.onFocus.bind(this)}
+							onBlur={this.onBlur.bind(this)}
+							/>
+						<input className='form-control card'
+							readOnly={true}
+							value='https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2'
+							// value='https://d2w9rnfcy7mm78.cloudfront.net/1380519/original_68cb6b97fa36bad871fb18352de81972.jpeg'
+							onFocus={this.onFocus.bind(this)}
+							onBlur={this.onBlur.bind(this)}
+							/>
+						</form>
 				</div>
 			</div>
 		);

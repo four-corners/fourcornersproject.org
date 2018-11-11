@@ -1,0 +1,254 @@
+*[readonly], *[disabled] {
+	background-color: $lighter !important;
+}
+#creator {
+	margin: 30px auto 0 auto;
+	.card {
+		margin: 0 auto 30px auto;
+		padding: 2rem;
+		background-color: $lighter;
+	  border: {
+	  	width: 1px;
+	  	style: solid;
+	  	color: $blue;
+			radius: 4px;
+		}
+	  overflow: hidden;
+	}
+}
+section {
+	margin: 0 auto 30px auto;
+}
+form {
+	padding: 0 0 30px 0;
+}
+fieldset .field-object {
+	margin-bottom: 10rem;
+	legend {
+		margin-bottom: 2rem;
+	}
+}
+label {
+	width: 100%;
+}
+.form-control {
+	color: $dark;
+	border-color: $blue;
+	border: 0 0 1px 0;
+	padding: .375rem;
+	&:focus {
+		color: $dark;
+		background-color: $lightest;
+		border-width: 1px;
+		outline: 0;
+		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+	}
+}
+input.form-control {
+	border-width: 0 0 1px 0;
+}
+.field-description {
+	color: $dark;
+	font-size: .75rem;
+}
+.field-array {
+	legend {
+		font-size: inherit;
+	}
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+.array-item-list.row {
+	margin-left: 0;
+	margin-right: 0;
+}
+.array-item {
+	width: 100%;
+	margin: 0 auto 30px auto;
+	padding: 1rem;
+	// background-color: $light;
+  border: 1px solid $light;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.btn-group {
+	display: block;
+}
+button.btn {
+	height: 1.5rem;
+	padding: 0 !important;
+	position: relative;
+	flex: inherit !important;
+	background-color: transparent;
+	border-color: $light;
+	color: $dark;
+	&.btn-add, &.btn-danger {
+		width: 1.5rem;
+	}
+	&:hover {
+		background-color: $light;
+		border-color: $light;
+		color: $dark;
+	}
+}
+i.glyphicon {
+	display: none;
+}
+.btn-add::after {
+	content: '+';
+}
+.array-item-move-up::after {
+	content: 'Move Up';
+}
+.array-item-move-down::after {
+	content: 'Move Down';
+}
+.array-item-remove::after {
+	content: '×';
+}
+#embedder {
+	&.sticky {
+		position: fixed;
+	  top: 0;
+	}
+	form {
+		input.card, textarea.card {
+			width: 100%;
+			padding: .375rem .75rem;
+			&:not([readonly]) {
+				background-color: $lightest;
+			}
+		}
+	}
+	input, textarea {
+		&:focus {
+			background-color: $blue;
+		}
+	}
+	textarea.output {
+		direction: ltr !important;
+	}
+	#embed.card {
+		width: 100%;
+		position: relative;
+		padding: 0;
+		img {
+			width: 100%;
+			height: auto;
+		}
+		.corner {
+			width: 2rem;
+			height: 2rem;
+			margin: 1rem;
+			border-style: solid;
+			border-color: rgba($lightest,.9);
+			// border-radius: 4px;
+			position: absolute;
+			z-index: 5;
+			transition: transform 100ms ease-in-out;
+			&:hover, &.active {
+				border-color: $blue !important;
+				cursor: pointer;
+			}
+			&.tl {
+				top: -1.5rem;
+				left: -1.5rem;
+				border-width: .5rem 0 0 .5rem;
+			}
+			&.tr {
+				top: -1.5rem;
+				right: -1.5rem;
+				border-width: .5rem .5rem 0 0;
+			}
+			&.br {
+				bottom: -1.5rem;
+				right: -1.5rem;
+				border-width: 0 .5rem .5rem 0;
+			}
+			&.bl {
+				bottom: -1.5rem;
+				left: -1.5rem;
+				border-width: 0 0 .5rem .5rem;
+			}
+		}
+		.cornerContent {
+			width: calc(100% - 1rem);
+			height: calc(100% - 1rem);
+			position: absolute;
+			left: .5rem;
+			top: .5rem;
+			z-index: 4;
+			background: $lightest;
+			padding: 1rem;
+			opacity: 0;
+			pointer-events: none;
+			transform: scale(0.95);
+			box-shadow: 0 0 2em 2em transparent;
+			transition: transform 100ms ease-in-out, box-shadow 100ms ease-in-out;
+			h1 {
+		    margin: 0 0 .5rem 0;
+		    font-size: 1.5rem;
+			}
+			.empty {
+				display: none;
+			}
+			span.label {
+				&::after {
+					content: ': ';
+					display: inline;
+				}
+			}
+			span.value {
+				
+			}
+			&.active {
+				opacity: 1;
+				pointer-events: all;
+				transform: scale(1);
+			}
+		}
+		&:hover {
+			.corner {
+				&.tl {
+					transform: translate3d(1rem, 1rem, 0);
+				}
+				&.tr {
+					transform: translate3d(-1rem, 1rem, 0);	
+				}
+				&.br {
+					transform: translate3d(-1rem, -1rem, 0);
+				}
+				&.bl {
+					transform: translate3d(1rem, -1rem, 0);
+				}
+			}
+		}
+		&.activeCorner {
+			.corner {
+				border-color: rgba($lighter,.5);
+			}
+		}
+		&.activeCorner, &.activeCorner:hover {
+			.corner {
+				&.tl {
+					transform: translate3d(.5rem, .5rem, 0);
+				}
+				&.tr {
+					transform: translate3d(-.5rem, .5rem, 0);	
+				}
+				&.br {
+					transform: translate3d(-.5rem, -.5rem, 0);
+				}
+				&.bl {
+					transform: translate3d(.5rem, -.5rem, 0);
+				}
+			}
+			.cornerContent {
+				transform: scale(1);
+				box-shadow: 0 0 10rem 10rem rgba($dark,.5);
+			}
+		}
+	}
+}

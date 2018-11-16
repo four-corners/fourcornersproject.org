@@ -1,7 +1,7 @@
-import React from 'react';
+import { Component } from 'react';
 import NotFound from './not-found';
 
-class Post extends React.Component {
+class Post extends Component {
 
 	constructor(props) {
 		super(props);

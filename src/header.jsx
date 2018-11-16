@@ -80,10 +80,10 @@ class Header extends React.Component {
 	}
 
 	render() {
-		let lang = this.state.lang
+		let lang = this.state.lang;
 		return(
-			<div className='container'>
-				<header>
+			<header className='header'>
+				<div className='container'>
 					<div className='row'>
 						<div className='col-6'>
 							<h1 className='site-title'>
@@ -94,8 +94,8 @@ class Header extends React.Component {
 							{this.state.langs ? this.renderLangList() : this.renderEmpty()}
 						</div>
 					</div>
-				</header>
-			</div>
+				</div>
+			</header>
 		)
 	}
 

@@ -9,6 +9,14 @@ const uiSchema = {
 				rows: 5
 			}
 		}
+	},
+	copyright: {
+		caption: {
+			'ui:widget': 'textarea',
+			'ui:options': {
+				rows: 5
+			}
+		}
 	}
 };
 

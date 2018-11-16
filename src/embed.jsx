@@ -3,7 +3,7 @@ import Form from 'react-jsonschema-form';
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import i18n from './i18n.jsx';
-import Schema from './schema.jsx';
+import Entry from './entry.jsx';
 
 let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 
@@ -15,9 +15,13 @@ class Embed extends React.Component {
 			imageLoaded: false,
 			imgSrc: placeholderSrc,
 			position: 'static',
+			includeCSS: false,
+			includeJS: false,
 		};
 		this.inputRef = React.createRef();
 		this.outputRef = React.createRef();
+		this.includeJSRef = React.createRef();
+		this.includeCSSRef = React.createRef();
 		this.colInnerRef = React.createRef();
 		this.embedderRef = React.createRef();
 
@@ -46,8 +50,8 @@ class Embed extends React.Component {
 	}
 
 
-	onChange(formEvent) {
-		let imgSrc = formEvent.target.value;
+	onChangeImage(e) {
+		let imgSrc = e.target.value;
 		let pseudoImg = new Image();
 		pseudoImg.onload = () => {
 			this.setState({
@@ -62,6 +66,15 @@ class Embed extends React.Component {
 			});
 		}
 		pseudoImg.src = imgSrc;
+	}
+
+	onChangeOpts(e) {
+		console.log(e.target.id);
+		let stateChange = {
+			formData: this.props.formData
+		};
+		stateChange[e.target.id] = e.target.checked;
+		this.setState(stateChange);
 	}
 
 	onFocus(e) {
@@ -81,21 +94,23 @@ class Embed extends React.Component {
 	}
 
 	onScroll(e) {
-
+		
 	}
 
 	createEmbedCode(formData) {
 		let auxData = {
+			lang: i18n.language,
 			img: this.state.imageLoaded ? this.state.imgSrc : undefined,
-			lang: this.props.lang
 		}
-		// if(this.state.imageLoaded) {
-		// 	formData.img = this.state.imgSrc;
-		// }
+		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
+		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
 		Object.assign(formData, auxData);
 		const stringData = JSON.stringify(formData);
-		const stringHtml = renderToStaticMarkup(
-			<div className='four-corners-embedder' data-fc={stringData}/>
+		let stringHtml = '';
+		stringHtml += (this.state.includeJS?'<script src='+jsCDN+' type="text/javascript"></script>':'');
+		stringHtml += (this.state.includeCSS?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
+		stringHtml += renderToStaticMarkup(
+			<div className='fc_embed' data-fc={stringData}/>
 		);
 		const decodedHtml = stringHtml
 			.replace(/(&quot\;)/g,"\'")
@@ -119,10 +134,7 @@ class Embed extends React.Component {
 						<div data-id='links' className='corner bl'></div>
 						<div id='backstory' className='cornerContent'>
 							<h1>Backstory</h1>
-							<div className={this.props.formData.backstory.story ? '':'empty'}>
-								<span className='label'>Story</span>
-								<span className='value'>{this.props.formData.backstory.story}</span>
-							</div>
+							<Entry formData={this.props.formData.backstory} slug='story' />
 							<div className={this.props.formData.backstory.author ? '':'empty'}>
 								<span className='label'>Author</span>
 								<span className='value'>{this.props.formData.backstory.author}</span>
@@ -170,25 +182,45 @@ class Embed extends React.Component {
 							<h1>Related Links</h1>
 						</div>
 					</div>
-					<form className='image'>
+					<form name='embed'>
 						<input className='form-control card'
 							name='imageSrc'
 							ref={this.inputRef}
-							onChange={this.onChange.bind(this)}
-							onSubmit={this.onChange.bind(this)}
-							onError={this.onError.bind(this)}
+							placeholder='https://example.com/images/photo.jpg'
+							onChange={this.onChangeImage.bind(this)}
 							onFocus={this.onFocus.bind(this)}
 							onBlur={this.onBlur.bind(this)}
 							/>
-						<textarea className='output form-control card'
+						<textarea className='output form-control'
 							id='json'
 							readOnly={true}
 							ref={this.outputRef}
 							rows={5}
+							// value={this.createEmbedCode(this.props.formData)}
 							value={this.createEmbedCode(this.props.formData)}
 							onFocus={this.onFocus.bind(this)}
 							onBlur={this.onBlur.bind(this)}
 							/>
+						<div className='embed-opts checkboxes'>
+							<label className='control-label' htmlFor='includeJS'>
+								<input className='embed-opt'
+									id='includeJS'
+									name='includeJS'
+									type='checkbox' 
+									defaultChecked={this.state.includeJS}
+									onChange={this.onChangeOpts.bind(this)} />
+								&nbsp;Include JavaScript file
+							</label>
+							<label className='control-label' htmlFor='includeCSS'>
+								<input className='embed-opt'
+									id='includeCSS'
+									name='includeCSS'
+									type='checkbox' 
+									defaultChecked={this.state.includeCSS}
+									onChange={this.onChangeOpts.bind(this)} />
+								&nbsp;Include CSS file
+							</label>
+						</div>
 						<input className='form-control card'
 							readOnly={true}
 							value='https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2'

@@ -3,13 +3,13 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
 
-module.exports = {
+module.exports = (env, argv) => ({
 	entry: {
 		app: './src/index.jsx'
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: '[name].js'
+		filename: '[name]'+(argv.mode=='development'?'':'.min')+'.js'
 	},
 	module: {
 		rules: [
@@ -60,11 +60,21 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx']
 	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				common: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendors',
+					chunks: 'initial'
+				}
+			}
+		}
+	},
 	plugins: [
-		// new UglifyJSPlugin(),
 		new MiniCssExtractPlugin({
 			filename: '[name].css',
 			chunkFilename: '[id].css'
 		})
 	]
-};
+});

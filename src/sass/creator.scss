@@ -2,9 +2,9 @@
 	background-color: $lighter !important;
 }
 #creator {
-	margin: 30px auto 0 auto;
+	margin: 2rem auto 0 auto;
 	.card {
-		margin: 0 auto 30px auto;
+		margin: 0 auto 2rem auto;
 		padding: 2rem;
 		background-color: $lighter;
 	  border: {
@@ -17,13 +17,15 @@
 	}
 }
 section {
-	margin: 0 auto 30px auto;
+	margin: 0 auto 2rem auto;
 }
 form {
-	padding: 0 0 30px 0;
+	padding: 0 0 2rem 0;
 }
 fieldset .field-object {
-	margin-bottom: 10rem;
+	margin-bottom: 2rem;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid $dark;
 	legend {
 		margin-bottom: 2rem;
 	}
@@ -34,7 +36,7 @@ label {
 .form-control {
 	color: $dark;
 	border-color: $blue;
-	border: 0 0 1px 0;
+	// border: 0 0 1px 0;
 	padding: .375rem;
 	&:focus {
 		color: $dark;
@@ -45,7 +47,7 @@ label {
 	}
 }
 input.form-control {
-	border-width: 0 0 1px 0;
+	// border-width: 0 0 1px 0;
 }
 .field-description {
 	color: $dark;
@@ -59,6 +61,9 @@ input.form-control {
 		margin-left: 0;
 		margin-right: 0;
 	}
+	fieldset .field-object {
+		margin-bottom: 0rem;
+	}
 }
 .array-item-list.row {
 	margin-left: 0;
@@ -66,7 +71,7 @@ input.form-control {
 }
 .array-item {
 	width: 100%;
-	margin: 0 auto 30px auto;
+	margin: 0 auto 2rem auto;
 	padding: 1rem;
 	// background-color: $light;
   border: 1px solid $light;
@@ -77,15 +82,15 @@ input.form-control {
 	display: block;
 }
 button.btn {
-	height: 1.5rem;
-	padding: 0 !important;
+	height: 2.5rem;
+	padding: .5rem !important;
 	position: relative;
 	flex: inherit !important;
 	background-color: transparent;
 	border-color: $light;
 	color: $dark;
 	&.btn-add, &.btn-danger {
-		width: 1.5rem;
+		width: 2.5rem;
 	}
 	&:hover {
 		background-color: $light;
@@ -128,7 +133,13 @@ i.glyphicon {
 		}
 	}
 	textarea.output {
+		margin-bottom: 1rem;
+		font-size: .75rem;
 		direction: ltr !important;
+	}
+	.embed-opts {
+		margin: 0 auto 2rem auto;
+		font-size: .75rem;
 	}
 	#embed.card {
 		width: 100%;

@@ -10,15 +10,15 @@ h1, h2, h3, h4 {
   margin: 0; }
 
 header {
-  margin: 30px auto; }
+  margin: 2rem auto 5rem auto; }
 
 *[readonly], *[disabled] {
   background-color: #f5f5f5 !important; }
 
 #creator {
-  margin: 30px auto 0 auto; }
+  margin: 2rem auto 0 auto; }
   #creator .card {
-    margin: 0 auto 30px auto;
+    margin: 0 auto 2rem auto;
     padding: 2rem;
     background-color: #f5f5f5;
     border-width: 1px;
@@ -28,13 +28,15 @@ header {
     overflow: hidden; }
 
 section {
-  margin: 0 auto 30px auto; }
+  margin: 0 auto 2rem auto; }
 
 form {
-  padding: 0 0 30px 0; }
+  padding: 0 0 2rem 0; }
 
 fieldset .field-object {
-  margin-bottom: 10rem; }
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #000; }
   fieldset .field-object legend {
     margin-bottom: 2rem; }
 
@@ -44,7 +46,6 @@ label {
 .form-control {
   color: #000;
   border-color: #80bdff;
-  border: 0 0 1px 0;
   padding: .375rem; }
   .form-control:focus {
     color: #000;
@@ -53,9 +54,6 @@ label {
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-
-input.form-control {
-  border-width: 0 0 1px 0; }
 
 .field-description {
   color: #000;
@@ -68,13 +66,16 @@ input.form-control {
   margin-left: 0;
   margin-right: 0; }
 
+.field-array fieldset .field-object {
+  margin-bottom: 0rem; }
+
 .array-item-list.row {
   margin-left: 0;
   margin-right: 0; }
 
 .array-item {
   width: 100%;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 2rem auto;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -84,8 +85,8 @@ input.form-control {
   display: block; }
 
 button.btn {
-  height: 1.5rem;
-  padding: 0 !important;
+  height: 2.5rem;
+  padding: .5rem !important;
   position: relative;
   -webkit-box-flex: inherit !important;
       -ms-flex: inherit !important;
@@ -94,7 +95,7 @@ button.btn {
   border-color: #ccc;
   color: #000; }
   button.btn.btn-add, button.btn.btn-danger {
-    width: 1.5rem; }
+    width: 2.5rem; }
   button.btn:hover {
     background-color: #ccc;
     border-color: #ccc;
@@ -129,7 +130,13 @@ i.glyphicon {
   background-color: #80bdff; }
 
 #embedder textarea.output {
+  margin-bottom: 1rem;
+  font-size: .75rem;
   direction: ltr !important; }
+
+#embedder .embed-opts {
+  margin: 0 auto 2rem auto;
+  font-size: .75rem; }
 
 #embedder #embed.card {
   width: 100%;

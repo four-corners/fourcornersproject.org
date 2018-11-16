@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import Form from 'react-jsonschema-form';
 
@@ -55,8 +55,8 @@ class Creator extends React.Component {
 		});
 	}
 
-	formatSchema(schema) {
-		const schemaObjs = Object.assign({}, schema)
+	translateSchema(schema) {
+		const schemaObjs = Object.assign({}, schema);
 		const groupKeys = Object.keys(schema.properties);
 		for(let groupKey of groupKeys) {
 			let schemaObj = schema.properties[groupKey];
@@ -112,14 +112,14 @@ class Creator extends React.Component {
 		return (
 			<div id='forms'>
 				<Form
-					schema={this.formatSchema(Schema)}
+					schema={this.translateSchema(Schema)}
 					uiSchema={uiSchema}
 					formData={this.state.formData}
 					onChange={this.onChange}
 					onSubmit={this.onSubmit}
 					onError={this.onError}>
 					<button type='submit' hidden/>
-					<button type='button' className='btn'>Add content in anouther language</button>
+					<button type='button' className='btn'>Add content in another language</button>
 	      </Form>
 			</div>
 		);

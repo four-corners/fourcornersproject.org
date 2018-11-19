@@ -13,12 +13,10 @@ class Entry extends React.Component {
 	}
 
 	render() {
-		const value = this.props.formData[this.props.slug];
-		console.log(this.props.formData);
 		return(
-			<div className={value ? '':'empty'}>
-				<span className='label'>{this.props.slug}</span>
-				<span className='value'>{value}</span>
+			<div className='fc_row {value ? "":"empty"}'>
+				<span className='fc_label'>{this.props.slug}</span>
+				<span className='fc_value'>{this.props.formData[this.props.slug]}</span>
 			</div>
 		);
 	}

@@ -1,0 +1,94 @@
+#embedder {
+	&.sticky {
+		position: fixed;
+	  top: 0;
+	}
+	form {
+		input.card, textarea.card {
+			width: 100%;
+			padding: .375rem .75rem;
+			&:not([readonly]) {
+				background-color: $lightest;
+			}
+		}
+	}
+	input, textarea {
+		&:focus {
+			background-color: $blue;
+		}
+	}
+	textarea.output {
+		margin-bottom: 1rem;
+		font-size: .75rem;
+		direction: ltr !important;
+	}
+	.embed-opts {
+		margin: 0 auto 2rem auto;
+		font-size: .75rem;
+	}
+}
+#embed.card {
+	padding: 0;
+	position: relative;
+	form {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+	input#img-src-file {
+		width: 0.1px;
+		height: 0.1px;
+		opacity: 0;
+		overflow: hidden;
+		position: absolute;
+		z-index: -1;
+		& + label {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			padding: 1em;
+			* {
+				pointer-events: none;
+			}
+		}
+		& + label:hover, &:focus + label  {
+			cursor: pointer;
+			background-color: $blue;
+		}
+		&:focus + label {
+			color: $dark;
+			background-color: $blue;
+			border-width: 1px;
+			outline: 0;
+			box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+		}
+	}
+	&:not(.has-image) .fc-embed {
+		pointer-events: none;
+		.fc-corner {
+			&:hover:before, &:hover:after {
+				background-color: $lightest;
+			}
+			&[data-slug='backstory'] {
+				top: calc(50% - 5rem);
+				left: calc(50% - 5rem);
+			}
+			&[data-slug='copyright'] {
+				top: calc(50% - 5rem);
+				right: calc(50% - 5rem);
+			}
+			&[data-slug='media'] {
+				bottom: calc(50% - 5rem);
+				right: calc(50% - 5rem);
+			}
+			&[data-slug='links'] {
+				bottom: calc(50% - 5rem);
+				left: calc(50% - 5rem);
+			}
+		}
+	}
+}

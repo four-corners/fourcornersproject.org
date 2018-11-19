@@ -7,7 +7,6 @@ import Embed from './embed.jsx';
 import i18n from './i18n.jsx';
 import Schema from './schema.jsx';
 import uiSchema from './ui-schema.jsx';
-// import Forms from './forms.jsx';
 
 class Creator extends React.Component {
 	
@@ -16,7 +15,8 @@ class Creator extends React.Component {
 		this.state = {
 			creator: {},
 			lang: 'en',
-			formData: {}
+			formData: {},
+			activeCorner: null
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 		this.onChange = this.onChange.bind(this);
@@ -115,8 +115,8 @@ class Creator extends React.Component {
 					schema={this.translateSchema(Schema)}
 					uiSchema={uiSchema}
 					formData={this.state.formData}
+					onFocus={this.onFocus.bind(this)}
 					onChange={this.onChange}
-					onSubmit={this.onSubmit}
 					onError={this.onError}>
 					<button type='submit' hidden/>
 					<button type='button' className='btn'>Add content in another language</button>
@@ -127,14 +127,14 @@ class Creator extends React.Component {
 
 	renderEmbed() {
 		return (
-			<Embed formData={this.state.formData} lang={this.state.lang} />
+			<Embed formData={this.state.formData} lang={this.state.lang} activeCorner={this.state.activeCorner} />
 		);
 	}
 
-	renderEmpty() {
-		return (
-			<div className='loader'/>
-		);
+
+	onFocus(id, val) {
+		const slug = id.split('_')[1];
+		this.setState({activeCorner: slug});
 	}
 
 	onChange(e) {
@@ -142,9 +142,6 @@ class Creator extends React.Component {
 		this.setState({formData: formData});
 	}
 
-	onSubmit(e) {
-		// console.log('Submit', e);
-	}
 
 	onError(e) {
 		// console.log('Error', e);
@@ -155,11 +152,11 @@ class Creator extends React.Component {
 		return (
 			<div id='creator' className='container'>
 				<div className='row'>
-					<div className='col-6'>
-						{this.state.creator.ID ? this.renderCreator() : this.renderEmpty()}
+					<div className='col-12 col-sm-6'>
+						{this.state.creator && this.state.creator.ID ? this.renderCreator() : null}
 					</div>
-					<div className='col-6'>
-						{this.state.creator.ID ? this.renderEmbed() : this.renderEmpty()}
+					<div className='col-12 col-sm-6'>
+						{this.state.creator && this.state.creator.ID ? this.renderEmbed() : null}
 					</div>
 				</div>
 			</div>

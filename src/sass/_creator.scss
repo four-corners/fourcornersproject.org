@@ -1,0 +1,119 @@
+*[readonly], *[disabled] {
+	background-color: $lighter !important;
+}
+#creator {
+	margin: 2rem auto 0 auto;
+	.card {
+		margin: 0 auto 2rem auto;
+		padding: 2rem;
+		background-color: $lighter;
+	  border: {
+	  	width: 1px;
+	  	style: solid;
+	  	color: $blue;
+			radius: 4px;
+		}
+	  overflow: hidden;
+	}
+	@include media-breakpoint-down(sm) {
+	 max-width: 100%;
+	}
+}
+section {
+	margin: 0 auto 2rem auto;
+}
+form {
+	padding: 0 0 2rem 0;
+}
+fieldset .field-object {
+	margin-bottom: 2rem;
+	padding-bottom: 2rem;
+	border-bottom: 1px solid $dark;
+	legend {
+		margin-bottom: 2rem;
+	}
+}
+label {
+	width: 100%;
+}
+.form-control {
+	// width: 100%;
+	color: $dark;
+	border-color: $blue;
+	// border: 0 0 1px 0;
+	padding: .375rem;
+	&:focus {
+		color: $dark;
+		background-color: $lightest;
+		border-width: 1px;
+		outline: 0;
+		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+	}
+}
+input.form-control {
+	// border-width: 0 0 1px 0;
+}
+.field-description {
+	color: $dark;
+	font-size: .75rem;
+}
+.field-array {
+	legend {
+		font-size: inherit;
+	}
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
+	fieldset .field-object {
+		margin-bottom: 0rem;
+	}
+}
+.array-item-list.row {
+	margin-left: 0;
+	margin-right: 0;
+}
+.array-item {
+	width: 100%;
+	margin: 0 auto 2rem auto;
+	padding: 1rem;
+	// background-color: $light;
+  border: 1px solid $light;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.btn-group {
+	display: block;
+}
+button.btn {
+	height: 2.5rem;
+	padding: .5rem !important;
+	position: relative;
+	flex: inherit !important;
+	background-color: transparent;
+	border-color: $light;
+	color: $dark;
+	&.btn-add, &.btn-danger {
+		width: 2.5rem;
+	}
+	&:hover {
+		background-color: $light;
+		border-color: $light;
+		color: $dark;
+	}
+}
+i.glyphicon {
+	display: none;
+}
+.btn-add::after {
+	content: '+';
+}
+.array-item-move-up::after {
+	content: 'Move Up';
+}
+.array-item-move-down::after {
+	content: 'Move Down';
+}
+.array-item-remove::after {
+	content: '×';
+}

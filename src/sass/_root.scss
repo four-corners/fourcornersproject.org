@@ -1,14 +1,18 @@
 html, body {
 	font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
 	background-color: $lighter;
+  overflow-x: hidden;
 }
 .rtl, .rtl * {
 	text-align: right;
 }
+#page {
+  width: 100%;
+  display: table;
+}
 h1, h2, h3, h4 {
 	margin: 0;
 }
-
 .col-inner {
 	width: 100%;
 	margin: 0 15px;

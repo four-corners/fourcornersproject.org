@@ -1800,10 +1800,15 @@ textarea.form-control {
 
 html, body {
   font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
-  background-color: #faf9fe; }
+  background-color: #faf9fe;
+  overflow-x: hidden; }
 
 .rtl, .rtl * {
   text-align: right; }
+
+#page {
+  width: 100%;
+  display: table; }
 
 h1, h2, h3, h4 {
   margin: 0; }
@@ -1971,8 +1976,6 @@ i.glyphicon {
       background-color: #fff; }
   #embedder input, #embedder textarea {
     background-color: #fff; }
-    #embedder input:focus, #embedder textarea:focus {
-      background-color: #80bdff; }
 
 #embed-input {
   padding: 0;

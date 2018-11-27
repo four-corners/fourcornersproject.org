@@ -14,9 +14,9 @@
 	}
 	input, textarea {
 		background-color: $lightest;
-		&:focus {
-			background-color: $blue;
-		}
+		// &:focus {
+		// 	background-color: $blue;
+		// }
 	}
 }
 #embed-input {

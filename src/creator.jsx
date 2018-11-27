@@ -2,11 +2,10 @@ import React from 'react';
 import { render } from 'react-dom';
 import Form from 'react-jsonschema-form';
 
-import Header from './header.jsx';
-import Embed from './embed.jsx';
 import i18n from './i18n.jsx';
-import Schema from './schema.jsx';
-import uiSchema from './ui-schema.jsx';
+import Header from './header.jsx';
+import Left from './left.jsx';
+import Right from './right.jsx';
 
 class Creator extends React.Component {
 	
@@ -19,7 +18,6 @@ class Creator extends React.Component {
 			activeCorner: null
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
-		this.onChange = this.onChange.bind(this);
 		this.outputRef = React.createRef();
 	}
 
@@ -55,108 +53,50 @@ class Creator extends React.Component {
 		});
 	}
 
-	translateSchema(schema) {
-		const schemaObjs = Object.assign({}, schema);
-		const groupKeys = Object.keys(schema.properties);
-		for(let groupKey of groupKeys) {
-			let schemaObj = schema.properties[groupKey];
-			const creator = this.state.creator;
-			const fields = creator.acf;
-			const titleKey = [groupKey, 'title'].join('_');
-			const title = fields[titleKey];
-		  const props = schemaObj.properties;
-		  schemaObj.title = title;
-		  if(props) {
-			  const propKeys = Object.keys(props);
-				for (let propKey of propKeys) {
-					const fieldTitleKey = [groupKey, propKey, 'label'].join('_');
-					if(fields.hasOwnProperty(fieldTitleKey)) {
-						const fieldTitle = fields[fieldTitleKey];
-						schemaObj.properties[propKey].title = fieldTitle;
-					}
-					const fieldDescKey = [groupKey, propKey, 'desc'].join('_');
-					if(fields.hasOwnProperty(fieldDescKey)) {
-						const fieldDescLabel = fields[fieldDescKey];
-						schemaObj.properties[propKey].description = fieldDescLabel;
-					}
-					//Collect options for selector
-					if(props[propKey].hasOwnProperty('enum')) {
-						const fieldOptionsKey = [groupKey, propKey, 'options'].join('_');
-						const fieldOptions = fields[fieldOptionsKey];
-						if( fieldOptions ) {
-							for (let fieldOption of fieldOptions) {
-								const fieldValue = fieldOption.label+(fieldOption.desc ? ': '+fieldOption.desc : '');
-								schemaObj.properties[propKey].enum.push(fieldValue);
-							}
-						}
-					}
-					if(props[propKey].type == 'array') {
-						const nestedProps = props[propKey].items.properties;
-						const nestedPropKeys = Object.keys(nestedProps);
-						for (let nestedProp of nestedPropKeys) {
-							const nestedPropKey = [groupKey, nestedProp, 'label'].join('_');
-							if(fields.hasOwnProperty(nestedPropKey)) {
-								const nestedPropLabel = fields[nestedPropKey];
-								schemaObj.properties[propKey].items.properties[nestedProp].title = nestedPropLabel;
-							}
-						}
-					}
-				}
-			}
-			schemaObjs.properties[groupKey] = schemaObj;
-		}
-		return schemaObjs;
-	}
+	setFormData(formData) {
+		this.setState({
+			formData: formData
+		});
+  }
+	
+  setActiveCorner(slug) {
+		this.setState({
+			activeCorner: slug
+		});
+  }
 
-	renderCreator() {
+	renderLeft() {
 		return (
-			<div id='forms'>
-				<Form
-					schema={this.translateSchema(Schema)}
-					uiSchema={uiSchema}
-					formData={this.state.formData}
-					onFocus={this.onFocus.bind(this)}
-					onChange={this.onChange}
-					onError={this.onError}>
-					<button type='submit' hidden/>
-					<button type='button' className='btn'>Add content in another language</button>
-	      </Form>
-			</div>
+			<Left
+				lang={this.state.lang}
+				creator={this.state.creator}
+				formData={this.state.formData}
+				sendActiveCorner={this.setActiveCorner.bind(this)}
+				sendFormData={this.setFormData.bind(this)} />
 		);
 	}
 
-	renderEmbed() {
+	renderRight() {
 		return (
-			<Embed formData={this.state.formData} lang={this.state.lang} activeCorner={this.state.activeCorner} />
+			<Right
+				lang={this.state.lang}
+				creator={this.state.creator}
+				formData={this.state.formData}
+				activeCorner={this.state.activeCorner} />
 		);
-	}
-
-
-	onFocus(id, val) {
-		const slug = id.split('_')[1];
-		this.setState({activeCorner: slug});
-	}
-
-	onChange(e) {
-		const formData = Object.assign(this.state.formData, e.formData);
-		this.setState({formData: formData});
-	}
-
-
-	onError(e) {
-		// console.log('Error', e);
 	}
 
 	render() {
 		let lang = this.state.lang;
 		return (
-			<div id='creator' className='container'>
-				<div className='row'>
-					<div className='col-12 col-sm-6'>
-						{this.state.creator && this.state.creator.ID ? this.renderCreator() : null}
+			// <div id='creator' className='container'>
+			<div id='creator'>
+				<div className='row' data-sticky-container>
+					<div className='col-12 col-sm-6 left'>
+						{this.state.creator && this.state.creator.ID ? this.renderLeft() : null}
 					</div>
-					<div className='col-12 col-sm-6'>
-						{this.state.creator && this.state.creator.ID ? this.renderEmbed() : null}
+					<div className='col-12 col-sm-6 right'>
+						{this.state.creator && this.state.creator.ID ? this.renderRight() : null}
 					</div>
 				</div>
 			</div>

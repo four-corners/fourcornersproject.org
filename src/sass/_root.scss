@@ -1,9 +1,38 @@
 html, body {
 	font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
+	background-color: $lighter;
 }
 .rtl, .rtl * {
 	text-align: right;
 }
 h1, h2, h3, h4 {
 	margin: 0;
+}
+
+.col-inner {
+	width: 100%;
+	margin: 0 15px;
+	.left & {
+		float: right;
+	}
+}
+@media (min-width: 576px) {
+  .col-inner {
+    max-width: calc(540px/2);
+  }
+}
+@media (min-width: 768px) {
+  .col-inner {
+    max-width: calc(720px/2);
+  }
+}
+@media (min-width: 992px) {
+  .col-inner {
+    max-width: calc(960px/2);
+  }
+}
+@media (min-width: 1200px) {
+  .col-inner {
+    max-width: calc(1140px/2);
+  }
 }

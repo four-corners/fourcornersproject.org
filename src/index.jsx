@@ -8,7 +8,8 @@ import Footer from './footer';
 import Creator from './creator';
 import NotFound from './not-found';
 
-require('./sass/public.scss');
+import publicScripts from './coffee/public.coffee';
+import publicStyles from './sass/public.scss';
 
 const routes = (
 	<NamespacesConsumer>
@@ -23,7 +24,6 @@ const routes = (
 								<Route exact path={SiteSettings.path+'creator'} component={Creator} />
 								<Route path="*" component={NotFound} />
 							</Switch>
-							<Footer></Footer>
 						</React.Fragment>
 					</Router>
 				)

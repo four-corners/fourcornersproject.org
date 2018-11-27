@@ -1,19 +1,20 @@
 *[readonly], *[disabled] {
-	background-color: $lighter !important;
+	background-color: $light !important;
+}
+.card {
+	@include card;
 }
 #creator {
 	margin: 2rem auto 0 auto;
+	.col-inner {
+		width: 100%;
+	}
 	.card {
 		margin: 0 auto 2rem auto;
-		padding: 2rem;
-		background-color: $lighter;
-	  border: {
-	  	width: 1px;
-	  	style: solid;
-	  	color: $blue;
-			radius: 4px;
-		}
 	  overflow: hidden;
+	}
+	form {
+		padding: 0 0 2rem 0;
 	}
 	@include media-breakpoint-down(sm) {
 	 max-width: 100%;
@@ -22,29 +23,27 @@
 section {
 	margin: 0 auto 2rem auto;
 }
-form {
-	padding: 0 0 2rem 0;
+label, legend {
+	font-weight: bold;
 }
 fieldset .field-object {
 	margin-bottom: 2rem;
 	padding-bottom: 2rem;
 	border-bottom: 1px solid $dark;
 	legend {
-		margin-bottom: 2rem;
+		// margin-bottom: 2rem;
 	}
 }
 label {
 	width: 100%;
 }
 .form-control {
-	// width: 100%;
 	color: $dark;
 	border-color: $blue;
-	// border: 0 0 1px 0;
+	background-color: $lightest;
 	padding: .375rem;
 	&:focus {
 		color: $dark;
-		background-color: $lightest;
 		border-width: 1px;
 		outline: 0;
 		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
@@ -66,7 +65,9 @@ input.form-control {
 		margin-right: 0;
 	}
 	fieldset .field-object {
-		margin-bottom: 0rem;
+		margin-bottom: 0;
+		padding-bottom: 0;
+		border-bottom: 0;
 	}
 }
 .array-item-list.row {
@@ -76,30 +77,37 @@ input.form-control {
 .array-item {
 	width: 100%;
 	margin: 0 auto 2rem auto;
-	padding: 1rem;
-	// background-color: $light;
-  border: 1px solid $light;
-  border-radius: 4px;
+	@include card;
   overflow: hidden;
 }
 .btn-group {
-	display: block;
+	display: block !important;
 }
 button.btn {
 	height: 2.5rem;
+	margin: 0 .5rem 0 0;
 	padding: .5rem !important;
 	position: relative;
 	flex: inherit !important;
-	background-color: transparent;
-	border-color: $light;
-	color: $dark;
+	@include card;
 	&.btn-add, &.btn-danger {
 		width: 2.5rem;
 	}
+	&::after {
+		font-weight: normal;
+	}
+	&:last-of-type {
+		margin: 0;
+	}
 	&:hover {
 		background-color: $light;
-		border-color: $light;
-		color: $dark;
+		cursor: pointer;
+	}
+	&[disabled] {
+		opacity: .5;
+		&:hover {
+			cursor: default;
+		}
 	}
 }
 i.glyphicon {

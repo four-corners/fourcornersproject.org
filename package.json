@@ -6,7 +6,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "four-corners": "^1.0.0",
     "autoprefixer": "^9.2.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -16,6 +15,7 @@
     "coffee-loader": "^0.9.0",
     "coffeescript": "^2.3.2",
     "css-loader": "^1.0.0",
+    "four-corners": "^1.0.0",
     "i18next": "^12.0.0",
     "i18next-browser-languagedetector": "^2.2.3",
     "i18next-xhr-backend": "^1.5.1",
@@ -29,13 +29,15 @@
     "react-jsonschema-form": "^1.0.5",
     "react-router-dom": "^4.3.1",
     "sass-loader": "^7.1.0",
+    "sticky-js": "^1.2.0",
     "style-loader": "^0.23.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2"
   },
   "devDependencies": {
-    "babel-minify-webpack-plugin": "^0.3.1"
+    "babel-minify-webpack-plugin": "^0.3.1",
+    "react-dropzone": "^7.0.1"
   },
   "browserslist": [
     "last 2 versions"

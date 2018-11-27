@@ -2,7 +2,7 @@
 // https://github.com/mozilla-services/react-jsonschema-form/
 
 const uiSchema = {
-	backstory: {
+	context: {
 		story: {
 			'ui:widget': 'textarea',
 			'ui:options': {
@@ -12,6 +12,14 @@ const uiSchema = {
 	},
 	copyright: {
 		caption: {
+			'ui:widget': 'textarea',
+			'ui:options': {
+				rows: 5
+			}
+		}
+	},
+	backstory: {
+		story: {
 			'ui:widget': 'textarea',
 			'ui:options': {
 				rows: 5

@@ -10,60 +10,16 @@ const Schema = {
 		// 	enum: [],
 		// 	enumNames: [],
 		// },
-		backstory: {
+		context: {
 			title: '',
 			type: 'object',
 			required: [],
 			properties: {
 				story: {
-					type: 'string',
+					type: 'string'
 				},
-				author: {
-					type: 'string',
-				},
-				publication: {
-					type: 'string',
-				},
-				url: {
-					type: 'string',
-					format: 'uri',
-				},
-				date: {
-					type: 'string',
-					format: 'date',
-				}
-			}
-		},
-		copyright: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				copyright: {
-					type: 'string',
-					enum: [],
-				},
-				credit: {
-					type: 'string',
-				},
-				year: {
-					type: 'string',
-				},
-				ethics: {
-					type: 'string',
-					enum: [],
-				},
-				caption: {
-					type: 'string',
-				}
-			}
-		},
-		media: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
 				media: {
+					title: '',
 					type: 'array',
 					items: {
 						type: 'object',
@@ -74,11 +30,13 @@ const Schema = {
 									'image',
 									'youtube',
 									'vimeo',
+									'soundcloud'
 								],
 								enumNames: [
 									'Image',
 									'YouTube',
 									'Vimeo',
+									'SoundCloud'
 								],
 							},
 							url: {
@@ -90,7 +48,7 @@ const Schema = {
 							}
 						}
 					}
-				},
+				}
 			}
 		},
 		links: {
@@ -114,6 +72,68 @@ const Schema = {
 						}
 					}
 				},
+			}
+		},
+		backstory: {
+			title: '',
+			type: 'object',
+			required: [],
+			properties: {
+				story: {
+					type: 'string'
+				},
+				media: {
+					title: '',
+					type: 'array',
+					items: {
+						type: 'object',
+						properties: {
+							type: {
+								type: 'string',
+								enum: [
+									'image',
+									'youtube',
+									'vimeo',
+									'soundcloud'
+								],
+								enumNames: [
+									'Image',
+									'YouTube',
+									'Vimeo',
+									'SoundCloud'
+								],
+							},
+							url: {
+								type: 'string',
+								format: 'uri',
+							},
+							credit: {
+								type: 'string'
+							}
+						}
+					}
+				}
+			}
+		},
+		copyright: {
+			title: '',
+			type: 'object',
+			required: [],
+			properties: {
+				caption: {
+					type: 'string',
+				},
+				credit: {
+					type: 'string',
+				},
+				copyright: {
+					type: 'string',
+					enum: [],
+				},
+				ethics: {
+					type: 'string',
+					enum: [],
+				}
 			}
 		}
 	}

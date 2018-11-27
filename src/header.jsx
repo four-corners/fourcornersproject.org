@@ -75,22 +75,24 @@ class Header extends React.Component {
 		);
 	}
 
-	changeLang() {
-
+	changeLang(e) {
+		console.log(e);
 	}
 
 	render() {
 		let lang = this.state.lang;
 		return(
 			<header className='header'>
-				<div className='container'>
-					<div className='row'>
-						<div className='col-6'>
+				<div className='row'>
+					<div className='col-12 col-sm-6 left'>
+						<div className='col-inner'>
 							<h1 className='site-title'>
 								<Link to={SiteSettings.path}>Four Corners</Link>
 							</h1>
 						</div>
-						<div className='col-6'>
+					</div>
+					<div className='col-12 col-sm-6 right'>
+						<div className='col-inner'>
 							{this.state.langs ? this.renderLangList() : this.renderEmpty()}
 						</div>
 					</div>

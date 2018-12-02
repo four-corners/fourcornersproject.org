@@ -6,8 +6,6 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import i18n from './i18n.jsx';
 import Embed from './embed.jsx';
 
-import Sticky from 'sticky-js';
-
 let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
 
@@ -50,38 +48,36 @@ class Right extends React.Component {
 
 	}
 
-	onImageLoad(e) {
+	onDropLoad(e) {
 		// console.log('Image Loaded');
 		// this.setState({ imgLoaded: 'loaded' });
 	}
 
-	onImageError(e) {
+	onDropError(e) {
 		// console.log('Image Failed'); 
 		// this.setState({ imgLoaded: 'failed' });
 	}
 
-	onChangeImage(e) {
+	onChangeDrop(e) {
 		let imgSrc = e.target.value;
 		let pseudoImg = new Image();
 		pseudoImg.onload = (e) => {
 			// window.FOURCORNERS[0].closeCorner(this.state.activeCorner);
 			this.setState({
 				imgSrc: imgSrc,
-				imgLoaded: true,
-				// activeCorner: null
+				imgLoaded: true
 			});
 		}
 		pseudoImg.onerror = (e) => {
 			this.setState({
 				imgSrc: placeholderSrc,
-				imgLoaded: false,
-				// activeCorner: null
+				imgLoaded: false
 			});
 		}
 		pseudoImg.src = imgSrc;
 	}
 
-	onDropImage(file) {
+	onDrop(file) {
 		let imgSrc = URL.createObjectURL(file[0]);
 		this.setState({
 			imgSrc: imgSrc,
@@ -90,13 +86,13 @@ class Right extends React.Component {
 		});
 	}
 
-	onFocusImage(e) {
+	onFocusDrop(e) {
 		this.setState({
 			imgFocus: true
 		});
 	}
 
-	onBlurImage(e) {
+	onBlurDrop(e) {
 		this.setState({
 			imgFocus: false
 		});
@@ -124,12 +120,11 @@ class Right extends React.Component {
 
 	onScroll(e) {
 		const sticky = this.stickyRef.current;
-		const col = sticky.parentElement;
-		const rect = col.getBoundingClientRect();
-		const width = rect.width-15;
+		const parent = sticky.parentElement;
+		const rect = parent.getBoundingClientRect();
+		const width = rect.width;
 		const height = window.innerHeight;
 		const top = rect.top;
-		// const left = rect.left;
 		let stickyStyle = {};
 		if(top <= 60) {
 			stickyStyle = {
@@ -138,15 +133,12 @@ class Right extends React.Component {
 				position: 'fixed',
 				top: 0,
 				right: 0,
-				paddingTop: '60px',
-				paddingLeft: '15px'
+				paddingTop: '60px'
 			};	
 		}
 		this.setState({
 			stickyStyle: stickyStyle
 		});
-		// ;
-		// console.log(position);
 	}
 
 	embedCode(formData) {
@@ -176,88 +168,85 @@ class Right extends React.Component {
 		const formGroupClass = 'form-group'+(this.state.imgLoaded?'':' card')+(this.state.imgFocus?' focus':'');
 		const dropClass = 'drop'+(this.state.imgLoaded?' under card':' over');
 		return(
-			<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
-				<div className='col-inner'>
-					<div id='embedder'>
-						<div id='embed-input' className={inputClass}>
-							<div className={formGroupClass}>
-								<Embed
-									creator={this.props.creator}
-									imgSrc={this.state.imgSrc}
-									imgLoaded={this.state.imgLoaded}
-									formData={this.props.formData}
-									activeCorner={this.props.activeCorner}
-									/>
-								<div className={dropClass}>
-									<Dropzone
-										className='drop-zone'
-										ref={this.imgInputRef}
-										style={{}}
-										accept='image/jpeg, image/png, image/gif'
-										multiple={false}
-										onDrop={this.onDropImage.bind(this)}
-										onClick={this.onFocusImage.bind(this)}
-										onMouseEnter={this.onFocusImage.bind(this)}
-										onMouseLeave={this.onBlurImage.bind(this)}
-										onDragEnter={this.onFocusImage.bind(this)}
-										onDragLeave={this.onBlurImage.bind(this)}
-										onFileDialogCancel={this.onBlurImage.bind(this)}
-										onBlur={this.onBlurImage.bind(this)}
-										>
-									</Dropzone>
-									{this.state.imgLoaded ? <div className='label-text'>Drag and drop an image here to upload.</div> : ''}
-								</div>
-								{!this.state.imgLoaded ? <div className='label-text'>Drag and drop an image here to upload.</div> : ''}
-							</div>
-							<input className='form-control card'
-								id='image-src-url'
-								name='image-src'
-								placeholder='Copy and paste the URL of your image.'
-								onChange={this.onChangeImage.bind(this)}
-								onFocus={this.onFocus.bind(this)}
-								onBlur={this.onBlur.bind(this)}
-								/>
-						</div>
-						<div id='embed-output'>
-							<legend>Embed</legend>
-							<p className='field-description'>Copy and paste this code onto your site to embed this Four Corners module.</p>
-							<textarea className='output form-control'
-								id='json'
-								readOnly={true}
-								ref={this.outputRef}
-								rows={5}
-								value={this.embedCode(this.props.formData)}
-								onFocus={this.onFocus.bind(this)}
-								onBlur={this.onBlur.bind(this)}
-								/>
-							<form name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
-								<label>Embed Options</label>
-								<div className='embed-opts checkboxes'>
-									<label className='control-label' htmlFor='includeJs'>
-										<input className='embed-opt'
-											id='includeJs'
-											name='includeJs'
-											type='checkbox' 
-											defaultChecked={this.state.includeJs} />
-										&nbsp;Include JavaScript file
-									</label>
-									<label className='control-label' htmlFor='includeCss'>
-										<input className='embed-opt'
-											id='includeCss'
-											name='includeCss'
-											type='checkbox' 
-											defaultChecked={this.state.includeCss} />
-										&nbsp;Include CSS file
-									</label>
+			<div className='col-inner'>
+				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
+					<div className='half-max-width'>
+						<legend>{this.props.creator.acf['photo_title']}</legend>
+						<div id='embedder'>
+							<div id='embed-input' className={inputClass}>
+								<div className={formGroupClass}>
+									<Embed
+										creator={this.props.creator}
+										imgSrc={this.state.imgSrc}
+										imgLoaded={this.state.imgLoaded}
+										formData={this.props.formData}
+										mediaData={this.props.mediaData}
+										activeCorner={this.props.activeCorner}
+										/>
+									<div className={dropClass}>
+										<Dropzone
+											className='drop-zone'
+											ref={this.imgInputRef}
+											style={{}}
+											accept='image/jpeg, image/png, image/gif'
+											multiple={false}
+											onDrop={this.onDrop.bind(this)}
+											onClick={this.onFocusDrop.bind(this)}
+											onMouseEnter={this.onFocusDrop.bind(this)}
+											onMouseLeave={this.onBlurDrop.bind(this)}
+											onDragEnter={this.onFocusDrop.bind(this)}
+											onDragLeave={this.onBlurDrop.bind(this)}
+											onFileDialogCancel={this.onBlurDrop.bind(this)}
+											onBlur={this.onBlurDrop.bind(this)}
+											>
+										</Dropzone>
+										{this.state.imgLoaded ? <div className='label-text'>Drag and drop an image here to upload.</div> : ''}
+									</div>
+									{!this.state.imgLoaded ? <div className='label-text'>Drag and drop an image here to upload.</div> : ''}
 								</div>
 								<input className='form-control card'
-									readOnly={true}
-									value='https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2'
-									// value='https://d2w9rnfcy7mm78.cloudfront.net/1380519/original_68cb6b97fa36bad871fb18352de81972.jpeg'
+									id='image-src-url'
+									name='image-src'
+									placeholder='Copy and paste the URL of your image.'
+									onChange={this.onChangeDrop.bind(this)}
 									onFocus={this.onFocus.bind(this)}
 									onBlur={this.onBlur.bind(this)}
 									/>
-							</form>
+							</div>
+							<div id='embed-output'>
+								<legend>{this.props.creator.acf['embed_title']}</legend>
+								<p className='field-description'>Copy and paste this code onto your site to embed this Four Corners module.</p>
+								<textarea className='output form-control'
+									id='json'
+									readOnly={true}
+									ref={this.outputRef}
+									rows={5}
+									value={this.embedCode(this.props.formData)}
+									onFocus={this.onFocus.bind(this)}
+									onBlur={this.onBlur.bind(this)}
+									/>
+								<form name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
+									<label>Embed Options</label>
+									<div className='embed-opts checkboxes'>
+										<label className='control-label' htmlFor='includeJs'>
+											<input className='embed-opt'
+												id='includeJs'
+												name='includeJs'
+												type='checkbox' 
+												defaultChecked={this.state.includeJs} />
+											&nbsp;Include JavaScript file
+										</label>
+										<label className='control-label' htmlFor='includeCss'>
+											<input className='embed-opt'
+												id='includeCss'
+												name='includeCss'
+												type='checkbox' 
+												defaultChecked={this.state.includeCss} />
+											&nbsp;Include CSS file
+										</label>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>

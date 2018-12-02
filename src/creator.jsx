@@ -15,6 +15,7 @@ class Creator extends React.Component {
 			creator: {},
 			lang: 'en',
 			formData: {},
+			mediaData: {context:[],backstory:[]},
 			activeCorner: null
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
@@ -53,9 +54,50 @@ class Creator extends React.Component {
 		});
 	}
 
-	setFormData(formData) {
+	getEmbedId(url, type) {
+		const that = this;
+
+		if(!url||!isUrl(url)){return}
+
+		// let endpoint = '';
+		// switch(type) {
+		// 	case 'youtube':
+		// 		endpoint = 'https://www.youtube.com/oembed';
+		// 		break;
+		// 	case 'vimeo':
+		// 		endpoint = 'https://vimeo.com/api/oembed.json';
+		// 		break;
+		// 	case 'soundcloud':
+		// 		endpoint = 'https://soundcloud.com/oembed';
+		// 		break;
+		// 	default:
+		// 		return false;
+		// 		break;
+		// }
+		// const callback = 'embedVideo';
+	 //  let req = endpoint+'?url='+encodeURIComponent(url);
+		// fetch(req)
+		// 	.then(res => {
+		// 		if (!res.ok) {throw Error(res.statusText)}
+		// 		return res.json();
+		// 	})
+		// 	.then(res => {
+		// 		console.log(that.state.formData);
+		// 		console.log(res.video_id);
+
+		// 		// that.setState({ creator: res[0] });
+		// 	});
+	}
+
+	setFormData(newData) {
 		this.setState({
-			formData: formData
+			formData: newData
+		});
+  }
+
+  setMediaData(mediaData) {
+		this.setState({
+			mediaData: mediaData
 		});
   }
 	
@@ -72,7 +114,8 @@ class Creator extends React.Component {
 				creator={this.state.creator}
 				formData={this.state.formData}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
-				sendFormData={this.setFormData.bind(this)} />
+				sendFormData={this.setFormData.bind(this)}
+				sendMediaData={this.setMediaData.bind(this)} />
 		);
 	}
 
@@ -82,6 +125,7 @@ class Creator extends React.Component {
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
+				mediaData={this.state.mediaData}
 				activeCorner={this.state.activeCorner} />
 		);
 	}

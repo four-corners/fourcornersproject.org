@@ -14,9 +14,9 @@ class Embed extends React.Component {
 	}
 
 	componentDidMount() {
-		const fc = FourCorners.default.prototype.init();
+		const fourCornersInst = FourCorners.default.prototype.init()[0];
 		const activeCorner = this.props.activeCorner;
-		this.FourCorners = fc[0];
+		this.FourCorners = fourCornersInst;
 		if(activeCorner) {
 			this.FourCorners.openCorner(activeCorner);
 		}
@@ -76,12 +76,14 @@ class Embed extends React.Component {
 					const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
 					fieldLabel = fields[fieldLabelKey];
 				}
+				const mediaData = this.props.mediaData[cornerSlug];
 				entries.push(
 					<Entry
 						cornerSlug={cornerSlug}
 						fieldLabel={fieldLabel}
 						fieldSlug={fieldSlug}
 						fieldData={fieldData}
+						mediaData={mediaData}
 						key={i} />
 				);
 			})
@@ -96,13 +98,11 @@ class Embed extends React.Component {
 	}
 
 	render() {
-		const className = this.props.imgLoaded?'fc-embed card':'fc-embed';
 		return(
-			<div className={className}>
-				<img
-					src={this.props.imgSrc}
-					className='fc-photo'
-				/>
+			<div className={this.props.imgLoaded?'fc-embed card':'fc-embed'}>
+				<div className={this.props.imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
+					<img src={this.props.imgSrc} className='fc-img'/>
+				</div>
 				{this.renderPanels()}
 			</div>
 		)

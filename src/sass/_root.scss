@@ -14,6 +14,11 @@ h1, h2, h3, h4 {
 	margin: 0;
 }
 .col-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.half-max-width {
 	width: 100%;
 	margin: 0 15px;
 	.left & {
@@ -21,22 +26,22 @@ h1, h2, h3, h4 {
 	}
 }
 @media (min-width: 576px) {
-  .col-inner {
+  .half-max-width {
     max-width: calc(540px/2);
   }
 }
 @media (min-width: 768px) {
-  .col-inner {
+  .half-max-width {
     max-width: calc(720px/2);
   }
 }
 @media (min-width: 992px) {
-  .col-inner {
+  .half-max-width {
     max-width: calc(960px/2);
   }
 }
 @media (min-width: 1200px) {
-  .col-inner {
+  .half-max-width {
     max-width: calc(1140px/2);
   }
 }

@@ -85,14 +85,14 @@ class Header extends React.Component {
 			<header className='header'>
 				<div className='row'>
 					<div className='col-12 col-sm-6 left'>
-						<div className='col-inner'>
+						<div className='half-max-width'>
 							<h1 className='site-title'>
 								<Link to={SiteSettings.path}>Four Corners</Link>
 							</h1>
 						</div>
 					</div>
 					<div className='col-12 col-sm-6 right'>
-						<div className='col-inner'>
+						<div className='half-max-width'>
 							{this.state.langs ? this.renderLangList() : this.renderEmpty()}
 						</div>
 					</div>

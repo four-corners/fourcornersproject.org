@@ -5,11 +5,6 @@ const Schema = {
 	title: '',
 	type: 'object',
 	properties: {
-		// language: {
-		// 	type: 'string',
-		// 	enum: [],
-		// 	enumNames: [],
-		// },
 		context: {
 			title: '',
 			type: 'object',
@@ -51,29 +46,7 @@ const Schema = {
 				}
 			}
 		},
-		links: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				links: {
-					type: 'array',
-					minItems: 0,
-					items: {
-						type: 'object',
-						properties: {
-							title: {
-								type: 'string'
-							},
-							url: {
-								type: 'string',
-								format: 'uri',
-							}
-						}
-					}
-				},
-			}
-		},
+
 		backstory: {
 			title: '',
 			type: 'object',
@@ -115,15 +88,42 @@ const Schema = {
 				}
 			}
 		},
+
+
+		links: {
+			title: '',
+			type: 'object',
+			required: [],
+			properties: {
+				links: {
+					type: 'array',
+					minItems: 0,
+					items: {
+						type: 'object',
+						properties: {
+							title: {
+								type: 'string'
+							},
+							url: {
+								type: 'string',
+								format: 'uri',
+							}
+						}
+					}
+				},
+			}
+		},
+
+
 		copyright: {
 			title: '',
 			type: 'object',
 			required: [],
 			properties: {
-				caption: {
+				credit: {
 					type: 'string',
 				},
-				credit: {
+				caption: {
 					type: 'string',
 				},
 				copyright: {

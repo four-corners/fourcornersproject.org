@@ -1,17 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Form from 'react-jsonschema-form';
+import isUrl from 'validator/lib/isUrl';
 
 import i18n from './i18n.jsx';
 import Schema from './schema.jsx';
 import uiSchema from './ui-schema.jsx';
+import Widgets from './widgets.jsx';
 
 class Left extends React.Component {
 	
 	constructor(props) {
 		super(props);
 		this.state = {
-			formData: {}
+			mediaData: this.props.mediaData
 		};
 		this.onChange = this.onChange.bind(this);
 	}
@@ -24,20 +26,74 @@ class Left extends React.Component {
 		
 	}
 
-	componentDidUpdate() {
+	componentDidUpdate(prevProps, prevState, snapshot) {
 
 	}
 
-	onFocus(id, val) {
+	onFocus(id) {
 		const slug = id.split('_')[1];
 		this.setState({activeCorner: slug});
 		this.props.sendActiveCorner(slug);
 	}
 
+	onBlur(id) {
+
+	}
+
+	getMediaData(url,type,corner,index) {
+		if(!isUrl(url)) {return}
+		const that = this;
+		const uri = encodeURIComponent(url);
+		const mediaData = Object.assign({},this.state.mediaData);
+		let req = '';
+		switch(type) {
+			case 'youtube':
+				req = 'https://www.youtube.com/oembed?url='+uri;
+				break;
+			case 'vimeo':
+				req = 'https://vimeo.com/api/oembed.json?url='+uri;
+				break;
+			case 'soundcloud':
+				req = 'https://soundcloud.com/oembed?format=json&url='+uri;
+				break;
+			default:
+				return false;
+				break;
+		}
+		fetch(req)
+			.then(res => {
+				if (!res.ok) {throw Error(res.statusText)}
+				return res.json();
+			})
+			.then(res => {
+				mediaData[corner][index] = res.html;
+				this.setState({mediaData: mediaData});
+				this.props.sendMediaData(mediaData);
+			});
+	}
+
 	onChange(e) {
-		const formData = Object.assign(this.props.formData, e.formData);
-		this.props.sendFormData(formData);
-		// this.props.sendFormData(formData);
+		const formData = e.formData;
+		const formDataKeys = Object.keys(formData);
+		const mediaData = Object.assign({},this.props.mediaData);
+		for(let key of formDataKeys) {
+			if(formData[key]&&formData[key].media) {
+				for(let index of formData[key].media.keys()) {
+					const media = formData[key].media[index];
+					const url = media.url;
+					const type = media.type;
+					if(!mediaData[key]){mediaData[key]=[]}
+					if(!mediaData[key][index]) {
+						mediaData[key][index] = ''
+						// this.props.sendMediaData(mediaData);
+						this.setState({mediaData: mediaData});
+					}
+					if(url&&type){this.getMediaData(url,type,key,index)}
+				}
+			}
+		}
+		const newData = Object.assign(this.props.formData, formData);
+		this.props.sendFormData(e.formData);
 	}
 
 	onError(e) {
@@ -81,6 +137,7 @@ class Left extends React.Component {
 								const fieldValue = fieldOption.label+(fieldOption.desc ? ': '+fieldOption.desc : '');
 								schemaObj.properties[propKey].enum.push(fieldValue);
 							}
+							schemaObj.properties[propKey].enum.push('Custom');
 						}
 					}
 					//Repeater fields
@@ -105,12 +162,16 @@ class Left extends React.Component {
 	renderForm() {
 		return (
 			<div className='col-inner'>
-				<div id='forms'>
+				<div id='forms' className='half-max-width'>
 					<Form
 						schema={this.translateSchema(Schema)}
 						uiSchema={uiSchema}
+						// widgets={Widgets}
+						// ArrayFieldTemplate={Widgets.ArrayFieldTemplate}
 						formData={this.props.formData}
+						liveValidate={true}
 						onFocus={this.onFocus.bind(this)}
+						onBlur={this.onBlur.bind(this)}
 						onChange={this.onChange}
 						onError={this.onError}>
 						<button type='submit' hidden/>

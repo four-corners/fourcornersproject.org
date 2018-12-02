@@ -96,6 +96,10 @@
 	.fc-embed {
 		transition: all 200ms ease-in-out;
 		padding: 0;
+		.fc-photo {
+			padding-bottom: 0;
+			background-color: transparent;
+		}
 	}
 	&:not(.has-image) {
 		.form-group.focus {

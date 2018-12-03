@@ -33,14 +33,18 @@ class Entry extends React.Component {
 		const fieldSlug = this.props.fieldSlug;
 		const cornerData = Object.assign({}, this.state.embedData[cornerSlug]);
 		const mediaData = Object.assign({}, this.props.mediaData);
-		let mediaIndex = 0;
 		if(!this.props.fieldData){return}
 		this.props.fieldData.forEach((obj, i) => {
 			let subRowInner = '';
 			if(obj.type == 'image') {
 				subRowInner = obj.url ? <img src={obj.url} alt=''/> : false;
-			} else {
-				subRowInner = mediaData ? <div className='fc-media' dangerouslySetInnerHTML={{__html: mediaData[i]}} /> : false;
+			} else if(mediaData&&mediaData[i]) {
+				const media = mediaData[i];
+				console.log(media.width, media.height);
+				// if(Number.isInteger(media.width*media.height)) {
+					// console.log(media.width/media.height);
+				// }
+				subRowInner = media ? <div className='fc-media' dangerouslySetInnerHTML={{__html: media.html}} /> : false;
 			}
 			const mediaCredit = obj.credit ? <div className='fc-sub-credit'>{obj.credit}</div> : '';
 			const subRow = <div className='fc-sub-row' key={i}>{subRowInner}{mediaCredit}</div>;

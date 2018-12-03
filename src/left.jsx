@@ -62,13 +62,22 @@ class Left extends React.Component {
 		}
 		fetch(req)
 			.then(res => {
+				console.log(res);
 				if (!res.ok) {throw Error(res.statusText)}
 				return res.json();
 			})
 			.then(res => {
-				mediaData[corner][index] = res.html;
+				console.log(res);
+				mediaData[corner][index] = {
+					html:res.html,
+					width: res.width,
+					height: res.height
+				}
 				this.setState({mediaData: mediaData});
 				this.props.sendMediaData(mediaData);
+			})
+			.catch(function(err) {
+				console.log(err);
 			});
 	}
 

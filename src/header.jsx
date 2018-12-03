@@ -93,7 +93,7 @@ class Header extends React.Component {
 					</div>
 					<div className='col-12 col-sm-6 right'>
 						<div className='half-max-width'>
-							{this.state.langs ? this.renderLangList() : this.renderEmpty()}
+							{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
 						</div>
 					</div>
 				</div>

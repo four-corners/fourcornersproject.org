@@ -1824,6 +1824,11 @@ h1, h2, h3, h4 {
   .left .half-max-width {
     float: right; }
 
+.field-description {
+  color: #000;
+  font-size: .75rem;
+  margin-bottom: 1rem; }
+
 @media (min-width: 576px) {
   .half-max-width {
     max-width: calc(540px/2); } }
@@ -1892,10 +1897,6 @@ label {
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-
-.field-description {
-  color: #000;
-  font-size: .75rem; }
 
 .field-array legend {
   font-size: inherit; }
@@ -2023,14 +2024,13 @@ legend {
 .sticky {
   overflow-y: auto; }
 
-#embedder {
-  padding: 5px 0 0 0; }
-  #embedder form input.card, #embedder form textarea.card {
-    width: 100%; }
-    #embedder form input.card:not([readonly]), #embedder form textarea.card:not([readonly]) {
-      background-color: #fff; }
-  #embedder input, #embedder textarea {
+#embedder form input.card, #embedder form textarea.card {
+  width: 100%; }
+  #embedder form input.card:not([readonly]), #embedder form textarea.card:not([readonly]) {
     background-color: #fff; }
+
+#embedder input, #embedder textarea {
+  background-color: #fff; }
 
 #embed-input {
   padding: 0;
@@ -2093,14 +2093,16 @@ legend {
     margin: auto;
     padding: 1rem;
     color: #6f6f6f; }
-  #embed-input input#image-src-url::-webkit-input-placeholder {
-    text-align: center; }
-  #embed-input input#image-src-url:-ms-input-placeholder {
-    text-align: center; }
-  #embed-input input#image-src-url::-ms-input-placeholder {
-    text-align: center; }
-  #embed-input input#image-src-url::placeholder {
-    text-align: center; }
+  #embed-input input#image-src-url {
+    margin: 0 0 1rem 0; }
+    #embed-input input#image-src-url::-webkit-input-placeholder {
+      text-align: center; }
+    #embed-input input#image-src-url:-ms-input-placeholder {
+      text-align: center; }
+    #embed-input input#image-src-url::-ms-input-placeholder {
+      text-align: center; }
+    #embed-input input#image-src-url::placeholder {
+      text-align: center; }
   #embed-input .fc-embed {
     -webkit-transition: all 200ms ease-in-out;
     transition: all 200ms ease-in-out;

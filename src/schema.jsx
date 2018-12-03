@@ -5,6 +5,27 @@ const Schema = {
 	title: '',
 	type: 'object',
 	properties: {
+		// copyright: {
+		// 	title: '',
+		// 	type: 'object',
+		// 	required: [],
+		// 	properties: {
+		// 		credit: {
+		// 			type: 'string',
+		// 		},
+		// 		caption: {
+		// 			type: 'string',
+		// 		},
+		// 		copyright: {
+		// 			type: 'string',
+		// 			enum: [],
+		// 		},
+		// 		ethics: {
+		// 			type: 'string',
+		// 			enum: [],
+		// 		}
+		// 	}
+		// },
 		context: {
 			title: '',
 			type: 'object',
@@ -46,7 +67,6 @@ const Schema = {
 				}
 			}
 		},
-
 		backstory: {
 			title: '',
 			type: 'object',
@@ -88,8 +108,6 @@ const Schema = {
 				}
 			}
 		},
-
-
 		links: {
 			title: '',
 			type: 'object',
@@ -111,29 +129,6 @@ const Schema = {
 						}
 					}
 				},
-			}
-		},
-
-
-		copyright: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				credit: {
-					type: 'string',
-				},
-				caption: {
-					type: 'string',
-				},
-				copyright: {
-					type: 'string',
-					enum: [],
-				},
-				ethics: {
-					type: 'string',
-					enum: [],
-				}
 			}
 		}
 	}

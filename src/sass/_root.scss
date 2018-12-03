@@ -25,6 +25,11 @@ h1, h2, h3, h4 {
 		float: right;
 	}
 }
+.field-description {
+  color: $dark;
+  font-size: .75rem;
+  margin-bottom: 1rem;
+}
 @media (min-width: 576px) {
   .half-max-width {
     max-width: calc(540px/2);

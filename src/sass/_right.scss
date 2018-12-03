@@ -2,7 +2,6 @@
 	overflow-y: auto;
 }
 #embedder {
-	padding: 5px 0 0 0;
 	form {
 		input.card, textarea.card {
 			width: 100%;
@@ -89,6 +88,7 @@
 		color: $medium;
 	}
 	input#image-src-url {
+		margin: 0 0 1rem 0;
 		&::placeholder {
 			text-align: center;
 		}

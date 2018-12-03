@@ -163,6 +163,7 @@ class Right extends React.Component {
 	}
 
 	render() {
+		const fields = this.props.creator.acf;
 		const entries = ['story','author','publication','url','date'];
 		const inputClass = (this.state.imgLoaded?'has-image':'');
 		const formGroupClass = 'form-group'+(this.state.imgLoaded?'':' card')+(this.state.imgFocus?' focus':'');
@@ -171,7 +172,8 @@ class Right extends React.Component {
 			<div className='col-inner'>
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='half-max-width'>
-						<legend>{this.props.creator.acf['photo_title']}</legend>
+						<legend>{fields['photo_title']}</legend>
+						<div className='field-description'>{fields['photo_desc']}</div>
 						<div id='embedder'>
 							<div id='embed-input' className={inputClass}>
 								<div className={formGroupClass}>
@@ -200,22 +202,25 @@ class Right extends React.Component {
 											onBlur={this.onBlurDrop.bind(this)}
 											>
 										</Dropzone>
-										{this.state.imgLoaded ? <div className='label-text'>Drag and drop an image here to upload.</div> : ''}
+										{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
 									</div>
-									{!this.state.imgLoaded ? <div className='label-text'>Drag and drop an image here to upload.</div> : ''}
+									{!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
 								</div>
-								<input className='form-control card'
-									id='image-src-url'
-									name='image-src'
-									placeholder='Copy and paste the URL of your image.'
-									onChange={this.onChangeDrop.bind(this)}
-									onFocus={this.onFocus.bind(this)}
-									onBlur={this.onBlur.bind(this)}
-									/>
+
+								<div className='form-group image-src'>
+									<input className='form-control'
+										id='image-src-url'
+										name='src'
+										placeholder={fields['copy_paste']}
+										onChange={this.onChangeDrop.bind(this)}
+										onFocus={this.onFocus.bind(this)}
+										onBlur={this.onBlur.bind(this)}
+										/>
+								</div>
 							</div>
 							<div id='embed-output'>
 								<legend>{this.props.creator.acf['embed_title']}</legend>
-								<p className='field-description'>Copy and paste this code onto your site to embed this Four Corners module.</p>
+								<p className='field-description'>{fields['embed_desc']}</p>
 								<textarea className='output form-control'
 									id='json'
 									readOnly={true}

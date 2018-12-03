@@ -5,27 +5,27 @@ const Schema = {
 	title: '',
 	type: 'object',
 	properties: {
-		// copyright: {
-		// 	title: '',
-		// 	type: 'object',
-		// 	required: [],
-		// 	properties: {
-		// 		credit: {
-		// 			type: 'string',
-		// 		},
-		// 		caption: {
-		// 			type: 'string',
-		// 		},
-		// 		copyright: {
-		// 			type: 'string',
-		// 			enum: [],
-		// 		},
-		// 		ethics: {
-		// 			type: 'string',
-		// 			enum: [],
-		// 		}
-		// 	}
-		// },
+		copyright: {
+			title: '',
+			type: 'object',
+			required: [],
+			properties: {
+				credit: {
+					type: 'string',
+				},
+				caption: {
+					type: 'string',
+				},
+				copyright: {
+					type: 'string',
+					enum: [],
+				},
+				ethics: {
+					type: 'string',
+					enum: [],
+				}
+			}
+		},
 		context: {
 			title: '',
 			type: 'object',

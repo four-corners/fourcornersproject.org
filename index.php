@@ -19,7 +19,7 @@
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?>>
-		<div id="page" class="hfeed site">
+		<div id="page">
 			<div id="content">
 			</div>
 			<?php wp_footer(); ?>

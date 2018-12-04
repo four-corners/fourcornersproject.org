@@ -4,11 +4,11 @@
 .card {
 	@include card;
 }
+.error-detail {
+	display: none !important;
+}
 #creator {
 	margin: 2rem auto 0 auto;
-	.half-max-width {
-		width: 100%;
-	}
 	.card {
 		margin: 0 auto 2rem auto;
 		overflow: hidden;
@@ -51,6 +51,39 @@ label {
 }
 input.form-control {
 	// border-width: 0 0 1px 0;
+}
+.select-widget {
+	textarea, .has-error & textarea {
+		margin-top: 30px;
+		background-color: $lightest !important;
+		&.hidden {
+			display: none;
+		}
+	}
+}
+.select-widget-dropdown {
+	overflow-y: scroll;
+	padding: 0;
+	&:not(.opened) {
+		height: calc(10rem + 2px);
+	}
+	.option {
+		padding: .375rem;
+		border-bottom: 1px solid $light;
+		.option-label {
+
+		}
+		.option-desc {
+			@include smText;
+		}
+		&.selected, &.selected:hover {
+			background-color: rgba($blue,.25);
+		}
+		&:hover {
+			cursor: pointer;
+			background-color: $light;
+		}
+	}
 }
 .field-array {
 	legend {

@@ -6,7 +6,8 @@ import isUrl from 'validator/lib/isUrl';
 import i18n from './i18n.jsx';
 import Schema from './schema.jsx';
 import uiSchema from './ui-schema.jsx';
-import Widgets from './widgets.jsx';
+import validate from './validate.jsx';
+import CustomSelectWidget from './CustomSelectWidget.jsx';
 
 class Left extends React.Component {
 	
@@ -16,6 +17,8 @@ class Left extends React.Component {
 			mediaData: this.props.mediaData
 		};
 		this.onChange = this.onChange.bind(this);
+		this.onBlur = this.onBlur.bind(this);
+		this.onFocus = this.onFocus.bind(this);
 	}
 
 	componentDidMount() {
@@ -31,6 +34,7 @@ class Left extends React.Component {
 	}
 
 	onFocus(id) {
+		console.log(id);
 		const slug = id.split('_')[1];
 		this.setState({activeCorner: slug});
 		this.props.sendActiveCorner(slug);
@@ -62,12 +66,10 @@ class Left extends React.Component {
 		}
 		fetch(req)
 			.then(res => {
-				console.log(res);
 				if (!res.ok) {throw Error(res.statusText)}
 				return res.json();
 			})
 			.then(res => {
-				console.log(res);
 				mediaData[corner][index] = {
 					html:res.html,
 					width: res.width,
@@ -141,12 +143,15 @@ class Left extends React.Component {
 						const fieldOptionsKey = [groupKey, propKey, 'options'].join('_');
 						const fieldOptions = fields[fieldOptionsKey];
 						schemaObj.properties[propKey].enum = [];
+						schemaObj.properties[propKey].enumNames = [];
+						// schemaObj.properties[propKey].enum.push('default');
+						// schemaObj.properties[propKey].enumNames.push('Select one');
 						if( fieldOptions ) {
-							for (let fieldOption of fieldOptions) {
+							for(let fieldOption of fieldOptions) {
 								const fieldValue = fieldOption.label+(fieldOption.desc ? ': '+fieldOption.desc : '');
 								schemaObj.properties[propKey].enum.push(fieldValue);
+								schemaObj.properties[propKey].enumNames.push(fieldValue);
 							}
-							schemaObj.properties[propKey].enum.push('Custom');
 						}
 					}
 					//Repeater fields
@@ -169,18 +174,22 @@ class Left extends React.Component {
 	}
 
 	renderForm() {
+		const widgets = {
+			customSelectWidget: CustomSelectWidget
+		}
+
 		return (
 			<div className='col-inner'>
 				<div id='forms' className='half-max-width'>
 					<Form
 						schema={this.translateSchema(Schema)}
 						uiSchema={uiSchema}
-						// widgets={Widgets}
-						// ArrayFieldTemplate={Widgets.ArrayFieldTemplate}
+						widgets={widgets}
 						formData={this.props.formData}
+						validate={validate}
 						liveValidate={true}
-						onFocus={this.onFocus.bind(this)}
-						onBlur={this.onBlur.bind(this)}
+						onFocus={this.onFocus}
+						onBlur={this.onBlur}
 						onChange={this.onChange}
 						onError={this.onError}>
 						<button type='submit' hidden/>

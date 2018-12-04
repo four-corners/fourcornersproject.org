@@ -13,14 +13,17 @@ html, body {
 h1, h2, h3, h4 {
 	margin: 0;
 }
+.container {
+
+}
 .col-inner {
   width: 100%;
   height: 100%;
   position: relative;
 }
 .half-max-width {
-	width: 100%;
-	margin: 0 15px;
+	width: calc(100% - 30px);
+	padding: 0 15px;
 	.left & {
 		float: right;
 	}
@@ -30,22 +33,22 @@ h1, h2, h3, h4 {
   font-size: .75rem;
   margin-bottom: 1rem;
 }
-@media (min-width: 576px) {
+@include sm {
   .half-max-width {
     max-width: calc(540px/2);
   }
 }
-@media (min-width: 768px) {
+@include md {
   .half-max-width {
     max-width: calc(720px/2);
   }
 }
-@media (min-width: 992px) {
+@include lg {
   .half-max-width {
     max-width: calc(960px/2);
   }
 }
-@media (min-width: 1200px) {
+@include xl {
   .half-max-width {
     max-width: calc(1140px/2);
   }

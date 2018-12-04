@@ -1,21 +1,6 @@
 // https://mozilla-services.github.io/react-jsonschema-form/
 // https://github.com/mozilla-services/react-jsonschema-form/
 
-
-// const MyCustomWidget = (props) => {
-//   return (
-//     <input type="text"
-//       className="custom"
-//       value={props.value}
-//       required={props.required}
-//       onChange={(event) => props.onChange(event.target.value)} />
-//   );
-// };
-
-// const widgets = {
-//   myCustomWidget: MyCustomWidget
-// };
-
 const uiSchema = {
 	copyright: {
 		caption: {
@@ -23,6 +8,12 @@ const uiSchema = {
 			'ui:options': {
 				rows: 5
 			}
+		},
+		copyright: {
+			'ui:widget': 'customSelectWidget'
+		},
+		ethics: {
+			'ui:widget': 'customSelectWidget'
 		}
 	},
 	backstory: {

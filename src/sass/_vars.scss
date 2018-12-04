@@ -18,6 +18,28 @@ $lightest: #fff;
 	}
 }
 
-@media (min-width: 576px) {
-	
+@mixin smText {
+	font-size: .75rem;
+	line-height: 1rem;
+}
+
+@mixin sm {
+	@media (min-width: 576px) {
+		@content;
+	}
+}
+@mixin md {
+	@media (min-width: 768px) {
+		@content;
+	}
+}
+@mixin lg {
+	@media (min-width: 992px) {
+		@content;
+	}
+}
+@mixin xl {
+	@media (min-width: 1200px) {
+		@content;
+	}
 }

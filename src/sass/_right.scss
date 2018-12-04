@@ -149,13 +149,13 @@
 #embed-output {
 	textarea.output {
 		margin-bottom: 1rem;
-		font-size: .75rem;
+		@include smText;
 		direction: ltr !important;
 		background-color: $light;
 	}
 	.embed-opts {
 		margin: 0 auto 2rem auto;
-		font-size: .75rem;
+		@include smText;
 		label {
 			width: auto;
 			margin: 0 1rem 0 0;

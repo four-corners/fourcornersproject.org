@@ -18,15 +18,17 @@ const Schema = {
 				},
 				copyright: {
 					type: 'string',
-					enum: [],
+					// default: 'default',
+					enum: []
 				},
 				ethics: {
 					type: 'string',
-					enum: [],
+					// default: 'default',
+					enum: []
 				}
 			}
 		},
-		context: {
+		backstory: {
 			title: '',
 			type: 'object',
 			required: [],
@@ -67,7 +69,7 @@ const Schema = {
 				}
 			}
 		},
-		backstory: {
+		context: {
 			title: '',
 			type: 'object',
 			required: [],

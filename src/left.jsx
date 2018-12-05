@@ -4,10 +4,10 @@ import Form from 'react-jsonschema-form';
 import isUrl from 'validator/lib/isUrl';
 
 import i18n from './i18n.jsx';
-import Schema from './schema.jsx';
-import uiSchema from './ui-schema.jsx';
-import validate from './validate.jsx';
-import CustomSelectWidget from './CustomSelectWidget.jsx';
+import Schema from './form/schema.jsx';
+import uiSchema from './form/ui-schema.jsx';
+import validate from './form/validate.jsx';
+import CustomSelectWidget from './form/CustomSelectWidget.jsx';
 
 class Left extends React.Component {
 	
@@ -34,7 +34,6 @@ class Left extends React.Component {
 	}
 
 	onFocus(id) {
-		console.log(id);
 		const slug = id.split('_')[1];
 		this.setState({activeCorner: slug});
 		this.props.sendActiveCorner(slug);
@@ -96,7 +95,6 @@ class Left extends React.Component {
 					if(!mediaData[key]){mediaData[key]=[]}
 					if(!mediaData[key][index]) {
 						mediaData[key][index] = ''
-						// this.props.sendMediaData(mediaData);
 						this.setState({mediaData: mediaData});
 					}
 					if(url&&type){this.getMediaData(url,type,key,index)}

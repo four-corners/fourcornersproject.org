@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import i18n from './i18n.jsx';
-import Embed from './embed.jsx';
+import Embed from './embed/embed.jsx';
 
 let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
@@ -149,17 +149,14 @@ class Right extends React.Component {
 		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
 		Object.assign(formData, auxData);
-		const stringData = JSON.stringify(formData);
-		let stringHtml = '';
-		stringHtml += (this.state.includeJs?'<script src='+jsCDN+' type="text/javascript"></script>':'');
-		stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
-		stringHtml += renderToStaticMarkup(
-			<div className='fc-embed' data-fc={stringData}/>
-		);
-		const decodedHtml = stringHtml
+		let stringData =
+			JSON.stringify(formData)
 			.replace(/(&quot\;)/g,"\'")
 			.replace(/(&amp\;)/g,"&");
-		return decodedHtml;
+		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'></div>";
+		stringHtml += (this.state.includeJs?'<script src='+jsCDN+' type="text/javascript"></script>':'');
+		stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
+		return stringHtml;
 	}
 
 	render() {

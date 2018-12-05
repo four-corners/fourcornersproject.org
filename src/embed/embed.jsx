@@ -1,6 +1,6 @@
 import React from 'react';
 
-import i18n from './i18n.jsx';
+import i18n from './../i18n.jsx';
 import Entry from './entry.jsx';
 
 class Embed extends React.Component {

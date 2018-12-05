@@ -77,7 +77,7 @@ class CustomSelectWidget extends React.Component {
 						}
 						return (
 							<div
-								className={this.state.value === value ? 'option selected' : 'option'}
+								className={(this.state.value === value ||  this.state.value === desc) ? 'option selected' : 'option'}
 								data-value={desc ? desc : value}
 								key={i}
 								onClick={

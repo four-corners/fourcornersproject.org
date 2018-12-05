@@ -63,7 +63,14 @@ class Left extends React.Component {
 				return false;
 				break;
 		}
-		fetch(req)
+		const headers = new Headers();
+		fetch(req,
+			{
+				method: 'GET',
+				headers: headers,
+	      mode: 'cors',
+	      cache: 'default'
+	    })
 			.then(res => {
 				if (!res.ok) {throw Error(res.statusText)}
 				return res.json();

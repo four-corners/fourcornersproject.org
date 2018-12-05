@@ -148,11 +148,10 @@ class Right extends React.Component {
 		}
 		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
-		Object.assign(formData, auxData);
-		let stringData =
-			JSON.stringify(formData)
-			.replace(/(&quot\;)/g,"\'")
-			.replace(/(&amp\;)/g,"&");
+
+		let safeFormData = Object.assign(formData, auxData);
+		let stringData = JSON.stringify(safeFormData)
+			.replace(/'/g, '&apos;')
 		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'></div>";
 		stringHtml += (this.state.includeJs?'<script src='+jsCDN+' type="text/javascript"></script>':'');
 		stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');

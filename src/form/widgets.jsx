@@ -17,7 +17,6 @@ function ArrayFieldTemplate(props) {
 			{props.items &&
 				props.items.map(element => (
 					<div key={element.index}>
-						{console.log(element.children)}
 						<div>{element.children}</div>
 						{element.hasMoveDown && (
 							<button

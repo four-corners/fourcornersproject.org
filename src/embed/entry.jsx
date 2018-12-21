@@ -7,7 +7,7 @@ class Entry extends React.Component {
 		super(props);
 		this.state = {
 			embedData: {
-				copyright:{},
+				authorship:{},
 				backstory:{},
 				context:{},
 				links:{}
@@ -40,7 +40,6 @@ class Entry extends React.Component {
 				subRowInner = obj.url ? <img src={obj.url} alt=''/> : false;
 			} else if(mediaData&&mediaData[i]) {
 				const media = mediaData[i];
-				console.log(media.width, media.height);
 				// if(Number.isInteger(media.width*media.height)) {
 					// console.log(media.width/media.height);
 				// }
@@ -87,8 +86,7 @@ class Entry extends React.Component {
 		const fieldSlug = this.props.fieldSlug;
 
 		return(
-			<div className={this.props.fieldData ? 'fc-row' : 'fc-row fc-empty'}>
-				{this.props.fieldLabel ? <div className='fc-label'>{this.props.fieldLabel}</div> : ''}
+			<div className='fc-row'>
 				{this.props.fieldData ? <div className='fc-value'>{this.renderEntry()}</div> : ''}
 			</div>
 		);

@@ -2,7 +2,7 @@
 // https://github.com/mozilla-services/react-jsonschema-form/
 
 const uiSchema = {
-	copyright: {
+	authorship: {
 		caption: {
 			'ui:widget': 'textarea',
 			'ui:options': {
@@ -10,7 +10,7 @@ const uiSchema = {
 			}
 		},
 		copyright: {
-			'ui:widget': 'customSelectWidget'
+			'ui:widget': 'customToggleWidget',
 		},
 		ethics: {
 			'ui:widget': 'customSelectWidget'
@@ -20,8 +20,14 @@ const uiSchema = {
 		story: {
 			'ui:widget': 'textarea',
 			'ui:options': {
-				rows: 5
+				rows: 5,
+				label: false
 			}
+		},
+		media: {
+			'ui:options': {
+		    label: false
+		  },
 		}
 	},
 	context: {
@@ -31,8 +37,14 @@ const uiSchema = {
 		story: {
 			'ui:widget': 'textarea',
 			'ui:options': {
-				rows: 5
+				rows: 5,
+				label: false
 			}
+		},
+		media: {
+			'ui:options': {
+		    label: false
+		  },
 		}
 	}
 };

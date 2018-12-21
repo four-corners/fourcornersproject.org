@@ -8,8 +8,8 @@ import Footer from './footer';
 import Creator from './creator';
 import NotFound from './not-found';
 
-import publicScripts from './coffee/public.coffee';
-import publicStyles from './sass/public.scss';
+import publicScripts from '../assets/coffee/public.coffee';
+import publicStyles from '../assets/sass/public.scss';
 
 const routes = (
 	<NamespacesConsumer>

@@ -5,7 +5,7 @@ const Schema = {
 	title: '',
 	type: 'object',
 	properties: {
-		copyright: {
+		authorship: {
 			title: '',
 			type: 'object',
 			required: [],
@@ -18,8 +18,6 @@ const Schema = {
 				},
 				copyright: {
 					type: 'string',
-					// default: 'default',
-					enum: []
 				},
 				ethics: {
 					type: 'string',

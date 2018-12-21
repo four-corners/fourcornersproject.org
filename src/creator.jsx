@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Form from 'react-jsonschema-form';
+// import SchemaForm from 'react-jsonschema-form';
 
 import i18n from './i18n.jsx';
 import Header from './header.jsx';
-import Left from './left.jsx';
-import Right from './right.jsx';
+import Form from './form/form.jsx';
+import Embed from './embed/embed.jsx';
 
 class Creator extends React.Component {
 	
@@ -102,14 +102,15 @@ class Creator extends React.Component {
   }
 	
   setActiveCorner(slug) {
+  	// if(this.state.activeCorner === slug){return}
 		this.setState({
 			activeCorner: slug
 		});
   }
 
-	renderLeft() {
+	renderFormCol() {
 		return (
-			<Left
+			<Form
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
@@ -119,9 +120,9 @@ class Creator extends React.Component {
 		);
 	}
 
-	renderRight() {
+	renderEmbedCol() {
 		return (
-			<Right
+			<Embed
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
@@ -136,11 +137,11 @@ class Creator extends React.Component {
 			// <div id='creator' className='container'>
 			<div id='creator'>
 				<div className='row' data-sticky-container>
-					<div className='col-12 col-sm-6 left'>
-						{this.state.creator && this.state.creator.ID ? this.renderLeft() : null}
+				<div className='col col-12 col-sm-6 left'>
+						{this.state.creator && this.state.creator.ID ? this.renderEmbedCol() : null}
 					</div>
-					<div className='col-12 col-sm-6 right'>
-						{this.state.creator && this.state.creator.ID ? this.renderRight() : null}
+					<div className='col col-12 col-sm-6 right'>
+						{this.state.creator && this.state.creator.ID ? this.renderFormCol() : null}
 					</div>
 				</div>
 			</div>

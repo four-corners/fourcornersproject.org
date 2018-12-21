@@ -60,6 +60,7 @@ class CustomSelectWidget extends React.Component {
 			<div className='select-widget'>
 				<input
 					id={id}
+					name={id}
 					type='hidden'
 					readOnly={true}
 					required={this.props.required}

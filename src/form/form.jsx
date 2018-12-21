@@ -1,13 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
-import Form from 'react-jsonschema-form';
+import SchemaForm from 'react-jsonschema-form';
 import isUrl from 'validator/lib/isUrl';
 
-import i18n from './i18n.jsx';
-import Schema from './form/schema.jsx';
-import uiSchema from './form/ui-schema.jsx';
-import validate from './form/validate.jsx';
-import CustomSelectWidget from './form/CustomSelectWidget.jsx';
+import i18n from '../i18n.jsx';
+import Schema from './schema.jsx';
+import uiSchema from './ui-schema.jsx';
+import validate from './validate.jsx';
+import CustomSelectWidget from './CustomSelectWidget.jsx';
+import CustomToggleWidget from './CustomToggleWidget.jsx';
+import ArrayField from './ArrayField.jsx';
 
 class Left extends React.Component {
 	
@@ -35,7 +37,6 @@ class Left extends React.Component {
 
 	onFocus(id) {
 		const slug = id.split('_')[1];
-		this.setState({activeCorner: slug});
 		this.props.sendActiveCorner(slug);
 	}
 
@@ -161,6 +162,10 @@ class Left extends React.Component {
 					}
 					//Repeater fields
 					if(props[propKey].type == 'array') {
+						const addNewKey = [groupKey,propKey,'add'].join('_');
+						const addNewText = fields[addNewKey];
+						// console.log(schemaObj.properties[propKey].add);
+						schemaObj.properties[propKey].add = addNewText;
 						const nestedProps = props[propKey].items.properties;
 						const nestedPropKeys = Object.keys(nestedProps);
 						for (let nestedProp of nestedPropKeys) {
@@ -180,16 +185,18 @@ class Left extends React.Component {
 
 	renderForm() {
 		const widgets = {
-			customSelectWidget: CustomSelectWidget
+			customSelectWidget: CustomSelectWidget,
+			customToggleWidget: CustomToggleWidget
 		}
 
 		return (
 			<div className='col-inner'>
-				<div id='forms' className='half-max-width'>
-					<Form
+				<div id='forms' className='col-content'>
+					<SchemaForm
 						schema={this.translateSchema(Schema)}
 						uiSchema={uiSchema}
 						widgets={widgets}
+						ArrayFieldTemplate={ArrayField}
 						formData={this.props.formData}
 						validate={validate}
 						liveValidate={true}
@@ -199,7 +206,7 @@ class Left extends React.Component {
 						onError={this.onError}>
 						<button type='submit' hidden/>
 						<button type='button' className='btn'>Add content in another language</button>
-		      </Form>
+		      </SchemaForm>
 				</div>
 			</div>
 		);

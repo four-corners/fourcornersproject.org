@@ -121,6 +121,7 @@
 			pointer-events: none;
 		}
 		.fc-corner {
+			opacity: 1;
 			&::before, &::after {
 				background-color: $blue;
 			}
@@ -132,7 +133,7 @@
 				top: calc(50% - 5rem);
 				right: calc(50% - 5rem);
 			}
-			&[data-slug='copyright'] {
+			&[data-slug='authorship'] {
 				bottom: calc(50% - 5rem);
 				right: calc(50% - 5rem);
 			}
@@ -154,11 +155,16 @@
 		background-color: $light;
 	}
 	.embed-opts {
-		margin: 0 auto 2rem auto;
+		margin: 0 auto;
 		@include smText;
 		label {
 			width: auto;
 			margin: 0 1rem 0 0;
 		}
+	}
+}
+.fc-embed {
+	.fc-row:not(.fc-empty):last-of-type {
+		border: none;
 	}
 }

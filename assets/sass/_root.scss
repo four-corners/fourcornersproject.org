@@ -21,17 +21,31 @@ h1, h2, h3, h4 {
   height: 100%;
   position: relative;
 }
-.half-max-width {
-	width: calc(100% - 30px);
-	padding: 0 15px;
+.col-content {
+	width: 100%;
+	padding-bottom: 3rem;
+  padding: 30px;
 	.left & {
 		float: right;
+    padding-left: 45px;
 	}
+  .right & {
+    float: left;
+    padding-right: 45px;
+  }
 }
-.field-description {
-  color: $dark;
-  font-size: .75rem;
-  margin-bottom: 1rem;
+#creator {
+  .col {
+    border: 1px solid $blue;
+  }
+  .left.col {
+    // border-right: 1px solid $blue;
+    margin: 0 1px 0 -1px;
+  }
+  .right.col {
+    // border-left: 1px solid $blue;
+    margin: 0 -1px 0 1px;
+  }
 }
 @include sm {
   .half-max-width {

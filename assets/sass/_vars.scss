@@ -10,6 +10,7 @@ $lightest: #fff;
 @mixin card {
 	padding: 1rem;
 	background-color: $lightest;
+	box-shadow: 0 0 1px 1px rgba($dark,.1);
   border: {
   	width: 1px;
   	style: solid;
@@ -19,7 +20,7 @@ $lightest: #fff;
 }
 
 @mixin smText {
-	font-size: .75rem;
+	font-size: .8rem;
 	line-height: 1rem;
 }
 

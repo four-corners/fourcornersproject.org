@@ -36,15 +36,16 @@ h1, h2, h3, h4 {
 }
 #creator {
   .col {
-    border: 1px solid $blue;
+    border: solid $blue;
+    border-width: 1px 1px 0 1px;
   }
   .left.col {
-    // border-right: 1px solid $blue;
     margin: 0 1px 0 -1px;
+    border-radius: 0 $radius 0 0;
   }
   .right.col {
-    // border-left: 1px solid $blue;
     margin: 0 -1px 0 1px;
+    border-radius: $radius 0 0 0;
   }
 }
 @include sm {

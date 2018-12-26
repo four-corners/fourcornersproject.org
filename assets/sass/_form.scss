@@ -43,22 +43,28 @@ label.control-label {
 	margin-bottom: .5rem;
 }
 
+.label-inner {
+	display: flex;
+	align-items: center;
+	margin-left: .5rem;
+}
+
 .field-description {
-  color: $dark;
-  font-size: .75rem;
-  margin-bottom: 1rem;
-  display: none;
+	color: $dark;
+	font-size: .75rem;
+	margin-bottom: 1rem;
+	display: none;
 
 
-  // width: 100%;
-  // max-width: 15rem;
-  // max-height: 10rem;
-  // position: absolute;
-  // display: inline;
-  // padding: .5rem;
-  // margin-left: 1rem;
-  // overflow-y: scroll;
-  // @include card;
+	// width: 100%;
+	// max-width: 15rem;
+	// max-height: 10rem;
+	// position: absolute;
+	// display: inline;
+	// padding: .5rem;
+	// margin-left: 1rem;
+	// overflow-y: scroll;
+	// @include card;
 }
 
 fieldset .field-object {
@@ -122,26 +128,24 @@ input.form-control {
 	}
 }
 
-.toggle-widget {
+
+.checkbox-widget, .toggle-widget {
 	display: flex;
-	flex-direction: rows;
 	flex-wrap: no-wrap;
 	label {
-		width: 5rem;
-		opacity: 0.5;
 		position: relative;
 		transition: all 100ms ease;
-		// overflow: hidden;
+		display: flex;
+		flex-direction: rows-reverse;
+		flex-wrap: no-wrap;
 		&::before, &::after {
 			height: calc(2.25rem + 2px);
-			// padding: 0.375rem 0.75rem;
 			display: block;
-			border-radius: 0.25rem;
+			border-radius: $radius;
 			content: '';
 			border: 1px solid $blue;
 		}
 		&::before {
-			width: 5rem;
 			background: $lightest;
 		}
 		&::after {
@@ -157,23 +161,54 @@ input.form-control {
 			cursor: pointer;
 		}
 	}
-	input[type="checkbox"] {
+	input[type="checkbox"], input[type="radio"] {
 		position: absolute;
 		left: -999999px;
-		opacity: 0;
 		&:focus {
 			opacity: 0.00001;
 		}
-		&:checked + label {
-			opacity: 1;
-			&::after {
-				left: 2.75rem;
-			}
-		}
+		
 	}
-	.toggle-input {
+	.toggle-input, .toggle-label {
 		width: 100%;
 		margin-left: 1rem;
+	}
+}
+
+.checkbox-widget {
+	flex-direction: rows;
+	label {
+		width: 100%;
+		opacity: 0.5;
+		&::before {
+			width: calc(2.25rem + 2px);
+		}
+		&::after {
+			opacity: 0;
+		}
+	}
+	input:checked + label {
+		opacity: 1;
+		&::after {
+			opacity: 1;
+		}
+	}
+}
+
+.toggle-widget {
+	flex-direction: rows-reverse;
+	label {
+		width: 5rem;
+		opacity: 0.5;
+		&::before {
+			width: 5rem;
+		}
+	}
+	input:checked + label {
+		opacity: 1;
+		&::after {
+			left: 2.75rem;
+		}
 	}
 }
 

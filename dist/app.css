@@ -1830,13 +1830,16 @@ h1, h2, h3, h4 {
     padding-right: 45px; }
 
 #creator .col {
-  border: 1px solid #80bdff; }
+  border: solid #80bdff;
+  border-width: 1px 1px 0 1px; }
 
 #creator .left.col {
-  margin: 0 1px 0 -1px; }
+  margin: 0 1px 0 -1px;
+  border-radius: 0 4px 0 0; }
 
 #creator .right.col {
-  margin: 0 -1px 0 1px; }
+  margin: 0 -1px 0 1px;
+  border-radius: 4px 0 0 0; }
 
 @media (min-width: 576px) {
   .half-max-width {
@@ -2045,6 +2048,15 @@ label.control-label, legend {
 label.control-label {
   margin-bottom: .5rem; }
 
+.label-inner {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-left: .5rem; }
+
 .field-description {
   color: #000;
   font-size: .75rem;
@@ -2096,32 +2108,34 @@ label {
       cursor: pointer;
       background-color: #f6f6f6; }
 
-.toggle-widget {
+.checkbox-widget, .toggle-widget {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: rows;
-          flex-direction: rows;
   -ms-flex-wrap: no-wrap;
       flex-wrap: no-wrap; }
-  .toggle-widget label {
-    width: 5rem;
-    opacity: 0.5;
+  .checkbox-widget label, .toggle-widget label {
     position: relative;
     -webkit-transition: all 100ms ease;
-    transition: all 100ms ease; }
-    .toggle-widget label::before, .toggle-widget label::after {
+    transition: all 100ms ease;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: rows-reverse;
+            flex-direction: rows-reverse;
+    -ms-flex-wrap: no-wrap;
+        flex-wrap: no-wrap; }
+    .checkbox-widget label::before, .checkbox-widget label::after, .toggle-widget label::before, .toggle-widget label::after {
       height: calc(2.25rem + 2px);
       display: block;
-      border-radius: 0.25rem;
+      border-radius: 4px;
       content: '';
       border: 1px solid #80bdff; }
-    .toggle-widget label::before {
-      width: 5rem;
+    .checkbox-widget label::before, .toggle-widget label::before {
       background: #fff; }
-    .toggle-widget label::after {
+    .checkbox-widget label::after, .toggle-widget label::after {
       width: calc(2.25rem + 2px);
       position: absolute;
       left: 0;
@@ -2131,21 +2145,48 @@ label {
       transition: all 100ms ease;
       -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
               box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1); }
-    .toggle-widget label:hover {
+    .checkbox-widget label:hover, .toggle-widget label:hover {
       cursor: pointer; }
-  .toggle-widget input[type="checkbox"] {
+  .checkbox-widget input[type="checkbox"], .checkbox-widget input[type="radio"], .toggle-widget input[type="checkbox"], .toggle-widget input[type="radio"] {
     position: absolute;
-    left: -999999px;
-    opacity: 0; }
-    .toggle-widget input[type="checkbox"]:focus {
+    left: -999999px; }
+    .checkbox-widget input[type="checkbox"]:focus, .checkbox-widget input[type="radio"]:focus, .toggle-widget input[type="checkbox"]:focus, .toggle-widget input[type="radio"]:focus {
       opacity: 0.00001; }
-    .toggle-widget input[type="checkbox"]:checked + label {
-      opacity: 1; }
-      .toggle-widget input[type="checkbox"]:checked + label::after {
-        left: 2.75rem; }
-  .toggle-widget .toggle-input {
+  .checkbox-widget .toggle-input, .checkbox-widget .toggle-label, .toggle-widget .toggle-input, .toggle-widget .toggle-label {
     width: 100%;
     margin-left: 1rem; }
+
+.checkbox-widget {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: rows;
+          flex-direction: rows; }
+  .checkbox-widget label {
+    width: 100%;
+    opacity: 0.5; }
+    .checkbox-widget label::before {
+      width: calc(2.25rem + 2px); }
+    .checkbox-widget label::after {
+      opacity: 0; }
+  .checkbox-widget input:checked + label {
+    opacity: 1; }
+    .checkbox-widget input:checked + label::after {
+      opacity: 1; }
+
+.toggle-widget {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: rows-reverse;
+          flex-direction: rows-reverse; }
+  .toggle-widget label {
+    width: 5rem;
+    opacity: 0.5; }
+    .toggle-widget label::before {
+      width: 5rem; }
+  .toggle-widget input:checked + label {
+    opacity: 1; }
+    .toggle-widget input:checked + label::after {
+      left: 2.75rem; }
 
 .field-array legend {
   font-size: inherit; }

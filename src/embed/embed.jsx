@@ -167,6 +167,7 @@ class Right extends React.Component {
 			<div className='col-inner'>
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='col-content'>
+
 						<legend>{fields['photo_title']}</legend>
 						<div className='field-description'>{fields['photo_desc']}</div>
 						<div id='embedder'>
@@ -233,46 +234,77 @@ class Right extends React.Component {
 										<form name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
 											<div className='form-group'>
 												<label className='control-label'>Color Options</label>
-												<div className='embed-opts color-mode'>
-													<label className='control-label' htmlFor='darkMode'>
-														<input className='embed-opt'
-															id='darkMode'
-															name='colorMode'
-															type='radio' 
-															// defaultChecked={this.state.darkMode}
-															/>
-														&nbsp;Light
-													</label>
-													<label className='control-label' htmlFor='lightMode'>
-														<input className='embed-opt'
-															id='lightMode'
-															name='colorMode'
-															type='radio' 
-															// defaultChecked={this.state.darkMode}
-															/>
-														&nbsp;Dark
-													</label>
+												<div className='embed-opts checkboxes'>
+
+													<div className='checkbox-widget form-group'>
+														<div className='toggle-checkbox'>
+															<input className='embed-opt'
+																id='lightMode'
+																name='colorMode'
+																type='radio' 
+																// defaultChecked={this.state.includeJs}
+																/>
+															<label className='control-label' htmlFor='lightMode'>
+																<div className='label-inner'>
+																	<span>Light mode</span>
+																</div>
+															</label>
+														</div>
+													</div>
+
+													<div className='checkbox-widget form-group'>
+														<div className='toggle-checkbox'>
+															<input className='embed-opt'
+																id='darkMode'
+																name='colorMode'
+																type='radio' 
+																// defaultChecked={this.state.includeJs}
+																/>
+															<label className='control-label' htmlFor='darkMode'>
+																<div className='label-inner'>
+																	<span>Dark mode</span>
+																</div>
+															</label>
+														</div>
+													</div>
+													
 												</div>
 											</div>
 											<div className='form-group'>
 												<label className='control-label'>Embed Options</label>
+												
 												<div className='embed-opts checkboxes'>
-													<label className='control-label' htmlFor='includeJs'>
-														<input className='embed-opt'
-															id='includeJs'
-															name='includeJs'
-															type='checkbox' 
-															defaultChecked={this.state.includeJs} />
-														&nbsp;Include JavaScript file
-													</label>
-													<label className='control-label' htmlFor='includeCss'>
-														<input className='embed-opt'
-															id='includeCss'
-															name='includeCss'
-															type='checkbox' 
-															defaultChecked={this.state.includeCss} />
-														&nbsp;Include CSS file
-													</label>
+
+													<div className='checkbox-widget form-group'>
+														<div className='toggle-checkbox'>
+															<input className='embed-opt'
+																id='includeJs'
+																name='includeJs'
+																type='checkbox' 
+																defaultChecked={this.state.includeJs} />
+															<label className='control-label' htmlFor='includeJs'>
+																<div className='label-inner'>
+																	<span>Include JavaScript file</span>
+																</div>
+															</label>
+														</div>
+													</div>
+
+													<div className='checkbox-widget form-group'>
+														<div className='toggle-checkbox'>
+															<input className='embed-opt'
+																id='includeCss'
+																name='includeCss'
+																type='checkbox' 
+																defaultChecked={this.state.includeJs} />
+															<label className='control-label' htmlFor='includeCss'>
+																<div className='label-inner'>
+																	<span>Include CSS file</span>
+																</div>
+															</label>
+														</div>
+													</div>
+
 												</div>
 											</div>
 										</form>

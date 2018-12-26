@@ -7,6 +7,8 @@ $light: #f6f6f6;
 $lighter: #faf9fe;
 $lightest: #fff;
 
+$radius: 4px;
+
 @mixin card {
 	padding: 1rem;
 	background-color: $lightest;
@@ -15,7 +17,7 @@ $lightest: #fff;
   	width: 1px;
   	style: solid;
   	color: $blue;
-		radius: 4px;
+		radius: $radius;
 	}
 }
 

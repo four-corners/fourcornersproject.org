@@ -170,108 +170,115 @@ class Right extends React.Component {
 						<legend>{fields['photo_title']}</legend>
 						<div className='field-description'>{fields['photo_desc']}</div>
 						<div id='embedder'>
-							<div id='embed-input' className={inputClass}>
-								<div className={formGroupClass}>
-									<Module
-										creator={this.props.creator}
-										imgSrc={this.state.imgSrc}
-										imgLoaded={this.state.imgLoaded}
-										formData={this.props.formData}
-										mediaData={this.props.mediaData}
-										activeCorner={this.props.activeCorner}
-										/>
-									<div className={dropClass}>
-										<Dropzone
-											className='drop-zone'
-											ref={this.imgInputRef}
-											style={{}}
-											accept='image/jpeg, image/png, image/gif'
-											multiple={false}
-											onDrop={this.onDrop.bind(this)}
-											onClick={this.onFocusDrop.bind(this)}
-											onMouseEnter={this.onFocusDrop.bind(this)}
-											onMouseLeave={this.onBlurDrop.bind(this)}
-											onDragEnter={this.onFocusDrop.bind(this)}
-											onDragLeave={this.onBlurDrop.bind(this)}
-											onFileDialogCancel={this.onBlurDrop.bind(this)}
-											onBlur={this.onBlurDrop.bind(this)}
-											>
-										</Dropzone>
-										{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
+							<fieldset>
+								<div className='form-group field field-object'>
+									<div id='embed-input' className={inputClass}>
+										<div className={formGroupClass}>
+											<Module
+												creator={this.props.creator}
+												imgSrc={this.state.imgSrc}
+												imgLoaded={this.state.imgLoaded}
+												formData={this.props.formData}
+												mediaData={this.props.mediaData}
+												activeCorner={this.props.activeCorner}
+												/>
+											<div className={dropClass}>
+												<Dropzone
+													className='drop-zone'
+													ref={this.imgInputRef}
+													style={{}}
+													accept='image/jpeg, image/png, image/gif'
+													multiple={false}
+													onDrop={this.onDrop.bind(this)}
+													onClick={this.onFocusDrop.bind(this)}
+													onMouseEnter={this.onFocusDrop.bind(this)}
+													onMouseLeave={this.onBlurDrop.bind(this)}
+													onDragEnter={this.onFocusDrop.bind(this)}
+													onDragLeave={this.onBlurDrop.bind(this)}
+													onFileDialogCancel={this.onBlurDrop.bind(this)}
+													onBlur={this.onBlurDrop.bind(this)}
+													>
+												</Dropzone>
+												{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
+											</div>
+											{!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
+										</div>
+
+										<div className='form-group image-src'>
+											<input className='form-control'
+												id='image-src-url'
+												name='src'
+												placeholder={fields['copy_paste']}
+												onChange={this.onChangeDrop.bind(this)}
+												onFocus={this.onFocus.bind(this)}
+												onBlur={this.onBlur.bind(this)}
+												/>
+										</div>
 									</div>
-									{!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
 								</div>
 
-								<div className='form-group image-src'>
-									<input className='form-control'
-										id='image-src-url'
-										name='src'
-										placeholder={fields['copy_paste']}
-										onChange={this.onChangeDrop.bind(this)}
-										onFocus={this.onFocus.bind(this)}
-										onBlur={this.onBlur.bind(this)}
-										/>
+								<div className='form-group field field-object'>
+									<div id='embed-output'>
+										<legend>{this.props.creator.acf['embed_title']}</legend>
+										<p className='field-description'>{fields['embed_desc']}</p>
+										<textarea className='output form-control'
+											id='json'
+											readOnly={true}
+											ref={this.outputRef}
+											rows={5}
+											value={this.embedCode(this.props.formData)}
+											onFocus={this.onFocus.bind(this)}
+											onBlur={this.onBlur.bind(this)}
+											/>
+										<form name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
+											<div className='form-group'>
+												<label className='control-label'>Color Options</label>
+												<div className='embed-opts color-mode'>
+													<label className='control-label' htmlFor='darkMode'>
+														<input className='embed-opt'
+															id='darkMode'
+															name='colorMode'
+															type='radio' 
+															// defaultChecked={this.state.darkMode}
+															/>
+														&nbsp;Light
+													</label>
+													<label className='control-label' htmlFor='lightMode'>
+														<input className='embed-opt'
+															id='lightMode'
+															name='colorMode'
+															type='radio' 
+															// defaultChecked={this.state.darkMode}
+															/>
+														&nbsp;Dark
+													</label>
+												</div>
+											</div>
+											<div className='form-group'>
+												<label className='control-label'>Embed Options</label>
+												<div className='embed-opts checkboxes'>
+													<label className='control-label' htmlFor='includeJs'>
+														<input className='embed-opt'
+															id='includeJs'
+															name='includeJs'
+															type='checkbox' 
+															defaultChecked={this.state.includeJs} />
+														&nbsp;Include JavaScript file
+													</label>
+													<label className='control-label' htmlFor='includeCss'>
+														<input className='embed-opt'
+															id='includeCss'
+															name='includeCss'
+															type='checkbox' 
+															defaultChecked={this.state.includeCss} />
+														&nbsp;Include CSS file
+													</label>
+												</div>
+											</div>
+										</form>
+									</div>
 								</div>
-							</div>
-							<div id='embed-output'>
-								<legend>{this.props.creator.acf['embed_title']}</legend>
-								<p className='field-description'>{fields['embed_desc']}</p>
-								<textarea className='output form-control'
-									id='json'
-									readOnly={true}
-									ref={this.outputRef}
-									rows={5}
-									value={this.embedCode(this.props.formData)}
-									onFocus={this.onFocus.bind(this)}
-									onBlur={this.onBlur.bind(this)}
-									/>
-								<form name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
-									<div className='form-group'>
-										<label className='control-label'>Color Options</label>
-										<div className='embed-opts color-mode'>
-											<label className='control-label' htmlFor='darkMode'>
-												<input className='embed-opt'
-													id='darkMode'
-													name='colorMode'
-													type='radio' 
-													// defaultChecked={this.state.darkMode}
-													/>
-												&nbsp;Light
-											</label>
-											<label className='control-label' htmlFor='lightMode'>
-												<input className='embed-opt'
-													id='lightMode'
-													name='colorMode'
-													type='radio' 
-													// defaultChecked={this.state.darkMode}
-													/>
-												&nbsp;Dark
-											</label>
-										</div>
-									</div>
-									<div className='form-group'>
-										<label className='control-label'>Embed Options</label>
-										<div className='embed-opts checkboxes'>
-											<label className='control-label' htmlFor='includeJs'>
-												<input className='embed-opt'
-													id='includeJs'
-													name='includeJs'
-													type='checkbox' 
-													defaultChecked={this.state.includeJs} />
-												&nbsp;Include JavaScript file
-											</label>
-											<label className='control-label' htmlFor='includeCss'>
-												<input className='embed-opt'
-													id='includeCss'
-													name='includeCss'
-													type='checkbox' 
-													defaultChecked={this.state.includeCss} />
-												&nbsp;Include CSS file
-											</label>
-										</div>
-									</div>
-								</form>
-							</div>
+							</fieldset>
 						</div>
 					</div>
 				</div>

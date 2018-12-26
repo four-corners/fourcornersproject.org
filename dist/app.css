@@ -1860,13 +1860,14 @@ header {
 .sticky {
   overflow-y: auto; }
 
-#embedder form input.card, #embedder form textarea.card {
-  width: 100%; }
-  #embedder form input.card:not([readonly]), #embedder form textarea.card:not([readonly]) {
+#embedder {
+  margin-top: 1.25rem; }
+  #embedder form input.card, #embedder form textarea.card {
+    width: 100%; }
+    #embedder form input.card:not([readonly]), #embedder form textarea.card:not([readonly]) {
+      background-color: #fff; }
+  #embedder input, #embedder textarea {
     background-color: #fff; }
-
-#embedder input, #embedder textarea {
-  background-color: #fff; }
 
 #embed-input {
   padding: 0;

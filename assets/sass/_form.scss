@@ -84,12 +84,7 @@ label {
 	background-color: $lightest;
 	box-shadow: 0 0 1px 1px rgba($dark,.1);
 	padding: .375rem;
-	&:focus {
-		color: $dark;
-		border-width: 1px;
-		outline: 0;
-		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-	}
+	@include focus;
 }
 input.form-control {
 	// border-width: 0 0 1px 0;
@@ -112,6 +107,7 @@ input.form-control {
 	.option {
 		padding: .375rem;
 		border-bottom: 1px solid $light;
+		@include slowTrans;
 		.option-label {
 
 		}
@@ -134,10 +130,11 @@ input.form-control {
 	flex-wrap: no-wrap;
 	label {
 		position: relative;
-		transition: all 100ms ease;
 		display: flex;
 		flex-direction: rows-reverse;
 		flex-wrap: no-wrap;
+		border-radius: $radius;
+		@include slowTrans;
 		&::before, &::after {
 			height: calc(2.25rem + 2px);
 			display: block;
@@ -154,7 +151,7 @@ input.form-control {
 			left: 0;
 			top: 0;
 			background: $blue;
-			transition: all 100ms ease;
+			@include slowTrans;
 			box-shadow: 0 0 1px 1px rgba($dark,.1);
 		}
 		&:hover {
@@ -167,7 +164,6 @@ input.form-control {
 		&:focus {
 			opacity: 0.00001;
 		}
-		
 	}
 	.toggle-input, .toggle-label {
 		width: 100%;
@@ -193,6 +189,9 @@ input.form-control {
 			opacity: 1;
 		}
 	}
+	input:focus + label::before {
+		@include shadow;
+	}
 }
 
 .toggle-widget {
@@ -209,6 +208,9 @@ input.form-control {
 		&::after {
 			left: 2.75rem;
 		}
+	}
+	input:focus + label {
+		@include shadow;
 	}
 }
 
@@ -253,6 +255,7 @@ button {
 	flex: inherit !important;
 	box-shadow: 0 0 1px 1px rgba($dark,.1);
 	@include card;
+	@include focus;
 	&.btn-add, &.btn-danger {
 		width: 2.5rem;
 	}

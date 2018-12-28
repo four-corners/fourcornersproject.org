@@ -1831,7 +1831,8 @@ h1, h2, h3, h4 {
 
 #creator .col {
   border: solid #80bdff;
-  border-width: 1px 1px 0 1px; }
+  border-width: 1px 1px 0 1px;
+  background-color: rgba(128, 189, 255, 0.02); }
 
 #creator .left.col {
   margin: 0 1px 0 -1px;
@@ -1896,6 +1897,7 @@ header {
   #embed-input .form-group {
     position: relative;
     background-color: transparent;
+    background-color: #fff;
     padding: 0; }
   #embed-input .drop-zone {
     width: 100%;
@@ -2077,7 +2079,9 @@ label {
   background-color: #fff;
   -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
-  padding: .375rem; }
+  padding: .375rem;
+  -webkit-transition: all 400ms ease;
+  transition: all 400ms ease; }
   .form-control:focus {
     color: #000;
     border-width: 1px;
@@ -2098,7 +2102,9 @@ label {
     height: calc(10rem + 2px); }
   .select-widget-dropdown .option {
     padding: .375rem;
-    border-bottom: 1px solid #f6f6f6; }
+    border-bottom: 1px solid #f6f6f6;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease; }
     .select-widget-dropdown .option .option-desc {
       font-size: .8rem;
       line-height: 1rem; }
@@ -2116,8 +2122,6 @@ label {
       flex-wrap: no-wrap; }
   .checkbox-widget label, .toggle-widget label {
     position: relative;
-    -webkit-transition: all 100ms ease;
-    transition: all 100ms ease;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2126,7 +2130,10 @@ label {
         -ms-flex-direction: rows-reverse;
             flex-direction: rows-reverse;
     -ms-flex-wrap: no-wrap;
-        flex-wrap: no-wrap; }
+        flex-wrap: no-wrap;
+    border-radius: 4px;
+    -webkit-transition: all 100ms ease;
+    transition: all 100ms ease; }
     .checkbox-widget label::before, .checkbox-widget label::after, .toggle-widget label::before, .toggle-widget label::after {
       height: calc(2.25rem + 2px);
       display: block;
@@ -2172,6 +2179,12 @@ label {
     opacity: 1; }
     .checkbox-widget input:checked + label::after {
       opacity: 1; }
+  .checkbox-widget input:focus + label::before {
+    color: #000;
+    border-width: 1px;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
 .toggle-widget {
   -webkit-box-orient: horizontal;
@@ -2187,6 +2200,12 @@ label {
     opacity: 1; }
     .toggle-widget input:checked + label::after {
       left: 2.75rem; }
+  .toggle-widget input:focus + label {
+    color: #000;
+    border-width: 1px;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
 .field-array legend {
   font-size: inherit; }
@@ -2239,7 +2258,15 @@ button {
   border-width: 1px;
   border-style: solid;
   border-color: #80bdff;
-  border-radius: 4px; }
+  border-radius: 4px;
+  -webkit-transition: all 400ms ease;
+  transition: all 400ms ease; }
+  button:focus {
+    color: #000;
+    border-width: 1px;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
   button.btn-add, button.btn-danger {
     width: 2.5rem; }
   button::after {

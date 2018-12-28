@@ -180,6 +180,7 @@ class Left extends React.Component {
 			}
 			schemaObjs.properties[groupKey] = schemaObj;
 		}
+		console.log(schemaObjs);
 		return schemaObjs;
 	}
 

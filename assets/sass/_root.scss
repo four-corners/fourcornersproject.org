@@ -38,6 +38,7 @@ h1, h2, h3, h4 {
   .col {
     border: solid $blue;
     border-width: 1px 1px 0 1px;
+    background-color: $lightBlue;
   }
   .left.col {
     margin: 0 1px 0 -1px;

@@ -9,7 +9,7 @@ function four_corners_scripts() {
 	// wp_enqueue_script( 'four_corners_script', 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@latest/dist/four-corners.min.js' );
 	// wp_enqueue_style( 'four_corners_style', 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css' );
 
-	wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/four-corners.min.js' , array(), $ver, true );
+	// wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/four-corners.min.js' , array(), $ver, true );
 	wp_enqueue_style( 'four_corners_style', get_stylesheet_directory_uri() . '/assets/css/four-corners.min.css' );
 
 

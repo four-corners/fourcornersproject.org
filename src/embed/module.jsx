@@ -2,28 +2,34 @@ import React from 'react';
 
 import i18n from './../i18n.jsx';
 import Entry from './entry.jsx';
+import FourCorners from './../../assets/js/four-corners.min.js';
 
 class Embed extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.corners = ['context','links','authorship','backstory'];
+		this.state = {
+			fourCorners: null,
+			formData: {}
+		};
 	}
 
 	componentDidMount() {
-		const fourCornersInst = FourCorners.default.prototype.init()[0];
+		let self = this;
 		const activeCorner = this.props.activeCorner;
-		this.FourCorners = fourCornersInst;
-		if(activeCorner) {
-			this.FourCorners.openCorner(activeCorner);
-		}
+		setTimeout(function() {
+			self.fourCorners = FourCorners.prototype.init({
+				noPanels: true
+			})[0];
+		});
 	}
 
 	componentDidUpdate(prevProps) {
 		const activeCorner = this.props.activeCorner;
 		const prevCorner = prevProps.activeCorner;
 		if(activeCorner) {
-			this.FourCorners.openCorner(activeCorner);
+			this.fourCorners.openCorner(activeCorner);
 		}
 	}
 
@@ -37,7 +43,6 @@ class Embed extends React.Component {
 
 	onFocus(e) {
 		e.target.setSelectionRange(0, e.target.value.length);
-		// this.FourCorners.closeCorner();
 	}
 
 	onBlur(e) {
@@ -92,7 +97,7 @@ class Embed extends React.Component {
 				className += ' fc-active';
 			}
 			panels.push(
-				<div data-slug={cornerSlug} className={className} key={i}>
+				<div className={className} data-slug={cornerSlug} key={i}>
 					<div className='fc-panel-title'>{cornerTitle}</div>
 					<div className='fc-inner'>{entries}</div>
 				</div>

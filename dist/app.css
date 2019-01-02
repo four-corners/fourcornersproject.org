@@ -1820,27 +1820,23 @@ h1, h2, h3, h4 {
 
 .col-content {
   width: 100%;
+  max-width: 30rem;
+  margin: auto;
   padding-bottom: 3rem;
   padding: 30px; }
   .left .col-content {
-    float: right;
     padding-left: 45px; }
   .right .col-content {
-    float: left;
     padding-right: 45px; }
 
 #creator .col {
-  border: solid #80bdff;
-  border-width: 1px 1px 0 1px;
   background-color: rgba(128, 189, 255, 0.02); }
 
 #creator .left.col {
-  margin: 0 1px 0 -1px;
-  border-radius: 0 4px 0 0; }
+  margin: 0 1px 0 -1px; }
 
 #creator .right.col {
-  margin: 0 -1px 0 1px;
-  border-radius: 4px 0 0 0; }
+  margin: 0 -1px 0 1px; }
 
 @media (min-width: 576px) {
   .half-max-width {
@@ -1897,8 +1893,9 @@ header {
   #embed-input .form-group {
     position: relative;
     background-color: transparent;
-    background-color: #fff;
     padding: 0; }
+  #embed-input .card {
+    background-color: #fff; }
   #embed-input .drop-zone {
     width: 100%;
     height: 100%;
@@ -1952,16 +1949,16 @@ header {
     #embed-input .fc-embed .fc-photo {
       padding-bottom: 0;
       background-color: transparent; }
-  #embed-input:not(.has-image) .form-group.focus {
+  #embed-input:not(.has-image) .form-group.focus, #embed-input:not(.has-image) .form-group:focus {
     color: #000;
     background-color: #80bdff;
     border-width: 1px;
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-    #embed-input:not(.has-image) .form-group.focus .label-text {
+    #embed-input:not(.has-image) .form-group.focus .label-text, #embed-input:not(.has-image) .form-group:focus .label-text {
       color: #f6f6f6; }
-    #embed-input:not(.has-image) .form-group.focus .fc-corner::before, #embed-input:not(.has-image) .form-group.focus .fc-corner::after {
+    #embed-input:not(.has-image) .form-group.focus .fc-corner::before, #embed-input:not(.has-image) .form-group.focus .fc-corner::after, #embed-input:not(.has-image) .form-group:focus .fc-corner::before, #embed-input:not(.has-image) .form-group:focus .fc-corner::after {
       background-color: #fff !important; }
   #embed-input:not(.has-image) .fc-embed {
     pointer-events: none; }
@@ -2107,6 +2104,19 @@ label {
   -webkit-transition: all 400ms ease;
   transition: all 400ms ease; }
   .form-control:focus {
+    color: #000;
+    border-width: 1px;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
+.select-widget select {
+  width: 100%;
+  position: absolute;
+  left: -999999px; }
+  .select-widget select:focus {
+    opacity: 0.00001; }
+  .select-widget select:focus + .select-widget-dropdown {
     color: #000;
     border-width: 1px;
     outline: 0;

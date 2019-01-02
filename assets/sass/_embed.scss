@@ -41,8 +41,10 @@
 	.form-group {
 		position: relative;
 		background-color: transparent;
-		background-color: $lightest;
 		padding: 0;
+	}
+	.card {
+		background-color: $lightest;
 	}
 	.drop-zone {
 		width: 100%;
@@ -104,7 +106,7 @@
 		}
 	}
 	&:not(.has-image) {
-		.form-group.focus {
+		.form-group.focus, .form-group:focus {
 			color: $dark;
 			background-color: $blue;
 			border-width: 1px;

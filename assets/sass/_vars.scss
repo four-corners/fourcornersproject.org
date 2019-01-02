@@ -44,6 +44,14 @@ $radius: 4px;
 	}
 }
 
+@mixin hidden {
+	position: absolute;
+	left: -999999px;
+	&:focus {
+		opacity: 0.00001;
+	}
+}
+
 @mixin smText {
 	font-size: .8rem;
 	line-height: 1rem;

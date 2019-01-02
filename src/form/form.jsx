@@ -102,7 +102,7 @@ class Left extends React.Component {
 					const type = media.type;
 					if(!mediaData[key]){mediaData[key]=[]}
 					if(!mediaData[key][index]) {
-						mediaData[key][index] = ''
+						mediaData[key][index] = '';
 						this.setState({mediaData: mediaData});
 					}
 					if(url&&type){this.getMediaData(url,type,key,index)}
@@ -110,7 +110,8 @@ class Left extends React.Component {
 			}
 		}
 		const newData = Object.assign(this.props.formData, formData);
-		this.props.sendFormData(e.formData);
+		this.props.sendFormData(newData);
+		// this.props.sendFormData(e.formData);
 	}
 
 	onError(e) {
@@ -148,23 +149,33 @@ class Left extends React.Component {
 					if(props[propKey].hasOwnProperty('enum')) {
 						const fieldOptionsKey = [groupKey, propKey, 'options'].join('_');
 						const fieldOptions = fields[fieldOptionsKey];
+
 						schemaObj.properties[propKey].enum = [];
 						schemaObj.properties[propKey].enumNames = [];
 						// schemaObj.properties[propKey].enum.push('default');
 						// schemaObj.properties[propKey].enumNames.push('Select one');
 						if( fieldOptions ) {
 							for(let fieldOption of fieldOptions) {
-								const fieldValue = fieldOption.label+(fieldOption.desc ? ': '+fieldOption.desc : '');
-								schemaObj.properties[propKey].enum.push(fieldValue);
-								schemaObj.properties[propKey].enumNames.push(fieldValue);
+								// const fieldValue = fieldOption.label+(fieldOption.desc ? ': '+fieldOption.desc : '');
+								schemaObj.properties[propKey].enum.push((fieldOption.desc ? fieldOption.desc : fieldOption.label));
+								schemaObj.properties[propKey].enumNames.push(fieldOption.label);
 							}
 						}
+
+						const customFieldKey = [groupKey, propKey, 'custom'].join('_');
+						const customField = fields[customFieldKey];
+						schemaObj.properties[propKey].enum.unshift(customField);
+						schemaObj.properties[propKey].enumNames.unshift(customField);
+
+						const emptyFieldKey = [groupKey, propKey, 'empty'].join('_');
+						const emptyField = fields[emptyFieldKey];
+						schemaObj.properties[propKey].enum.unshift('empty');
+						schemaObj.properties[propKey].enumNames.unshift(emptyField);
 					}
 					//Repeater fields
 					if(props[propKey].type == 'array') {
 						const addNewKey = [groupKey,propKey,'add'].join('_');
 						const addNewText = fields[addNewKey];
-						// console.log(schemaObj.properties[propKey].add);
 						schemaObj.properties[propKey].add = addNewText;
 						const nestedProps = props[propKey].items.properties;
 						const nestedPropKeys = Object.keys(nestedProps);
@@ -180,7 +191,6 @@ class Left extends React.Component {
 			}
 			schemaObjs.properties[groupKey] = schemaObj;
 		}
-		console.log(schemaObjs);
 		return schemaObjs;
 	}
 

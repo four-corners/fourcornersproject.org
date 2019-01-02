@@ -33,6 +33,8 @@ class CustomSelectWidget extends React.Component {
 		const nums = new Set(['number', 'integer']);
 		if (value === '') {
 			return undefined;
+		} else if (value === 'empty') {
+			return undefined;
 		} else if (type === 'array' && items && nums.has(items.type)) {
 			return value.map(asNumber);
 		} else if (type === 'boolean') {
@@ -58,28 +60,36 @@ class CustomSelectWidget extends React.Component {
 		const schema = this.props.schema;
 		return (
 			<div className='select-widget'>
-				<input
+				<select
 					id={id}
 					name={id}
-					type='hidden'
-					readOnly={true}
 					required={this.props.required}
-					noValidate={true}
-					value={typeof this.state.value === 'undefined' ? emptyValue : this.state.value} />
+					value={this.state.value}
+					onChange={
+						(e => {
+							const newValue = e.currentTarget.value;
+							this.setState({
+								value: newValue
+							});
+							this.props.onChange(this.processValue(schema, newValue));
+						})
+					}>
+					{enumOptions.map(({ value, label }, i) => {
+						return(
+							<option key={i} value={value}>{label+(value&&value!='empty' ? ': '+value : '')}</option>
+						);
+					})}
+				</select>
+
 				<div
 					data-id={id}
 					className='select-widget-dropdown form-control'
 					data-value={typeof value === 'undefined' ? emptyValue : value}>
 					{enumOptions.map(({ value, label }, i) => {
-						let desc;
-						if(label.includes(':')) {
-							desc = (label?label.split(':')[1]:'');
-							label = (label?label.split(':')[0]:'');
-						}
 						return (
 							<div
-								className={(this.state.value === value ||  this.state.value === desc) ? 'option selected' : 'option'}
-								data-value={desc ? desc : value}
+								className={(this.state.value === value || this.state.value === label) ? 'option selected' : 'option'}
+								data-value={value}
 								key={i}
 								onClick={
 									(e => {
@@ -92,25 +102,10 @@ class CustomSelectWidget extends React.Component {
 									})
 								}>
 								<div className='option-label'>{label}</div>
-								{ label?<div className='option-desc'>{desc}</div>:'' }
+								{ value&&value!='empty' ? <div className='option-desc'>{value}</div> : '' }
 							</div>
 						);
 					})}
-					<div
-						className={this.state.isCustom ? 'option selected' : 'option'}
-						data-value={this.state.customText}
-						onClick={
-							(e => {
-								const newValue = this.state.customText;
-								this.setState({
-									isCustom: true,
-									value: newValue
-								});
-								this.props.onChange(this.processValue(schema, newValue));
-							})
-						}>
-						Write your own
-					</div>
 				</div>
 
 				<textarea

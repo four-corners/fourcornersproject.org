@@ -166,6 +166,13 @@ input.form-control {
 	// border-width: 0 0 1px 0;
 }
 .select-widget {
+	select {
+		width: 100%;
+		@include hidden;
+		&:focus + .select-widget-dropdown {
+			@include shadow;
+		}
+	}
 	textarea, .has-error & textarea {
 		margin-top: 30px;
 		background-color: $lightest !important;
@@ -236,11 +243,7 @@ input.form-control {
 		}
 	}
 	input[type="checkbox"], input[type="radio"] {
-		position: absolute;
-		left: -999999px;
-		&:focus {
-			opacity: 0.00001;
-		}
+		@include hidden;
 	}
 	.toggle-input, .toggle-label {
 		width: 100%;

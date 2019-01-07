@@ -151,6 +151,14 @@
 		}
 	}
 }
+.form-cols {
+	display: flex;
+	flex-direction: rows;
+	flex-wrap: wrap;
+	.form-col {
+		width: 50%;
+	}
+}
 #embed-output {
 	textarea.output {
 		margin-bottom: 1rem;

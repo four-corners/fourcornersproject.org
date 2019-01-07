@@ -133,19 +133,22 @@ class Creator extends React.Component {
 
 	render() {
 		let lang = this.state.lang;
-		return (
-			// <div id='creator' className='container'>
-			<div id='creator'>
-				<div className='row' data-sticky-container>
-				<div className='col col-12 col-sm-6 left'>
-						{this.state.creator && this.state.creator.ID ? this.renderEmbedCol() : null}
-					</div>
-					<div className='col col-12 col-sm-6 right'>
-						{this.state.creator && this.state.creator.ID ? this.renderFormCol() : null}
+		if(this.state.creator && this.state.creator.ID) {
+			return (
+				<div id='creator'>
+					<div className='row' data-sticky-container>
+						<div className='col col-12 col-sm-6 left'>
+							{this.renderEmbedCol()}
+						</div>
+						<div className='col col-12 col-sm-6 right'>
+							{this.renderFormCol()}
+						</div>
 					</div>
 				</div>
-			</div>
-		);
+			);
+		} else {
+			return null;
+		}
 	}
 }
 

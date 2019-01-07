@@ -84,16 +84,23 @@ class Header extends React.Component {
 		return(
 			<header className='header'>
 				<div className='row'>
-					<div className='col-12 col-sm-6 left'>
+					<div className='col col-12 col-sm-12 col-md-6 left'>
 						<div className='col-content'>
 							<h1 className='site-title'>
 								<Link to={SiteSettings.path}>Four Corners</Link>
 							</h1>
 						</div>
 					</div>
-					<div className='col-12 col-sm-6 right'>
+					<div className='col col-12 col-sm-12 col-md-6 right'>
 						<div className='col-content'>
 							{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
+							<nav className='site-nav'>
+								<Link to='#'>How-to</Link>
+								<Link to='#'>About</Link>
+								<Link to='#'>Inquires</Link>
+								<Link to='#'>Showcase</Link>
+								<Link to='#'>Contribute</Link>
+							</nav>
 						</div>
 					</div>
 				</div>

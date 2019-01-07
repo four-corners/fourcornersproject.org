@@ -5,6 +5,17 @@ const Schema = {
 	title: '',
 	type: 'object',
 	properties: {
+		photo: {
+			title: '',
+			type: 'object',
+			required: [],
+			properties: {
+				file: {
+					type: 'string',
+					format: 'data-url'
+				}
+			}
+		},
 		authorship: {
 			title: '',
 			type: 'object',

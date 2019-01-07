@@ -54,7 +54,17 @@ $radius: 4px;
 
 @mixin smText {
 	font-size: .8rem;
-	line-height: 1rem;
+	line-height: 1em;
+}
+
+@mixin lgText {
+	font-size: 1.5rem;
+	line-height: 1.3em;
+}
+
+@mixin xlText {
+	font-size: 2rem;
+	line-height: 1.2em;
 }
 
 @mixin sm {

@@ -1,0 +1,18 @@
+#creator {
+  margin: 0 auto;
+  .card {
+    margin: 0 auto 2rem auto;
+    overflow: hidden;
+  }
+  .col.right {
+    form {
+      max-width: 25rem; 
+    }
+  }
+  form {
+    padding: 0 0 2rem 0;
+  }
+  @include media-breakpoint-down(sm) {
+   max-width: 100%;
+  }
+}

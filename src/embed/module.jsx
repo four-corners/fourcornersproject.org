@@ -108,7 +108,11 @@ class Embed extends React.Component {
 
 	render() {
 		return(
-			<div className={this.props.imgLoaded?'fc-embed card':'fc-embed'}>
+			<div
+				className={
+					(this.props.imgLoaded?'fc-embed card':'fc-embed')
+					+(this.props.darkMode=='true'?' fc-dark':'')
+				}>
 				<div className={this.props.imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
 					<img src={this.props.imgSrc} className='fc-img'/>
 				</div>

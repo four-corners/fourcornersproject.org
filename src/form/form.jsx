@@ -11,7 +11,7 @@ import CustomSelectWidget from './CustomSelectWidget.jsx';
 import CustomToggleWidget from './CustomToggleWidget.jsx';
 import ArrayField from './ArrayField.jsx';
 
-class Left extends React.Component {
+class Form extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -232,4 +232,4 @@ class Left extends React.Component {
 	}
 }
 
-export default Left;
+export default Form;

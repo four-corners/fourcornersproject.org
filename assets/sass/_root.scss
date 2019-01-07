@@ -13,8 +13,36 @@ html, body {
 h1, h2, h3, h4 {
 	margin: 0;
 }
+h1 {
+  @include xlText;
+  font-weight: 700;
+}
+a, a:visited, a:hover {
+  color: $blue;
+  text-decoration: none;
+  @include focus;
+  @include medTrans;
+}
 .container {
 
+}
+.col {
+  background-color: $lightBlue;
+  &.left {
+    margin: 0 1px 0 -1px;    
+    .col-content {
+      padding-right: 45px;
+      float: right;
+    }
+  }
+  &.right {
+    flex: 1;
+    margin: 0 -1px 0 1px;
+    .col-content {
+      padding-left: 45px;
+      float: left;
+    } 
+  }
 }
 .col-inner {
   width: 100%;
@@ -23,33 +51,9 @@ h1, h2, h3, h4 {
 }
 .col-content {
 	width: 100%;
-  max-width: 30rem;
-  margin: auto;
+  margin: 0;
 	padding-bottom: 3rem;
   padding: 30px;
-	.left & {
-		// float: right;
-    padding-left: 45px;
-	}
-  .right & {
-    // float: left;
-    padding-right: 45px;
-  }
-}
-#creator {
-  .col {
-    // border: solid $blue;
-    // border-width: 1px 1px 0 1px;
-    background-color: $lightBlue;
-  }
-  .left.col {
-    margin: 0 1px 0 -1px;
-    // border-radius: 0 $radius 0 0;
-  }
-  .right.col {
-    margin: 0 -1px 0 1px;
-    // border-radius: $radius 0 0 0;
-  }
 }
 @include sm {
   .half-max-width {

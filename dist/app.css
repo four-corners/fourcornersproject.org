@@ -1813,6 +1813,40 @@ html, body {
 h1, h2, h3, h4 {
   margin: 0; }
 
+h1 {
+  font-size: 2rem;
+  line-height: 1.2em;
+  font-weight: 700; }
+
+a, a:visited, a:hover {
+  color: #80bdff;
+  text-decoration: none;
+  -webkit-transition: all 400ms ease;
+  transition: all 400ms ease;
+  transition: all 400ms ease; }
+  a:focus, a:visited:focus, a:hover:focus {
+    color: #000;
+    border-width: 1px;
+    outline: 0;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
+.col {
+  background-color: rgba(128, 189, 255, 0.02); }
+  .col.left {
+    margin: 0 1px 0 -1px; }
+    .col.left .col-content {
+      padding-right: 45px;
+      float: right; }
+  .col.right {
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+    margin: 0 -1px 0 1px; }
+    .col.right .col-content {
+      padding-left: 45px;
+      float: left; }
+
 .col-inner {
   width: 100%;
   height: 100%;
@@ -1820,23 +1854,9 @@ h1, h2, h3, h4 {
 
 .col-content {
   width: 100%;
-  max-width: 30rem;
-  margin: auto;
+  margin: 0;
   padding-bottom: 3rem;
   padding: 30px; }
-  .left .col-content {
-    padding-left: 45px; }
-  .right .col-content {
-    padding-right: 45px; }
-
-#creator .col {
-  background-color: rgba(128, 189, 255, 0.02); }
-
-#creator .left.col {
-  margin: 0 1px 0 -1px; }
-
-#creator .right.col {
-  margin: 0 -1px 0 1px; }
 
 @media (min-width: 576px) {
   .half-max-width {
@@ -1855,7 +1875,41 @@ h1, h2, h3, h4 {
     max-width: calc(1140px/2); } }
 
 header {
-  margin: 2rem auto 1rem auto; }
+  width: 100%;
+  border-bottom: 1px solid #80bdff;
+  -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1); }
+  header a, header a:visited {
+    display: table;
+    padding: 1rem;
+    color: #000;
+    -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-width: 1px;
+    border-style: solid;
+    border-color: #80bdff;
+    border-radius: 4px; }
+    header a:hover, header a:visited:hover {
+      background-color: #fff; }
+
+nav.site-nav {
+  clear: both; }
+  nav.site-nav a {
+    float: left;
+    margin: 0 0 .5rem .5rem; }
+
+#creator {
+  margin: 0 auto; }
+  #creator .card {
+    margin: 0 auto 2rem auto;
+    overflow: hidden; }
+  #creator .col.right form {
+    max-width: 25rem; }
+  #creator form {
+    padding: 0 0 2rem 0; }
+  @media (max-width: 767.98px) {
+    #creator {
+      max-width: 100%; } }
 
 .sticky {
   overflow-y: auto; }
@@ -1981,17 +2035,30 @@ header {
   #embed-input:not(.has-image) .fc-panel {
     display: none; }
 
+.form-cols {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: rows;
+          flex-direction: rows;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap; }
+  .form-cols .form-col {
+    width: 50%; }
+
 #embed-output textarea.output {
   margin-bottom: 1rem;
   font-size: .8rem;
-  line-height: 1rem;
+  line-height: 1em;
   direction: ltr !important;
   background-color: #f6f6f6; }
 
 #embed-output .embed-opts {
   margin: 0 auto;
   font-size: .8rem;
-  line-height: 1rem; }
+  line-height: 1em; }
   #embed-output .embed-opts label {
     width: auto;
     margin: 0 1rem 0 0; }
@@ -2019,40 +2086,31 @@ header {
 .error-detail {
   display: none !important; }
 
-#creator {
-  margin: 2rem auto 0 auto; }
-  #creator .card {
-    margin: 0 auto 2rem auto;
-    overflow: hidden; }
-  #creator form {
-    padding: 0 0 2rem 0; }
-  @media (max-width: 767.98px) {
-    #creator {
-      max-width: 100%; } }
-
-#forms legend::before {
-  width: 2rem;
-  height: 2rem;
-  position: absolute;
-  right: -3rem;
-  top: .1rem;
-  background-size: 2rem;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url("data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 300 300' enable-background='new 0 0 300 300' xml:space='preserve'%3E %3Cpolygon opacity='0.2' fill='%2380BDFF' points='130.001,50.001 130.001,0.001 0,0.001 0,130.001 50,130.001 50.001,50.001 '/%3E %3Cpolygon opacity='0.2' fill='%2380BDFF' points='50,250.001 50,170.001 0,170.001 0,300.001 130,300.001 130,250.001 '/%3E %3Cpolygon fill='%2380BDFF' points='300,170.001 250,170.001 250,250.001 170,250.001 170,300.001 300,300.001 '/%3E %3Cpolygon opacity='0.2' fill='%2380BDFF' points='170,0.001 170,50.001 250,50.001 250,130.001 300,130.001 300,0.001 '/%3E %3C/svg%3E");
-  content: ''; }
-
-#forms legend#root_backstory__title::before {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg); }
-
-#forms legend#root_context__title::before {
-  -webkit-transform: rotate(180deg);
-          transform: rotate(180deg); }
-
-#forms legend#root_links__title::before {
-  -webkit-transform: rotate(270deg);
-          transform: rotate(270deg); }
+legend {
+  font-size: 1.5rem;
+  line-height: 1.3em;
+  line-height: 1.5em;
+  margin-bottom: 1rem; }
+  legend#root_athourship__title::before, legend#root_backstory__title::before, legend#root_context__title::before, legend#root_links__title::before {
+    width: 2rem;
+    height: 2rem;
+    position: absolute;
+    right: -3rem;
+    top: .1rem;
+    background-size: 2rem;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='300px' height='300px' viewBox='0 0 300 300' enable-background='new 0 0 300 300' xml:space='preserve'%3E %3Cpolygon opacity='0.2' fill='%2380BDFF' points='130.001,50.001 130.001,0.001 0,0.001 0,130.001 50,130.001 50.001,50.001 '/%3E %3Cpolygon opacity='0.2' fill='%2380BDFF' points='50,250.001 50,170.001 0,170.001 0,300.001 130,300.001 130,250.001 '/%3E %3Cpolygon fill='%2380BDFF' points='300,170.001 250,170.001 250,250.001 170,250.001 170,300.001 300,300.001 '/%3E %3Cpolygon opacity='0.2' fill='%2380BDFF' points='170,0.001 170,50.001 250,50.001 250,130.001 300,130.001 300,0.001 '/%3E %3C/svg%3E");
+    content: ''; }
+  legend#root_backstory__title::before {
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg); }
+  legend#root_context__title::before {
+    -webkit-transform: rotate(180deg);
+            transform: rotate(180deg); }
+  legend#root_links__title::before {
+    -webkit-transform: rotate(270deg);
+            transform: rotate(270deg); }
 
 section {
   margin: 0 auto 2rem auto; }
@@ -2088,8 +2146,8 @@ label.control-label {
 
 fieldset .field-object {
   margin-bottom: 5rem;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid #6f6f6f; }
+  padding-bottom: 5rem;
+  border-bottom: 1px solid #80bdff; }
 
 label {
   width: 100%; }
@@ -2141,7 +2199,7 @@ label {
     transition: all 100ms ease; }
     .select-widget-dropdown .option .option-desc {
       font-size: .8rem;
-      line-height: 1rem; }
+      line-height: 1em; }
     .select-widget-dropdown .option.selected, .select-widget-dropdown .option.selected:hover {
       background-color: rgba(128, 189, 255, 0.25); }
     .select-widget-dropdown .option:hover {

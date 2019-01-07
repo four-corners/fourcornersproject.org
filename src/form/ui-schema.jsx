@@ -2,6 +2,11 @@
 // https://github.com/mozilla-services/react-jsonschema-form/
 
 const uiSchema = {
+	photo: {
+		file: {
+			'ui:widget': 'file'
+		}
+	},
 	authorship: {
 		caption: {
 			'ui:widget': 'textarea',

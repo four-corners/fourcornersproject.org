@@ -9,7 +9,7 @@ import Module from '../embed/module.jsx';
 let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
 
-class Right extends React.Component {
+class Embed extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -19,6 +19,7 @@ class Right extends React.Component {
 			imgSrc: placeholderSrc,
 			includeCss: false,
 			includeJs: false,
+			darkMode: false,
 			stickyStyle: {}
 			// activeCorner: this.props.activeCorner
 		};
@@ -102,8 +103,13 @@ class Right extends React.Component {
 		};
 		if(e.target.type == 'checkbox') {
 			stateChange[e.target.name] = e.target.checked;
-		} else if(e.target.type == 'radio') {
-			stateChange[e.target.name] = e.target.value;
+		} else if(e.target.name == 'dark') {
+			stateChange.darkMode = e.target.value;
+			if(e.target.value === 'true') {
+				stateChange.formData[e.target.name] = e.target.value;
+			} else {
+				delete stateChange.formData[e.target.name];
+			}
 		}
 		this.setState(stateChange);
 	}
@@ -128,14 +134,14 @@ class Right extends React.Component {
 		const height = window.innerHeight;
 		const top = rect.top;
 		let stickyStyle = {};
-		if(top <= 60) {
+		if(top <= 30) {
 			stickyStyle = {
 				width: width+'px',
 				height: '100%',
 				position: 'fixed',
 				top: 0,
 				left: 0,
-				paddingTop: '60px'
+				paddingTop: '30px'
 			};	
 		}
 		this.setState({
@@ -170,8 +176,10 @@ class Right extends React.Component {
 			<div className='col-inner'>
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='col-content'>
-
-						<legend>{fields['photo_title']}</legend>
+						<legend>{this.props.creator.acf['embed_title']}</legend>
+						{
+							// <legend>{fields['photo_title']}</legend>
+						}
 						<div className='field-description'>{fields['photo_desc']}</div>
 						<div id='embedder'>
 							<fieldset>
@@ -182,6 +190,7 @@ class Right extends React.Component {
 												creator={this.props.creator}
 												imgSrc={this.state.imgSrc}
 												imgLoaded={this.state.imgLoaded}
+												darkMode={this.state.darkMode}
 												formData={this.props.formData}
 												mediaData={this.props.mediaData}
 												activeCorner={this.props.activeCorner}
@@ -206,44 +215,37 @@ class Right extends React.Component {
 												{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
 											</div>
 											{!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
-										</div>
-
-										<div className='form-group image-src'>
-											<input className='form-control'
-												id='image-src-url'
-												name='src'
-												placeholder={fields['copy_paste']}
-												onChange={this.onChangeDrop.bind(this)}
-												onFocus={this.onFocus.bind(this)}
-												onBlur={this.onBlur.bind(this)}
-												/>
+										{
+											// </div>
+										// <div className='form-group image-src'>
+										// 	<input className='form-control'
+										// 		id='image-src-url'
+										// 		name='src'
+										// 		placeholder={fields['copy_paste']}
+										// 		onChange={this.onChangeDrop.bind(this)}
+										// 		onFocus={this.onFocus.bind(this)}
+										// 		onBlur={this.onBlur.bind(this)}
+										// 		/>
+										}
 										</div>
 									</div>
-								</div>
+								{/*</div>
 
-								<div className='form-group field field-object'>
+								<div className='form-group field field-object'>*/}
 									<div id='embed-output'>
-										<legend>{this.props.creator.acf['embed_title']}</legend>
+										
 										<p className='field-description'>{fields['embed_desc']}</p>
-										<textarea className='output form-control'
-											id='json'
-											readOnly={true}
-											ref={this.outputRef}
-											rows={5}
-											value={this.embedCode(this.props.formData)}
-											onFocus={this.onFocus.bind(this)}
-											onBlur={this.onBlur.bind(this)}
-											/>
-										<form name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
-											<div className='form-group'>
+										
+										<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
+											<div className='form-group form-col'>
 												<label className='control-label'>Color Options</label>
 												<div className='embed-opts checkboxes'>
 
 													<div className='checkbox-widget form-group'>
 														<input className='embed-opt'
 															id='lightMode'
-															name='color'
-															value='light'
+															name='dark'
+															value={false}
 															type='radio' 
 															defaultChecked={true}
 															/>
@@ -257,8 +259,8 @@ class Right extends React.Component {
 													<div className='checkbox-widget form-group'>
 														<input className='embed-opt'
 															id='darkMode'
-															name='color'
-															value='dark'
+															name='dark'
+															value={true}
 															type='radio' 
 															defaultChecked={false}
 															/>
@@ -271,7 +273,7 @@ class Right extends React.Component {
 
 												</div>
 											</div>
-											<div className='form-group'>
+											<div className='form-group form-col'>
 												<label className='control-label'>Embed Options</label>
 												<div className='embed-opts checkboxes'>
 
@@ -304,6 +306,17 @@ class Right extends React.Component {
 												</div>
 											</div>
 										</form>
+
+										<textarea className='output form-control'
+											id='json'
+											readOnly={true}
+											ref={this.outputRef}
+											rows={3}
+											value={this.embedCode(this.props.formData)}
+											onFocus={this.onFocus.bind(this)}
+											onBlur={this.onBlur.bind(this)}
+											/>
+
 									</div>
 								</div>
 							</fieldset>
@@ -315,4 +328,4 @@ class Right extends React.Component {
 	}
 }
 
-export default Right;
+export default Embed;

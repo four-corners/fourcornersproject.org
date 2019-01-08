@@ -59,6 +59,7 @@ class CustomUploadWidget extends React.Component {
 					imgSrc: imgSrc,
 					isLoaded: true
 				});
+				this.changeSrcMode(srcMode);
 				this.props.onChange(imgSrc);
 			}
 			pseudoImg.onerror = (e) => {
@@ -72,6 +73,7 @@ class CustomUploadWidget extends React.Component {
 			pseudoImg.src = imgSrc;
 		} else if(srcMode == 'fileMode') {
 			imgSrc = URL.createObjectURL(value);
+			this.changeSrcMode(srcMode);
 			this.setState({
 				fileSrc: imgSrc,
 				imgSrc: imgSrc,
@@ -79,7 +81,6 @@ class CustomUploadWidget extends React.Component {
 			});
 			this.props.onChange(imgSrc);
 		}
-		this.changeSrcMode(srcMode);
 	}
 
 	render() {
@@ -88,7 +89,6 @@ class CustomUploadWidget extends React.Component {
 		const checkboxId = id+'Check';
 		const urlId = id+'Url';
 		const fileId = id+'File';
-		// console.log(this.state.imgSrc);
 		return (
 			<div className='upload-widget'>
 

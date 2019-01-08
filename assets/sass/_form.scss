@@ -163,10 +163,15 @@ input.form-control {
 		width: auto;
 		position: relative;
 		display: flex;
+		opacity: 0.5;
 		flex-direction: rows-reverse;
 		flex-wrap: no-wrap;
 		border-radius: $radius;
 		@include slowTrans;
+		&:hover {
+			cursor: pointer;
+			opacity: .7;
+		}
 		&::before, &::after {
 			height: calc(2.25rem + 2px);
 			display: block;
@@ -190,6 +195,9 @@ input.form-control {
 		// 	width: calc(100% - 2.75rem - 2px);
 		// }
 	}
+	input:checked + label {
+		opacity: 1;
+	}
 	input[type="checkbox"], input[type="radio"] {
 		@include hidden;
 	}
@@ -202,7 +210,6 @@ input.form-control {
 .checkbox-widget {
 	flex-direction: rows;
 	label.checkbox {
-		opacity: 0.5;
 		margin-right: .5rem;
 		&::before {
 			width: calc(2.25rem + 2px);
@@ -210,17 +217,12 @@ input.form-control {
 		&::after {
 			opacity: 0;
 		}
-		&:hover {
-			cursor: pointer;
-			opacity: .7;
-		}
 		p {
 			display: block;
 			font-weight: normal;
 		}
 	}	
 	input:checked + label {
-		opacity: 1;
 		&::after {
 			opacity: 1;
 		}

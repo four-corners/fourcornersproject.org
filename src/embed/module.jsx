@@ -61,8 +61,6 @@ class Embed extends React.Component {
 		const formData = Object.entries(this.props.formData);
 		const embedData = {};
 		{formData.map((obj) => this.corners.includes(obj[0]) ? embedData[obj[0]]=obj[1]:'')}
-		// const imgLoaded = this.state.imgLoaded?' has-image':'';
-		// const imgFocus = this.state.imgFocus?' focus':'';
 		const panels = [];
 		const fields = this.props.creator.acf;
 		{Object.entries(embedData).forEach((obj,i) => {

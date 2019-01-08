@@ -1894,6 +1894,7 @@ header {
     color: #000;
     -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
             box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.5);
     border-width: 1px;
     border-style: solid;
     border-color: #80bdff;
@@ -2203,6 +2204,7 @@ label {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    opacity: 0.5;
     -webkit-box-orient: horizontal;
     -webkit-box-direction: reverse;
         -ms-flex-direction: rows-reverse;
@@ -2212,6 +2214,9 @@ label {
     border-radius: 4px;
     -webkit-transition: all 100ms ease;
     transition: all 100ms ease; }
+    .checkbox-widget label.checkbox:hover, .toggle-widget label.checkbox:hover {
+      cursor: pointer;
+      opacity: .7; }
     .checkbox-widget label.checkbox::before, .checkbox-widget label.checkbox::after, .toggle-widget label.checkbox::before, .toggle-widget label.checkbox::after {
       height: calc(2.25rem + 2px);
       display: block;
@@ -2230,6 +2235,8 @@ label {
       transition: all 100ms ease;
       -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
               box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1); }
+  .checkbox-widget input:checked + label, .toggle-widget input:checked + label {
+    opacity: 1; }
   .checkbox-widget input[type="checkbox"], .checkbox-widget input[type="radio"], .toggle-widget input[type="checkbox"], .toggle-widget input[type="radio"] {
     position: absolute;
     left: -999999px; }
@@ -2245,22 +2252,16 @@ label {
       -ms-flex-direction: rows;
           flex-direction: rows; }
   .checkbox-widget label.checkbox {
-    opacity: 0.5;
     margin-right: .5rem; }
     .checkbox-widget label.checkbox::before {
       width: calc(2.25rem + 2px); }
     .checkbox-widget label.checkbox::after {
       opacity: 0; }
-    .checkbox-widget label.checkbox:hover {
-      cursor: pointer;
-      opacity: .7; }
     .checkbox-widget label.checkbox p {
       display: block;
       font-weight: normal; }
-  .checkbox-widget input:checked + label {
+  .checkbox-widget input:checked + label::after {
     opacity: 1; }
-    .checkbox-widget input:checked + label::after {
-      opacity: 1; }
   .checkbox-widget input:focus + label::before {
     color: #000;
     border-width: 1px;

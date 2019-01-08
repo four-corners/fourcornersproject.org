@@ -136,12 +136,14 @@ class Creator extends React.Component {
 		if(this.state.creator && this.state.creator.ID) {
 			return (
 				<div id='creator'>
-					<div className='row' data-sticky-container>
-						<div className='col col-12 col-sm-6 left'>
-							{this.renderEmbedCol()}
-						</div>
-						<div className='col col-12 col-sm-6 right'>
-							{this.renderFormCol()}
+					<div className='max-width'>
+						<div className='row' data-sticky-container>
+							<div className='col col-12 col-sm-6 left'>
+								{this.renderEmbedCol()}
+							</div>
+							<div className='col col-12 col-sm-6 right'>
+								{this.renderFormCol()}
+							</div>
 						</div>
 					</div>
 				</div>

@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import i18n from '../i18n.jsx';
 import Module from '../embed/module.jsx';
 
-let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
+// let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
 
 class Embed extends React.Component {
@@ -14,9 +14,9 @@ class Embed extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			imgLoaded: false,
-			imgFocus: false,
-			imgSrc: placeholderSrc,
+			// imgLoaded: false,
+			// imgFocus: false,
+			// imgSrc: placeholderSrc,
 			includeCss: false,
 			includeJs: false,
 			darkMode: false,
@@ -31,12 +31,12 @@ class Embed extends React.Component {
 	}
 
 	componentDidMount() {
-		window.addEventListener('scroll', this.onScroll.bind(this));
+		document.body.addEventListener('scroll', this.onScroll.bind(this));
 		window.addEventListener('resize', this.onScroll.bind(this));
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('scroll', this.onScroll.bind(this));
+		document.body.removeEventListener('scroll', this.onScroll.bind(this));
 		window.removeEventListener('resize', this.onScroll.bind(this));
 	}
 
@@ -58,44 +58,44 @@ class Embed extends React.Component {
 		// this.setState({ imgLoaded: 'failed' });
 	}
 
-	onChangeDrop(e) {
-		let imgSrc = e.target.value;
-		let pseudoImg = new Image();
-		pseudoImg.onload = (e) => {
-			this.setState({
-				imgSrc: imgSrc,
-				imgLoaded: true
-			});
-		}
-		pseudoImg.onerror = (e) => {
-			this.setState({
-				imgSrc: placeholderSrc,
-				imgLoaded: false
-			});
-		}
-		pseudoImg.src = imgSrc;
-	}
+	// onChangeDrop(e) {
+	// 	let imgSrc = e.target.value;
+	// 	let pseudoImg = new Image();
+	// 	pseudoImg.onload = (e) => {
+	// 		this.setState({
+	// 			imgSrc: imgSrc,
+	// 			imgLoaded: true
+	// 		});
+	// 	}
+	// 	pseudoImg.onerror = (e) => {
+	// 		this.setState({
+	// 			imgSrc: placeholderSrc,
+	// 			imgLoaded: false
+	// 		});
+	// 	}
+	// 	pseudoImg.src = imgSrc;
+	// }
 
-	onDrop(file) {
-		let imgSrc = URL.createObjectURL(file[0]);
-		this.setState({
-			imgSrc: imgSrc,
-			imgLoaded: true,
-			imgFocus: false
-		});
-	}
+	// onDrop(file) {
+	// 	let imgSrc = URL.createObjectURL(file[0]);
+	// 	this.setState({
+	// 		imgSrc: imgSrc,
+	// 		imgLoaded: true,
+	// 		imgFocus: false
+	// 	});
+	// }
 
-	onFocusDrop(e) {
-		this.setState({
-			imgFocus: true
-		});
-	}
+	// onFocusDrop(e) {
+	// 	this.setState({
+	// 		imgFocus: true
+	// 	});
+	// }
 
-	onBlurDrop(e) {
-		this.setState({
-			imgFocus: false
-		});
-	}
+	// onBlurDrop(e) {
+	// 	this.setState({
+	// 		imgFocus: false
+	// 	});
+	// }
 
 	onChangeOpts(e) {
 		let stateChange = {
@@ -130,18 +130,19 @@ class Embed extends React.Component {
 		const sticky = this.stickyRef.current;
 		const parent = sticky.parentElement;
 		const rect = parent.getBoundingClientRect();
+		const top = rect.top;
+		const left = rect.left;
 		const width = rect.width;
 		const height = window.innerHeight;
-		const top = rect.top;
 		let stickyStyle = {};
-		if(top <= 30) {
+		if(top <= 0) {
 			stickyStyle = {
 				width: width+'px',
 				height: '100%',
 				position: 'fixed',
 				top: 0,
-				left: 0,
-				paddingTop: '30px'
+				left: left+'px',
+				paddingTop: '0px'
 			};	
 		}
 		this.setState({
@@ -152,7 +153,7 @@ class Embed extends React.Component {
 	embedCode(formData) {
 		let auxData = {
 			lang: i18n.language,
-			img: this.state.imgLoaded ? this.state.imgSrc : undefined,
+			img: this.props.imgLoaded ? this.props.imgSrc : undefined,
 		}
 		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
@@ -169,18 +170,18 @@ class Embed extends React.Component {
 	render() {
 		const fields = this.props.creator.acf;
 		const entries = ['story','author','publication','url','date'];
-		const inputClass = (this.state.imgLoaded?'has-image':'');
-		const formGroupClass = 'form-group'+(this.state.imgLoaded?'':' card')+(this.state.imgFocus?' focus':'');
-		const dropClass = 'drop'+(this.state.imgLoaded?' under card':' over');
+		const inputClass = (this.props.imgLoaded?'has-image':'');
+		const formGroupClass = 'form-group card'+(this.props.imgFocus?' focus':'');
+
+		// const dropClass = 'drop'+(this.props.imgLoaded?' under card':' over');
 		return(
 			<div className='col-inner'>
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='col-content'>
-						<legend>{this.props.creator.acf['embed_title']}</legend>
-						{
-							// <legend>{fields['photo_title']}</legend>
-						}
+					
+						<legend>Create your own</legend>
 						<div className='field-description'>{fields['photo_desc']}</div>
+
 						<div id='embedder'>
 							<fieldset>
 								<div className='form-group field field-object'>
@@ -188,35 +189,37 @@ class Embed extends React.Component {
 										<div className={formGroupClass}>
 											<Module
 												creator={this.props.creator}
-												imgSrc={this.state.imgSrc}
-												imgLoaded={this.state.imgLoaded}
+												imgSrc={this.props.imgSrc}
+												imgLoaded={this.props.imgLoaded}
 												darkMode={this.state.darkMode}
 												formData={this.props.formData}
 												mediaData={this.props.mediaData}
 												activeCorner={this.props.activeCorner}
 												/>
-											<div className={dropClass}>
-												<Dropzone
-													className='drop-zone'
-													ref={this.imgInputRef}
-													style={{}}
-													accept='image/jpeg, image/png, image/gif'
-													multiple={false}
-													onDrop={this.onDrop.bind(this)}
-													onClick={this.onFocusDrop.bind(this)}
-													onMouseEnter={this.onFocusDrop.bind(this)}
-													onMouseLeave={this.onBlurDrop.bind(this)}
-													onDragEnter={this.onFocusDrop.bind(this)}
-													onDragLeave={this.onBlurDrop.bind(this)}
-													onFileDialogCancel={this.onBlurDrop.bind(this)}
-													onBlur={this.onBlurDrop.bind(this)}
-													>
-												</Dropzone>
-												{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
-											</div>
-											{!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
-										{
+											{
+											// <div className={dropClass}>
+											// 	<Dropzone
+											// 		className='drop-zone'
+											// 		ref={this.imgInputRef}
+											// 		style={{}}
+											// 		accept='image/jpeg, image/png, image/gif'
+											// 		multiple={false}
+											// 		onDrop={this.onDrop.bind(this)}
+											// 		onClick={this.onFocusDrop.bind(this)}
+											// 		onMouseEnter={this.onFocusDrop.bind(this)}
+											// 		onMouseLeave={this.onBlurDrop.bind(this)}
+											// 		onDragEnter={this.onFocusDrop.bind(this)}
+											// 		onDragLeave={this.onBlurDrop.bind(this)}
+											// 		onFileDialogCancel={this.onBlurDrop.bind(this)}
+											// 		onBlur={this.onBlurDrop.bind(this)}
+											// 		>
+											// 	</Dropzone>
+											// 	{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
 											// </div>
+											// {!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
+
+
+										// </div>
 										// <div className='form-group image-src'>
 										// 	<input className='form-control'
 										// 		id='image-src-url'
@@ -226,14 +229,25 @@ class Embed extends React.Component {
 										// 		onFocus={this.onFocus.bind(this)}
 										// 		onBlur={this.onBlur.bind(this)}
 										// 		/>
+										// </div>
 										}
 										</div>
 									</div>
-								{/*</div>
 
-								<div className='form-group field field-object'>*/}
 									<div id='embed-output'>
 										
+										<legend>{this.props.creator.acf['embed_title']}</legend>
+
+										<textarea className='output form-control'
+											id='json'
+											readOnly={true}
+											ref={this.outputRef}
+											rows={3}
+											value={this.embedCode(this.props.formData)}
+											onFocus={this.onFocus.bind(this)}
+											onBlur={this.onBlur.bind(this)}
+											/>
+
 										<p className='field-description'>{fields['embed_desc']}</p>
 										
 										<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
@@ -249,7 +263,7 @@ class Embed extends React.Component {
 															type='radio' 
 															defaultChecked={true}
 															/>
-														<label className='control-label' htmlFor='lightMode'>
+														<label className='control-label checkbox' htmlFor='lightMode'>
 															<div className='label-inner'>
 																<span>Light mode</span>
 															</div>
@@ -264,7 +278,7 @@ class Embed extends React.Component {
 															type='radio' 
 															defaultChecked={false}
 															/>
-														<label className='control-label' htmlFor='darkMode'>
+														<label className='control-label checkbox' htmlFor='darkMode'>
 															<div className='label-inner'>
 																<span>Dark mode</span>
 															</div>
@@ -283,7 +297,7 @@ class Embed extends React.Component {
 															name='includeJs'
 															type='checkbox' 
 															defaultChecked={this.state.includeJs} />
-														<label className='control-label' htmlFor='includeJs'>
+														<label className='control-label checkbox' htmlFor='includeJs'>
 															<div className='label-inner'>
 																<span>Include JavaScript file</span>
 															</div>
@@ -296,7 +310,7 @@ class Embed extends React.Component {
 															name='includeCss'
 															type='checkbox' 
 															defaultChecked={this.state.includeJs} />
-														<label className='control-label' htmlFor='includeCss'>
+														<label className='control-label checkbox' htmlFor='includeCss'>
 															<div className='label-inner'>
 																<span>Include CSS file</span>
 															</div>
@@ -306,16 +320,6 @@ class Embed extends React.Component {
 												</div>
 											</div>
 										</form>
-
-										<textarea className='output form-control'
-											id='json'
-											readOnly={true}
-											ref={this.outputRef}
-											rows={3}
-											value={this.embedCode(this.props.formData)}
-											onFocus={this.onFocus.bind(this)}
-											onBlur={this.onBlur.bind(this)}
-											/>
 
 									</div>
 								</div>

@@ -133,3 +133,5 @@ add_action( 'rest_api_init', function () {
 	));
 
 });
+
+show_admin_bar( false );

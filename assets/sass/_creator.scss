@@ -1,5 +1,5 @@
 #creator {
-  margin: 0 auto;
+  margin: 4rem auto 0 auto;
   .card {
     margin: 0 auto 2rem auto;
     overflow: hidden;
@@ -10,7 +10,7 @@
     }
   }
   form {
-    padding: 0 0 2rem 0;
+    // padding: 0 0 2rem 0;
   }
   @include media-breakpoint-down(sm) {
    max-width: 100%;

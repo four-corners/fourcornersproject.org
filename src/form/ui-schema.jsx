@@ -4,7 +4,8 @@
 const uiSchema = {
 	photo: {
 		file: {
-			'ui:widget': 'file'
+			'ui:widget': 'customUploadWidget',
+			noValidate: false,
 		}
 	},
 	authorship: {

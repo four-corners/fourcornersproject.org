@@ -9,6 +9,7 @@ import uiSchema from './ui-schema.jsx';
 import validate from './validate.jsx';
 import CustomSelectWidget from './CustomSelectWidget.jsx';
 import CustomToggleWidget from './CustomToggleWidget.jsx';
+import CustomUploadWidget from './CustomUploadWidget.jsx';
 import ArrayField from './ArrayField.jsx';
 
 class Form extends React.Component {
@@ -16,7 +17,8 @@ class Form extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			mediaData: this.props.mediaData
+			mediaData: this.props.mediaData,
+			imgSrc: null
 		};
 		this.onChange = this.onChange.bind(this);
 		this.onBlur = this.onBlur.bind(this);
@@ -95,18 +97,26 @@ class Form extends React.Component {
 		const formDataKeys = Object.keys(formData);
 		const mediaData = Object.assign({},this.props.mediaData);
 		for(let key of formDataKeys) {
-			if(formData[key]&&formData[key].media) {
-				for(let index of formData[key].media.keys()) {
-					const media = formData[key].media[index];
-					const url = media.url;
-					const type = media.type;
-					if(!mediaData[key]){mediaData[key]=[]}
-					if(!mediaData[key][index]) {
-						mediaData[key][index] = '';
-						this.setState({mediaData: mediaData});
+			if(formData[key]) {
+				if(formData[key].media) {
+					for(let index of formData[key].media.keys()) {
+						const media = formData[key].media[index];
+						const url = media.url;
+						const type = media.type;
+						if(!mediaData[key]){mediaData[key]=[]}
+						if(!mediaData[key][index]) {
+							mediaData[key][index] = '';
+							this.setState({mediaData: mediaData});
+						}
+						if(url&&type){this.getMediaData(url,type,key,index)}
 					}
-					if(url&&type){this.getMediaData(url,type,key,index)}
 				}
+				// else if(key=='photo') {
+				// 	const imgSrc = formData[key].file;
+				// 	if(imgSrc) {
+				// 		this.setState({imgSrc: imgSrc});
+				// 	}
+				// }
 			}
 		}
 		const newData = Object.assign(this.props.formData, formData);
@@ -197,7 +207,8 @@ class Form extends React.Component {
 	renderForm() {
 		const widgets = {
 			customSelectWidget: CustomSelectWidget,
-			customToggleWidget: CustomToggleWidget
+			customToggleWidget: CustomToggleWidget,
+			customUploadWidget: CustomUploadWidget
 		}
 
 		return (
@@ -216,7 +227,7 @@ class Form extends React.Component {
 						onChange={this.onChange}
 						onError={this.onError}>
 						<button type='submit' hidden/>
-						<button type='button' className='btn'>Add content in another language</button>
+						{/*<button type='button' className='btn'>Add content in another language</button>*/}
 		      </SchemaForm>
 				</div>
 			</div>

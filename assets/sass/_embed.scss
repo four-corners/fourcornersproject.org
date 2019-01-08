@@ -101,55 +101,54 @@
 		transition: all 200ms ease-in-out;
 		padding: 0;
 		.fc-photo {
-			padding-bottom: 0;
-			background-color: transparent;
+			background-color: $lightBlue;
 		}
 	}
-	&:not(.has-image) {
-		.form-group.focus, .form-group:focus {
-			color: $dark;
-			background-color: $blue;
-			border-width: 1px;
-			outline: 0;
-			box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
-			.label-text {
-				color: $light;
-			}
-			.fc-corner {
-				&::before, &::after {
-					background-color: $lightest !important;
-				}
-			}
-		}
-		.fc-embed {
-			pointer-events: none;
-		}
-		.fc-corner {
-			opacity: 1;
-			&::before, &::after {
-				background-color: $blue;
-			}
-			&[data-slug='context'] {
-				top: calc(50% - 5rem);
-				left: calc(50% - 5rem);
-			}
-			&[data-slug='links'] {
-				top: calc(50% - 5rem);
-				right: calc(50% - 5rem);
-			}
-			&[data-slug='authorship'] {
-				bottom: calc(50% - 5rem);
-				right: calc(50% - 5rem);
-			}
-			&[data-slug='backstory'] {
-				bottom: calc(50% - 5rem);
-				left: calc(50% - 5rem);
-			}
-		}
-		.fc-panel {
-			display: none;
-		}
-	}
+	// &:not(.has-image) {
+	// 	.form-group.focus, .form-group:focus {
+	// 		color: $dark;
+	// 		background-color: $blue;
+	// 		border-width: 1px;
+	// 		outline: 0;
+	// 		box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+	// 		.label-text {
+	// 			color: $light;
+	// 		}
+	// 		.fc-corner {
+	// 			&::before, &::after {
+	// 				background-color: $lightest !important;
+	// 			}
+	// 		}
+	// 	}
+	// 	.fc-embed {
+	// 		pointer-events: none;
+	// 	}
+	// 	.fc-corner {
+	// 		opacity: 1;
+	// 		&::before, &::after {
+	// 			background-color: $blue;
+	// 		}
+	// 		&[data-slug='context'] {
+	// 			top: calc(50% - 5rem);
+	// 			left: calc(50% - 5rem);
+	// 		}
+	// 		&[data-slug='links'] {
+	// 			top: calc(50% - 5rem);
+	// 			right: calc(50% - 5rem);
+	// 		}
+	// 		&[data-slug='authorship'] {
+	// 			bottom: calc(50% - 5rem);
+	// 			right: calc(50% - 5rem);
+	// 		}
+	// 		&[data-slug='backstory'] {
+	// 			bottom: calc(50% - 5rem);
+	// 			left: calc(50% - 5rem);
+	// 		}
+	// 	}
+	// 	.fc-panel {
+	// 		display: none;
+	// 	}
+	// }
 }
 .form-cols {
 	display: flex;
@@ -160,6 +159,7 @@
 	}
 }
 #embed-output {
+	padding: 2rem 0 0 0;
 	textarea.output {
 		margin-bottom: 1rem;
 		@include smText;
@@ -170,7 +170,6 @@
 		margin: 0 auto;
 		@include smText;
 		label {
-			width: auto;
 			margin: 0 1rem 0 0;
 		}
 	}

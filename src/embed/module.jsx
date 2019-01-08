@@ -107,14 +107,16 @@ class Embed extends React.Component {
 	}
 
 	render() {
+		const photo = this.props.formData.photo;
+		const imgSrc = photo ? photo.file : '';
 		return(
 			<div
 				className={
 					(this.props.imgLoaded?'fc-embed card':'fc-embed')
 					+(this.props.darkMode=='true'?' fc-dark':'')
 				}>
-				<div className={this.props.imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
-					<img src={this.props.imgSrc} className='fc-img'/>
+				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
+					<img src={imgSrc} className='fc-img'/>
 				</div>
 				{this.renderPanels()}
 			</div>

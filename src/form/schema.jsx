@@ -12,8 +12,8 @@ const Schema = {
 			properties: {
 				file: {
 					type: 'string',
-					format: 'data-url'
-				}
+					// format: 'data-url',
+				},
 			}
 		},
 		authorship: {

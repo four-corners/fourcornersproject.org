@@ -11,11 +11,17 @@
 .error-detail {
 	display: none !important;
 }
+#forms {
+	fieldset .field-object {
+		margin-bottom: 2rem;
+		padding-bottom: 2rem;
+	}
+}
 legend {
 	@include lgText;	
 	line-height: 1.5em;	
 	margin-bottom: 1rem;
-	&#root_athourship__title,
+	&#root_authorship__title,
 	&#root_backstory__title,
 	&#root_context__title,
 	&#root_links__title {
@@ -67,7 +73,9 @@ label.control-label, legend {
 label.control-label {
 	margin-bottom: .5rem;
 }
-
+label[for='root_photo_file'] {
+	display: none;
+}
 .label-inner {
 	display: flex;
 	align-items: center;
@@ -90,15 +98,6 @@ label.control-label {
 	// margin-left: 1rem;
 	// overflow-y: scroll;
 	// @include card;
-}
-
-fieldset .field-object {
-	margin-bottom: 5rem;
-	padding-bottom: 5rem;
-	border-bottom: 1px solid $blue;
-	legend {
-		// margin-bottom: 2rem;
-	}
 }
 label {
 	width: 100%;
@@ -160,7 +159,8 @@ input.form-control {
 .checkbox-widget, .toggle-widget {
 	display: flex;
 	flex-wrap: no-wrap;
-	label {
+	label.checkbox {
+		width: auto;
 		position: relative;
 		display: flex;
 		flex-direction: rows-reverse;
@@ -186,10 +186,9 @@ input.form-control {
 			@include slowTrans;
 			box-shadow: 0 0 1px 1px rgba($dark,.1);
 		}
-		&:hover {
-			cursor: pointer;
-			opacity: .7;
-		}
+		// .label-inner {
+		// 	width: calc(100% - 2.75rem - 2px);
+		// }
 	}
 	input[type="checkbox"], input[type="radio"] {
 		@include hidden;
@@ -202,16 +201,24 @@ input.form-control {
 
 .checkbox-widget {
 	flex-direction: rows;
-	label {
-		width: 100%;
+	label.checkbox {
 		opacity: 0.5;
+		margin-right: .5rem;
 		&::before {
 			width: calc(2.25rem + 2px);
 		}
 		&::after {
 			opacity: 0;
 		}
-	}
+		&:hover {
+			cursor: pointer;
+			opacity: .7;
+		}
+		p {
+			display: block;
+			font-weight: normal;
+		}
+	}	
 	input:checked + label {
 		opacity: 1;
 		&::after {
@@ -220,6 +227,15 @@ input.form-control {
 	}
 	input:focus + label::before {
 		@include shadow;
+	}
+	// button {
+	// 	width: 100%;
+	// 	position: absolute;
+	// 	left: 0;
+	// 	top: 0;
+	// }
+	input[type="file"] {
+		@include hidden;
 	}
 }
 
@@ -240,6 +256,22 @@ input.form-control {
 	}
 	input:focus + label {
 		@include shadow;
+	}
+}
+
+.upload-widget {
+	label.btn {
+		font-weight: normal;
+	}
+	.checkbox-content {
+		width: 100%;
+		opacity: 0.5
+	}
+	input:checked + label + .checkbox-content {
+		opacity: 1;
+	}
+	input[name="imgSrc"] {
+		@include hidden;
 	}
 }
 
@@ -276,8 +308,8 @@ input.form-control {
 .btn-group {
 	display: block !important;
 }
-button {
-	height: 2.5rem;
+button, .btn {
+	height: calc(2.25rem + 2px);
 	margin: 0 .5rem 0 0;
 	padding: .5rem !important;
 	position: relative;
@@ -286,7 +318,7 @@ button {
 	@include card;
 	@include focus;
 	&.btn-add, &.btn-danger {
-		width: 2.5rem;
+		width: calc(2.25rem + 2px);
 	}
 	&::after {
 		font-weight: normal;

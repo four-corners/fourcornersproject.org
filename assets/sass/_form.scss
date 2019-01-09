@@ -58,6 +58,9 @@ legend {
 section {
 	margin: 0 auto 2rem auto;
 }
+.form-group {
+	position: relative;
+}
 .form-group.field.field-object {
 	// opacity: .5;
 	transition: opacity 500ms ease-in-out;
@@ -81,27 +84,44 @@ label[for='root_photo_file'] {
 	align-items: center;
 	margin-left: .5rem;
 }
-
-.field-description {
-	color: $dark;
-	font-size: .75rem;
-	margin-bottom: 1rem;
-	display: none;
-
-
-	// width: 100%;
-	// max-width: 15rem;
-	// max-height: 10rem;
-	// position: absolute;
-	// display: inline;
-	// padding: .5rem;
-	// margin-left: 1rem;
-	// overflow-y: scroll;
-	// @include card;
-}
 label {
 	width: 100%;
 }
+.field-description {
+	// @include hidden;
+	width: .5rem;
+	height: .5rem;
+	margin: 0;
+	background-color: $dark;
+	border-radius: 50%;
+	overflow: hidden;
+	display: inline-block;
+	display: none;
+	// label:hover + &, &:hover {
+	// 	width: 100%;
+	// 	max-width: 15rem;
+	// 	height: auto;
+	// 	max-height: 10rem;
+	// 	position: absolute;
+	// 	left: 1rem;
+	// 	top: 0;
+	// 	z-index: 2;
+	// 	padding: .5rem;
+	// 	display: inline;
+	// 	color: $dark;
+	// 	font-size: .75rem;
+	// 	overflow-y: scroll;
+	// 	background-color: $light;
+	// 	box-shadow: 0 0 1px 1px rgba($dark,.1);
+	//   border: {
+	//   	width: 1px;
+	//   	style: solid;
+	//   	color: $light;
+	// 		radius: $radius;
+	// 	}
+	// }
+}
+
 .form-control {
 	color: $dark;
 	border-color: $blue;
@@ -118,7 +138,7 @@ input.form-control {
 		width: 100%;
 		@include hidden;
 		&:focus + .select-widget-dropdown {
-			@include shadow;
+			@include highlight;
 		}
 	}
 	textarea, .has-error & textarea {
@@ -228,7 +248,7 @@ input.form-control {
 		}
 	}
 	input:focus + label::before {
-		@include shadow;
+		@include highlight;
 	}
 	// button {
 	// 	width: 100%;
@@ -257,7 +277,7 @@ input.form-control {
 		}
 	}
 	input:focus + label {
-		@include shadow;
+		@include highlight;
 	}
 }
 

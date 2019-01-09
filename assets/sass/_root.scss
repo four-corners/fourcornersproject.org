@@ -18,6 +18,9 @@ body {
   width: 100%;
   display: table;
 }
+main {
+  margin: 4rem auto 0 auto;
+}
 h1, h2, h3, h4 {
 	margin: 0;
 }
@@ -34,8 +37,13 @@ a, a:visited, a:hover {
 .container {
 
 }
+.row {
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+}
 .max-width {
-  width: 100%;
+  width: 90%;
   max-width: 80rem;
   margin: auto;
 }

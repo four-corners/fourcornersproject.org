@@ -17,6 +17,11 @@ const uiSchema = {
 		},
 		copyright: {
 			'ui:widget': 'customToggleWidget',
+			'ui:placeholder': 'Creative Commons'
+		},
+		license: {
+			'ui:widget': 'customToggleWidget',
+			'ui:placeholder': 'name@email.com'
 		},
 		ethics: {
 			'ui:widget': 'customSelectWidget'

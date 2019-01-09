@@ -71,6 +71,7 @@ class CustomToggleWidget extends React.Component {
 						name={this.props.id}
 						className='form-control'
 						disabled={!this.state.isTrue}
+						placeholder={this.props.placeholder}
 						onChange={
 							(e => {
 								const newValue = e.target.value;

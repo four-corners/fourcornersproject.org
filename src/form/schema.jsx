@@ -30,11 +30,13 @@ const Schema = {
 				copyright: {
 					type: 'string',
 				},
+				license: {
+					type: 'string',
+				},
 				ethics: {
 					type: 'string',
-					// default: 'default',
 					enum: []
-				}
+				},
 			}
 		},
 		backstory: {

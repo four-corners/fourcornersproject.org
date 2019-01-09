@@ -97,7 +97,7 @@ class Header extends React.Component {
 								{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
 								<nav className='site-nav'>
 									<Link to='#'>About</Link>
-									<Link to='#'>Create</Link>
+									<Link to={SiteSettings.path+'creator'}>Create</Link>
 									<Link to='#'>How-to</Link>
 									<Link to='#'>Inquires</Link>
 									<Link to='#'>Showcase</Link>

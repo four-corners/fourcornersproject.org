@@ -23,11 +23,8 @@ $radius: 4px;
 	transition: all 400ms ease;
 }
 
-@mixin card {
-	padding: 1rem;
-	background-color: $lightest;
-	box-shadow: 0 0 1px 1px rgba($dark,.1);
-  border: {
+@mixin border {
+	border: {
   	width: 1px;
   	style: solid;
   	color: $blue;
@@ -36,16 +33,27 @@ $radius: 4px;
 }
 
 @mixin shadow {
+	box-shadow: 0 0 1px 1px rgba($dark,.1);
+}
+
+@mixin highlight {
 	color: $dark;
 	border-width: 1px;
 	outline: 0;
 	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
 }
 
+@mixin card {
+	padding: 1rem;
+	background-color: $lightest;
+	@include shadow;
+	@include border;
+}
+
 @mixin focus {
 	@include medTrans;
 	&:focus {
-		@include shadow;
+		@include highlight;
 	}
 }
 

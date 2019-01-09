@@ -57,7 +57,6 @@ class Entry extends React.Component {
 		const subRows = [];
 		this.props.fieldData.forEach((obj, i) => {
 			if(!obj.url){return;}
-			let link = <img src={obj.url} alt=''/>
 			const subRow = <div className='fc-sub-row' key={i}>
 				{obj.title ? <div className='fc-sub-title'>{obj.title}</div> : ''}
 				<div className='fc-sub-url'>{obj.url}</div>
@@ -67,6 +66,13 @@ class Entry extends React.Component {
 		return <div className='fc-sub-rows'>{subRows}</div>;
 	}
 
+	renderLicense() {
+		const url = this.props.fieldData;
+		let text = 'License this photo';
+		let link = <span>{text} <a href={url} target='_blank'>{url}</a></span>
+		return link;
+	}
+
 	renderEntry() {
 		switch(this.props.fieldSlug) {
 			case 'media':
@@ -74,6 +80,9 @@ class Entry extends React.Component {
 				break;
 			case 'links':
 				return this.renderLinks();
+				break;
+			case 'license':
+				return this.renderLicense();
 				break;
 			default:
 				return this.props.fieldData;

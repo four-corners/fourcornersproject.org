@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './header';
 import Footer from './footer';
+import Home from './home';
 import Creator from './creator';
 import NotFound from './not-found';
 
@@ -14,14 +15,15 @@ import publicStyles from '../assets/sass/public.scss';
 const routes = (
 	<NamespacesConsumer>
 		{
-		 (t) => {
+			console.log(SiteSettings.path+'creator'),
+			(t) => {
 				return(
 					<Router>
 						<React.Fragment>
 							<Header></Header>
 							<Switch>
-								<Route exact path={SiteSettings.path} component={Creator} />
-								<Route exact path={SiteSettings.path+'creator'} component={Creator} />
+								<Route exact path={SiteSettings.path} component={Home} />
+								<Route path={SiteSettings.path+'creator'} component={Creator} />
 								<Route path="*" component={NotFound} />
 							</Switch>
 						</React.Fragment>

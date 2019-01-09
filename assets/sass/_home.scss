@@ -1,0 +1,30 @@
+.explainer {
+	padding: 2rem 0;
+	margin-bottom: 3rem;
+	background-color: $mediumBlue;
+	border-radius: $radius;
+	@include shadow;
+	.col {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		flex-wrap: wrap;
+	}
+	.col-content {
+		// height: 100%;
+		margin: auto;
+	}
+	.fc-embed {
+		@include shadow;
+	}
+	h2 {
+		margin: 0 0 1.5rem 0;
+		strong {
+			color: $blue;
+			border-bottom: .2rem solid $blue;
+		}
+	}
+	p {
+		color: $medium;
+	}
+}

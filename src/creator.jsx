@@ -135,7 +135,7 @@ class Creator extends React.Component {
 		let lang = this.state.lang;
 		if(this.state.creator && this.state.creator.ID) {
 			return (
-				<div id='creator'>
+				<main id='creator'>
 					<div className='max-width'>
 						<div className='row' data-sticky-container>
 							<div className='col col-12 col-sm-6 left'>
@@ -146,7 +146,7 @@ class Creator extends React.Component {
 							</div>
 						</div>
 					</div>
-				</div>
+				</main>
 			);
 		} else {
 			return null;

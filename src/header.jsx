@@ -87,9 +87,12 @@ class Header extends React.Component {
 					<div className='row'>
 						<div className='col col-12 col-sm-12 col-md-6 left'>
 							<div className='col-content'>
-								<h1 className='site-title'>
-									<Link to={SiteSettings.path}>Four Corners</Link>
-								</h1>
+								<div className='site-title'>
+									<Link to={SiteSettings.path}>
+										<div></div><div></div><div></div><div></div>
+										<h1>Four Corners</h1>
+									</Link>
+								</div>
 							</div>
 						</div>
 						<div className='col col-12 col-sm-12 col-md-6 right'>

@@ -70,17 +70,32 @@ function creators_endpoint( $req ) {
 }
 
 function creator_endpoint( $req ) {
-	$slug = $req['lang'];
+	$lang = $req['lang'];
 	$args = array(
 		'post_type' => 'creators',
 		'posts_per_page'=> 1, 
 		'numberposts'=> 1,
-		'name' => $slug
+		'name' => $lang
 	);
-	$creator = get_posts($args)[0];
+	$creator = get_posts( $args )[0];
 	$acf = get_fields( $creator->ID );
 	$creator->acf = $acf;
 	return $creator;
+}
+
+function page_endpoint( $req ) {
+	$slug = $req['slug'];
+	$lang = $req['lang'];
+	$args = array(
+		'post_type' => 'page',
+		'posts_per_page'=> 1, 
+		'numberposts'=> 1,
+		'name' => $slug
+	);
+	$page = get_posts( $args )[0];
+	$acf = get_fields( $page->ID );
+	$page->acf = $acf;
+	return $page;
 }
 
 function get_translations_json( $req ) {
@@ -120,6 +135,11 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'wp/v2', '/creator/(?P<lang>[a-zA-Z0-9-]+)', array(
 		'methods' => 'GET',
 		'callback' => 'creator_endpoint'
+	));
+
+	register_rest_route( 'wp/v2', '/page/', array(
+		'methods' => 'GET',
+		'callback' => 'page_endpoint'
 	));
 
 	register_rest_route( 'wp/v2', '/translation/(?P<lang>[a-zA-Z0-9-]+)', array(

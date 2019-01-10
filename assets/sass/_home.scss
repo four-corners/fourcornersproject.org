@@ -1,6 +1,13 @@
+.intro-text {
+	@include lgText;
+	p {
+		margin-bottom: 2rem;
+	}
+}
+
 .explainer {
 	padding: 2rem 0;
-	margin-bottom: 3rem;
+	margin: 3rem 0;
 	background-color: $mediumBlue;
 	border-radius: $radius;
 	@include shadow;
@@ -18,10 +25,13 @@
 		@include shadow;
 	}
 	h2 {
+		color: $dark;
 		margin: 0 0 1.5rem 0;
+		p {
+			color: $dark;
+		}
 		strong {
 			color: $blue;
-			border-bottom: .2rem solid $blue;
 		}
 	}
 	p {

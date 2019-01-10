@@ -1,93 +1,102 @@
 html, body {
-  width: 100%;
-  height: 100%;
+	width: 100%;
+	height: 100%;
 	font-family: 'Noto Sans', 'Helvetica', 'Arial', sans-serif;
 	background-color: $lighter;
-  overflow-x: hidden;
+	overflow-x: hidden;
 }
 html {
-  overflow: hidden;
+	overflow: hidden;
 }
 body {
-  overflow-y: scroll;
+	overflow-y: scroll;
 }
 .rtl, .rtl * {
 	text-align: right;
 }
 #page {
-  width: 100%;
-  display: table;
+	width: 100%;
+	display: table;
 }
 main {
-  margin: 4rem auto 0 auto;
+	margin: 4rem auto 0 auto;
 }
 h1, h2, h3, h4 {
 	margin: 0;
+	strong {
+		@include underline;
+	}
 }
 h1 {
-  @include xlText;
-  font-weight: 700;
+	@include xlText;
+	@include strong;
+}
+strong {
+	@include strong;
 }
 a, a:visited, a:hover {
-  color: $blue;
-  text-decoration: none;
-  @include focus;
-  @include medTrans;
+	color: $blue;
+	text-decoration: none;
+	@include focus;
+	@include medTrans;
 }
 .container {
 
 }
 .row {
-  &.reverse {
-    flex-direction: row-reverse;
-  }
+	&.reverse {
+		flex-direction: row-reverse;
+	}
 }
 .max-width {
-  width: 90%;
-  max-width: 80rem;
-  margin: auto;
+	width: 90%;
+	max-width: 80rem;
+	margin: auto;
 }
 .col {
-  &.left {
-    .col-content {
-      float: right;
-    }
-  }
-  &.right {
-    flex: 1;
-    margin: 0 -1px 0 1px;
-    .col-content {
-      float: left;
-    } 
-  }
+	&.left {
+		.col-content {
+			float: right;
+		}
+	}
+	&.right {
+		flex: 1;
+		margin: 0 -1px 0 1px;
+		.col-content {
+			float: left;
+		} 
+	}
 }
 .col-inner {
-  width: 100%;
-  height: 100%;
-  position: relative;
+	width: 100%;
+	height: 100%;
+	position: relative;
 }
 .col-content {
 	width: 100%;
-  margin: 0;
-  padding: .5rem 2rem;
+	margin: 0;
+	padding: .5rem 2rem;
+	@include sm {
+		padding: 0rem;
+	}
 }
 @include sm {
-  .half-max-width {
-    max-width: calc(540px/2);
-  }
+	.half-max-width {
+		max-width: calc(540px/2);
+	}
 }
 @include md {
-  .half-max-width {
-    max-width: calc(720px/2);
-  }
+	.half-max-width {
+		max-width: calc(720px/2);
+	}
 }
 @include lg {
-  .half-max-width {
-    max-width: calc(960px/2);
-  }
+	.half-max-width {
+		max-width: calc(960px/2);
+	}
 }
 @include xl {
-  .half-max-width {
-    max-width: calc(1140px/2);
-  }
+	.half-max-width {
+		max-width: calc(1140px/2);
+	}
 }

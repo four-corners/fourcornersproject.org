@@ -88,37 +88,19 @@ label {
 	width: 100%;
 }
 .field-description {
-	// @include hidden;
-	width: .5rem;
-	height: .5rem;
-	margin: 0;
-	background-color: $dark;
-	border-radius: 50%;
-	overflow: hidden;
-	display: inline-block;
-	display: none;
-	// label:hover + &, &:hover {
-	// 	width: 100%;
-	// 	max-width: 15rem;
-	// 	height: auto;
-	// 	max-height: 10rem;
-	// 	position: absolute;
-	// 	left: 1rem;
-	// 	top: 0;
-	// 	z-index: 2;
-	// 	padding: .5rem;
-	// 	display: inline;
-	// 	color: $dark;
-	// 	font-size: .75rem;
-	// 	overflow-y: scroll;
-	// 	background-color: $light;
-	// 	box-shadow: 0 0 1px 1px rgba($dark,.1);
-	//   border: {
-	//   	width: 1px;
-	//   	style: solid;
-	//   	color: $light;
-	// 		radius: $radius;
-	// 	}
+	width: 100%;
+	margin: 0 0 1rem 0;
+	padding: .5rem;
+	display: block;
+	background-color: $light;
+	border-radius: $radius;
+	@include smText;
+	label + & {
+		color: $medium;
+		font-style: italic;
+	}
+	// label.show-desc + & {
+	// 	display: block;
 	// }
 }
 

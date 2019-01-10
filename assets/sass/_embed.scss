@@ -1,5 +1,13 @@
 .sticky {
 	overflow-y: auto;
+	@include sm {
+		width: 100% !important;
+		height: auto !important;
+		position: relative !important;
+		top: unset !important;
+		left: unset !important;
+		padding-top: 0px !important;
+	}
 }
 #embedder {
 	margin-top: 1.25rem;
@@ -102,6 +110,22 @@
 		padding: 0;
 		.fc-photo {
 			background-color: $mediumBlue;
+		}
+		.no-photo {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			display: flex;
+			flex-direction: column;
+			@include strong;
+			h2 {
+				margin: auto;
+				color: $blue;
+				user-select: none;
+				@include strong;
+			}
 		}
 	}
 	// &:not(.has-image) {

@@ -35,7 +35,7 @@ class CustomUploadWidget extends React.Component {
 		} = props;
 	}
 
-	changeSrcMode(srcMode) {
+	updateSrcMode(srcMode) {
 		const srcKey = srcMode.replace('Mode','Src');
 		if(!srcKey) {return}
 		const srcVal = this.state[srcKey];
@@ -59,7 +59,7 @@ class CustomUploadWidget extends React.Component {
 					imgSrc: imgSrc,
 					isLoaded: true
 				});
-				this.changeSrcMode(srcMode);
+				this.updateSrcMode(srcMode);
 				this.props.onChange(imgSrc);
 			}
 			pseudoImg.onerror = (e) => {
@@ -73,7 +73,7 @@ class CustomUploadWidget extends React.Component {
 			pseudoImg.src = imgSrc;
 		} else if(srcMode == 'fileMode') {
 			imgSrc = URL.createObjectURL(value);
-			this.changeSrcMode(srcMode);
+			this.updateSrcMode(srcMode);
 			this.setState({
 				fileSrc: imgSrc,
 				imgSrc: imgSrc,
@@ -114,7 +114,7 @@ class CustomUploadWidget extends React.Component {
 						checked={(this.state.srcMode=='urlMode')}
 						onChange={(e => {
 							const srcMode = e.target.id;
-							this.changeSrcMode(srcMode);
+							this.updateSrcMode(srcMode);
 						})}
 						/>
 					<label className='control-label checkbox' htmlFor='urlMode'></label>
@@ -136,6 +136,7 @@ class CustomUploadWidget extends React.Component {
 				<label className='control-label' htmlFor='fileMode'>
 					From a file (temporary)
 				</label>
+
 				<div className='checkbox-widget form-group'>
 					<input className=''
 						id='fileMode'
@@ -144,11 +145,10 @@ class CustomUploadWidget extends React.Component {
 						type='radio' 
 						checked={(this.state.srcMode=='fileMode')}
 						onChange={(e => {
-							this.changeSrcMode('fileMode');
+							this.updateSrcMode('fileMode');
 						})}
 						/>
 					<label className='control-label checkbox' htmlFor='fileMode'></label>
-
 
 					<div className='checkbox-content'>
 						<label className='control-label btn' htmlFor={fileId}>Browse file</label>
@@ -162,13 +162,7 @@ class CustomUploadWidget extends React.Component {
 									this.onChangeSrc(e.target.files[0], 'fileMode');
 								}
 							})} />
-
-						<p className='field-description'>
-							{/*fields['embed_desc']*/}
-							Four Corners does not host files, this upload is just for preview. Before embedding on your site, please paste a URL to your image.
-						</p>
 					</div>
-
 
 				</div>
 			</div>

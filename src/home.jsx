@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import ReactHtmlParser from 'react-html-parser';
 // import SchemaForm from 'react-jsonschema-form';
 
 import i18n from './i18n.jsx';
@@ -13,33 +14,33 @@ class Home extends React.Component {
 		super(props);
 		this.state = {
 			lang: 'en',
+			homeData: {},
+			embeds: {},
+			embedHtmls: {}
 		};
+		this.slugs = ['authorship', 'backstory', 'context', 'links'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
 
 	componentDidMount() {
-		let that = this;
-		setTimeout(function() {
-			FourCorners.prototype.init({
-				cutline: false,
-				interactive: false,
-				active: 'authorship'
+		let self = this;
+		let url = window.location.href.split('/');
+		let lang = i18n.language;
+		let req = SiteSettings.url.api+'page?slug=home&lang='+lang;
+		fetch(req)
+			.then(function(res) {
+				if (!res.ok) {
+					throw Error(res.statusText);
+				}
+				return res.json();
+			})
+			.then(function(res) {
+				if(res) {
+					self.setState({ homeData: res });
+					self.initEmbeds();
+				}
 			});
-		},20);
-		// let url = window.location.href.split('/');
-		// let lang = i18n.language;
-		// let req = SiteSettings.url.api + 'creators?lang=' + lang;
-		// fetch(req)
-		// 	.then(function(res) {
-		// 		if (!res.ok) {
-		// 			throw Error(res.statusText);
-		// 		}
-		// 		return res.json();
-		// 	})
-		// 	.then(function(res) {
-		// 		that.setState({ creator: res[0] });
-		// 	});
-		// i18n.on('languageChanged', this.onLanguageChanged);
+		i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
 	componentWillUnmount() {
@@ -47,7 +48,14 @@ class Home extends React.Component {
 	}
 
 	componentDidUpdate() {
-
+		// let self = this;
+		// setTimeout(function() {
+		// 	const fourCorners = FourCorners.prototype.init({
+		// 		cutline: false,
+		// 		active: 'authorship'
+		// 	});
+		// 	// console.log(fourCorners);
+		// });
 	}
 
 	onLanguageChanged(lang) {
@@ -56,22 +64,53 @@ class Home extends React.Component {
 		});
 	}
 
+	initEmbeds() {
+		this.slugs.forEach((slug, i) => {
+			if(this.state.homeData&&this.state.homeData.acf) {
+				const fields = this.state.homeData.acf;
+				const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
+				let embedHtmls = this.state.embedHtmls;
+				embedHtmls[slug] = embedHtml;
+				this.setState({
+					embedHtmls: embedHtmls
+				});
+				console.log(slug);
+				const fourCorners = FourCorners.prototype.init({
+					cutline: false,
+					active: slug
+				});
+
+			}
+		});
+	}
+
 	renderRow(slug, i) {
 		const side = i%2==0;
-		const rowClass = 'row explainer'+(side?'':' reverse')
+		const rowClass = 'row explainer'+(side?'':' reverse');
+		const homeData = this.state.homeData;
+		let rowData = {}
+		let keys = ['title', 'desc', 'embed'];
+
+		keys.forEach((key,i) => {
+			if(homeData&&homeData.acf&&homeData.acf[slug+'_'+key]) {
+				rowData[key] = ReactHtmlParser(homeData.acf[slug+'_'+key]);
+			} else {
+				rowData[key] = '';
+			}
+		});
+
 		return (
 			<div className={rowClass} key={i}>
 				<div className="col col-5">
 					<div className="col-content">
-						<h2>Declare your <strong>authorship</strong></h2>
-
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi suscipit lorem ipsum, sed convallis tellus interdum vel. Phasellus ac egestas felis. Cras sodales semper pharetra. Praesent mattis sapien a ultrices condimentum. Donec laoreet ligula ac augue venenatis, a posuere nibh tempus. Duis et posuere mauris.</p>
+						<h2>{rowData.title}</h2>
+						{rowData.desc}
 					</div>
 				</div>
 
 				<div className="col col-7">
 					<div className="col-content">
-						<div className='fc-embed' data-fc='{"lang":"en","photo":{"file":"https://i.guim.co.uk/img/media/aa06488c4757b267f6c6c96f27da476f97ac1ade/0_130_5760_3456/master/5760.jpg?width=1920&quality=85&auto=format&fit=max&s=adfe866d19eb26e25a35fd62d0cddf56"},"authorship":{"credit":"Credit credit credit credit credit credit credit credit credit credit credit credit credit credit credit credit credit","license":"coreytegeler@gmail.com"},"backstory":{},"context":{},"links":{}}'></div>
+						{this.state.embedHtmls[slug]}
 					</div>
 				</div>
 			</div>
@@ -80,14 +119,21 @@ class Home extends React.Component {
 
 	render() {
 		let lang = this.state.lang;
-		let corners = ['authorship', 'backstory', 'context', 'links'];
+		const homeData = this.state.homeData;
+
+		let intro = '';
+		if(homeData.post_content) {
+			intro = <div className="intro-text">{ReactHtmlParser(homeData.post_content)}</div>;
+		}
+
 		let rows = [];
-		corners.forEach((slug,i) => {
+		this.slugs.forEach((slug,i) => {
 			rows.push(this.renderRow(slug,i));
 		});
 		return (
 			<main id="home">
 				<div className="max-width">
+					{/*intro*/}
 					{rows}
 				</div>
 			</main>

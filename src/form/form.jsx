@@ -215,11 +215,11 @@ class Form extends React.Component {
 			<div className='col-inner'>
 				<div id='forms' className='col-content'>
 					<SchemaForm
+						formData={this.props.formData}
 						schema={this.translateSchema(Schema)}
 						uiSchema={uiSchema}
-						widgets={widgets}
 						ArrayFieldTemplate={ArrayField}
-						formData={this.props.formData}
+						widgets={widgets}
 						validate={validate}
 						liveValidate={true}
 						onFocus={this.onFocus}

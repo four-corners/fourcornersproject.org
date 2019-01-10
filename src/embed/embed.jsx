@@ -48,15 +48,15 @@ class Embed extends React.Component {
 
 	}
 
-	onDropLoad(e) {
-		// console.log('Image Loaded');
-		// this.setState({ imgLoaded: 'loaded' });
-	}
+	// onDropLoad(e) {
+	// 	// console.log('Image Loaded');
+	// 	// this.setState({ imgLoaded: 'loaded' });
+	// }
 
-	onDropError(e) {
-		// console.log('Image Failed'); 
-		// this.setState({ imgLoaded: 'failed' });
-	}
+	// onDropError(e) {
+	// 	// console.log('Image Failed'); 
+	// 	// this.setState({ imgLoaded: 'failed' });
+	// }
 
 	// onChangeDrop(e) {
 	// 	let imgSrc = e.target.value;
@@ -180,7 +180,6 @@ class Embed extends React.Component {
 					<div className='col-content'>
 					
 						<legend>Create your own</legend>
-						<div className='field-description'>{fields['photo_desc']}</div>
 
 						<div id='embedder'>
 							<fieldset>
@@ -189,7 +188,6 @@ class Embed extends React.Component {
 										<div className={formGroupClass}>
 											<Module
 												creator={this.props.creator}
-												imgSrc={this.props.imgSrc}
 												imgLoaded={this.props.imgLoaded}
 												darkMode={this.state.darkMode}
 												formData={this.props.formData}
@@ -247,8 +245,6 @@ class Embed extends React.Component {
 											onFocus={this.onFocus.bind(this)}
 											onBlur={this.onBlur.bind(this)}
 											/>
-
-										<p className='field-description'>{fields['embed_desc']}</p>
 										
 										<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
 											<div className='form-group form-col'>

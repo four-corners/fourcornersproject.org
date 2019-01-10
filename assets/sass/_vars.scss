@@ -2,9 +2,7 @@
 
 $blue: #80bdff;
 $mediumBlue: rgba($blue,.1);
-$lightBlue: rgba($blue,.02);
-
-
+$lightBlue: rgba($blue,.05);
 
 $dark: #000;
 $medium: #6f6f6f;
@@ -15,12 +13,17 @@ $lighten: rgba($lightest,.5);
 
 $radius: 4px;
 
+
 @mixin slowTrans {
 	transition: all 100ms ease;
 }
 
 @mixin medTrans {
 	transition: all 400ms ease;
+}
+
+@mixin strong {
+	font-weight: 700;
 }
 
 @mixin border {
@@ -65,23 +68,27 @@ $radius: 4px;
 	}
 }
 
+@mixin underline {
+	border-bottom: .2rem solid;
+}
+
 @mixin smText {
 	font-size: .8rem;
-	line-height: 1.2em;
+	line-height: 1.4em;
 }
 
 @mixin lgText {
 	font-size: 1.5rem;
-	line-height: 1.3em;
+	line-height: 1.7em;
 }
 
 @mixin xlText {
-	font-size: 2rem;
+	font-size: 2.3rem;
 	line-height: 1.2em;
 }
 
 @mixin sm {
-	@media (min-width: 576px) {
+	@media (max-width: 576px) {
 		@content;
 	}
 }

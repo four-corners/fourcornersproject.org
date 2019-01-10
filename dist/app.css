@@ -1977,6 +1977,7 @@ nav.site-nav {
     margin-bottom: 2rem; }
 
 .explainer {
+  min-height: 15rem;
   padding: 2rem 0;
   margin: 3rem 0;
   background-color: rgba(128, 189, 255, 0.1);
@@ -1997,8 +1998,26 @@ nav.site-nav {
   .explainer .col-content {
     margin: auto; }
   .explainer .fc-embed {
+    max-height: 20rem;
+    border-radius: 4px;
+    mix-blend-mode: multiply;
     -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
             box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1); }
+    .explainer .fc-embed img {
+      -webkit-filter: grayscale(1);
+              filter: grayscale(1); }
+    .explainer .fc-embed .fc-corner[data-slug='context'] {
+      top: 0em;
+      left: 0em; }
+    .explainer .fc-embed .fc-corner[data-slug='links'] {
+      top: 0em;
+      right: 0em; }
+    .explainer .fc-embed .fc-corner[data-slug='authorship'] {
+      bottom: 0em;
+      right: 0em; }
+    .explainer .fc-embed .fc-corner[data-slug='backstory'] {
+      bottom: 0em;
+      left: 0em; }
   .explainer h2 {
     color: #000;
     margin: 0 0 1.5rem 0; }

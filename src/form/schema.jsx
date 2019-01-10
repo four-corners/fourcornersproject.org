@@ -1,6 +1,8 @@
 // https://mozilla-services.github.io/react-jsonschema-form/
 // https://github.com/mozilla-services/react-jsonschema-form/
 
+// https://creativecommons.org/choose/
+
 const Schema = {
 	title: '',
 	type: 'object',
@@ -27,15 +29,15 @@ const Schema = {
 				caption: {
 					type: 'string',
 				},
+				ethics: {
+					type: 'string',
+					enum: []
+				},
 				copyright: {
 					type: 'string',
 				},
 				license: {
 					type: 'string',
-				},
-				ethics: {
-					type: 'string',
-					enum: []
 				},
 			}
 		},

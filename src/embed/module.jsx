@@ -96,8 +96,12 @@ class Embed extends React.Component {
 			}
 			panels.push(
 				<div className={className} data-slug={cornerSlug} key={i}>
-					<div className='fc-panel-title'>{cornerTitle}</div>
-					<div className='fc-inner'>{entries}</div>
+					<div className='fc-scroll'>
+						<div className='fc-inner'>
+							<div className='fc-panel-title'>{cornerTitle}</div>
+							{entries}
+						</div>
+					</div>
 				</div>
 			);
 		})}

@@ -6,6 +6,7 @@
 }
 
 .explainer {
+	min-height: 15rem;
 	padding: 2rem 0;
 	margin: 3rem 0;
 	background-color: $mediumBlue;
@@ -22,7 +23,34 @@
 		margin: auto;
 	}
 	.fc-embed {
+		max-height: 20rem;
+		border-radius: $radius;
+		mix-blend-mode: multiply;
 		@include shadow;
+		.fc-photo {
+
+		}
+		img {
+			filter: grayscale(1);
+		}
+		.fc-corner {
+			&[data-slug='context'] {
+				top: 0em;
+				left: 0em;
+			}
+			&[data-slug='links'] {
+				top: 0em;
+				right: 0em;
+			}
+			&[data-slug='authorship'] {
+				bottom: 0em;
+				right: 0em;
+			}
+			&[data-slug='backstory'] {
+				bottom: 0em;
+				left: 0em;
+			}
+		}
 	}
 	h2 {
 		color: $dark;

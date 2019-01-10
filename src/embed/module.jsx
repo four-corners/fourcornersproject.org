@@ -112,8 +112,9 @@ class Embed extends React.Component {
 		const photo = this.props.formData.photo;
 		const imgSrc = photo ? photo.file : '';
 		const darkMode = this.props.darkMode == 'true' ? ' fc-dark' : '';
+		const imgLoaded = imgSrc ? ' fc-loaded' : '';
 		return(
-			<div className={'fc-embed'+darkMode}>
+			<div className={'fc-embed'+darkMode+imgLoaded}>
 				{!imgSrc?<div className="no-photo"><h2>No photo</h2></div>:''}
 				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
 					<img src={imgSrc} className='fc-img'/>

@@ -26,6 +26,29 @@
 		// 	background-color: $blue;
 		// }
 	}
+	.fc-embed {
+		.fc-row:not(.fc-empty):last-of-type {
+			border: none;
+		}
+		&:not(.fc-loaded) .fc-corner {
+			&[data-slug='context']:not(.fc-active) {
+				top: 0em;
+				left: 0em;
+			}
+			&[data-slug='links']:not(.fc-active) {
+				top: 0em;
+				right: 0em;
+			}
+			&[data-slug='authorship']:not(.fc-active) {
+				bottom: 0em;
+				right: 0em;
+			}
+			&[data-slug='backstory']:not(.fc-active) {
+				bottom: 0em;
+				left: 0em;
+			}
+		}
+	}
 }
 #embed-input {
 	padding: 0;
@@ -196,10 +219,5 @@
 		label {
 			margin: 0 1rem 0 0;
 		}
-	}
-}
-.fc-embed {
-	.fc-row:not(.fc-empty):last-of-type {
-		border: none;
 	}
 }

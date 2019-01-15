@@ -37,8 +37,7 @@ strong {
 a, a:visited, a:hover {
 	color: $blue;
 	text-decoration: none;
-	@include focus;
-	@include medTrans;
+	@include fastTrans;
 }
 .container {
 

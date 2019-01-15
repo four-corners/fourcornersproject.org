@@ -9,7 +9,7 @@
 	min-height: 15rem;
 	padding: 2rem 0;
 	margin: 3rem 0;
-	background-color: $mediumBlue;
+	background-color: $medium-blue;
 	border-radius: $radius;
 	@include shadow;
 	.col {
@@ -52,10 +52,10 @@
 		}
 	}
 	h2 {
-		color: $dark;
+		color: $darkest;
 		margin: 0 0 1.5rem 0;
 		p {
-			color: $dark;
+			color: $darkest;
 		}
 		strong {
 			color: $blue;

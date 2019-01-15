@@ -132,7 +132,7 @@
 		transition: all 200ms ease-in-out;
 		padding: 0;
 		.fc-photo {
-			background-color: $mediumBlue;
+			background-color: $medium-blue;
 		}
 		.no-photo {
 			width: 100%;
@@ -153,7 +153,7 @@
 	}
 	// &:not(.has-image) {
 	// 	.form-group.focus, .form-group:focus {
-	// 		color: $dark;
+	// 		color: $darkest;
 	// 		background-color: $blue;
 	// 		border-width: 1px;
 	// 		outline: 0;

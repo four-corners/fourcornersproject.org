@@ -1,11 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&subset=cyrillic,cyrillic-ext,greek,greek-ext,vietnamese);
 
 $blue: #80bdff;
-$mediumBlue: rgba($blue,.1);
-$lightBlue: rgba($blue,.05);
+$medium-blue: rgba($blue,.1);
+$light-blue: rgba($blue,.05);
 
-$dark: #000;
+$darkest: #000;
+$dark: #262225;
 $medium: #6f6f6f;
+
+$medium: #c4c4c4;
+
 $light: #f6f6f6;
 $lighter: #faf9fe;
 $lightest: #fff;
@@ -14,8 +18,8 @@ $lighten: rgba($lightest,.5);
 $radius: 4px;
 
 
-@mixin slowTrans {
-	transition: all 100ms ease;
+@mixin fastTrans {
+	transition: all 200ms ease;
 }
 
 @mixin medTrans {
@@ -36,11 +40,11 @@ $radius: 4px;
 }
 
 @mixin shadow {
-	box-shadow: 0 0 1px 1px rgba($dark,.1);
+	box-shadow: 0 0 1px 1px rgba($darkest,.1);
 }
 
 @mixin highlight {
-	color: $dark;
+	color: $darkest;
 	border-width: 1px;
 	outline: 0;
 	box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);

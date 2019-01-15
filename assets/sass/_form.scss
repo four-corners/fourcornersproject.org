@@ -105,10 +105,10 @@ label {
 }
 
 .form-control {
-	color: $dark;
+	color: $darkest;
 	border-color: $blue;
 	background-color: $lightest;
-	box-shadow: 0 0 1px 1px rgba($dark,.1);
+	box-shadow: 0 0 1px 1px rgba($darkest,.1);
 	padding: .375rem;
 	@include focus;
 }
@@ -140,7 +140,7 @@ input.form-control {
 	.option {
 		padding: .375rem;
 		border-bottom: 1px solid $light;
-		@include slowTrans;
+		@include fastTrans;
 		.option-label {
 
 		}
@@ -169,7 +169,7 @@ input.form-control {
 		flex-direction: rows-reverse;
 		flex-wrap: no-wrap;
 		border-radius: $radius;
-		@include slowTrans;
+		@include fastTrans;
 		&:hover {
 			cursor: pointer;
 			opacity: .7;
@@ -190,8 +190,8 @@ input.form-control {
 			left: 0;
 			top: 0;
 			background: $blue;
-			@include slowTrans;
-			box-shadow: 0 0 1px 1px rgba($dark,.1);
+			@include fastTrans;
+			box-shadow: 0 0 1px 1px rgba($darkest,.1);
 		}
 		// .label-inner {
 		// 	width: calc(100% - 2.75rem - 2px);
@@ -318,7 +318,7 @@ button, .btn {
 	padding: .5rem !important;
 	position: relative;
 	flex: inherit !important;
-	box-shadow: 0 0 1px 1px rgba($dark,.1);
+	box-shadow: 0 0 1px 1px rgba($darkest,.1);
 	@include card;
 	@include focus;
 	&.btn-add, &.btn-danger {

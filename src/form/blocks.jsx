@@ -7,7 +7,8 @@ class Blocks extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
-			blocks: [{}]
+			blocks: [{}],
+			mediaData: []
 		};
 	}
 
@@ -27,11 +28,65 @@ class Blocks extends React.Component {
 		let block = blocks[index];
 		blocks[index][fieldKey] = value;
 
+		if(blocks[index].url) {
+			this.getMediaData(blocks[index], fieldsetKey, index);
+		}
+
 		this.setState({
 			blocks: blocks
 		});
 
 		this.props.onChange(fieldName, blocks);
+	}
+
+	getMediaData(obj, fieldsetKey, index) {
+		const url = obj.url;
+		const source = obj.source;
+		// if(!isUrl(url)) {return}
+		const that = this;
+		const uri = encodeURIComponent(url);
+		const mediaData = Object.assign({},this.state.mediaData);
+		let req = '';
+		mediaData[fieldsetKey] = [];
+		switch(source) {
+			case 'youtube':
+				// req = 'https://www.youtube.com/oembed?url='+uri;
+				req = 'https://noembed.com/embed?url='+uri;
+				break;
+			case 'vimeo':
+				req = 'https://vimeo.com/api/oembed.json?url='+uri;
+				break;
+			case 'soundcloud':
+				req = 'https://soundcloud.com/oembed?format=json&url='+uri;
+				break;
+			default:
+				return false;
+				break;
+		}
+		const headers = new Headers();
+		fetch(req, {
+				method: 'GET',
+				headers: headers,
+	      mode: 'cors',
+	      cache: 'default'
+	    })
+			.then(res => {
+				if (!res.ok) {throw Error(res.statusText)}
+				return res.json();
+			})
+			.then(res => {
+				mediaData[fieldsetKey][index] = {
+					html:res.html,
+					width: res.width,
+					height: res.height
+				};
+				// console.log(mediaData);
+				this.setState({mediaData: mediaData});
+				this.props.sendMediaData(mediaData);
+			})
+			.catch(function(err) {
+				console.log(err);
+			});
 	}
 
 	renderField(fieldKey, fieldData, blockIndex, fieldIndex) {

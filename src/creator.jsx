@@ -15,7 +15,7 @@ class Creator extends React.Component {
 			creator: {},
 			lang: 'en',
 			formData: {},
-			// mediaData: {context:[],backstory:[]},
+			mediaData: {backstory:[]},
 			activeCorner: null
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
@@ -95,11 +95,11 @@ class Creator extends React.Component {
 		});
   }
 
-  // setMediaData(mediaData) {
-		// this.setState({
-		// 	mediaData: mediaData
-		// });
-  // }
+  setMediaData(mediaData) {
+		this.setState({
+			mediaData: mediaData
+		});
+  }
 	
   setActiveCorner(slug) {
   	if(!slug){slug==''}
@@ -116,8 +116,7 @@ class Creator extends React.Component {
 				formData={this.state.formData}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
 				sendFormData={this.setFormData.bind(this)}
-				// sendMediaData={this.setMediaData.bind(this)}
-				/>
+				sendMediaData={this.setMediaData.bind(this)} />
 		);
 	}
 

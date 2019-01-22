@@ -103,7 +103,8 @@ class Fieldset extends React.Component {
 							fieldset={this.props.id}
 							data={field}
 							key={fieldElems.length}
-							onChange={this.props.onChange} />
+							onChange={this.props.onChange}
+							sendMediaData={this.props.sendMediaData}/>
 					)
 					break;
 				default:

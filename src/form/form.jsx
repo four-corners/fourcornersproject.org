@@ -119,7 +119,8 @@ class Form extends React.Component {
 				id={setKey}
 				data={Schema[setKey]}
 				key={setKey}
-				onChange={this.onChange.bind(this)} />;
+				onChange={this.onChange.bind(this)}
+				sendMediaData={this.props.sendMediaData} />;
 			fieldsets.push(fieldset);
 		}
 		return fieldsets;

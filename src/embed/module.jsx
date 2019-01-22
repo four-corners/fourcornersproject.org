@@ -95,7 +95,7 @@ class Embed extends React.Component {
 					const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
 					fieldLabel = fields[fieldLabelKey];
 				}
-				// const mediaData = this.props.mediaData[cornerSlug];
+				const mediaData = this.props.mediaData[cornerSlug];
 				if(fieldData) {
 					entries.push(
 						<Entry
@@ -103,7 +103,7 @@ class Embed extends React.Component {
 							fieldLabel={fieldLabel}
 							fieldSlug={fieldSlug}
 							fieldData={fieldData}
-							// mediaData={mediaData}
+							mediaData={mediaData}
 							key={i} />
 					);
 				}

@@ -11,24 +11,81 @@
 .error-detail {
 	display: none !important;
 }
-#forms {
-	fieldset .field-object {
-		margin-bottom: 2rem;
-		padding-bottom: 2rem;
+
+fieldset {
+	width: 100%;
+	margin-bottom: 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 1px solid $medium;
+}
+
+.fieldset-inner {
+	height: 0;
+	overflow: hidden;
+	fieldset.expand & {
+		height: auto;
 	}
 }
+.field {
+	margin: 1rem .25rem .25rem;
+}
+section {
+	margin: 0 auto 2rem auto;
+}
+.form-group {
+	position: relative;
+}
+label, legend {
+	width: 100%;
+	font-weight: bold;
+}
 legend {
+	width: 100%;
+	margin: 0 .25rem;
+	display: block;
 	@include lgText;	
-	line-height: 1.5em;	
-	margin-bottom: 1rem;
-	&#root_authorship__title,
-	&#root_backstory__title,
-	&#root_context__title,
-	&#root_links__title {
-		&::before {
+	line-height: 1.5em;
+	user-select: none;
+	position: relative;
+	@include fastTrans;
+	span {
+		position: relative;
+	}
+	&::after {
+		width: 1rem;
+		height: 1rem;
+		position: absolute;
+		right: .75rem;
+    top: calc(50% - .75rem);
+		transform: rotate(45deg);
+		border: solid $medium;
+		border-width: 0 2px 2px 0;
+		content: '';
+		@include fastTrans(border-color);
+	}
+	&:hover {
+		cursor: pointer;
+	}
+	fieldset:not(.expand) &:not(:hover) {
+		color: $medium;
+		span::before {
+			opacity: .5;
+		}
+		&::after {
+			// border-color: $light;	
+		}
+	}
+	fieldset.expand &::after {
+		top: calc(50% - .25rem);
+		transform: rotate(-135deg);
+	}
+	#authorship &,
+	#backstory &,
+	#context &,
+	#links & {
+		span::before {
 			width: 2rem;
 			height: 2rem;
-			// background-color: $blue;
 			position: absolute;
 	    right: -3rem;
 	    top: .1rem;
@@ -37,57 +94,29 @@ legend {
 			background-repeat: no-repeat;
 			background-image: url(./../images/selected.svg);
 			content: '';
+			@include fastTrans;
 		}
 	}
-	&#root_backstory__title {
-		&::before {
-			transform: rotate(90deg);
-		}
+	#backstory & span::before {
+		transform: rotate(90deg);
 	}
-	&#root_context__title {
-		&::before {
-			transform: rotate(180deg);
-		}
+	#context & span::before {
+		transform: rotate(180deg);
 	}
-	&#root_links__title {
-		&::before {
-			transform: rotate(270deg);
-		}
+	#links & span::before {
+		transform: rotate(270deg);
 	}
 }
-section {
-	margin: 0 auto 2rem auto;
-}
-.form-group {
-	position: relative;
-}
-.form-group.field.field-object {
-	// opacity: .5;
-	transition: opacity 500ms ease-in-out;
-	&:hover {
-		opacity: 1;
-	}
-}
-label.control-label, legend {
-	width: auto;
-	display: inline-block;
-	font-weight: bold;
-}
-label.control-label {
+label {
 	margin-bottom: .5rem;
-}
-label[for='root_photo_file'] {
-	display: none;
+	display: inline-block;
 }
 .label-inner {
 	display: flex;
 	align-items: center;
 	margin-left: .5rem;
 }
-label {
-	width: 100%;
-}
-.field-description {
+.desc {
 	width: 100%;
 	margin: 0 0 1rem 0;
 	padding: .5rem;
@@ -104,22 +133,25 @@ label {
 	// }
 }
 
-.form-control {
+.form-elem {
+	width: 100%;
 	color: $darkest;
 	border-color: $blue;
 	background-color: $lightest;
 	box-shadow: 0 0 1px 1px rgba($darkest,.1);
 	padding: .375rem;
+	@include border;
 	@include focus;
 }
-input.form-control {
-	// border-width: 0 0 1px 0;
+
+select {
+	height: 2.5rem;
 }
-.select-widget {
+
+.select.field {
 	select {
-		width: 100%;
 		@include hidden;
-		&:focus + .select-widget-dropdown {
+		&:focus + .select-widget {
 			@include highlight;
 		}
 	}
@@ -131,7 +163,7 @@ input.form-control {
 		}
 	}
 }
-.select-widget-dropdown {
+.select-widget {
 	overflow-y: scroll;
 	padding: 0;
 	&:not(.opened) {
@@ -263,7 +295,7 @@ input.form-control {
 	}
 }
 
-.upload-widget {
+.file.field {
 	label.btn {
 		font-weight: normal;
 	}
@@ -279,30 +311,33 @@ input.form-control {
 	}
 }
 
-.field-array {
-	legend {
-		font-size: inherit;
-	}
-	.row {
-		margin-left: 0;
-		margin-right: 0;
-	}
+// .field-array {
+// 	legend {
+// 		font-size: inherit;
+// 	}
+// 	.row {
+// 		margin-left: 0;
+// 		margin-right: 0;
+// 	}
 
-	.field-object {
-		margin-bottom: 0;
-		padding-bottom: 0;
-		border-bottom: 0;
-	}
-}
-.array-item-list.row {
-	margin-left: 0;
-	margin-right: 0;
-}
-.array-item {
+// 	.field-object {
+// 		margin-bottom: 0;
+// 		padding-bottom: 0;
+// 		border-bottom: 0;
+// 	}
+// }
+// .array-item-list.row {
+// 	margin-left: 0;
+// 	margin-right: 0;
+// }
+.block-widget {
 	width: 100%;
 	margin: 0 auto 2rem auto;
 	@include card;
 	overflow: hidden;
+	.field:first-child {
+		margin-top: 0;
+	}
 }
 .has-error {
 	input, select, textarea {

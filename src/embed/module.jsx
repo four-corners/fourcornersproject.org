@@ -11,13 +11,14 @@ class Embed extends React.Component {
 		this.corners = ['context','links','authorship','backstory'];
 		this.state = {
 			fourCorners: null,
-			formData: {}
+			formData: {},
+			expandPanel: false
 		};
 	}
 
 	componentDidMount() {
 		let self = this;
-		const activeCorner = this.props.activeCorner;
+		// const activeCorner = this.props.activeCorner;
 		setTimeout(function() {
 			self.fourCorners = FourCorners.prototype.init({
 				noPanels: true
@@ -26,11 +27,10 @@ class Embed extends React.Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		const activeCorner = this.props.activeCorner;
-		const prevCorner = prevProps.activeCorner;
-		if(activeCorner) {
-			this.fourCorners.openCorner(activeCorner);
-		}
+		// const activeCorner = this.props.activeCorner;
+		// if(this.fourCorners) {
+		// 	this.fourCorners.openCorner(activeCorner);
+		// }
 	}
 
 	onChangeOpts(e) {
@@ -57,12 +57,30 @@ class Embed extends React.Component {
 		
 	}
 
+	toggleExpandPanel() {
+		// this.fourCorners.toggleExpandPanel();
+		this.setState({
+			expandPanel: !this.state.expandPanel
+		});
+	}
+
+	closePanel() {
+		this.fourCorners.closeCorner();
+		// this.props.setActiveCorner();
+		this.setState({
+			expandPanel: false
+		});
+	}
+
 	renderPanels() {
 		const formData = Object.entries(this.props.formData);
 		const embedData = {};
+		// console.log(formData);
 		{formData.map((obj) => this.corners.includes(obj[0]) ? embedData[obj[0]]=obj[1]:'')}
+		// console.log(embedData);
 		const panels = [];
 		const fields = this.props.creator.acf;
+		// console.log(this.props.activeCorner);
 		{Object.entries(embedData).forEach((obj,i) => {
 			const cornerSlug = obj[0];
 			const cornerTitleKey = [cornerSlug, 'title'].join('_');
@@ -77,7 +95,7 @@ class Embed extends React.Component {
 					const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
 					fieldLabel = fields[fieldLabelKey];
 				}
-				const mediaData = this.props.mediaData[cornerSlug];
+				// const mediaData = this.props.mediaData[cornerSlug];
 				if(fieldData) {
 					entries.push(
 						<Entry
@@ -85,12 +103,12 @@ class Embed extends React.Component {
 							fieldLabel={fieldLabel}
 							fieldSlug={fieldSlug}
 							fieldData={fieldData}
-							mediaData={mediaData}
+							// mediaData={mediaData}
 							key={i} />
 					);
 				}
 			});
-			let className = 'fc-panel';
+			let className = 'fc-panel fc-'+cornerSlug;
 			if(this.props.activeCorner == cornerSlug) {
 				className += ' fc-active';
 			}
@@ -98,7 +116,11 @@ class Embed extends React.Component {
 				<div className={className} data-slug={cornerSlug} key={i}>
 					<div className='fc-scroll'>
 						<div className='fc-inner'>
-							<div className='fc-panel-title'>{cornerTitle}</div>
+							<div className='fc-panel-title'>
+								<span>{cornerTitle}</span>
+								<div className='fc-icon fc-expand' onClick={this.toggleExpandPanel.bind(this)}/>
+								<div className='fc-icon fc-close' onClick={this.closePanel.bind(this)}/>
+							</div>
 							{entries}
 						</div>
 					</div>
@@ -111,10 +133,19 @@ class Embed extends React.Component {
 	render() {
 		const photo = this.props.formData.photo;
 		const imgSrc = photo ? photo.file : '';
-		const darkMode = this.props.darkMode == 'true' ? ' fc-dark' : '';
-		const imgLoaded = imgSrc ? ' fc-loaded' : '';
+
+		let className = 'fc-embed';
+		if(this.props.darkMode == 'true') {
+			className += ' fc-dark';
+		}
+		if(this.state.expandPanel) {
+			className += ' fc-full';
+		}
+		if(imgSrc) {
+			className += ' fc-loaded';	
+		}
 		return(
-			<div className={'fc-embed'+darkMode+imgLoaded}>
+			<div className={className} data-active={this.props.activeCorner}>
 				{!imgSrc?<div className="no-photo"><h2>No photo</h2></div>:''}
 				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
 					<img src={imgSrc} className='fc-img'/>

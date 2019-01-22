@@ -4,149 +4,81 @@
 // https://creativecommons.org/choose/
 
 const Schema = {
-	title: '',
-	type: 'object',
-	properties: {
-		photo: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				file: {
-					type: 'string',
-					// format: 'data-url',
-				},
-			}
-		},
-		authorship: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				credit: {
-					type: 'string',
-				},
-				caption: {
-					type: 'string',
-				},
-				ethics: {
-					type: 'string',
-					enum: []
-				},
-				copyright: {
-					type: 'string',
-				},
-				license: {
-					type: 'string',
-				},
-			}
-		},
-		backstory: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				story: {
-					type: 'string'
-				},
-				media: {
-					title: '',
-					type: 'array',
-					items: {
-						type: 'object',
-						properties: {
-							type: {
-								type: 'string',
-								enum: [
-									'image',
-									'youtube',
-									'vimeo',
-									'soundcloud'
-								],
-								enumNames: [
-									'Image',
-									'YouTube',
-									'Vimeo',
-									'SoundCloud'
-								],
-							},
-							url: {
-								type: 'string',
-								format: 'uri',
-							},
-							credit: {
-								type: 'string'
-							}
-						}
+	photo: {
+		fields: {
+			file: {
+				type: 'file',
+			},
+		}
+	},
+	authorship: {
+		fields: {
+			credit: {
+				type: 'text',
+			},
+			caption: {
+				type: 'text',
+			},
+			ethics: {
+				type: 'select',
+			},
+			copyright: {
+				type: 'toggle',
+			},
+			license: {
+				type: 'toggle',
+			},
+		}
+	},
+	backstory: {
+		fields: {
+			text: {
+				type: 'textarea'
+			},
+			media: {
+				type: 'blocks',
+				fields: {
+					source: {
+						type: 'select',
+						options: ['image','youtube','vimeo','soundcloud']
+					},
+					url: {
+						type: 'text',
+						format: 'uri',
+					},
+					caption: {
+						type: 'text',
 					}
 				}
 			}
-		},
-		context: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				story: {
-					type: 'string'
-				},
-				media: {
-					title: '',
-					type: 'array',
-					items: {
-						type: 'object',
-						properties: {
-							type: {
-								type: 'string',
-								enum: [
-									'image',
-									'youtube',
-									'vimeo',
-									'soundcloud'
-								],
-								enumNames: [
-									'Image',
-									'YouTube',
-									'Vimeo',
-									'SoundCloud'
-								],
-							},
-							url: {
-								type: 'string',
-								format: 'uri',
-							},
-							credit: {
-								type: 'string'
-							}
-						}
+		}
+	},
+	context: {
+		fields: {
+			text: {
+				type: 'textarea'
+			}
+		}
+	},
+	links: {
+		fields: {
+			links: {
+				type: 'blocks',
+				fields: {
+					title: {
+						type: 'text'
+					},
+					url: {
+						type: 'text',
+						format: 'uri',
+					},
+					caption: {
+						type: 'text',
 					}
 				}
-			}
-		},
-		links: {
-			title: '',
-			type: 'object',
-			required: [],
-			properties: {
-				links: {
-					type: 'array',
-					minItems: 0,
-					items: {
-						type: 'object',
-						properties: {
-							title: {
-								type: 'string'
-							},
-							url: {
-								type: 'string',
-								format: 'uri',
-							}
-						}
-					}
-				},
 			}
 		}
 	}
-}
+};
 
 export default Schema;

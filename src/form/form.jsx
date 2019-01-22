@@ -5,12 +5,15 @@ import isUrl from 'validator/lib/isUrl';
 
 import i18n from '../i18n.jsx';
 import Schema from './schema.jsx';
-import uiSchema from './ui-schema.jsx';
-import validate from './validate.jsx';
-import CustomSelectWidget from './CustomSelectWidget.jsx';
-import CustomToggleWidget from './CustomToggleWidget.jsx';
-import CustomUploadWidget from './CustomUploadWidget.jsx';
-import ArrayField from './ArrayField.jsx';
+import Fieldset from './fieldset.jsx'
+import Field from './field.jsx';
+
+// import uiSchema from './ui-schema.jsx';
+// import validate from './validate.jsx';
+// import CustomSelectWidget from './CustomSelectWidget.jsx';
+// import CustomToggleWidget from './CustomToggleWidget.jsx';
+// import CustomUploadWidget from './CustomUploadWidget.jsx';
+// import ArrayField from './ArrayField.jsx';
 
 class Form extends React.Component {
 	
@@ -18,11 +21,15 @@ class Form extends React.Component {
 		super(props);
 		this.state = {
 			mediaData: this.props.mediaData,
+			formData: {
+				'photo':{},
+				'authorship':{},
+				'backstory':{},
+				'context':{},
+				'links':{}
+			},
 			imgSrc: null
 		};
-		this.onChange = this.onChange.bind(this);
-		this.onBlur = this.onBlur.bind(this);
-		this.onFocus = this.onFocus.bind(this);
 	}
 
 	componentDidMount() {
@@ -37,8 +44,9 @@ class Form extends React.Component {
 
 	}
 
-	onFocus(id) {
-		const slug = id.split('_')[1];
+	onFocus(e) {
+		const name = e.target.name;
+		const slug = name.split('_')[0];
 		this.props.sendActiveCorner(slug);
 	}
 
@@ -46,199 +54,87 @@ class Form extends React.Component {
 
 	}
 
-	getMediaData(url,type,corner,index) {
-		if(!isUrl(url)) {return}
-		const that = this;
-		const uri = encodeURIComponent(url);
-		const mediaData = Object.assign({},this.state.mediaData);
-		let req = '';
-		switch(type) {
-			case 'youtube':
-				req = 'https://www.youtube.com/oembed?url='+uri;
-				break;
-			case 'vimeo':
-				req = 'https://vimeo.com/api/oembed.json?url='+uri;
-				break;
-			case 'soundcloud':
-				req = 'https://soundcloud.com/oembed?format=json&url='+uri;
-				break;
-			default:
-				return false;
-				break;
-		}
-		const headers = new Headers();
-		fetch(req,
-			{
-				method: 'GET',
-				headers: headers,
-	      mode: 'cors',
-	      cache: 'default'
-	    })
-			.then(res => {
-				if (!res.ok) {throw Error(res.statusText)}
-				return res.json();
-			})
-			.then(res => {
-				mediaData[corner][index] = {
-					html:res.html,
-					width: res.width,
-					height: res.height
-				}
-				this.setState({mediaData: mediaData});
-				this.props.sendMediaData(mediaData);
-			})
-			.catch(function(err) {
-				console.log(err);
-			});
-	}
-
-	onChange(e) {
-		const formData = e.formData;
-		const formDataKeys = Object.keys(formData);
-		const mediaData = Object.assign({},this.props.mediaData);
-		for(let key of formDataKeys) {
-			if(formData[key]) {
-				if(formData[key].media) {
-					for(let index of formData[key].media.keys()) {
-						const media = formData[key].media[index];
-						const url = media.url;
-						const type = media.type;
-						if(!mediaData[key]){mediaData[key]=[]}
-						if(!mediaData[key][index]) {
-							mediaData[key][index] = '';
-							this.setState({mediaData: mediaData});
-						}
-						if(url&&type){this.getMediaData(url,type,key,index)}
-					}
-				}
-				// else if(key=='photo') {
-				// 	const imgSrc = formData[key].file;
-				// 	if(imgSrc) {
-				// 		this.setState({imgSrc: imgSrc});
-				// 	}
-				// }
-			}
-		}
-		const newData = Object.assign(this.props.formData, formData);
-		this.props.sendFormData(newData);
-		// this.props.sendFormData(e.formData);
+	onChange(name, value) {
+		const formData = this.state.formData;
+		const nameArr = name.split('_');
+		let fieldsetSlug = nameArr[0];
+		let fieldSlug = nameArr[1];
+		let blockFieldSlug = '';
+		formData[fieldsetSlug][fieldSlug] = value;
+		this.setState({
+			formData: formData
+		});
+		this.props.sendFormData(formData);
+		this.props.sendActiveCorner(fieldsetSlug);
 	}
 
 	onError(e) {
 		// console.log('Error', e);
 	}
 
-	translateSchema(schema) {
+	renderSchema() {
+		let components = [];
 		let lang = this.state.lang;
-		const schemaObjs = Object.assign({}, schema);
-		const groupKeys = Object.keys(schema.properties);
 		const creator = this.props.creator;
-		const fields = creator.acf;
-		for(let groupKey of groupKeys) {
-			let schemaObj = schema.properties[groupKey];
-			const titleKey = [groupKey, 'title'].join('_');
-			schemaObj.title = fields[titleKey];
-			const descKey = [groupKey, 'desc'].join('_');
-			schemaObj.description = fields[descKey];
-		  const props = schemaObj.properties;
-		  if(props) {
-			  const propKeys = Object.keys(props);
-				for (let propKey of propKeys) {
-					//Text fields
-					const fieldTitleKey = [groupKey, propKey, 'label'].join('_');
-					if(fields.hasOwnProperty(fieldTitleKey)) {
-						const fieldTitle = fields[fieldTitleKey];
-						schemaObj.properties[propKey].title = fieldTitle;
-					}
-					const fieldDescKey = [groupKey, propKey, 'desc'].join('_');
-					if(fields.hasOwnProperty(fieldDescKey)) {
-						const fieldDescLabel = fields[fieldDescKey];
-						schemaObj.properties[propKey].description = fieldDescLabel;
-					}
-					//Select fields
-					if(props[propKey].hasOwnProperty('enum')) {
-						const fieldOptionsKey = [groupKey, propKey, 'options'].join('_');
-						const fieldOptions = fields[fieldOptionsKey];
+		const translations = creator.acf;
+		const setKeys = Object.keys(Schema);
+		let translatedSchema = {};
+		let fieldsets = [];
+		for(let setKey of setKeys) {
+			const fields = Schema[setKey].fields;
+			const fieldKeys = Object.keys(fields);
+			Schema[setKey].text = {
+				title: translations[[setKey, 'title'].join('_')],
+				desc: translations[[setKey, 'desc'].join('_')]
+			}
+			for(let fieldKey of fieldKeys) {
+				let field = fields[fieldKey];
+				if(field) {
 
-						schemaObj.properties[propKey].enum = [];
-						schemaObj.properties[propKey].enumNames = [];
-						// schemaObj.properties[propKey].enum.push('default');
-						// schemaObj.properties[propKey].enumNames.push('Select one');
-						if( fieldOptions ) {
-							for(let fieldOption of fieldOptions) {
-								// const fieldValue = fieldOption.label+(fieldOption.desc ? ': '+fieldOption.desc : '');
-								schemaObj.properties[propKey].enum.push((fieldOption.desc ? fieldOption.desc : fieldOption.label));
-								schemaObj.properties[propKey].enumNames.push(fieldOption.label);
-							}
-						}
-
-						const customFieldKey = [groupKey, propKey, 'custom'].join('_');
-						const customField = fields[customFieldKey];
-						schemaObj.properties[propKey].enum.unshift(customField);
-						schemaObj.properties[propKey].enumNames.unshift(customField);
-
-						const emptyFieldKey = [groupKey, propKey, 'empty'].join('_');
-						const emptyField = fields[emptyFieldKey];
-						schemaObj.properties[propKey].enum.unshift('empty');
-						schemaObj.properties[propKey].enumNames.unshift(emptyField);
+					Schema[setKey].fields[fieldKey].text = {
+						label: translations[[setKey, fieldKey, 'label'].join('_')],
+						desc: translations[[setKey, fieldKey, 'desc'].join('_')]
 					}
-					//Repeater fields
-					if(props[propKey].type == 'array') {
-						const addNewKey = [groupKey,propKey,'add'].join('_');
-						const addNewText = fields[addNewKey];
-						schemaObj.properties[propKey].add = addNewText;
-						const nestedProps = props[propKey].items.properties;
-						const nestedPropKeys = Object.keys(nestedProps);
-						for (let nestedProp of nestedPropKeys) {
-							const nestedPropKey = [groupKey, nestedProp, 'label'].join('_');
-							if(fields.hasOwnProperty(nestedPropKey)) {
-								const nestedPropLabel = fields[nestedPropKey];
-								schemaObj.properties[propKey].items.properties[nestedProp].title = nestedPropLabel;
+
+					if(field.type=='select') {
+						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
+						Schema[setKey].fields[fieldKey].options = opts;
+					}
+
+					if(field.type=='blocks') {
+						const blockFields = Schema[setKey].fields[fieldKey].fields;
+						const blockFieldKeys = Object.keys(blockFields);
+						for(let blockFieldKey of blockFieldKeys) {
+							const fields = translations[[setKey, fieldKey, 'fields'].join('_')];
+							Schema[setKey].fields[fieldKey].fields[blockFieldKey].text = {
+								label: translations[[setKey, fieldKey, blockFieldKey, 'label'].join('_')],
+								placeholder: translations[[setKey, fieldKey, blockFieldKey, 'placeholder'].join('_')],
+								desc: translations[[setKey, fieldKey, blockFieldKey, 'desc'].join('_')]
 							}
 						}
 					}
 				}
 			}
-			schemaObjs.properties[groupKey] = schemaObj;
+			const fieldset = <Fieldset
+				id={setKey}
+				data={Schema[setKey]}
+				key={setKey}
+				onChange={this.onChange.bind(this)} />;
+			fieldsets.push(fieldset);
 		}
-		return schemaObjs;
-	}
-
-	renderForm() {
-		const widgets = {
-			customSelectWidget: CustomSelectWidget,
-			customToggleWidget: CustomToggleWidget,
-			customUploadWidget: CustomUploadWidget
-		}
-
-		return (
-			<div className='col-inner'>
-				<div id='forms' className='col-content'>
-					<SchemaForm
-						formData={this.props.formData}
-						schema={this.translateSchema(Schema)}
-						uiSchema={uiSchema}
-						ArrayFieldTemplate={ArrayField}
-						widgets={widgets}
-						validate={validate}
-						liveValidate={true}
-						onFocus={this.onFocus}
-						onBlur={this.onBlur}
-						onChange={this.onChange}
-						onError={this.onError}>
-						<button type='submit' hidden/>
-						{/*<button type='button' className='btn'>Add content in another language</button>*/}
-		      </SchemaForm>
-				</div>
-			</div>
-		);
+		return fieldsets;
 	}
 
 	render() {
 		return (
-			<React.Fragment>
-				{this.renderForm()}
-			</React.Fragment>
+			<div className='col-inner'>
+				<div id='forms' className='col-content'>
+					<form
+						onFocus={this.onFocus.bind(this)}>
+						{this.renderSchema()}
+					</form>
+				</div>
+			</div>
 		);
 	}
 }

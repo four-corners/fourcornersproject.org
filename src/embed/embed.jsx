@@ -20,7 +20,8 @@ class Embed extends React.Component {
 			includeCss: false,
 			includeJs: false,
 			darkMode: false,
-			stickyStyle: {}
+			stickyStyle: {},
+			expand: false
 			// activeCorner: this.props.activeCorner
 		};
 		this.imgInputRef = React.createRef();
@@ -126,6 +127,14 @@ class Embed extends React.Component {
 		console.log('Error', e);
 	}
 
+	toggleExpand() {
+		const currentState = this.state.expand;
+		const newState = !currentState;
+		this.setState({
+			expand: newState
+		});
+	}
+
 	onScroll(e) {
 		const sticky = this.stickyRef.current;
 		const parent = sticky.parentElement;
@@ -171,87 +180,53 @@ class Embed extends React.Component {
 		const fields = this.props.creator.acf;
 		const entries = ['story','author','publication','url','date'];
 		const inputClass = (this.props.imgLoaded?'has-image':'');
-		const formGroupClass = 'form-group card'+(this.props.imgFocus?' focus':'');
-
+		// this.props.imgFocus?' focus':''
 		// const dropClass = 'drop'+(this.props.imgLoaded?' under card':' over');
 		return(
 			<div className='col-inner'>
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='col-content'>
-					
-						<legend>Create your own</legend>
 
 						<div id='embedder'>
-							<fieldset>
-								<div className='form-group field field-object'>
-									<div id='embed-input' className={inputClass}>
-										<div className={formGroupClass}>
-											<Module
-												creator={this.props.creator}
-												imgLoaded={this.props.imgLoaded}
-												darkMode={this.state.darkMode}
-												formData={this.props.formData}
-												mediaData={this.props.mediaData}
-												activeCorner={this.props.activeCorner}
+
+							<div id='embed-input' className={inputClass}>
+								<Module
+									creator={this.props.creator}
+									imgLoaded={this.props.imgLoaded}
+									darkMode={this.state.darkMode}
+									formData={this.props.formData}
+									mediaData={this.props.mediaData}
+									activeCorner={this.props.activeCorner}
+									setActiveCorner={this.props.setActiveCorner}
+									/>
+							</div>
+
+							<div id='embed-output'>
+								
+								<fieldset className={this.state.expand ? 'expand' : ''}>
+									<legend onClick={this.toggleExpand.bind(this)}>
+										{this.props.creator.acf['embed_title']}
+									</legend>
+
+									<div className="fieldset-inner">
+										<div className="field">
+											<textarea className='output form-elem'
+												id='json'
+												readOnly={true}
+												ref={this.outputRef}
+												rows={3}
+												value={this.embedCode(this.props.formData)}
+												onFocus={this.onFocus.bind(this)}
+												onBlur={this.onBlur.bind(this)}
 												/>
-											{
-											// <div className={dropClass}>
-											// 	<Dropzone
-											// 		className='drop-zone'
-											// 		ref={this.imgInputRef}
-											// 		style={{}}
-											// 		accept='image/jpeg, image/png, image/gif'
-											// 		multiple={false}
-											// 		onDrop={this.onDrop.bind(this)}
-											// 		onClick={this.onFocusDrop.bind(this)}
-											// 		onMouseEnter={this.onFocusDrop.bind(this)}
-											// 		onMouseLeave={this.onBlurDrop.bind(this)}
-											// 		onDragEnter={this.onFocusDrop.bind(this)}
-											// 		onDragLeave={this.onBlurDrop.bind(this)}
-											// 		onFileDialogCancel={this.onBlurDrop.bind(this)}
-											// 		onBlur={this.onBlurDrop.bind(this)}
-											// 		>
-											// 	</Dropzone>
-											// 	{this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
-											// </div>
-											// {!this.state.imgLoaded ? <div className='label-text'>{fields['drag_drop']}</div> : ''}
-
-
-										// </div>
-										// <div className='form-group image-src'>
-										// 	<input className='form-control'
-										// 		id='image-src-url'
-										// 		name='src'
-										// 		placeholder={fields['copy_paste']}
-										// 		onChange={this.onChangeDrop.bind(this)}
-										// 		onFocus={this.onFocus.bind(this)}
-										// 		onBlur={this.onBlur.bind(this)}
-										// 		/>
-										// </div>
-										}
 										</div>
-									</div>
-
-									<div id='embed-output'>
-										
-										<legend>{this.props.creator.acf['embed_title']}</legend>
-
-										<textarea className='output form-control'
-											id='json'
-											readOnly={true}
-											ref={this.outputRef}
-											rows={3}
-											value={this.embedCode(this.props.formData)}
-											onFocus={this.onFocus.bind(this)}
-											onBlur={this.onBlur.bind(this)}
-											/>
 										
 										<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
-											<div className='form-group form-col'>
+											<div className='form-col'>
 												<label className='control-label'>Color Options</label>
 												<div className='embed-opts checkboxes'>
 
-													<div className='checkbox-widget form-group'>
+													<div className='checkbox-widget field'>
 														<input className='embed-opt'
 															id='lightMode'
 															name='dark'
@@ -266,7 +241,7 @@ class Embed extends React.Component {
 														</label>
 													</div>
 
-													<div className='checkbox-widget form-group'>
+													<div className='checkbox-widget field'>
 														<input className='embed-opt'
 															id='darkMode'
 															name='dark'
@@ -283,11 +258,11 @@ class Embed extends React.Component {
 
 												</div>
 											</div>
-											<div className='form-group form-col'>
+											<div className='form-col'>
 												<label className='control-label'>Embed Options</label>
 												<div className='embed-opts checkboxes'>
 
-													<div className='checkbox-widget form-group'>
+													<div className='checkbox-widget field'>
 														<input className='embed-opt'
 															id='includeJs'
 															name='includeJs'
@@ -300,7 +275,7 @@ class Embed extends React.Component {
 														</label>
 													</div>
 
-													<div className='checkbox-widget form-group'>
+													<div className='checkbox-widget field'>
 														<input className='embed-opt'
 															id='includeCss'
 															name='includeCss'
@@ -316,10 +291,9 @@ class Embed extends React.Component {
 												</div>
 											</div>
 										</form>
-
 									</div>
-								</div>
-							</fieldset>
+								</fieldset>
+							</div>
 						</div>
 					</div>
 				</div>

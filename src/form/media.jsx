@@ -1,9 +1,16 @@
+// items: {
+// 	'image': 'Image',
+// 	'youtube': 'YouTube',
+// 	'vimeo': 'Vimeo',
+// 	'soundcloud':  'SoundCloud'
+// }
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { asNumber } from 'react-jsonschema-form/lib/utils';
 
-class CustomSelectWidget extends React.Component {
+class SelectWidget extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -12,38 +19,23 @@ class CustomSelectWidget extends React.Component {
 			isCustom: false,
 			customText: ''
 		};
-		const {
-			schema,
-			id,
-			options,
-			value,
-			required,
-			disabled,
-			readonly,
-			autofocus,
-			onChange,
-			onBlur,
-			onFocus,
-			onClick,
-			placeholder,
-		} = props;
 	}
 
-	processValue({ type, items }, value) {
-		const nums = new Set(['number', 'integer']);
-		if (value === '') {
-			return undefined;
-		} else if (value === 'empty') {
-			return undefined;
-		} else if (type === 'array' && items && nums.has(items.type)) {
-			return value.map(asNumber);
-		} else if (type === 'boolean') {
-			return value === 'true';
-		} else if (type === 'number') {
-			return asNumber(value);
-		}
-		return value;
-	}
+	// processValue({ type, items }, value) {
+	// 	const nums = new Set(['number', 'integer']);
+	// 	if (value === '') {
+	// 		return undefined;
+	// 	} else if (value === 'empty') {
+	// 		return undefined;
+	// 	} else if (type === 'array' && items && nums.has(items.type)) {
+	// 		return value.map(asNumber);
+	// 	} else if (type === 'boolean') {
+	// 		return value === 'true';
+	// 	} else if (type === 'number') {
+	// 		return asNumber(value);
+	// 	}
+	// 	return value;
+	// }
 
 	getValue(e, multiple) {
 		return e.target.value;
@@ -54,10 +46,11 @@ class CustomSelectWidget extends React.Component {
 	}
 
 	render() {
-		const { enumOptions, enumDisabled } = this.props.options;
+		// const { options, enumDisabled } = this.props.options;
+		const options = this.props.options;
 		const emptyValue = '';
 		const id = this.props.id;
-		const schema = this.props.schema;
+		// const schema = this.props.schema;
 		return (
 			<div className='select-widget'>
 				<select
@@ -71,10 +64,10 @@ class CustomSelectWidget extends React.Component {
 							this.setState({
 								value: newValue
 							});
-							this.props.onChange(this.processValue(schema, newValue));
+							this.props.onChange(newValue);
 						})
 					}>
-					{enumOptions.map(({ value, label }, i) => {
+					{options.map(({ value, label }, i) => {
 						return(
 							<option key={i} value={value}>{label+(value&&value!='empty' ? ': '+value : '')}</option>
 						);
@@ -85,7 +78,7 @@ class CustomSelectWidget extends React.Component {
 					data-id={id}
 					className='select-widget-dropdown form-control'
 					data-value={typeof value === 'undefined' ? emptyValue : value}>
-					{enumOptions.map(({ value, label }, i) => {
+					{options.map(({ value, label }, i) => {
 						return (
 							<div
 								className={(this.state.value === value || this.state.value === label) ? 'option selected' : 'option'}
@@ -99,7 +92,7 @@ class CustomSelectWidget extends React.Component {
 											value: newValue,
 											isCustom: ( newValue=='Write your own' ? true : false )
 										});
-										this.props.onChange(this.processValue(schema, newValue));
+										this.props.onChange(newValue);
 									})
 								}>
 								<div className='option-label'>{label}</div>
@@ -116,34 +109,34 @@ class CustomSelectWidget extends React.Component {
 						this.setState({
 							customText: newValue
 						})
-						this.props.onChange(this.processValue(schema, newValue));
+						this.props.onChange(newValue);
 					}}></textarea>
 			</div>
 		);
 	}
 }
 
-CustomSelectWidget.defaultProps = {
-	autofocus: false,
-};
+// CustomSelectWidget.defaultProps = {
+// 	autofocus: false,
+// };
 
-if (process.env.NODE_ENV !== 'production') {
-	CustomSelectWidget.propTypes = {
-		schema: PropTypes.object.isRequired,
-		id: PropTypes.string.isRequired,
-		options: PropTypes.shape({
-			enumOptions: PropTypes.array,
-		}).isRequired,
-		value: PropTypes.any,
-		required: PropTypes.bool,
-		disabled: PropTypes.bool,
-		readonly: PropTypes.bool,
-		autofocus: PropTypes.bool,
-		onChange: PropTypes.func,
-		onBlur: PropTypes.func,
-		onFocus: PropTypes.func,
-		onClick: PropTypes.func,
-	};
-}
+// if (process.env.NODE_ENV !== 'production') {
+// 	CustomSelectWidget.propTypes = {
+// 		schema: PropTypes.object.isRequired,
+// 		id: PropTypes.string.isRequired,
+// 		options: PropTypes.shape({
+// 			options: PropTypes.array,
+// 		}).isRequired,
+// 		value: PropTypes.any,
+// 		required: PropTypes.bool,
+// 		disabled: PropTypes.bool,
+// 		readonly: PropTypes.bool,
+// 		autofocus: PropTypes.bool,
+// 		onChange: PropTypes.func,
+// 		onBlur: PropTypes.func,
+// 		onFocus: PropTypes.func,
+// 		onClick: PropTypes.func,
+// 	};
+// }
 
 export default CustomSelectWidget;

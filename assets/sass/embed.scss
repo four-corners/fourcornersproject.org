@@ -10,7 +10,7 @@
 	}
 }
 #embedder {
-	margin-top: 1.25rem;
+	margin-top: .5rem;
 	form {
 		input.card, textarea.card {
 			width: 100%;
@@ -27,9 +27,6 @@
 		// }
 	}
 	.fc-embed {
-		.fc-row:not(.fc-empty):last-of-type {
-			border: none;
-		}
 		&:not(.fc-loaded) .fc-corner {
 			&[data-slug='context']:not(.fc-active) {
 				top: 0em;
@@ -207,10 +204,14 @@
 }
 #embed-output {
 	padding: 2rem 0 0 0;
+	fieldset {
+		// border-bottom: none;
+	}
 	textarea.output {
 		margin-bottom: 1rem;
 		@include smText;
 		direction: ltr !important;
+    word-break: break-all;
 		background-color: $light;
 	}
 	.embed-opts {

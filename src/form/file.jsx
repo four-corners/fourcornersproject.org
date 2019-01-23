@@ -91,6 +91,10 @@ class File extends React.Component {
 					</label>
 				: ''}
 				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
+
+				<label className='control-label' htmlFor='fileMode'>
+					From a URL
+				</label>
 				<div className='checkbox-widget'>
 					<input
 						name={name}

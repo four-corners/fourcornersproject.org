@@ -1918,7 +1918,7 @@ header {
         position: absolute;
         right: -3rem;
         top: .5rem;
-        background-image: url("data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='20px' height='20px' viewBox='140 140 20 20' enable-background='new 140 140 20 20' xml:space='preserve'%3E %3Cpolygon fill='%2380BDFF' points='151.333,156.667 151.333,160 159.999,160 159.999,151.334 156.666,151.334 156.666,156.667 '/%3E %3Cpolygon fill='%2380BDFF' points='156.666,143.335 156.666,148.668 159.999,148.668 159.999,140.002 151.333,140.002 151.333,143.335 '/%3E %3Cpolygon fill='%2380BDFF' points='140.001,148.668 143.334,148.668 143.334,143.335 148.667,143.335 148.667,140.002 140.001,140.002 '/%3E %3Cpolygon fill='%2380BDFF' points='148.667,160 148.667,156.667 143.334,156.667 143.334,151.334 140.001,151.334 140.001,160 '/%3E %3C/svg%3E");
+        background-image: url("data:image/svg+xml,%3C?xml version='1.0' encoding='utf-8'?%3E %3C!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0) --%3E %3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E %3Csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' width='20px' height='20px' viewBox='0 0 20 20' enable-background='new 0 0 20 20' xml:space='preserve'%3E %3Cg%3E %3Cpolygon fill='%2380BDFF' points='11.333,16.666 11.333,19.999 19.999,19.999 19.999,11.333 16.666,11.333 16.666,16.666 '/%3E %3Cpolygon fill='%2380BDFF' points='16.666,3.334 16.666,8.667 19.999,8.667 19.999,0.001 11.333,0.001 11.333,3.334 '/%3E %3Cpolygon fill='%2380BDFF' points='0.001,8.667 3.334,8.667 3.334,3.334 8.667,3.334 8.667,0.001 0.001,0.001 '/%3E %3Cpolygon fill='%2380BDFF' points='8.667,19.999 8.667,16.666 3.334,16.666 3.334,11.333 0.001,11.333 0.001,19.999 '/%3E %3C/g%3E %3C/svg%3E");
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
@@ -1949,12 +1949,6 @@ nav.site-nav {
               box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
     nav.site-nav a:hover, nav.site-nav a:visited:hover {
       background-color: #fff; }
-
-.intro-text {
-  font-size: 1.5rem;
-  line-height: 1.7em; }
-  .intro-text p {
-    margin-bottom: 2rem; }
 
 .explainer {
   min-height: 15rem;
@@ -2010,6 +2004,10 @@ nav.site-nav {
 #creator .card {
   margin: 0 auto 2rem auto;
   overflow: hidden; }
+
+#creator .intro-text {
+  max-width: calc(50% + 28rem);
+  margin: 0 0 2rem 0; }
 
 #creator .col.right form {
   max-width: 25rem; }
@@ -2171,18 +2169,18 @@ nav.site-nav {
 #embed-output {
   padding: 2rem 0 0 0; }
   #embed-output textarea.output {
-    margin-bottom: 1rem;
-    font-size: .8rem;
-    line-height: 1.4em;
     direction: ltr !important;
     word-break: break-all;
-    background-color: #f6f6f6; }
-  #embed-output .embed-opts {
-    margin: 0 auto;
+    background-color: #f6f6f6;
     font-size: .8rem;
     line-height: 1.4em; }
-    #embed-output .embed-opts label {
-      margin: 0 1rem 0 0; }
+
+.embed-opts {
+  margin: 0 auto;
+  font-size: .8rem;
+  line-height: 1.4em; }
+  .embed-opts label {
+    margin: 0 1rem 0 0; }
 
 *[readonly] {
   background-color: #f6f6f6 !important; }
@@ -2209,10 +2207,10 @@ fieldset {
   margin-bottom: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #c4c4c4; }
-
-.fieldset-inner {
-  height: 0;
-  overflow: hidden; }
+  fieldset .fieldset-inner {
+    overflow: hidden; }
+  fieldset.collapse .fieldset-inner {
+    height: 0; }
   fieldset.expand .fieldset-inner {
     height: auto; }
 
@@ -2245,7 +2243,7 @@ legend {
   transition: all 200ms ease; }
   legend span {
     position: relative; }
-  legend::after {
+  fieldset.expand legend::after, fieldset.collapse legend::after {
     width: 1rem;
     height: 1rem;
     position: absolute;
@@ -2258,11 +2256,11 @@ legend {
     content: '';
     -webkit-transition: border-color 200ms ease;
     transition: border-color 200ms ease; }
-  legend:hover {
+  fieldset.expand legend:hover, fieldset.collapse legend:hover {
     cursor: pointer; }
-  fieldset:not(.expand) legend:not(:hover) {
+  fieldset.collapse legend:not(:hover) {
     color: #c4c4c4; }
-    fieldset:not(.expand) legend:not(:hover) span::before {
+    fieldset.collapse legend:not(:hover) span::before {
       opacity: .5; }
   fieldset.expand legend::after {
     top: calc(50% - .25rem);
@@ -2503,6 +2501,8 @@ select {
 .block-widget {
   width: 100%;
   margin: 0 auto 2rem auto;
+  position: relative;
+  overflow: hidden;
   padding: 1rem;
   background-color: #fff;
   -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -2510,10 +2510,36 @@ select {
   border-width: 1px;
   border-style: solid;
   border-color: #80bdff;
-  border-radius: 4px;
-  overflow: hidden; }
+  border-radius: 4px; }
   .block-widget .field:first-child {
     margin-top: 0; }
+
+.delete-block {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  right: .5rem;
+  top: .5rem; }
+  .delete-block::before, .delete-block::after {
+    width: .75rem;
+    height: .75rem;
+    position: absolute;
+    left: .375rem;
+    border: solid #c4c4c4;
+    border-width: 0 2px 2px 0;
+    content: '';
+    -webkit-transition: border-color 200ms ease;
+    transition: border-color 200ms ease; }
+  .delete-block::before {
+    top: calc(50% - .825rem);
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg); }
+  .delete-block::after {
+    bottom: calc(50% - .825rem);
+    -webkit-transform: rotate(-135deg);
+            transform: rotate(-135deg); }
+  .delete-block:hover {
+    cursor: pointer; }
 
 .has-error input, .has-error select, .has-error textarea {
   background-color: rgba(255, 0, 0, 0.2) !important; }

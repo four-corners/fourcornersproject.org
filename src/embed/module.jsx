@@ -20,17 +20,15 @@ class Embed extends React.Component {
 		let self = this;
 		// const activeCorner = this.props.activeCorner;
 		setTimeout(function() {
-			self.fourCorners = FourCorners.prototype.init({
-				noPanels: true
-			})[0];
-		});
+			self.fourCorners = FourCorners.prototype.init()[0];
+		}, 3000);
 	}
 
 	componentDidUpdate(prevProps) {
-		// const activeCorner = this.props.activeCorner;
-		// if(this.fourCorners) {
-		// 	this.fourCorners.openCorner(activeCorner);
-		// }
+		const activeCorner = this.props.activeCorner;
+		if(this.fourCorners) {
+			this.fourCorners.openCorner(activeCorner);
+		}
 	}
 
 	onChangeOpts(e) {
@@ -66,7 +64,7 @@ class Embed extends React.Component {
 
 	closePanel() {
 		this.fourCorners.closeCorner();
-		// this.props.setActiveCorner();
+		this.props.sendActiveCorner(null);
 		this.setState({
 			expandPanel: false
 		});
@@ -113,7 +111,7 @@ class Embed extends React.Component {
 				className += ' fc-active';
 			}
 			panels.push(
-				<div className={className} data-slug={cornerSlug} key={i}>
+				<div className={className} data-fc-slug={cornerSlug} key={i}>
 					<div className='fc-scroll'>
 						<div className='fc-inner'>
 							<div className='fc-panel-title'>
@@ -145,7 +143,7 @@ class Embed extends React.Component {
 			className += ' fc-loaded';	
 		}
 		return(
-			<div className={className} data-active={this.props.activeCorner}>
+			<div className={className} data-fc-active={this.props.activeCorner}>
 				{!imgSrc?<div className="no-photo"><h2>No photo</h2></div>:''}
 				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
 					<img src={imgSrc} className='fc-img'/>

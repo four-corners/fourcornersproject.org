@@ -1,19 +1,23 @@
 #creator {
-  .card {
-    margin: 0 auto 2rem auto;
-    overflow: hidden;
-  }
-  .col.right {
-    form {
-      max-width: 25rem; 
-    }
-  }
-  form {
-    // padding: 0 0 2rem 0;
-  }
-  @include sm {
-    .row {
-      flex-direction: column-reverse;
-    }
-  }
+	.card {
+		margin: 0 auto 2rem auto;
+		overflow: hidden;
+	}
+	.intro-text {
+		max-width: calc(50% + 28rem);
+		margin: 0 0 2rem 0;
+	}
+	.col.right {
+		form {
+			max-width: 25rem; 
+		}
+	}
+	form {
+		// padding: 0 0 2rem 0;
+	}
+	@include sm {
+		.row {
+			flex-direction: column-reverse;
+		}
+	}
 }

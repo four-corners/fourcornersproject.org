@@ -128,7 +128,7 @@ class Creator extends React.Component {
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
 				activeCorner={this.state.activeCorner}
-				setActiveCorner={this.setActiveCorner.bind(this)} />
+				sendActiveCorner={this.setActiveCorner.bind(this)} />
 		);
 	}
 
@@ -141,9 +141,9 @@ class Creator extends React.Component {
 						<div className='row' data-sticky-container>
 							<div className='col col-12'>
 								<div className='col-content'>
-									{
-									// Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
-									}
+									<div className='intro-text desc'>
+										Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
+									</div>
 								</div>
 							</div>
 							<div className='col col-12 col-sm-6 left'>

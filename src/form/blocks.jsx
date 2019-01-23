@@ -80,7 +80,6 @@ class Blocks extends React.Component {
 					width: res.width,
 					height: res.height
 				};
-				// console.log(mediaData);
 				this.setState({mediaData: mediaData});
 				this.props.sendMediaData(mediaData);
 			})
@@ -146,8 +145,12 @@ class Blocks extends React.Component {
 			fieldElems.push(field);
 		});
 		return(
-			<div className='block-widget' key={i}>
+			<div className="block-widget" key={i}>
 				{fieldElems}
+				<div
+					className="delete-block"
+					data-index={i}
+					onClick={this.deleteBlock.bind(this)}/>
 			</div>
 		);
 	}
@@ -169,8 +172,18 @@ class Blocks extends React.Component {
 			blocks: blocks
 		});
 	}
+
+	deleteBlock(e) {
+		let blocks = this.state.blocks;
+		const index = e.target.dataset.index;
+		delete blocks[index];
+		this.setState({
+			blocks: blocks
+		});
+	}
  
 	render() {
+		console.log(this.props);
 		const id = this.props.id;
 		const text = this.props.data.text;
 		const fieldset = this.props.fieldset;
@@ -189,10 +202,8 @@ class Blocks extends React.Component {
 					{this.renderBlocks()}
 				</div>
 
-				<button
-					className="add-block"
-					onClick={this.addBlock.bind(this)}>
-					{'Add block'}
+				<button className="add-block" onClick={this.addBlock.bind(this)}>
+					Add {id.replace('s','')}
 				</button>
 
 			</div>

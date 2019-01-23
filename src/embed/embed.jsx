@@ -197,102 +197,108 @@ class Embed extends React.Component {
 									formData={this.props.formData}
 									mediaData={this.props.mediaData}
 									activeCorner={this.props.activeCorner}
-									setActiveCorner={this.props.setActiveCorner}
+									sendActiveCorner={this.props.sendActiveCorner}
 									/>
 							</div>
 
 							<div id='embed-output'>
 								
-								<fieldset className={this.state.expand ? 'expand' : ''}>
-									<legend onClick={this.toggleExpand.bind(this)}>
-										{this.props.creator.acf['embed_title']}
-									</legend>
+								<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
 
-									<div className="fieldset-inner">
-										<div className="field">
-											<textarea className='output form-elem'
-												id='json'
-												readOnly={true}
-												ref={this.outputRef}
-												rows={3}
-												value={this.embedCode(this.props.formData)}
-												onFocus={this.onFocus.bind(this)}
-												onBlur={this.onBlur.bind(this)}
-												/>
+									<fieldset className={this.state.expand ? 'expand' : 'collapse'}>
+										<legend onClick={this.toggleExpand.bind(this)}>
+											{this.props.creator.acf['embed_title']}
+										</legend>
+										<div className="fieldset-inner">
+
+											<div className="field">
+												<textarea className='output form-elem'
+													id='json'
+													readOnly={true}
+													ref={this.outputRef}
+													rows={3}
+													value={this.embedCode(this.props.formData)}
+													onFocus={this.onFocus.bind(this)}
+													onBlur={this.onBlur.bind(this)}
+													/>
+											</div>
+											
+											<div className='desc'>Paste this into your website.</div>
+
+											<div className='form-cols'>
+
+												<div className='form-group form-col'>
+													
+													<div className='embed-opts checkboxes'>
+
+														<div className='checkbox-widget form-group'>
+															<input className='embed-opt'
+																id='lightMode'
+																name='dark'
+																value={false}
+																type='radio' 
+																defaultChecked={true}
+																/>
+															<label className='control-label checkbox' htmlFor='lightMode'>
+																<div className='label-inner'>
+																	<span>Light mode</span>
+																</div>
+															</label>
+														</div>
+
+														<div className='checkbox-widget form-group'>
+															<input className='embed-opt'
+																id='darkMode'
+																name='dark'
+																value={true}
+																type='radio' 
+																defaultChecked={false}
+																/>
+															<label className='control-label checkbox' htmlFor='darkMode'>
+																<div className='label-inner'>
+																	<span>Dark mode</span>
+																</div>
+															</label>
+														</div>
+
+													</div>
+												</div>
+												<div className='form-group form-col'>
+													
+													<div className='embed-opts checkboxes'>
+
+														<div className='checkbox-widget form-group'>
+															<input className='embed-opt'
+																id='includeJs'
+																name='includeJs'
+																type='checkbox' 
+																defaultChecked={this.state.includeJs} />
+															<label className='control-label checkbox' htmlFor='includeJs'>
+																<div className='label-inner'>
+																	<span>Include JavaScript file</span>
+																</div>
+															</label>
+														</div>
+
+														<div className='checkbox-widget form-group'>
+															<input className='embed-opt'
+																id='includeCss'
+																name='includeCss'
+																type='checkbox' 
+																defaultChecked={this.state.includeJs} />
+															<label className='control-label checkbox' htmlFor='includeCss'>
+																<div className='label-inner'>
+																	<span>Include CSS file</span>
+																</div>
+															</label>
+														</div>
+
+													</div>
+												</div>
+											</div>
 										</div>
-										
-										<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
-											<div className='form-col'>
-												<label className='control-label'>Color Options</label>
-												<div className='embed-opts checkboxes'>
-
-													<div className='checkbox-widget field'>
-														<input className='embed-opt'
-															id='lightMode'
-															name='dark'
-															value={false}
-															type='radio' 
-															defaultChecked={true}
-															/>
-														<label className='control-label checkbox' htmlFor='lightMode'>
-															<div className='label-inner'>
-																<span>Light mode</span>
-															</div>
-														</label>
-													</div>
-
-													<div className='checkbox-widget field'>
-														<input className='embed-opt'
-															id='darkMode'
-															name='dark'
-															value={true}
-															type='radio' 
-															defaultChecked={false}
-															/>
-														<label className='control-label checkbox' htmlFor='darkMode'>
-															<div className='label-inner'>
-																<span>Dark mode</span>
-															</div>
-														</label>
-													</div>
-
-												</div>
-											</div>
-											<div className='form-col'>
-												<label className='control-label'>Embed Options</label>
-												<div className='embed-opts checkboxes'>
-
-													<div className='checkbox-widget field'>
-														<input className='embed-opt'
-															id='includeJs'
-															name='includeJs'
-															type='checkbox' 
-															defaultChecked={this.state.includeJs} />
-														<label className='control-label checkbox' htmlFor='includeJs'>
-															<div className='label-inner'>
-																<span>Include JavaScript file</span>
-															</div>
-														</label>
-													</div>
-
-													<div className='checkbox-widget field'>
-														<input className='embed-opt'
-															id='includeCss'
-															name='includeCss'
-															type='checkbox' 
-															defaultChecked={this.state.includeJs} />
-														<label className='control-label checkbox' htmlFor='includeCss'>
-															<div className='label-inner'>
-																<span>Include CSS file</span>
-															</div>
-														</label>
-													</div>
-
-												</div>
-											</div>
-										</form>
-									</div>
-								</fieldset>
+									</fieldset>
+								</form>
 							</div>
 						</div>
 					</div>

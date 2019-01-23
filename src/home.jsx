@@ -121,10 +121,10 @@ class Home extends React.Component {
 		let lang = this.state.lang;
 		const homeData = this.state.homeData;
 
-		let intro = '';
-		if(homeData.post_content) {
-			intro = <div className="intro-text">{ReactHtmlParser(homeData.post_content)}</div>;
-		}
+		// let intro = '';
+		// if(homeData.post_content) {
+			// intro = <div className="intro-text">{ReactHtmlParser(homeData.post_content)}</div>;
+		// }
 
 		let rows = [];
 		this.slugs.forEach((slug,i) => {

@@ -5,8 +5,7 @@ import isUrl from 'validator/lib/isUrl';
 
 import i18n from '../i18n.jsx';
 import Schema from './schema.jsx';
-import Fieldset from './fieldset.jsx'
-import Field from './field.jsx';
+import Fieldset from './fieldset.jsx';
 
 // import uiSchema from './ui-schema.jsx';
 // import validate from './validate.jsx';

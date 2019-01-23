@@ -119,7 +119,7 @@ class Fieldset extends React.Component {
 		const data = this.props.data;
 		const text = data.text;
 		return (
-			<fieldset id={this.props.id} className={this.state.expand ? 'expand' : ''}>
+			<fieldset id={this.props.id} className={this.state.expand ? 'expand' : 'collapse'}>
 				<legend onClick={this.toggleExpand.bind(this)}>
 					<span>{text.title}</span>
 				</legend>

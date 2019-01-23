@@ -17,12 +17,13 @@ fieldset {
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
 	border-bottom: 1px solid $medium;
-}
-
-.fieldset-inner {
-	height: 0;
-	overflow: hidden;
-	fieldset.expand & {
+	.fieldset-inner {
+		overflow: hidden;
+	}
+	&.collapse .fieldset-inner {
+		height: 0;
+	}
+	&.expand .fieldset-inner {
 		height: auto;
 	}
 }
@@ -51,22 +52,24 @@ legend {
 	span {
 		position: relative;
 	}
-	&::after {
-		width: 1rem;
-		height: 1rem;
-		position: absolute;
-		right: .75rem;
-    top: calc(50% - .75rem);
-		transform: rotate(45deg);
-		border: solid $medium;
-		border-width: 0 2px 2px 0;
-		content: '';
-		@include fastTrans(border-color);
+	fieldset.expand &, fieldset.collapse & {
+		&::after {
+			width: 1rem;
+			height: 1rem;
+			position: absolute;
+			right: .75rem;
+	    top: calc(50% - .75rem);
+			transform: rotate(45deg);
+			border: solid $medium;
+			border-width: 0 2px 2px 0;
+			content: '';
+			@include fastTrans(border-color);
+		}
+		&:hover {
+			cursor: pointer;
+		}
 	}
-	&:hover {
-		cursor: pointer;
-	}
-	fieldset:not(.expand) &:not(:hover) {
+	fieldset.collapse &:not(:hover) {
 		color: $medium;
 		span::before {
 			opacity: .5;
@@ -333,12 +336,47 @@ select {
 .block-widget {
 	width: 100%;
 	margin: 0 auto 2rem auto;
-	@include card;
+	position: relative;
 	overflow: hidden;
+	@include card;
 	.field:first-child {
 		margin-top: 0;
 	}
 }
+.delete-block {
+	width: 1.5rem;
+	height: 1.5rem;
+	position: absolute;
+	right: .5rem;
+	top: .5rem;
+	// background-size: contain;
+	// background-position: center;
+	// background-repeat: no-repeat;
+	// background-image: url(./../images/x.svg);
+	&::before, &::after {
+		width: .75rem;
+		height: .75rem;
+		position: absolute;
+		left: .375rem;
+		border: solid $medium;
+		border-width: 0 2px 2px 0;
+		content: '';
+		@include fastTrans(border-color);
+	}
+	&::before {
+		top: calc(50% - .825rem);
+		transform: rotate(45deg);
+	}
+	&::after {
+		bottom: calc(50% - .825rem);
+		transform: rotate(-135deg);
+	}
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+
 .has-error {
 	input, select, textarea {
 		background-color: rgba(red,.2) !important;

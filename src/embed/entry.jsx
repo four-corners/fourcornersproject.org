@@ -29,7 +29,7 @@ class Entry extends React.Component {
 		if(!this.props.fieldData){return}
 		this.props.fieldData.forEach((obj, i) => {
 			let subRowInner = '';
-			if(obj.source == 'image') {
+			if(obj.source == 'image' || !obj.source) {
 				subRowInner = obj.url ? <img src={obj.url} alt=''/> : false;
 			} else {
 				const media = this.props.mediaData[i];

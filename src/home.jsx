@@ -74,7 +74,6 @@ class Home extends React.Component {
 				this.setState({
 					embedHtmls: embedHtmls
 				});
-				console.log(slug);
 				const fourCorners = FourCorners.prototype.init({
 					cutline: false,
 					active: slug

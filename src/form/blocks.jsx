@@ -183,7 +183,6 @@ class Blocks extends React.Component {
 	}
  
 	render() {
-		console.log(this.props);
 		const id = this.props.id;
 		const text = this.props.data.text;
 		const fieldset = this.props.fieldset;

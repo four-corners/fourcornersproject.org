@@ -21,7 +21,7 @@ class Embed extends React.Component {
 		// const activeCorner = this.props.activeCorner;
 		setTimeout(function() {
 			self.fourCorners = FourCorners.prototype.init()[0];
-		}, 3000);
+		}, 4000);
 	}
 
 	componentDidUpdate(prevProps) {

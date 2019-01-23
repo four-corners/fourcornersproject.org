@@ -103,7 +103,7 @@ class CustomUploadWidget extends React.Component {
 					/>
 
 				<label className='control-label' htmlFor='urlMode'>
-					From a URL
+					From an image URL
 				</label>
 				<div className='checkbox-widget form-group'>
 					<input className=''

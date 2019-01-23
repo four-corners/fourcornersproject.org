@@ -2229,7 +2229,7 @@ label, legend {
 
 legend {
   width: 100%;
-  margin: 0 .25rem;
+  margin: 0 .25rem .5rem .25rem;
   display: block;
   font-size: 1.5rem;
   line-height: 1.7em;

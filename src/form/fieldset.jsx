@@ -124,6 +124,7 @@ class Fieldset extends React.Component {
 					<span>{text.title}</span>
 				</legend>
 				<div className='fieldset-inner'>
+					{text.desc ? <div className='desc'>{text.desc}</div> : '' }
 					{this.renderFields()}
 				</div>
 			</fieldset>

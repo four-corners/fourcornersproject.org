@@ -42,7 +42,7 @@ label, legend {
 }
 legend {
 	width: 100%;
-	margin: 0 .25rem;
+	margin: 0 .25rem .5rem .25rem;
 	display: block;
 	@include lgText;	
 	line-height: 1.5em;

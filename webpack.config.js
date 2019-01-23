@@ -1,5 +1,4 @@
-require('babel-polyfill');
-
+// require('babel-polyfill');
 const path = require('path');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');

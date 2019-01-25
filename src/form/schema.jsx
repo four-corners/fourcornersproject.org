@@ -78,6 +78,19 @@ const Schema = {
 				}
 			}
 		}
+	},
+	opts: {
+		fields: {
+			dark: {
+				type: 'checkbox',
+				// multiple: false
+			},
+			// include: {
+			// 	type: 'checkbox',
+			// 	multiple: true,
+			// 	options: ['js','css']
+			// }
+		}
 	}
 };
 

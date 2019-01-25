@@ -19,7 +19,6 @@ class Embed extends React.Component {
 			// imgSrc: placeholderSrc,
 			includeCss: false,
 			includeJs: false,
-			darkMode: false,
 			stickyStyle: {},
 			expand: false
 			// activeCorner: this.props.activeCorner
@@ -104,13 +103,6 @@ class Embed extends React.Component {
 		};
 		if(e.target.type == 'checkbox') {
 			stateChange[e.target.name] = e.target.checked;
-		} else if(e.target.name == 'dark') {
-			stateChange.darkMode = e.target.value;
-			if(e.target.value === 'true') {
-				stateChange.formData[e.target.name] = e.target.value;
-			} else {
-				delete stateChange.formData[e.target.name];
-			}
 		}
 		this.setState(stateChange);
 	}
@@ -127,7 +119,8 @@ class Embed extends React.Component {
 		console.log('Error', e);
 	}
 
-	toggleExpand() {
+	toggleExpand(e) {
+		e.preventDefault();
 		const currentState = this.state.expand;
 		const newState = !currentState;
 		this.setState({
@@ -142,16 +135,16 @@ class Embed extends React.Component {
 		const top = rect.top;
 		const left = rect.left;
 		const width = rect.width;
-		const height = window.innerHeight;
+		const height = rect.height;
+		const winHeight = window.innerHeight;
 		let stickyStyle = {};
-		if(top <= 0) {
+		if(top <= 0 && height >= winHeight) {
 			stickyStyle = {
 				width: width+'px',
 				height: '100%',
 				position: 'fixed',
 				top: 0,
 				left: left+'px',
-				paddingTop: '0px'
 			};	
 		}
 		this.setState({
@@ -164,15 +157,17 @@ class Embed extends React.Component {
 			lang: i18n.language,
 			img: this.props.imgLoaded ? this.props.imgSrc : undefined,
 		}
-		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
+		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
+		// const jsInit = 'window.onload=function(){FourCorners.default.prototype.init()}';
 
 		let safeFormData = Object.assign(formData, auxData);
 		let stringData = JSON.stringify(safeFormData)
 			.replace(/'/g, '&apos;')
 		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'></div>";
-		stringHtml += (this.state.includeJs?'<script src='+jsCDN+' type="text/javascript"></script>':'');
 		stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
+		stringHtml += (this.state.includeJs?'<script src="'+jsCDN+'" type="text/javascript"></script>':'');
+		// stringHtml += (this.state.includeJs?'<script type="text/javascript">'+jsInit+'</script>':'');
 		return stringHtml;
 	}
 
@@ -187,30 +182,27 @@ class Embed extends React.Component {
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='col-content'>
 
-						<div id='embedder'>
-
-							<div id='embed-input' className={inputClass}>
-								<Module
-									creator={this.props.creator}
-									imgLoaded={this.props.imgLoaded}
-									darkMode={this.state.darkMode}
-									formData={this.props.formData}
-									mediaData={this.props.mediaData}
-									activeCorner={this.props.activeCorner}
-									sendActiveCorner={this.props.sendActiveCorner}
-									/>
-							</div>
+						<div id='embedder' className={inputClass}>
+							<Module
+								creator={this.props.creator}
+								imgLoaded={this.props.imgLoaded}
+								formData={this.props.formData}
+								mediaData={this.props.mediaData}
+								activeCorner={this.props.activeCorner}
+								sendActiveCorner={this.props.sendActiveCorner}
+								/>
 
 							<div id='embed-output'>
 								
-								<form className='form-cols' name='embed-opts' onChange={this.onChangeOpts.bind(this)}>
+								<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
 									<fieldset className={this.state.expand ? 'expand' : 'collapse'}>
-										<legend onClick={this.toggleExpand.bind(this)}>
-											{this.props.creator.acf['embed_title']}
-										</legend>
+										{ !this.state.expand ?
+											<button onClick={this.toggleExpand.bind(this)}>
+												<strong>{this.props.creator.acf['embed_title']}</strong>
+											</button>
+										: '' }
 										<div className="fieldset-inner">
-
 											<div className="field">
 												<textarea className='output form-elem'
 													id='json'
@@ -219,83 +211,11 @@ class Embed extends React.Component {
 													rows={3}
 													value={this.embedCode(this.props.formData)}
 													onFocus={this.onFocus.bind(this)}
-													onBlur={this.onBlur.bind(this)}
-													/>
+													onBlur={this.onBlur.bind(this)} />
 											</div>
 											
 											<div className='desc'>Paste this into your website.</div>
 
-											<div className='form-cols'>
-
-												<div className='form-group form-col'>
-													
-													<div className='embed-opts checkboxes'>
-
-														<div className='checkbox-widget form-group'>
-															<input className='embed-opt'
-																id='lightMode'
-																name='dark'
-																value={false}
-																type='radio' 
-																defaultChecked={true}
-																/>
-															<label className='control-label checkbox' htmlFor='lightMode'>
-																<div className='label-inner'>
-																	<span>Light mode</span>
-																</div>
-															</label>
-														</div>
-
-														<div className='checkbox-widget form-group'>
-															<input className='embed-opt'
-																id='darkMode'
-																name='dark'
-																value={true}
-																type='radio' 
-																defaultChecked={false}
-																/>
-															<label className='control-label checkbox' htmlFor='darkMode'>
-																<div className='label-inner'>
-																	<span>Dark mode</span>
-																</div>
-															</label>
-														</div>
-
-													</div>
-												</div>
-												<div className='form-group form-col'>
-													
-													<div className='embed-opts checkboxes'>
-
-														<div className='checkbox-widget form-group'>
-															<input className='embed-opt'
-																id='includeJs'
-																name='includeJs'
-																type='checkbox' 
-																defaultChecked={this.state.includeJs} />
-															<label className='control-label checkbox' htmlFor='includeJs'>
-																<div className='label-inner'>
-																	<span>Include JavaScript file</span>
-																</div>
-															</label>
-														</div>
-
-														<div className='checkbox-widget form-group'>
-															<input className='embed-opt'
-																id='includeCss'
-																name='includeCss'
-																type='checkbox' 
-																defaultChecked={this.state.includeJs} />
-															<label className='control-label checkbox' htmlFor='includeCss'>
-																<div className='label-inner'>
-																	<span>Include CSS file</span>
-																</div>
-															</label>
-														</div>
-
-													</div>
-												</div>
-											</div>
 										</div>
 									</fieldset>
 								</form>

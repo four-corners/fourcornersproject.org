@@ -14,10 +14,16 @@ class Creator extends React.Component {
 		this.state = {
 			creator: {},
 			lang: 'en',
-			formData: {},
+			formData: {
+				'context':{},
+				'links':{},
+				'authorship':{},
+				'backstory':{}
+			},
 			mediaData: {backstory:[]},
 			activeCorner: null
 		};
+		this.corners = ['context','links','authorship','backstory'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 		this.outputRef = React.createRef();
 	}
@@ -45,7 +51,7 @@ class Creator extends React.Component {
 	}
 
 	componentDidUpdate() {
-
+		// console.log(this.state.activeCorner);
 	}
 
 	onLanguageChanged(lang) {
@@ -102,7 +108,8 @@ class Creator extends React.Component {
   }
 	
   setActiveCorner(slug) {
-  	if(!slug){slug==''}
+  	// if(!slug){slug==''}
+  	// else if(!this.corners[slug]){return}
 		this.setState({
 			activeCorner: slug
 		});
@@ -139,17 +146,26 @@ class Creator extends React.Component {
 				<main id='creator'>
 					<div className='max-width'>
 						<div className='row' data-sticky-container>
-							<div className='col col-12'>
-								<div className='col-content'>
-									<div className='intro-text desc'>
-										Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
-									</div>
+						{
+							// <div className='col col-12 col-sm-6'>
+							// 	<div className='col-content'>
+							// 		<div className='intro-text desc'>
+							// 		</div>
+							// 	</div>
+							// </div>
+							// <div className='col col-12 col-sm-6'>
+							// 	<div className='col-content'>
+									
+							// 	</div>
+							// </div>
+						}
+							<div className='col col-12 col-sm-6 left col-embed'>
+								<div className='desc'>
+									Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
 								</div>
-							</div>
-							<div className='col col-12 col-sm-6 left'>
 								{this.renderEmbedCol()}
 							</div>
-							<div className='col col-12 col-sm-6 right'>
+							<div className='col col-12 col-sm-6 right col-form'>
 								{this.renderFormCol()}
 							</div>
 						</div>

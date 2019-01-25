@@ -11,63 +11,86 @@ header {
 		}
 	}
 }
-.site-title {
-	width: 100%;
+#title {
+	display: table;
 	a {
 		// padding: .5rem;
 		color: $darkest;
 		display: table;
 		position: relative;
-		&:hover, &:focus {
-			color: $blue;
-			outline: none;
-		}
-		h1 {
-			position: relative;
-			&::after {
-				width: 2rem;
-				height: 2rem;
-				position: absolute;
-				right: -3rem;
-				top: .5rem;
-				background-image: url(./../images/icon.svg);
-				background-repeat: no-repeat;
-				background-position: center;
-				background-size: cover;
-				content: '';
-			}
-		}
-		// div {
-		// 	width: 1rem;
-		// 	height: 1rem;
-		// 	position: absolute;
-		// 	background-image: url(./../images/corner.svg);
-		// 	background-repeat: no-repeat;
-		// 	background-position: center;
-		// 	background-size: contain;
-		// 	&:nth-child(1) {
-		// 		right: -.4rem;
-		// 		bottom: 0rem;
-		// 	}
-		// 	&:nth-child(2) {
-		// 		left: -.4rem;
-		// 		bottom: 0rem;
-		// 		transform: rotate(90deg);
-		// 	}
-		// 	&:nth-child(3) {
-		// 		left: -.4rem;
-		// 		top: .2rem;
-		// 		transform: rotate(180deg);
-		// 	}
-		// 	&:nth-child(4) {
-		// 		right: -.4rem;
-		// 		top: .2rem;
-		// 		transform: rotate(270deg);
-		// 	}
+		// &:hover, &:focus {
+		// 	color: $blue;
+		// 	outline: none;
 		// }
 	}
+	&:hover, &:focus {
+		// h1#page-title a {
+		// 	color: $black;
+		// }
+		// h1#site-title a {
+		// 	color: $blue;
+		// }
+	}
+	h1 {
+		display: table;
+	}
 }
-nav.site-nav {
+h1#page-title a {
+	color: $medium;
+}
+h1#site-title {
+	position: relative;
+	&::before, &::after {
+		width: 2rem;
+		height: 2rem;
+		position: absolute;
+		right: -3rem;
+		top: .5rem;
+		background-image: url(./../images/icon.svg);
+		background-repeat: no-repeat;
+		background-size: cover;
+		transition: opacity 200ms ease-in-out;
+		content: '';
+	}
+	&::after {
+		background-position: bottom center;
+		#title:hover & {
+			opacity: 0;
+		}
+	}
+	&::before {
+		background-position: top center;
+	}
+}
+// div {
+// 	width: 1rem;
+// 	height: 1rem;
+// 	position: absolute;
+// 	background-image: url(./../images/corner.svg);
+// 	background-repeat: no-repeat;
+// 	background-position: center;
+// 	background-size: contain;
+// 	&:nth-child(1) {
+// 		right: -.4rem;
+// 		bottom: 0rem;
+// 	}
+// 	&:nth-child(2) {
+// 		left: -.4rem;
+// 		bottom: 0rem;
+// 		transform: rotate(90deg);
+// 	}
+// 	&:nth-child(3) {
+// 		left: -.4rem;
+// 		top: .2rem;
+// 		transform: rotate(180deg);
+// 	}
+// 	&:nth-child(4) {
+// 		right: -.4rem;
+// 		top: .2rem;
+// 		transform: rotate(270deg);
+// 	}
+// }
+#nav {
 	clear: both;
 	margin-bottom: -5px;
 	display: table;

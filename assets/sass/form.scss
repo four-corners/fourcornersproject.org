@@ -228,9 +228,6 @@ select {
 			@include fastTrans;
 			box-shadow: 0 0 1px 1px rgba($darkest,.1);
 		}
-		// .label-inner {
-		// 	width: calc(100% - 2.75rem - 2px);
-		// }
 	}
 	input:checked + label {
 		opacity: 1;
@@ -386,13 +383,16 @@ select {
 	display: block !important;
 }
 button, .btn {
-	height: calc(2.25rem + 2px);
-	margin: 0 .5rem 0 0;
-	padding: .5rem !important;
+	height: calc(2.5rem + 2px);
+  margin: 0 .5rem 0 0;
+  padding: .5rem .75rem;
 	position: relative;
 	flex: inherit !important;
 	box-shadow: 0 0 1px 1px rgba($darkest,.1);
-	@include card;
+	background-color: $lightest;
+	font-weight: 700;
+	@include shadow;
+	@include border;
 	@include focus;
 	&.btn-add, &.btn-danger {
 		width: calc(2.25rem + 2px);

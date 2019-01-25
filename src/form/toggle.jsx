@@ -12,35 +12,6 @@ class CustomToggleWidget extends React.Component {
 			isTrue: true,
 			customText: ''
 		};
-		const {
-			schema,
-			id,
-			options,
-			value,
-			required,
-			disabled,
-			readonly,
-			autofocus,
-			onChange,
-			onBlur,
-			onFocus,
-			onClick,
-			placeholder,
-		} = props;
-	}
-
-	processValue({ type, items }, value) {
-		const nums = new Set(['number', 'integer']);
-		if (value === '') {
-			return undefined;
-		} else if (type === 'array' && items && nums.has(items.type)) {
-			return value.map(asNumber);
-		} else if (type === 'boolean') {
-			return value === 'true';
-		} else if (type === 'number') {
-			return asNumber(value);
-		}
-		return value;
 	}
 
 	render() {
@@ -95,26 +66,6 @@ class CustomToggleWidget extends React.Component {
 			</div>
 		);
 	}
-}
-
-CustomToggleWidget.defaultProps = {
-	autofocus: false,
-};
-
-if (process.env.NODE_ENV !== 'production') {
-	CustomToggleWidget.propTypes = {
-		schema: PropTypes.object.isRequired,
-		id: PropTypes.string.isRequired,
-		value: PropTypes.any,
-		required: PropTypes.bool,
-		disabled: PropTypes.bool,
-		readonly: PropTypes.bool,
-		autofocus: PropTypes.bool,
-		onChange: PropTypes.func,
-		onBlur: PropTypes.func,
-		onFocus: PropTypes.func,
-		onClick: PropTypes.func,
-	};
 }
 
 export default CustomToggleWidget;

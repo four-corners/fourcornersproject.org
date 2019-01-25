@@ -1,3 +1,6 @@
+.col-form {
+	min-height: 100vh;
+}
 .sticky {
 	overflow-y: auto;
 	@include sm {
@@ -7,6 +10,12 @@
 		top: unset !important;
 		left: unset !important;
 		padding-top: 0px !important;
+	}
+	&.stuck {
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
 	}
 }
 #embedder {
@@ -47,107 +56,29 @@
 		}
 	}
 }
-#embed-input {
+.fc-embed {
+	transition: all 200ms ease-in-out;
 	padding: 0;
-	position: relative;
-	.drop {
-		width: 100%;
-		padding: 0;
-		display: flex;
-		flex-direction: column;
-		&.over {
-			height: 100%;
-			position: absolute;
-			left: 0;
-			top: 0;
-		}
-		&.under {
-			position: relative;
-			margin: 0;
-		}
+	.fc-photo {
+		background-color: $medium-blue;
 	}
-	.form-group {
-		position: relative;
-		background-color: transparent;
-		padding: 0;
-	}
-	.card {
-		background-color: $lightest;
-	}
-	.drop-zone {
+	.no-photo {
 		width: 100%;
 		height: 100%;
-		position: absolute !important;
+		position: absolute;
 		left: 0;
 		top: 0;
-		input {
-			width: 100%;
-		}
-		&:hover {
-			cursor: pointer;
-		}
-		.has-image & {
-			pointer-events: none;
-		}
-	}
-	input#img-src-file {
-		width: 0.1px;
-		height: 0.1px;
-		opacity: 0;
-		overflow: hidden;
-		position: absolute;
-		z-index: -1;
-		& + label {
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			left: 0;
-			top: 0;
-			margin: 0;
-			padding: 1em;
-			* {
-				pointer-events: none;
-			}
-		}
-		& + label:hover, &:focus + label  {
-			cursor: pointer;
-		}
-	}
-	.label-text {
-		display: table;
-		margin: auto;
-		padding: 1rem;
-		color: $medium;
-	}
-	input#image-src-url {
-		margin: 0 0 1rem 0;
-		&::placeholder {
-			text-align: center;
-		}
-	}
-	.fc-embed {
-		transition: all 200ms ease-in-out;
-		padding: 0;
-		.fc-photo {
-			background-color: $medium-blue;
-		}
-		.no-photo {
-			width: 100%;
-			height: 100%;
-			position: absolute;
-			left: 0;
-			top: 0;
-			display: flex;
-			flex-direction: column;
+		display: flex;
+		flex-direction: column;
+		@include strong;
+		h2 {
+			margin: auto;
+			color: $blue;
+			user-select: none;
 			@include strong;
-			h2 {
-				margin: auto;
-				color: $blue;
-				user-select: none;
-				@include strong;
-			}
 		}
 	}
+}
 	// &:not(.has-image) {
 	// 	.form-group.focus, .form-group:focus {
 	// 		color: $darkest;
@@ -193,7 +124,6 @@
 	// 		display: none;
 	// 	}
 	// }
-}
 .form-cols {
 	display: flex;
 	flex-direction: rows;
@@ -204,17 +134,22 @@
 }
 #embed-output {
 	padding: 2rem 0 0 0;
+	form {
+		margin: .25rem;
+	}
+	button {
+		// margin: .25rem;
+	}
+	.field {
+		margin: 0;
+	}
+	fieldset {
+		border: none;
+	}
 	textarea.output {
 		direction: ltr !important;
     word-break: break-all;
 		background-color: $light;
 		@include smText;
-	}
-}
-.embed-opts {
-	margin: 0 auto;
-	@include smText;
-	label {
-		margin: 0 1rem 0 0;
 	}
 }

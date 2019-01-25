@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Textarea extends React.Component {
+class Checkbox extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -12,33 +12,36 @@ class Textarea extends React.Component {
 
 	onChange(e) {
 		const name = e.target.name;
-		const value = e.target.value;
+		const value = e.target.checked;
 		this.props.onChange(name, value);
 	}
 
 	render() {
 		const id = this.props.id;
 		const text = this.props.data.text;
-		const placeholder = text.placeholder;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
 		return(
 			<div className="field input">
-				{text && text.label ?
-					<label name={id}>
-						{text.label}
+				<div className='checkbox-widget'>
+					<input className='toggle'
+						id={id}
+						name={name}
+						type='checkbox'
+						defaultChecked={false}
+						onChange={this.onChange.bind(this)} />
+					<label className='control-label checkbox' htmlFor={id}>
+						<div className='label-inner'>
+							{text && text.label ?
+								<span>{text.label}</span>
+							: ''}
+						</div>
 					</label>
-				: ''}
+				</div>
 				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
-				<textarea
-					name={name}
-					className='form-elem'
-					rows={5}
-					placeholder={placeholder}
-					onChange={this.onChange.bind(this)} />
 			</div>
 		);
 	}
 }
 
-export default Textarea;
+export default Checkbox;

@@ -25,7 +25,8 @@ class Form extends React.Component {
 				'authorship':{},
 				'backstory':{},
 				'context':{},
-				'links':{}
+				'links':{},
+				'opts':{}
 			},
 			imgSrc: null
 		};
@@ -59,6 +60,7 @@ class Form extends React.Component {
 		let fieldsetSlug = nameArr[0];
 		let fieldSlug = nameArr[1];
 		let blockFieldSlug = '';
+		if(!formData[fieldsetSlug]) {return}
 		formData[fieldsetSlug][fieldSlug] = value;
 		this.setState({
 			formData: formData
@@ -89,17 +91,15 @@ class Form extends React.Component {
 			for(let fieldKey of fieldKeys) {
 				let field = fields[fieldKey];
 				if(field) {
-
 					Schema[setKey].fields[fieldKey].text = {
 						label: translations[[setKey, fieldKey, 'label'].join('_')],
-						desc: translations[[setKey, fieldKey, 'desc'].join('_')]
+						desc: translations[[setKey, fieldKey, 'desc'].join('_')],
+						placeholder: translations[[setKey, fieldKey, 'placeholder'].join('_')],
 					}
-
 					if(field.type=='select') {
 						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
 						Schema[setKey].fields[fieldKey].options = opts;
 					}
-
 					if(field.type=='blocks') {
 						const blockFields = Schema[setKey].fields[fieldKey].fields;
 						const blockFieldKeys = Object.keys(blockFields);

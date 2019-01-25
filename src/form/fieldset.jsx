@@ -3,6 +3,7 @@ import Textarea from './textarea.jsx';
 import File from './file.jsx';
 import Select from './select.jsx';
 import Blocks from './blocks.jsx';
+import Checkbox from './checkbox.jsx';
 
 import React from 'react';
 // import PropTypes from 'prop-types';
@@ -61,7 +62,7 @@ class Fieldset extends React.Component {
 							data={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
-					)
+					);
 					break;
 				case 'textarea':
 					fieldElems.push(
@@ -71,10 +72,17 @@ class Fieldset extends React.Component {
 							data={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
-					)
+					);
 					break;
-				case 'toggle':
-					// fieldElems.push(<Toggle id={'1'} data={field} key={fieldElems.length}/>)
+				case 'checkbox':
+					fieldElems.push(
+						<Checkbox
+							id={fieldKey}
+							fieldset={this.props.id}
+							data={field}
+							key={fieldElems.length}
+							onChange={this.props.onChange} />
+					);
 					break;
 				case 'select':
 					fieldElems.push(
@@ -84,7 +92,7 @@ class Fieldset extends React.Component {
 							data={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
-					)
+					);
 					break;
 				case 'file':
 					fieldElems.push(
@@ -94,7 +102,7 @@ class Fieldset extends React.Component {
 							data={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
-					)
+					);
 					break;
 				case 'blocks':
 					fieldElems.push(
@@ -105,7 +113,7 @@ class Fieldset extends React.Component {
 							key={fieldElems.length}
 							onChange={this.props.onChange}
 							sendMediaData={this.props.sendMediaData}/>
-					)
+					);
 					break;
 				default:
 					break;

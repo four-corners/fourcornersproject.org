@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { NamespacesConsumer } from 'react-i18next';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-
 import Header from './header';
 import Footer from './footer';
 import Home from './home';

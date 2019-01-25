@@ -108,8 +108,11 @@ class Creator extends React.Component {
   }
 	
   setActiveCorner(slug) {
-  	// if(!slug){slug==''}
-  	// else if(!this.corners[slug]){return}
+  	if(!slug) {
+  		slug = '';
+  	} else if(!this.corners.includes(slug)) {
+  		slug = this.state.activeCorner;
+  	}
 		this.setState({
 			activeCorner: slug
 		});

@@ -121,10 +121,8 @@ class Embed extends React.Component {
 
 	toggleExpand(e) {
 		e.preventDefault();
-		const currentState = this.state.expand;
-		const newState = !currentState;
 		this.setState({
-			expand: newState
+			expand: !this.state.expand
 		});
 	}
 
@@ -197,11 +195,19 @@ class Embed extends React.Component {
 								<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
 									<fieldset className={this.state.expand ? 'expand' : 'collapse'}>
-										{ !this.state.expand ?
-											<button onClick={this.toggleExpand.bind(this)}>
-												<strong>{this.props.creator.acf['embed_title']}</strong>
-											</button>
-										: '' }
+										{
+											// <legend onClick={this.toggleExpand.bind(this)}>
+												// <span>{text.title}</span>
+											// </legend>
+											// !this.state.expand ?
+											// 	<button onClick={this.toggleExpand.bind(this)}>
+											// 		<strong>{this.props.creator.acf['embed_title']}</strong>
+											// 	</button>
+											// : ''
+										}
+										<legend onClick={this.toggleExpand.bind(this)}>
+											<span>{this.props.creator.acf['embed_title']}</span>
+										</legend>
 										<div className="fieldset-inner">
 											<div className="field">
 												<textarea className='output form-elem'

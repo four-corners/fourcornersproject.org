@@ -244,7 +244,7 @@ select {
 .checkbox-widget {
 	flex-direction: rows;
 	label.checkbox {
-		margin-right: .5rem;
+		margin: 0 .5rem 0 0;
 		&::before {
 			width: calc(2.25rem + 2px);
 		}
@@ -297,7 +297,9 @@ select {
 
 .file.field {
 	label.btn {
-		font-weight: normal;
+		width: auto;
+		display: table;
+		// font-weight: normal;
 	}
 	.checkbox-content {
 		width: 100%;
@@ -383,9 +385,9 @@ select {
 	display: block !important;
 }
 button, .btn {
-	height: calc(2.5rem + 2px);
-  margin: 0 .5rem 0 0;
-  padding: .5rem .75rem;
+	height: calc(2.25rem + 2px);
+	margin: 0 .5rem 0 0;
+	padding: .325rem .75rem;
 	position: relative;
 	flex: inherit !important;
 	box-shadow: 0 0 1px 1px rgba($darkest,.1);

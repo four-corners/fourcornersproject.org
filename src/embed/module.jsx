@@ -107,7 +107,6 @@ class Embed extends React.Component {
 			let className = 'fc-panel fc-'+cornerSlug;
 			if(this.props.activeCorner == cornerSlug) {
 				className += ' fc-active';
-				console.log(cornerSlug, className);
 			}
 			panels.push(
 				<div className={className} data-fc-slug={cornerSlug} key={i}>

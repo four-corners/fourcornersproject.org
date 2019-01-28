@@ -18,8 +18,9 @@ class Embed extends React.Component {
 
 	componentDidMount() {
 		let self = this;
-		const fourCorners = FourCorners.default.prototype.init()[0];
-		self.fourCorners = fourCorners;
+		const fourCorners = FourCorners.default.prototype.init();
+		if(!fourCorners) {return}
+		self.fourCorners = fourCorners[0];
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {

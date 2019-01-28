@@ -41,7 +41,12 @@ class Creator extends React.Component {
 				return res.json();
 			})
 			.then(function(res) {
+				console.log(res)
+				if(!res.length) {return false}
 				that.setState({ creator: res[0] });
+			})
+			.catch(function(err) {
+				console.log(err);
 			});
 		i18n.on('languageChanged', this.onLanguageChanged);
 	}

@@ -15,7 +15,6 @@ import publicStyles from '../assets/sass/public.scss';
 const routes = (
 	<NamespacesConsumer>
 		{
-			console.log(SiteSettings.path+'creator'),
 			(t) => {
 				return(
 					<Router>

@@ -195,16 +195,6 @@ class Embed extends React.Component {
 								<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
 									<fieldset className={this.state.expand ? 'expand' : 'collapse'}>
-										{
-											// <legend onClick={this.toggleExpand.bind(this)}>
-												// <span>{text.title}</span>
-											// </legend>
-											// !this.state.expand ?
-											// 	<button onClick={this.toggleExpand.bind(this)}>
-											// 		<strong>{this.props.creator.acf['embed_title']}</strong>
-											// 	</button>
-											// : ''
-										}
 										<legend onClick={this.toggleExpand.bind(this)}>
 											<span>{this.props.creator.acf['embed_title']}</span>
 										</legend>

@@ -21,6 +21,7 @@ class Textarea extends React.Component {
 		const text = this.props.data.text;
 		const placeholder = text.placeholder;
 		const fieldset = this.props.fieldset;
+		const rows = this.props.data.rows;
 		const name = [fieldset, id].join('_');
 		return(
 			<div className="field input">
@@ -33,7 +34,7 @@ class Textarea extends React.Component {
 				<textarea
 					name={name}
 					className='form-elem'
-					rows={5}
+					rows={rows ? rows : 6}
 					placeholder={placeholder}
 					onChange={this.onChange.bind(this)} />
 			</div>

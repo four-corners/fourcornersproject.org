@@ -41,7 +41,6 @@ class Creator extends React.Component {
 				return res.json();
 			})
 			.then(function(res) {
-				console.log(res)
 				if(!res.length) {return false}
 				that.setState({ creator: res[0] });
 			})
@@ -115,9 +114,10 @@ class Creator extends React.Component {
   setActiveCorner(slug) {
   	if(!slug) {
   		slug = '';
-  	} else if(!this.corners.includes(slug)) {
-  		slug = this.state.activeCorner;
   	}
+  	// else if(!this.corners.includes(slug)) {
+  	// 	slug = this.state.activeCorner;
+  	// }
 		this.setState({
 			activeCorner: slug
 		});
@@ -129,6 +129,7 @@ class Creator extends React.Component {
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
+				activeCorner={this.state.activeCorner}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
 				sendFormData={this.setFormData.bind(this)}
 				sendMediaData={this.setMediaData.bind(this)} />

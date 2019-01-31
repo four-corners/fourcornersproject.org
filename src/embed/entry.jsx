@@ -22,6 +22,18 @@ class Entry extends React.Component {
 		// console.log(prevProps, this.props);
 	}
 
+	renderText(val) {
+		const fieldsetKey = this.props.cornerSlug;
+		const fieldKey = this.props.fieldSlug;
+		if(!this.props.fieldData){return}
+		let array = this.props.fieldData.split(/\n/g);
+		let paragraphs = [];
+		array.forEach(function(str, i) {
+			paragraphs.push(<p key={i}>{str}</p>);
+		});
+		return <div className='fc-row-inner'>{paragraphs}</div>;
+	}
+
 	renderMedia() {
 		const subRows = [];
 		const fieldsetKey = this.props.cornerSlug;
@@ -40,7 +52,7 @@ class Entry extends React.Component {
 			
 			subRows.push(subRow);
 		});
-		return <div className='fc-sub-rows'>{subRows}</div>;
+		return <div className='fc-row-inner'>{subRows}</div>;
 	}
 
 	extractHostname(url) {
@@ -81,7 +93,7 @@ class Entry extends React.Component {
 			</div>;
 			subRows.push(subRow);
 		});
-		return <div className='fc-sub-rows'>{subRows}</div>;
+		return <div className='fc-row-inner'>{subRows}</div>;
 	}
 
 	// renderLinks() {
@@ -97,7 +109,7 @@ class Entry extends React.Component {
 	// 		</div>;
 	// 		subRows.push(subRow);
 	// 	});
-	// 	return <div className='fc-sub-rows'>{subRows}</div>;
+	// 	return <div className='fc-row-inner'>{subRows}</div>;
 	// }
 
 	renderLicense() {
@@ -117,6 +129,9 @@ class Entry extends React.Component {
 				break;
 			case 'license':
 				return this.renderLicense();
+				break;
+			case 'text':
+				return this.renderText();
 				break;
 			default:
 				return this.props.fieldData;

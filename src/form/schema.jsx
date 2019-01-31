@@ -14,13 +14,15 @@ const Schema = {
 	authorship: {
 		fields: {
 			credit: {
-				type: 'text',
+				type: 'text'
 			},
 			caption: {
-				type: 'text',
+				type: 'textarea',
+				rows: 2
 			},
 			ethics: {
 				type: 'select',
+				customize: true
 			},
 			copyright: {
 				type: 'toggle',

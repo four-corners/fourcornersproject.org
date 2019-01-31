@@ -69,6 +69,10 @@ class Form extends React.Component {
 		this.props.sendActiveCorner(fieldsetSlug);
 	}
 
+	onToggle(e) {
+		
+	}
+
 	onError(e) {
 		// console.log('Error', e);
 	}
@@ -119,6 +123,8 @@ class Form extends React.Component {
 				data={Schema[setKey]}
 				key={setKey}
 				onChange={this.onChange.bind(this)}
+				activeCorner={this.props.activeCorner}
+				sendActiveCorner={this.props.sendActiveCorner}
 				sendMediaData={this.props.sendMediaData} />;
 			fieldsets.push(fieldset);
 		}

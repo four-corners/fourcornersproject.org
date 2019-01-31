@@ -159,8 +159,9 @@ class Embed extends React.Component {
 		if(imgSrc) {
 			className += ' fc-loaded';	
 		}
+		const activeCorner = this.props.activeCorner;
 		return(
-			<div className={className} data-fc-active={this.props.activeCorner}>
+			<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
 				{!imgSrc?<div className="no-photo"><h2>No photo</h2></div>:''}
 				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
 					<img src={imgSrc} className='fc-img'/>

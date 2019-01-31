@@ -2299,17 +2299,13 @@ select {
     -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
 
-.select.field textarea, .has-error .select.field textarea {
-  margin-top: 30px;
-  background-color: #fff !important; }
-  .select.field textarea.hidden, .has-error .select.field textarea.hidden {
-    display: none; }
-
 .select-widget {
   overflow-y: scroll;
   padding: 0; }
   .select-widget:not(.opened) {
     height: calc(10rem + 2px); }
+  .select-widget textarea {
+    margin: .375rem 0; }
   .select-widget .option {
     padding: .375rem;
     border-bottom: 1px solid #f6f6f6;
@@ -2323,6 +2319,10 @@ select {
     .select-widget .option:hover {
       cursor: pointer;
       background-color: #f6f6f6; }
+  .select-widget .custom.selected .option-desc {
+    display: none; }
+  .select-widget .custom:not(.selected) textarea {
+    display: none; }
 
 .checkbox-widget, .toggle-widget {
   display: -webkit-box;

@@ -158,19 +158,16 @@ select {
 			@include highlight;
 		}
 	}
-	textarea, .has-error & textarea {
-		margin-top: 30px;
-		background-color: $lightest !important;
-		&.hidden {
-			display: none;
-		}
-	}
 }
 .select-widget {
 	overflow-y: scroll;
 	padding: 0;
 	&:not(.opened) {
 		height: calc(10rem + 2px);
+	}
+	textarea {
+		// width: calc(100% - .75rem);
+		margin: .375rem 0;
 	}
 	.option {
 		padding: .375rem;
@@ -190,7 +187,20 @@ select {
 			background-color: $light;
 		}
 	}
+	.custom {
+		&.selected {
+			.option-desc {
+				display: none;
+			}
+		}
+		&:not(.selected) {
+			textarea {
+				display: none;
+			}
+		}
+	}
 }
+
 
 
 .checkbox-widget, .toggle-widget {

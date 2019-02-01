@@ -7,14 +7,16 @@ class Blocks extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
-			blocks: [{}],
-			mediaData: []
+			blocks: [],
+			mediaData: [],
+			urlPlaceholder: null
 		};
 	}
 
 	onChange(e) {
-		const name = e.target.name;
-		const value = e.target.value;
+		const select = e.target;
+		const name = select.name;
+		const value = select.value;
 
 		const nameArr = name.split('_');
 		const fieldsetKey = nameArr[0];
@@ -22,7 +24,7 @@ class Blocks extends React.Component {
 		const fieldKey = nameArr[2];
 
 		const fieldName = [fieldsetKey, blockKey].join('_');
-		const index = Number(e.target.dataset.index);
+		const index = Number(select.dataset.index);
 
 		let blocks = this.state.blocks;
 		let block = blocks[index];
@@ -31,7 +33,7 @@ class Blocks extends React.Component {
 		if(blocks[index].url) {
 			this.getMediaData(blocks[index], fieldsetKey, index);
 		}
-
+		
 		this.setState({
 			blocks: blocks
 		});
@@ -39,10 +41,17 @@ class Blocks extends React.Component {
 		this.props.onChange(fieldName, blocks);
 	}
 
+	onSelectChange(e) {
+		const select = e.target;
+		const urlPlaceholder = select.options[select.selectedIndex].dataset.urlPlaceholder;
+		this.setState({
+			urlPlaceholder: urlPlaceholder
+		});
+	}
+
 	getMediaData(obj, fieldsetKey, index) {
 		const url = obj.url;
 		const source = obj.source;
-		// if(!isUrl(url)) {return}
 		const that = this;
 		const uri = encodeURIComponent(url);
 		const mediaData = Object.assign({},this.state.mediaData);
@@ -96,26 +105,38 @@ class Blocks extends React.Component {
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id, fieldKey].join('_');
 		let field = '';
+		const urlPlaceholder = this.state.urlPlaceholder;
+		let placeholder = fieldKey=='url'&&urlPlaceholder?urlPlaceholder:text.placeholder;
 		switch(type) {
 			case 'text':
 				field = <input
 									name={name}
 									type={'text'}
 									data-index={blockIndex}
+									placeholder={placeholder}
 									className='form-elem'
 									onChange={this.onChange.bind(this)}/>
 				break;
 			case 'select':
-				const options = fieldData.options;
+				const opts = fieldData.opts;
 				const optionElems = [];
-				for(let option of options) {
-					optionElems.push(<option value={option} key={optionElems.length}>{option}</option>)
+				for(let opt of opts) {
+					optionElems.push(
+						<option
+							value={opt.label}
+							data-url-placeholder={opt.url_placeholder}
+							key={optionElems.length}>
+							{opt.label}
+						</option>)
 				}
 				field = <select
 									name={name}
-									data-index={blockIndex}
 									className='form-elem'
-									onChange={this.onChange.bind(this)}>
+									data-index={blockIndex}
+									onChange={(e) => {
+										this.onSelectChange(e);
+										this.onChange(e);
+									}}>
 									{optionElems}
 								</select>
 				break;
@@ -124,7 +145,7 @@ class Blocks extends React.Component {
 		return(
 			<div className="field input" key={fieldIndex}>
 				{text && text.label ?
-					<label name={id}>
+					<label name={name}>
 						{text.label}
 					</label>
 				: ''}
@@ -201,9 +222,9 @@ class Blocks extends React.Component {
 					{this.renderBlocks()}
 				</div>
 
-				<button className="add-block" onClick={this.addBlock.bind(this)}>
+				<div className="button add-block" onClick={this.addBlock.bind(this)}>
 					Add {id.replace('s','')}
-				</button>
+				</div>
 
 			</div>
 		);

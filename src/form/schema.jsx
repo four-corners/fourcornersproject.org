@@ -36,6 +36,13 @@ const Schema = {
 		fields: {
 			text: {
 				type: 'textarea'
+			}
+		}
+	},
+	context: {
+		fields: {
+			text: {
+				type: 'textarea'
 			},
 			media: {
 				type: 'blocks',
@@ -52,13 +59,6 @@ const Schema = {
 						type: 'text',
 					}
 				}
-			}
-		}
-	},
-	context: {
-		fields: {
-			text: {
-				type: 'textarea'
 			}
 		}
 	},

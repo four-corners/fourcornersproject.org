@@ -24,7 +24,7 @@ class Embed extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		const activeCorner = this.props.activeCorner;
+
 	}
 
 	onChangeOpts(e) {

@@ -92,61 +92,66 @@ class File extends React.Component {
 				: ''}
 				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
 
-				<label className='control-label' htmlFor='fileMode'>
-					From a URL
-				</label>
-				<div className='checkbox-widget'>
-					<input
-						name={name}
-						type='radio'
-						className='form-elem'
-						id='urlMode'
-						checked={(this.state.srcMode=='urlMode')}
-						onChange={this.onChange.bind(this)}
-						/>
-					<label className='control-label checkbox' htmlFor='urlMode'></label>
-					<div className='checkbox-content'>
+				<div className="field">
+					<label className='control-label' htmlFor='urlMode'>
+						From a URL
+					</label>
+					<div className='checkbox-widget'>
 						<input
-							id={urlId}
-							name={urlId}
-							type='url'
-							className='form-control'
-							placeholder='https://sample.org/photo.jpg'
-							onChange={(e => {
-								this.onChangeSrc(e.target.value, 'urlMode');
-							})} />
+							name={name}
+							type='radio'
+							className='form-elem'
+							id='urlMode'
+							checked={(this.state.srcMode=='urlMode')}
+							onChange={this.onChange.bind(this)}
+							/>
+						<label className='control-label checkbox' htmlFor='urlMode'></label>
+						<div className='checkbox-content'>
+							<input
+								id={urlId}
+								name={urlId}
+								type='url'
+								className='form-control'
+								placeholder='https://sample.org/photo.jpg'
+								onChange={(e => {
+									this.onChangeSrc(e.target.value, 'urlMode');
+								})} />
+						</div>
 					</div>
 				</div>
 
-				<label className='control-label' htmlFor='fileMode'>
-					From a file (temporary)
-				</label>
 
-				<div className='checkbox-widget'>
-					<input className=''
-						id='fileMode'
-						name='photo'
-						value={''}
-						type='radio' 
-						checked={(this.state.srcMode=='fileMode')}
-						onChange={(e => {
-							this.updateSrcMode('fileMode');
-						})}
-						/>
-					<label className='control-label checkbox' htmlFor='fileMode'></label>
+				<div className="field">
+					<label className='control-label' htmlFor='fileMode'>
+						From a file (temporary)
+					</label>
 
-					<div className='checkbox-content'>
-						<label className='control-label btn' htmlFor={fileId}>Browse file</label>
-						<input
-							id={fileId}
-							name={fileId}
-							type='file'
-							className='form-control'
+					<div className='checkbox-widget'>
+						<input className=''
+							id='fileMode'
+							name='photo'
+							value={''}
+							type='radio' 
+							checked={(this.state.srcMode=='fileMode')}
 							onChange={(e => {
-								if(e.target.files) {
-									this.onChangeSrc(e.target.files[0], 'fileMode');
-								}
-							})} />
+								this.updateSrcMode('fileMode');
+							})}
+							/>
+						<label className='control-label checkbox' htmlFor='fileMode'></label>
+
+						<div className='checkbox-content'>
+							<label className='control-label button' htmlFor={fileId}>Browse file</label>
+							<input
+								id={fileId}
+								name={fileId}
+								type='file'
+								className='form-control'
+								onChange={(e => {
+									if(e.target.files) {
+										this.onChangeSrc(e.target.files[0], 'fileMode');
+									}
+								})} />
+						</div>
 					</div>
 				</div>
 			</div>

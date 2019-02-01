@@ -48,6 +48,7 @@ class Form extends React.Component {
 		const name = e.target.name;
 		const slug = name.split('_')[0];
 		this.props.sendActiveCorner(slug);
+		this.props.sendActiveFieldset(slug)
 	}
 
 	onBlur(id) {
@@ -66,7 +67,8 @@ class Form extends React.Component {
 			formData: formData
 		});
 		this.props.sendFormData(formData);
-		this.props.sendActiveCorner(fieldsetSlug);
+		// this.props.sendActiveCorner(fieldsetSlug);
+		// this.props.sendActiveFieldset(fieldsetSlug);
 	}
 
 	onToggle(e) {
@@ -105,10 +107,14 @@ class Form extends React.Component {
 						Schema[setKey].fields[fieldKey].options = opts;
 					}
 					if(field.type=='blocks') {
+
 						const blockFields = Schema[setKey].fields[fieldKey].fields;
 						const blockFieldKeys = Object.keys(blockFields);
 						for(let blockFieldKey of blockFieldKeys) {
-							const fields = translations[[setKey, fieldKey, 'fields'].join('_')];
+							const blockOpts = translations[[setKey, fieldKey, blockFieldKey, 'opts'].join('_')];
+							if(blockOpts) {
+								Schema[setKey].fields[fieldKey].fields[blockFieldKey].opts = blockOpts;
+							}
 							Schema[setKey].fields[fieldKey].fields[blockFieldKey].text = {
 								label: translations[[setKey, fieldKey, blockFieldKey, 'label'].join('_')],
 								placeholder: translations[[setKey, fieldKey, blockFieldKey, 'placeholder'].join('_')],
@@ -124,7 +130,9 @@ class Form extends React.Component {
 				key={setKey}
 				onChange={this.onChange.bind(this)}
 				activeCorner={this.props.activeCorner}
+				activeFieldset={this.props.activeFieldset}
 				sendActiveCorner={this.props.sendActiveCorner}
+				sendActiveFieldset={this.props.sendActiveFieldset}
 				sendMediaData={this.props.sendMediaData} />;
 			fieldsets.push(fieldset);
 		}

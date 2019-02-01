@@ -41,6 +41,8 @@ class Fieldset extends React.Component {
 		const slug = this.props.id;
 		const newActiveCorner = slug==this.props.activeCorner?null:slug;
 		this.props.sendActiveCorner(newActiveCorner);
+		const newActiveFieldset = slug==this.props.activeFieldset?null:slug;
+		this.props.sendActiveFieldset(newActiveFieldset);
 	}
 
 	renderFields() {
@@ -132,7 +134,7 @@ class Fieldset extends React.Component {
 	render() {
 		const data = this.props.data;
 		const text = data.text;
-		const expand = this.props.id==this.props.activeCorner;
+		const expand = this.props.id==this.props.activeFieldset;
 		return (
 			<fieldset id={this.props.id} className={expand?'expand':'collapse'}>
 				<legend onClick={this.onToggle.bind(this)}>

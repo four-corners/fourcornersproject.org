@@ -20,8 +20,9 @@ class Creator extends React.Component {
 				'authorship':{},
 				'backstory':{}
 			},
-			mediaData: {backstory:[]},
-			activeCorner: null
+			mediaData: {context:[]},
+			activeCorner: null,
+			activeFieldset: null
 		};
 		this.corners = ['context','links','authorship','backstory'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
@@ -123,6 +124,18 @@ class Creator extends React.Component {
 		});
   }
 
+  setActiveFieldset(slug) {
+  	if(!slug) {
+  		slug = '';
+  	}
+  	// else if(!this.corners.includes(slug)) {
+  	// 	slug = this.state.activeCorner;
+  	// }
+		this.setState({
+			activeFieldset: slug
+		});
+  }
+
 	renderFormCol() {
 		return (
 			<Form
@@ -130,7 +143,9 @@ class Creator extends React.Component {
 				creator={this.state.creator}
 				formData={this.state.formData}
 				activeCorner={this.state.activeCorner}
+				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
+				sendActiveFieldset={this.setActiveFieldset.bind(this)}
 				sendFormData={this.setFormData.bind(this)}
 				sendMediaData={this.setMediaData.bind(this)} />
 		);
@@ -144,7 +159,9 @@ class Creator extends React.Component {
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
 				activeCorner={this.state.activeCorner}
-				sendActiveCorner={this.setActiveCorner.bind(this)} />
+				activeFieldset={this.state.activeFieldset}
+				sendActiveCorner={this.setActiveCorner.bind(this)}
+				sendActiveFieldset={this.setActiveFieldset.bind(this)} />
 		);
 	}
 

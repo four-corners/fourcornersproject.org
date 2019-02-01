@@ -2490,17 +2490,13 @@ select {
 .has-error input, .has-error select, .has-error textarea {
   background-color: rgba(255, 0, 0, 0.2) !important; }
 
-.btn-group {
-  display: block !important; }
-
-button, .btn {
+.button {
   height: calc(2.25rem + 2px);
+  width: auto;
   margin: 0 .5rem 0 0;
   padding: .325rem .75rem;
   position: relative;
-  -webkit-box-flex: inherit !important;
-      -ms-flex: inherit !important;
-          flex: inherit !important;
+  display: table;
   -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -2512,24 +2508,24 @@ button, .btn {
   border-radius: 4px;
   -webkit-transition: all 400ms ease;
   transition: all 400ms ease; }
-  button:focus, .btn:focus {
+  .button:focus {
     color: #000;
     border-width: 1px;
     outline: 0;
     -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
-  button.btn-add, button.btn-danger, .btn.btn-add, .btn.btn-danger {
+  .button.btn-add, .button.btn-danger {
     width: calc(2.25rem + 2px); }
-  button::after, .btn::after {
+  .button::after {
     font-weight: normal; }
-  button:last-of-type, .btn:last-of-type {
+  .button:last-of-type {
     margin: 0; }
-  button:hover, .btn:hover {
+  .button:hover {
     background-color: #f6f6f6;
     cursor: pointer; }
-  button[disabled], .btn[disabled] {
+  .button[disabled] {
     opacity: .5; }
-    button[disabled]:hover, .btn[disabled]:hover {
+    .button[disabled]:hover {
       cursor: default; }
 
 i.glyphicon {

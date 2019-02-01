@@ -391,15 +391,13 @@ select {
 		background-color: rgba(red,.2) !important;
 	}
 }
-.btn-group {
-	display: block !important;
-}
-button, .btn {
+.button {
 	height: calc(2.25rem + 2px);
+	width: auto;
 	margin: 0 .5rem 0 0;
 	padding: .325rem .75rem;
 	position: relative;
-	flex: inherit !important;
+	display: table;
 	box-shadow: 0 0 1px 1px rgba($darkest,.1);
 	background-color: $lightest;
 	font-weight: 700;

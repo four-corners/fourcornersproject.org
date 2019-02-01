@@ -21,7 +21,6 @@ class Embed extends React.Component {
 			includeJs: false,
 			stickyStyle: {},
 			expand: false
-			// activeCorner: this.props.activeCorner
 		};
 		this.imgInputRef = React.createRef();
 		this.outputRef = React.createRef();
@@ -187,7 +186,9 @@ class Embed extends React.Component {
 								formData={this.props.formData}
 								mediaData={this.props.mediaData}
 								activeCorner={this.props.activeCorner}
+								activeFieldset={this.props.activeFieldset}
 								sendActiveCorner={this.props.sendActiveCorner}
+								sendActiveFieldset={this.props.sendActiveFieldset}
 								/>
 
 							<div id='embed-output'>

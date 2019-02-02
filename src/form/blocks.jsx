@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+const slugify = require('slugify');
 
 class Blocks extends React.Component {
 
@@ -33,7 +34,6 @@ class Blocks extends React.Component {
 		if(blocks[index].url) {
 			this.getMediaData(blocks[index], fieldsetKey, index);
 		}
-		
 		this.setState({
 			blocks: blocks
 		});
@@ -121,9 +121,10 @@ class Blocks extends React.Component {
 				const opts = fieldData.opts;
 				const optionElems = [];
 				for(let opt of opts) {
+					const slug = slugify(opt.label,{lower: true})
 					optionElems.push(
 						<option
-							value={opt.label}
+							value={slug}
 							data-url-placeholder={opt.url_placeholder}
 							key={optionElems.length}>
 							{opt.label}

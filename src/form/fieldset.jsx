@@ -109,6 +109,7 @@ class Fieldset extends React.Component {
 							fieldset={this.props.id}
 							data={field}
 							key={fieldElems.length}
+							sendImgData={this.props.sendImgData}
 							onChange={this.props.onChange} />
 					);
 					break;

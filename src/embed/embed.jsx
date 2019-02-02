@@ -150,21 +150,20 @@ class Embed extends React.Component {
 	}
 
 	embedCode(formData) {
+		const imgData = this.props.imgData;
 		let auxData = {
 			lang: i18n.language,
-			img: this.props.imgLoaded ? this.props.imgSrc : undefined,
 		}
 		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
 		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
-		// const jsInit = 'window.onload=function(){FourCorners.default.prototype.init()}';
 
 		let safeFormData = Object.assign(formData, auxData);
 		let stringData = JSON.stringify(safeFormData)
-			.replace(/'/g, '&apos;')
-		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'></div>";
+			.replace(/'/g, '&apos;');
+		let imgHtml = imgData.imgLoaded ? "<img class='fc-img' src='"+imgData.imgSrc+"'/>":'';
+		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'>"+imgHtml+"</div>";
 		stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
 		stringHtml += (this.state.includeJs?'<script src="'+jsCDN+'" type="text/javascript"></script>':'');
-		// stringHtml += (this.state.includeJs?'<script type="text/javascript">'+jsInit+'</script>':'');
 		return stringHtml;
 	}
 
@@ -182,8 +181,8 @@ class Embed extends React.Component {
 						<div id='embedder' className={inputClass}>
 							<Module
 								creator={this.props.creator}
-								imgLoaded={this.props.imgLoaded}
 								formData={this.props.formData}
+								imgData={this.props.imgData}
 								mediaData={this.props.mediaData}
 								activeCorner={this.props.activeCorner}
 								activeFieldset={this.props.activeFieldset}

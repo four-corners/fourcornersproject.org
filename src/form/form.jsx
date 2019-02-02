@@ -133,7 +133,8 @@ class Form extends React.Component {
 				activeFieldset={this.props.activeFieldset}
 				sendActiveCorner={this.props.sendActiveCorner}
 				sendActiveFieldset={this.props.sendActiveFieldset}
-				sendMediaData={this.props.sendMediaData} />;
+				sendMediaData={this.props.sendMediaData}
+				sendImgData={this.props.sendImgData} />;
 			fieldsets.push(fieldset);
 		}
 		return fieldsets;

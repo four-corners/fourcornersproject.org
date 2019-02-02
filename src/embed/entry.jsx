@@ -42,17 +42,18 @@ class Entry extends React.Component {
 		this.props.fieldData.forEach((obj, i) => {
 			let subRowInner = '';
 			if(obj.source == 'image' || !obj.source) {
-				subRowInner = obj.url ? <img src={obj.url} alt=''/> : false;
+				subRowInner = obj.url ? <img src={obj.url} alt=''/> : null;
 			} else {
 				const media = this.props.mediaData[i];
-				subRowInner = media ? <div className='fc-media' dangerouslySetInnerHTML={{__html: media.html}} /> : false;
+				subRowInner = media ? <div className='fc-media' dangerouslySetInnerHTML={{__html: media.html}} /> : null;
 			}
-			const mediaCaption = obj.caption ? <div className='fc-sub-caption'>{obj.caption}</div> : '';
-			const subRow = <div className='fc-sub-row' key={i}>{subRowInner}{mediaCaption}</div>;
-			
-			subRows.push(subRow);
+			const mediaCaption = obj.caption ? <div className='fc-sub-caption'>{obj.caption}</div> : null;
+			if(subRowInner||mediaCaption) {
+				const subRow = <div className='fc-sub-row' key={i}>{subRowInner}{mediaCaption}</div>;
+				subRows.push(subRow);
+			}
 		});
-		return <div className='fc-row-inner'>{subRows}</div>;
+		return subRows.length ? <div className='fc-row-inner'>{subRows}</div> : null;
 	}
 
 	extractHostname(url) {
@@ -142,11 +143,8 @@ class Entry extends React.Component {
 	render() {
 		const cornerKey = this.props.cornerSlug;
 		const fieldKey = this.props.fieldSlug;
-		return(
-			<div className={'fc-row fc-'+fieldKey}>
-				{this.props.fieldData ? this.renderEntry() : ''}
-			</div>
-		);
+		const entry = this.props.fieldData ? this.renderEntry() : null;
+		return entry ? <div className={'fc-row fc-'+fieldKey}>{entry}</div> : null;
 	}
 }
 

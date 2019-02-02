@@ -8,71 +8,67 @@ class File extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: '',
-
 			imgSrc: '',
-
-			srcMode: 'urlMode',
+			srcMode: 'url',
 			urlSrc: '',
 			fileSrc: '',
-			properSrc: false,
-			isLoaded: false,
+			imgLoaded: false,
+			imgValid: false
 		};
 	}
 
+	componentDidUpdate() {
+		// console.log(this.state)
+	}
+
 	updateSrcMode(srcMode) {
-		const srcKey = srcMode.replace('Mode','Src');
-		if(!srcKey) {return}
-		const imgSrc = this.state[srcKey];
-		this.setState({
-			srcMode: srcMode,
-			imgSrc: imgSrc,
-			properSrc: (srcMode=='urlMode'&&imgSrc)
-		});
-		// this.props.onChange(srcVal);
-		this.props.onChange('photo_file', imgSrc);
+		const imgData = Object.assign({}, this.state);
+		imgData.srcMode = srcMode;
+		imgData.imgSrc = imgData[srcMode+'Src'];
+		this.setState(imgData);
+		this.props.sendImgData(imgData);
 	}
 
 	onChangeSrc(value, srcMode) {
-		// if(this.state.srcMode!=srcMode){return}
-		let imgSrc = null;
-		if(srcMode == 'urlMode') {
+		let imgData;
+		if(srcMode == 'url') {
 			let pseudoImg = new Image();
-			imgSrc = value;
+			const urlSrc = value;
 			pseudoImg.onload = (e) => {
-				this.setState({
-					urlSrc: imgSrc,
-					imgSrc: imgSrc,
-					isLoaded: true
-				});
-				this.updateSrcMode(srcMode);
-				this.props.onChange('photo_file', imgSrc);
+				imgData = {
+					srcMode: 'url',
+					urlSrc: urlSrc,
+					imgSrc: urlSrc,
+					imgLoaded: true,
+					imgValid: true
+				}
+				this.setState(imgData);
+				this.props.sendImgData(imgData);
 			}
 			pseudoImg.onerror = (e) => {
-				this.setState({
+				imgData = {
+					srcMode: 'url',
 					urlSrc: placeholderSrc,
 					imgSrc: placeholderSrc,
-					isLoaded: false
-				});
-				this.props.onChange('photo_file', placeholderSrc);
+					imgLoaded: false,
+					imgValid: false
+				}
+				this.setState(imgData);
+				this.props.sendImgData(imgData);
 			}
-			pseudoImg.src = imgSrc;
-		} else if(srcMode == 'fileMode') {
-			imgSrc = URL.createObjectURL(value);
-			this.updateSrcMode(srcMode);
-			this.setState({
-				fileSrc: imgSrc,
-				imgSrc: imgSrc,
-				isLoaded: true
-			});
-
-			this.props.onChange('photo_file', imgSrc);
+			pseudoImg.src = urlSrc;
+		} else if(srcMode == 'file') {
+			const fileSrc = URL.createObjectURL(value);
+			imgData = {
+				srcMode: 'file',
+				fileSrc: fileSrc,
+				imgSrc: fileSrc,
+				imgLoaded: true,
+				imgValid: false
+			}
+			this.setState(imgData);
+			this.props.sendImgData(imgData);
 		}
-	}
-
-	onChange(e) {
-		const srcMode = e.target.id;
-		this.updateSrcMode(srcMode);
 	}
 
 	render() {
@@ -80,9 +76,9 @@ class File extends React.Component {
 		const text = this.props.data.text;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
-		const checkboxId = id+'Check';
-		const urlId = id+'Url';
-		const fileId = id+'File';
+		const checkboxId = [fieldset, id, 'check'].join('_');
+		const urlId = [fieldset, id, 'url'].join('_');
+		const fileId = [fieldset, id, 'file'].join('_');
 		return(
 			<div className="field file">
 				{text && text.label ?
@@ -93,19 +89,21 @@ class File extends React.Component {
 				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
 
 				<div className="field">
-					<label className='control-label' htmlFor='urlMode'>
+					<label className='control-label' htmlFor='url'>
 						From a URL
 					</label>
 					<div className='checkbox-widget'>
 						<input
+							id='url'
 							name={name}
 							type='radio'
 							className='form-elem'
-							id='urlMode'
-							checked={(this.state.srcMode=='urlMode')}
-							onChange={this.onChange.bind(this)}
+							checked={this.state.srcMode=='url'}
+							onChange={(e => {
+								this.updateSrcMode('url');
+							})}
 							/>
-						<label className='control-label checkbox' htmlFor='urlMode'></label>
+						<label className='control-label checkbox' htmlFor='url'></label>
 						<div className='checkbox-content'>
 							<input
 								id={urlId}
@@ -114,7 +112,7 @@ class File extends React.Component {
 								className='form-control'
 								placeholder='https://sample.org/photo.jpg'
 								onChange={(e => {
-									this.onChangeSrc(e.target.value, 'urlMode');
+									this.onChangeSrc(e.target.value, 'url');
 								})} />
 						</div>
 					</div>
@@ -122,22 +120,21 @@ class File extends React.Component {
 
 
 				<div className="field">
-					<label className='control-label' htmlFor='fileMode'>
+					<label className='control-label' htmlFor='file'>
 						From a file (temporary)
 					</label>
 
 					<div className='checkbox-widget'>
 						<input className=''
-							id='fileMode'
-							name='photo'
-							value={''}
+							id='file'
+							name={name}
 							type='radio' 
-							checked={(this.state.srcMode=='fileMode')}
+							checked={this.state.srcMode=='file'}
 							onChange={(e => {
-								this.updateSrcMode('fileMode');
+								this.updateSrcMode('file');
 							})}
 							/>
-						<label className='control-label checkbox' htmlFor='fileMode'></label>
+						<label className='control-label checkbox' htmlFor='file'></label>
 
 						<div className='checkbox-content'>
 							<label className='control-label button' htmlFor={fileId}>Browse file</label>
@@ -147,9 +144,7 @@ class File extends React.Component {
 								type='file'
 								className='form-control'
 								onChange={(e => {
-									if(e.target.files) {
-										this.onChangeSrc(e.target.files[0], 'fileMode');
-									}
+									this.onChangeSrc(e.target.files?e.target.files[0]:null, 'file');
 								})} />
 						</div>
 					</div>

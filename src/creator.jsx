@@ -20,6 +20,7 @@ class Creator extends React.Component {
 				'authorship':{},
 				'backstory':{}
 			},
+			imgData: {},
 			mediaData: {context:[]},
 			activeCorner: null,
 			activeFieldset: null
@@ -136,6 +137,14 @@ class Creator extends React.Component {
 		});
   }
 
+  setImgData(imgData) {
+  	// const newImgData = Object.assign(this.state.imgData, imgData);
+  	const newImgData = imgData;
+  	this.setState({
+  		imgData: newImgData
+  	});
+  }
+
 	renderFormCol() {
 		return (
 			<Form
@@ -147,7 +156,8 @@ class Creator extends React.Component {
 				sendActiveCorner={this.setActiveCorner.bind(this)}
 				sendActiveFieldset={this.setActiveFieldset.bind(this)}
 				sendFormData={this.setFormData.bind(this)}
-				sendMediaData={this.setMediaData.bind(this)} />
+				sendMediaData={this.setMediaData.bind(this)}
+				sendImgData={this.setImgData.bind(this)} />
 		);
 	}
 
@@ -158,6 +168,7 @@ class Creator extends React.Component {
 				creator={this.state.creator}
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
+				imgData={this.state.imgData}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}

@@ -86,7 +86,6 @@ class SelectWidget extends React.Component {
 								key={i}
 								onClick={
 									(e => {
-										// console.log(e.currentTarget.dataset.value);
 										const newValue = e.currentTarget.dataset.value;
 										this.setState({
 											value: newValue,

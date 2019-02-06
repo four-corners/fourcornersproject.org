@@ -34,7 +34,7 @@ class CustomToggleWidget extends React.Component {
 								// this.props.onChange(e.target.checked);
 							})
 						} />
-					<label className='control-label checkbox' htmlFor={checkboxId}></label>
+					<label className='checkbox' htmlFor={checkboxId}></label>
 				</div>
 				<div className='toggle-input'>
 					<input

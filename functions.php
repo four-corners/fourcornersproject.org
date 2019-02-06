@@ -21,18 +21,22 @@ function four_corners_scripts() {
 
 	wp_scripts()->add_data( 'react_script', 'data', sprintf( 'var SiteSettings = %s;', wp_json_encode( 
 			array(
-		    'title' => get_bloginfo( 'name', 'display' ),
-		    'path' => $path,
-		    'url' => array(
-		      'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
-		      'root' => esc_url_raw( $url ),
-		      'theme' => esc_url_raw( get_stylesheet_directory_uri() )
-		    )
-		  )
-	  )
+				'title' => get_bloginfo( 'name', 'display' ),
+				'path' => $path,
+				'url' => array(
+					'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
+					'root' => esc_url_raw( $url ),
+					'theme' => esc_url_raw( get_stylesheet_directory_uri() )
+				)
+			)
+		)
 	) );
 }
 add_action( 'wp_enqueue_scripts', 'four_corners_scripts' );
+
+register_nav_menus( array(
+	'main' => 'Main',
+) );
 
 function register_creators() {
 	register_post_type( 'creators',
@@ -50,6 +54,32 @@ function register_creators() {
 	);
 }
 add_action( 'init', 'register_creators' );
+
+function get_translations_json( $req ) {
+	$lang = $req['lang'];
+	$obj = (object) array(
+		'test' => 'Four Corners'
+	);
+	return $obj;
+}
+
+function get_langs() {
+	$args = array(
+		'fields' => 'slug'
+	);
+	$slugs = pll_languages_list( array( 'fields' => 'slug' ) );
+	$locales = pll_languages_list( array( 'fields' => 'locale' ) );
+	$names = pll_languages_list( array( 'fields' => 'name' ) );
+	$langs = array();
+	foreach ( $slugs as $index => $slug ) {
+		$langs[$slug] = array(
+			'local' => $locales[$index],
+			'name' => $names[$index],
+			'url' => pll_home_url( $slug ),
+		);
+	}
+	return json_encode( $langs );
+}
 
 
 function creators_endpoint( $req ) {
@@ -98,34 +128,22 @@ function page_endpoint( $req ) {
 	return $page;
 }
 
-function get_translations_json( $req ) {
-	$lang = $req['lang'];
-	$obj = (object) array(
-		'test' => 'Four Corners'
-	);
-	return $obj;
-}
-
-function get_langs() {
-	$args = array(
-		'fields' => 'slug'
-	);
-	$slugs = pll_languages_list( array( 'fields' => 'slug' ) );
-	$locales = pll_languages_list( array( 'fields' => 'locale' ) );
-	$names = pll_languages_list( array( 'fields' => 'name' ) );
-	$langs = array();
-	foreach ( $slugs as $index => $slug ) {
-		$langs[$slug] = array(
-			'local' => $locales[$index],
-			'name' => $names[$index],
-			'url' => pll_home_url( $slug ),
-		);
+function menu_endpoint() {
+	$menu_items = wp_get_nav_menu_items( 'main' );
+	foreach ( $menu_items as $i => $menu_item ) {
+		if( $post = get_post( $menu_item->object_id ) ) {
+			$menu_items[$i]->slug = $post->post_name;	
+		}
 	}
-	return json_encode( $langs );
+	return $menu_items;
 }
-
 
 add_action( 'rest_api_init', function () {
+
+	register_rest_route( 'wp/v2', '/menu', array(
+		'methods' => 'GET',
+		'callback' => 'menu_endpoint'
+	));
 
 	register_rest_route( 'wp/v2', '/creators', array(
 		'methods' => 'GET',

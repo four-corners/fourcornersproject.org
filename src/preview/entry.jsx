@@ -85,13 +85,14 @@ class Entry extends React.Component {
 	}
 
 	renderLinks() {
+		console.log(this.props.fieldData);
 		const subRows = [];
 		this.props.fieldData.forEach((obj, i) => {
+			console.log(obj);
 			const subRow = <div className='fc-sub-row' key={i}>
-				<a href={obj.url}>{obj.title}</a>
-				{obj.url ? <div className='fc-sub-url'>{this.extractRootDomain(obj.url)}</div> : ''}
-				{obj.caption ? <div className='fc-sub-caption'>{obj.caption}</div> : ''}
-			</div>;
+					<a href={obj.url} target='_blank'>{obj.title}</a>
+					{obj.url ? <div className='fc-sub-url'>{this.extractRootDomain(obj.url)}</div> : ''}
+				</div>;
 			subRows.push(subRow);
 		});
 		return <div className='fc-row-inner'>{subRows}</div>;
@@ -121,6 +122,7 @@ class Entry extends React.Component {
 	}
 
 	renderEntry() {
+		console.log(this.props.fieldSlug);
 		switch(this.props.fieldSlug) {
 			case 'media':
 				return this.renderMedia();
@@ -143,7 +145,7 @@ class Entry extends React.Component {
 	render() {
 		const cornerKey = this.props.cornerSlug;
 		const fieldKey = this.props.fieldSlug;
-		const entry = this.props.fieldData ? this.renderEntry() : null;
+		const entry = (this.props.fieldData ? this.renderEntry() : null);
 		return entry ? <div className={'fc-row fc-'+fieldKey}>{entry}</div> : null;
 	}
 }

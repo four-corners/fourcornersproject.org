@@ -10,6 +10,7 @@ class Header extends React.Component {
 		this.state = {
 			lang: 'en',
 			langs: {},
+			menu: []
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
@@ -17,19 +18,33 @@ class Header extends React.Component {
 	componentDidMount() {
 		let that = this;
 		let lang = i18n.language;
-		let req = SiteSettings.url.api + 'get_langs';
-		fetch(req)
+
+		let langReq = SiteSettings.url.api + 'get_langs';
+		fetch(langReq)
 			.then(function(res) {
 				if (!res.ok) {
 					throw Error(res.statusText);
 				}
-				// return console.log(res);
 				return res.json();
 			})
 			.then(function(res) {
 				that.setState({ langs: JSON.parse(res) });
 			});
-		i18n.on('languageChanged', this.onLanguageChanged);
+
+		let menuReq = SiteSettings.url.api + 'menu';
+		fetch(menuReq)
+			.then(function(res) {
+				if (!res.ok) {
+					throw Error(res.statusText);
+				}
+				return res.json();
+			})
+			.then(function(res) {
+				that.setState({ menu: res });
+			});
+
+
+		// i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
 	componentWillUnmount() {
@@ -76,7 +91,25 @@ class Header extends React.Component {
 	}
 
 	changeLang(e) {
-		console.log(e);
+		// console.log(e);
+	}
+
+	renderMenu() {
+		let linkElems = [];
+		const links = this.state.menu;
+		const lang = this.state.lang;
+		if(links) {
+			linkElems = links.map( (link, i) => {
+				return (
+					<Link to={SiteSettings.path+link.slug} key={i}>{link.title}</Link>
+				);
+			});
+		}
+		return (
+			<nav id='nav'>
+				{linkElems}
+			</nav>
+		);
 	}
 
 	render() {
@@ -102,13 +135,7 @@ class Header extends React.Component {
 						<div className='col col-12 col-sm-12 col-md-6 right'>
 							<div className='col-content'>
 								{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
-								<nav id='nav'>
-									<Link to='#'>About</Link>
-									<Link to='#'>How Does It Work</Link>
-									<Link to={SiteSettings.path+'creator'}>Create Your Own</Link>
-									<Link to='#'>Gallery</Link>
-									<Link to='#'>Contact</Link>
-								</nav>
+								{this.state ? this.renderMenu() : null}
 							</div>
 						</div>
 					</div>

@@ -4,7 +4,7 @@ import Dropzone from 'react-dropzone';
 import { renderToStaticMarkup } from 'react-dom/server'
 
 import i18n from '../i18n.jsx';
-import Module from '../embed/module.jsx';
+import Module from './module.jsx';
 
 // let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
@@ -127,6 +127,7 @@ class Embed extends React.Component {
 
 	onScroll(e) {
 		const sticky = this.stickyRef.current;
+		if(!sticky){return}
 		const parent = sticky.parentElement;
 		const rect = parent.getBoundingClientRect();
 		const top = rect.top;
@@ -178,7 +179,7 @@ class Embed extends React.Component {
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
 					<div className='col-content'>
 
-						<div id='embedder' className={inputClass}>
+						<div id='preview' className={inputClass}>
 							<Module
 								creator={this.props.creator}
 								formData={this.props.formData}

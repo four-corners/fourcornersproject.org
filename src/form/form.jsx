@@ -7,12 +7,7 @@ import i18n from '../i18n.jsx';
 import Schema from './schema.jsx';
 import Fieldset from './fieldset.jsx';
 
-// import uiSchema from './ui-schema.jsx';
-// import validate from './validate.jsx';
-// import CustomSelectWidget from './CustomSelectWidget.jsx';
-// import CustomToggleWidget from './CustomToggleWidget.jsx';
-// import CustomUploadWidget from './CustomUploadWidget.jsx';
-// import ArrayField from './ArrayField.jsx';
+const slugify = require('slugify');
 
 class Form extends React.Component {
 	
@@ -21,7 +16,6 @@ class Form extends React.Component {
 		this.state = {
 			mediaData: this.props.mediaData,
 			formData: {
-				'photo':{},
 				'authorship':{},
 				'backstory':{},
 				'context':{},
@@ -96,6 +90,7 @@ class Form extends React.Component {
 			}
 			for(let fieldKey of fieldKeys) {
 				let field = fields[fieldKey];
+				// console.log(field);
 				if(field) {
 					Schema[setKey].fields[fieldKey].text = {
 						label: translations[[setKey, fieldKey, 'label'].join('_')],
@@ -107,19 +102,22 @@ class Form extends React.Component {
 						Schema[setKey].fields[fieldKey].options = opts;
 					}
 					if(field.type=='blocks') {
-
 						const blockFields = Schema[setKey].fields[fieldKey].fields;
 						const blockFieldKeys = Object.keys(blockFields);
 						for(let blockFieldKey of blockFieldKeys) {
-							const blockOpts = translations[[setKey, fieldKey, blockFieldKey, 'opts'].join('_')];
-							if(blockOpts) {
-								Schema[setKey].fields[fieldKey].fields[blockFieldKey].opts = blockOpts;
-							}
+							const blockTypes = translations[[setKey, fieldKey, 'types'].join('_')];
+							Schema[setKey].fields[fieldKey].types = [];
+							if(blockTypes) { for(let blockType of blockTypes) {
+								blockType.slug = slugify(blockType.label,{lower:true});
+								Schema[setKey].fields[fieldKey].types.push(blockType);
+							} }
+								
 							Schema[setKey].fields[fieldKey].fields[blockFieldKey].text = {
 								label: translations[[setKey, fieldKey, blockFieldKey, 'label'].join('_')],
 								placeholder: translations[[setKey, fieldKey, blockFieldKey, 'placeholder'].join('_')],
 								desc: translations[[setKey, fieldKey, blockFieldKey, 'desc'].join('_')]
 							}
+							// console.log(Schema[setKey]);
 						}
 					}
 				}

@@ -12,6 +12,9 @@ html {
 body {
 	overflow-y: scroll;
 }
+* {
+	box-sizing: border-box;
+}
 .rtl, .rtl * {
 	text-align: right;
 }

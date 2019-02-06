@@ -47,10 +47,6 @@ const Schema = {
 			media: {
 				type: 'blocks',
 				fields: {
-					source: {
-						type: 'select',
-						options: ['image','youtube','vimeo','soundcloud']
-					},
 					url: {
 						type: 'text',
 						format: 'uri',
@@ -58,7 +54,29 @@ const Schema = {
 					caption: {
 						type: 'text',
 					}
-				}
+				},
+				// options: [
+				// 	{
+				// 		slug: 'image',
+				// 		label: 'Image',
+				// 		placeholder: 'https://example.com/photo.jpg'
+				// 	},
+				// 	{
+				// 		slug: 'youtube',
+				// 		label: 'YouTube',
+				// 		placeholder: 'https://youtube.com/watch?v=abc123'
+				// 	},
+				// 	{
+				// 		slug: 'vimeo',
+				// 		label: 'Vimeo',
+				// 		placeholder: 'https://vimeo.com/123456'
+				// 	},
+				// 	{
+				// 		slug: 'soundcloud',
+				// 		label: 'SoundCloud',
+				// 		placeholder: 'https://soundcloud.com/example/audio'
+				// 	}
+				// ],
 			}
 		}
 	},
@@ -73,9 +91,6 @@ const Schema = {
 					url: {
 						type: 'text',
 						format: 'uri',
-					},
-					caption: {
-						type: 'text',
 					}
 				}
 			}
@@ -89,7 +104,7 @@ const Schema = {
 			},
 			// include: {
 			// 	type: 'checkbox',
-			// 	multiple: true,
+			// 	// multiple: true,
 			// 	options: ['js','css']
 			// }
 		}

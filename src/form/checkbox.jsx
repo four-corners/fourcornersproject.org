@@ -30,7 +30,7 @@ class Checkbox extends React.Component {
 						type='checkbox'
 						defaultChecked={false}
 						onChange={this.onChange.bind(this)} />
-					<label className='control-label checkbox' htmlFor={id}>
+					<label className='checkbox' htmlFor={id}>
 						<div className='label-inner'>
 							{text && text.label ?
 								<span>{text.label}</span>

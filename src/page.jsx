@@ -1,7 +1,10 @@
-import { Component } from 'react';
+import React from 'react';
+import { render } from 'react-dom';
+import i18n from './i18n.jsx';
+
 import NotFound from './not-found';
 
-class Post extends Component {
+class Page extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -14,8 +17,7 @@ class Post extends Component {
 		var that = this;
 		var url = window.location.href.split('/');
 		var slug = url.pop() || url.pop();
-
-		fetch(SiteSettings.URL.api + "pages?slug=" + slug)
+		fetch(SiteSettings.url.api + "pages?slug=" + slug)
 			.then(function (response) {
 				if (!response.ok) {
 					throw Error(response.statusText);
@@ -27,38 +29,31 @@ class Post extends Component {
 			});
 	}
 
-	renderPosts() {
+	renderPage() {
 		if(this.state.page.title) {
 			return (
-				<div className="card">
-					<div className="card-body">
-						<h4 className="card-title">{this.state.page.title.rendered}</h4>
-						<p className="card-text" dangerouslySetInnerHTML={{ __html: this.state.page.content.rendered }}  />
-					</div>
-				</div>
+				<React.Fragment>
+					<h1>{this.state.page.title.rendered}</h1>
+					<p className="card-text" dangerouslySetInnerHTML={{ __html: this.state.page.content.rendered }}  />
+				</React.Fragment>
 			)
-		} else {
-			this.renderEmpty();
 		}
 	}
 
-	renderEmpty() {
-		return (
-			<NotFound />
-		)
-	}
-
 	render() {
-		console.log('this.state.page',this.state.page)
+		// console.log('this.state.page',this.state.page)
 		return (
-			<div className="container post-entry">
-				{this.state.page ?
-					this.renderPosts() :
-					this.renderEmpty()
-				}
-			</div>
+			<main id='home'>
+				<div className='max-width'>
+					{
+						this.state.page ?
+						this.renderPage() :
+						null
+					}
+				</div>
+			</main>
 		);
 	}
 }
 
-export default Post;
+export default Page;

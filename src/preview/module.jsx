@@ -4,7 +4,7 @@ import i18n from './../i18n.jsx';
 import Entry from './entry.jsx';
 // import FourCorners from './../../assets/js/four-corners.min.js';
 
-class Embed extends React.Component {
+class Module extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -148,6 +148,7 @@ class Embed extends React.Component {
 	render() {
 		const imgData = this.props.imgData;
 		const imgSrc = imgData ? imgData.imgSrc : null;
+		const imgLoaded = imgData ? imgData.imgLoaded : null;
 		let className = 'fc-embed';
 		if(this.props.formData.opts&&this.props.formData.opts.dark) {
 			className += ' fc-dark';
@@ -161,7 +162,7 @@ class Embed extends React.Component {
 		const activeCorner = this.props.activeCorner;
 		return(
 			<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
-				{!imgSrc?<div className="no-photo"><h2>No photo</h2></div>:''}
+				{!imgLoaded?<div className="no-photo"><h2>No photo</h2></div>:''}
 				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
 					<img src={imgSrc} className='fc-img'/>
 				</div>
@@ -173,4 +174,4 @@ class Embed extends React.Component {
 	}
 }
 
-export default Embed;
+export default Module;

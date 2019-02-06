@@ -114,6 +114,7 @@ class Fieldset extends React.Component {
 					);
 					break;
 				case 'blocks':
+					// console.log(this.props, field)
 					fieldElems.push(
 						<Blocks
 							id={fieldKey}

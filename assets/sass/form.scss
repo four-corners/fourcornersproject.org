@@ -37,8 +37,15 @@ section {
 	position: relative;
 }
 label, legend {
-	width: 100%;
 	font-weight: bold;
+}
+label {
+	margin-bottom: .5rem;
+	display: inline-block;
+}
+.label-inner {
+	display: flex;
+	align-items: center;
 }
 legend {
 	width: 100%;
@@ -109,15 +116,6 @@ legend {
 	#links & span::before {
 		transform: rotate(270deg);
 	}
-}
-label {
-	margin-bottom: .5rem;
-	display: inline-block;
-}
-.label-inner {
-	display: flex;
-	align-items: center;
-	margin-left: .5rem;
 }
 .desc {
 	width: 100%;
@@ -228,6 +226,7 @@ select {
 		}
 		&::before {
 			background: $lightest;
+			margin-right: .5rem;
 		}
 		&::after {
 			width: calc(2.25rem + 2px);
@@ -254,7 +253,6 @@ select {
 .checkbox-widget {
 	flex-direction: rows;
 	label.checkbox {
-		margin: 0 .5rem 0 0;
 		&::before {
 			width: calc(2.25rem + 2px);
 		}
@@ -344,12 +342,27 @@ select {
 // }
 .block-widget {
 	width: 100%;
-	margin: 0 auto 2rem auto;
+	margin: 0 auto 1rem auto;
 	position: relative;
 	overflow: hidden;
-	@include card;
+	padding: 0 .325rem .75rem .325rem;
+	@include shadow;
+	@include border;
+	// label {
+		// margin: 0 .325rem;
+	// }
 	.field:first-child {
 		margin-top: 0;
+	}
+}
+.blocks-buttons {
+	// margin-top: -.5rem;
+	// label {
+		// width: auto;
+		// margin-right: .5rem;
+	// }
+	.button {
+		display: inline-block;
 	}
 }
 .delete-block {
@@ -357,7 +370,7 @@ select {
 	height: 1.5rem;
 	position: absolute;
 	right: .5rem;
-	top: .5rem;
+	top: .625rem;
 	// background-size: contain;
 	// background-position: center;
 	// background-repeat: no-repeat;
@@ -384,8 +397,6 @@ select {
 		cursor: pointer;
 	}
 }
-
-
 .has-error {
 	input, select, textarea {
 		background-color: rgba(red,.2) !important;
@@ -394,7 +405,7 @@ select {
 .button {
 	height: calc(2.25rem + 2px);
 	width: auto;
-	margin: 0 .5rem 0 0;
+	margin: 0 .5rem .5rem 0;
 	padding: .325rem .75rem;
 	position: relative;
 	display: table;

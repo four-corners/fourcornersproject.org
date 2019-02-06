@@ -6,7 +6,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './header';
 import Footer from './footer';
 import Home from './home';
+import How from './how';
 import Creator from './creator';
+import Page from './page';
 import NotFound from './not-found';
 
 import publicScripts from '../assets/coffee/public.coffee';
@@ -22,8 +24,9 @@ const routes = (
 							<Header></Header>
 							<Switch>
 								<Route exact path={SiteSettings.path} component={Home} />
-								<Route path={SiteSettings.path+'creator'} component={Creator} />
-								<Route path="*" component={NotFound} />
+								<Route path={SiteSettings.path+'create'} component={Creator} />
+								<Route path={SiteSettings.path+'how'} component={How} />
+								<Route path='*' component={Page} />
 							</Switch>
 						</React.Fragment>
 					</Router>

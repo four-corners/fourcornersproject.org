@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import i18n from './i18n.jsx';
 import Header from './header.jsx';
 import Form from './form/form.jsx';
-import Embed from './embed/embed.jsx';
+import Preview from './preview/preview.jsx';
 
 class Creator extends React.Component {
 	
@@ -32,7 +32,6 @@ class Creator extends React.Component {
 
 	componentDidMount() {
 		let that = this;
-		let url = window.location.href.split('/');
 		let lang = i18n.language;
 		let req = SiteSettings.url.api + 'creators?lang=' + lang;
 		fetch(req)
@@ -64,41 +63,6 @@ class Creator extends React.Component {
 		this.setState({
 			lang: lang
 		});
-	}
-
-	getEmbedId(url, type) {
-		const that = this;
-
-		if(!url||!isUrl(url)){return}
-
-		// let endpoint = '';
-		// switch(type) {
-		// 	case 'youtube':
-		// 		endpoint = 'https://www.youtube.com/oembed';
-		// 		break;
-		// 	case 'vimeo':
-		// 		endpoint = 'https://vimeo.com/api/oembed.json';
-		// 		break;
-		// 	case 'soundcloud':
-		// 		endpoint = 'https://soundcloud.com/oembed';
-		// 		break;
-		// 	default:
-		// 		return false;
-		// 		break;
-		// }
-		// const callback = 'embedVideo';
-	 //  let req = endpoint+'?url='+encodeURIComponent(url);
-		// fetch(req)
-		// 	.then(res => {
-		// 		if (!res.ok) {throw Error(res.statusText)}
-		// 		return res.json();
-		// 	})
-		// 	.then(res => {
-		// 		console.log(that.state.formData);
-		// 		console.log(res.video_id);
-
-		// 		// that.setState({ creator: res[0] });
-		// 	});
 	}
 
 	setFormData(newData) {
@@ -161,9 +125,9 @@ class Creator extends React.Component {
 		);
 	}
 
-	renderEmbedCol() {
+	renderPreviewCol() {
 		return (
-			<Embed
+			<Preview
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
@@ -196,11 +160,11 @@ class Creator extends React.Component {
 							// 	</div>
 							// </div>
 						}
-							<div className='col col-12 col-sm-6 left col-embed'>
+							<div className='col col-12 col-sm-6 left col-preview'>
 								<div className='desc'>
 									Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
 								</div>
-								{this.renderEmbedCol()}
+								{this.renderPreviewCol()}
 							</div>
 							<div className='col col-12 col-sm-6 right col-form'>
 								{this.renderFormCol()}

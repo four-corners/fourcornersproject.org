@@ -9,8 +9,7 @@ class Blocks extends React.Component {
 		this.state = {
 			value: '',
 			blocks: [],
-			mediaData: [],
-			urlPlaceholder: null
+			mediaData: []
 		};
 	}
 
@@ -39,14 +38,6 @@ class Blocks extends React.Component {
 		});
 
 		this.props.onChange(fieldName, blocks);
-	}
-
-	onSelectChange(e) {
-		const select = e.target;
-		const urlPlaceholder = select.options[select.selectedIndex].dataset.urlPlaceholder;
-		this.setState({
-			urlPlaceholder: urlPlaceholder
-		});
 	}
 
 	getMediaData(obj, fieldsetKey, index) {
@@ -97,86 +88,6 @@ class Blocks extends React.Component {
 			});
 	}
 
-	renderField(fieldKey, fieldData, blockIndex, fieldIndex) {
-		const id = this.props.id;
-		const data = this.props.data;
-		const text = fieldData.text;
-		const type = fieldData.type;
-		const fieldset = this.props.fieldset;
-		const name = [fieldset, id, fieldKey].join('_');
-		let field = '';
-		const urlPlaceholder = this.state.urlPlaceholder;
-		let placeholder = fieldKey=='url'&&urlPlaceholder?urlPlaceholder:text.placeholder;
-		switch(type) {
-			case 'text':
-				field = <input
-									name={name}
-									type={'text'}
-									data-index={blockIndex}
-									placeholder={placeholder}
-									className='form-elem'
-									onChange={this.onChange.bind(this)}/>
-				break;
-			case 'select':
-				const opts = fieldData.opts;
-				const optionElems = [];
-				for(let opt of opts) {
-					const slug = slugify(opt.label,{lower: true})
-					optionElems.push(
-						<option
-							value={slug}
-							data-url-placeholder={opt.url_placeholder}
-							key={optionElems.length}>
-							{opt.label}
-						</option>)
-				}
-				field = <select
-									name={name}
-									className='form-elem'
-									data-index={blockIndex}
-									onChange={(e) => {
-										this.onSelectChange(e);
-										this.onChange(e);
-									}}>
-									{optionElems}
-								</select>
-				break;
-		}
-
-		return(
-			<div className="field input" key={fieldIndex}>
-				{text && text.label ?
-					<label name={name}>
-						{text.label}
-					</label>
-				: ''}
-				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
-				{field}
-			</div>
-		);
-	}
-
-	renderBlock(blockData, i) {
-		const fields = this.props.data.fields;
-		const fieldKeys = Object.keys(fields);
-		let fieldElems = [];
-		// for(let fieldKey of fieldKeys) {
-		fieldKeys.map((fieldKey, j) => {
-			const fieldData = fields[fieldKey];
-			const field = this.renderField(fieldKey, fieldData, i, j);
-			fieldElems.push(field);
-		});
-		return(
-			<div className="block-widget" key={i}>
-				{fieldElems}
-				<div
-					className="delete-block"
-					data-index={i}
-					onClick={this.deleteBlock.bind(this)}/>
-			</div>
-		);
-	}
-
 	renderBlocks() {
 		let blocks = [];
 		this.state.blocks.map((blockData, i) => {
@@ -186,10 +97,101 @@ class Blocks extends React.Component {
 		return blocks;
 	}
 
+	renderBlock(blockData, i) {
+		const fieldset = this.props.fieldset;
+		const id = this.props.id;
+		const data = this.props.data;
+		if(!data.types){return null}
+		const type = data.types[i];
+		const typeLabel = type.label;
+		const typeSlug = slugify(typeLabel,{lower:true});
+		const typeName = [fieldset, id, 'source'].join('_');
+		const fields = data.fields;
+		const fieldKeys = Object.keys(fields);
+		let fieldElems = [];
+		fieldKeys.map((fieldKey, j) => {
+			const fieldData = fields[fieldKey];
+			const field = this.renderField(fieldKey, fieldData, i, j);
+			fieldElems.push(field);
+		});
+		return(
+			<div className="block-widget" data-slug={blockData.sourceSlug} key={i}>
+				<input
+					name={typeName}
+					type='hidden'
+					value={typeSlug}
+					onChange={this.onChange.bind(this)} />
+				{fieldElems}
+				<div
+					className="delete-block"
+					data-index={i}
+					onClick={this.deleteBlock.bind(this)}/>
+			</div>
+		);
+	}
+
+	renderField(fieldKey, fieldData, blockIndex, fieldIndex) {
+		const fieldset = this.props.fieldset;
+		const id = this.props.id;
+		const data = this.props.data;
+		const name = [fieldset, id, fieldKey].join('_');
+		let strings = fieldData.text;
+		let placeholder = null;
+		if(fieldKey == 'url') {
+			const type = data.types[blockIndex];
+			strings = {
+				label: type.label+' URL',
+				placeholder: type.placeholder
+			};
+		}
+		return(
+			<div className="field input" key={fieldIndex}>
+				{strings && strings.label ?
+					<label name={name}>
+						{strings.label}
+					</label>
+				: ''}
+				{strings && strings.desc ? <div className='desc'>{strings.desc}</div> : ''}
+				<input
+					name={name}
+					type={'text'}
+					data-index={blockIndex}
+					placeholder={strings.placeholder}
+					className='form-elem'
+					onChange={this.onChange.bind(this)}/>
+			</div>
+		);
+	}
+
+	renderButtons() {
+		const data = this.props.data;
+		const types = data.types;
+		if(!types){return}
+		let buttons = [];
+		types.map((type, i) => {
+			const button = this.renderButton(type, i);
+			buttons.push(button);
+		});
+		return buttons;
+	}
+
+	renderButton(type, i) {
+		return (
+			<div className="button add-block"
+				data-slug={type.slug}
+				key={i}
+				onClick={this.addBlock.bind(this)}>
+				{type.label}
+			</div>
+		);
+	}
+
 	addBlock(e) {
 		e.preventDefault();
 		let blocks = this.state.blocks;
-		blocks.push({});
+		blocks.push({
+			source: e.target.dataset.slug
+		});
 		this.setState({
 			blocks: blocks
 		});
@@ -209,22 +211,16 @@ class Blocks extends React.Component {
 		const text = this.props.data.text;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
-
+		console.log(this.props);
 		return(
 			<div className="field input">
-				{text && text.label ?
-					<label name={id}>
-						{text.label}
-					</label>
-				: ''}
-				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
 
 				<div className="blocks-widget">
 					{this.renderBlocks()}
 				</div>
 
-				<div className="button add-block" onClick={this.addBlock.bind(this)}>
-					Add {id.replace('s','')}
+				<div className="blocks-buttons">
+					{this.renderButtons()}
 				</div>
 
 			</div>

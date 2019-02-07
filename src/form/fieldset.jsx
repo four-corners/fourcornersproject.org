@@ -3,6 +3,7 @@ import Textarea from './textarea.jsx';
 import File from './file.jsx';
 import Select from './select.jsx';
 import Blocks from './blocks.jsx';
+import Group from './group.jsx';
 import Checkbox from './checkbox.jsx';
 
 import React from 'react';
@@ -37,11 +38,12 @@ class Fieldset extends React.Component {
 		// });
 	}
 
-	onToggle(e) {
+	onToggle() {
 		const slug = this.props.id;
-		const newActiveCorner = slug==this.props.activeCorner?null:slug;
-		this.props.sendActiveCorner(newActiveCorner);
 		const newActiveFieldset = slug==this.props.activeFieldset?null:slug;
+		if(newActiveFieldset) {
+			this.props.sendActiveCorner(newActiveFieldset);
+		}
 		this.props.sendActiveFieldset(newActiveFieldset);
 	}
 
@@ -109,12 +111,11 @@ class Fieldset extends React.Component {
 							fieldset={this.props.id}
 							data={field}
 							key={fieldElems.length}
-							sendImgData={this.props.sendImgData}
-							onChange={this.props.onChange} />
+							onChange={this.props.onChange}
+							sendImgData={this.props.sendImgData} />
 					);
 					break;
 				case 'blocks':
-					// console.log(this.props, field)
 					fieldElems.push(
 						<Blocks
 							id={fieldKey}
@@ -122,7 +123,19 @@ class Fieldset extends React.Component {
 							data={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange}
-							sendMediaData={this.props.sendMediaData}/>
+							sendActiveCorner={this.props.sendActiveCorner}
+							sendMediaData={this.props.sendMediaData} />
+					);
+					break;
+				case 'group':
+					fieldElems.push(
+						<Group
+							id={fieldKey}
+							fieldset={this.props.id}
+							data={field}
+							key={fieldElems.length}
+							onChange={this.props.onChange}
+							sendMediaData={this.props.sendMediaData} />
 					);
 					break;
 				default:
@@ -143,7 +156,7 @@ class Fieldset extends React.Component {
 					<span>{text.title}</span>
 				</legend>
 				<div className='fieldset-inner'>
-					{text.desc ? <div className='desc'>{text.desc}</div> : '' }
+					{text.desc ? <div className='fieldset-desc desc'>{text.desc}</div> : '' }
 					{this.renderFields()}
 				</div>
 			</fieldset>

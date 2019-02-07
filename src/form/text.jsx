@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Label from './label.jsx';
 
 class Text extends React.Component {
 
@@ -18,30 +19,16 @@ class Text extends React.Component {
 
 	render() {
 		const id = this.props.id;
-		const text = this.props.data.text;
+		const strings = this.props.data.text;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
 		return(
 			<div className="field input">
-				{text && text.label ?
-					<label name={id}>
-						{text.label}
-					</label>
-				: ''}
-				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
+				<Label strings={strings} fieldId={id} />
 				<input
 					name={name}
 					className='form-elem'
-					onChange={this.onChange.bind(this)}
-					onFocus={
-						(e => {
-							// const newValue = e.target.value;
-							// this.setState({
-							// 	value: newValue,
-							// });
-							// this.props.onChange(this.processValue(schema, newValue));
-						})
-					} />
+					onChange={this.onChange.bind(this)} />
 			</div>
 		);
 	}

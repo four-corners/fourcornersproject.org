@@ -42,7 +42,7 @@ class Form extends React.Component {
 		const name = e.target.name;
 		const slug = name.split('_')[0];
 		this.props.sendActiveCorner(slug);
-		this.props.sendActiveFieldset(slug)
+		this.props.sendActiveFieldset(slug);
 	}
 
 	onBlur(id) {
@@ -54,12 +54,13 @@ class Form extends React.Component {
 		const nameArr = name.split('_');
 		let fieldsetSlug = nameArr[0];
 		let fieldSlug = nameArr[1];
-		let blockFieldSlug = '';
+		let subFieldSlug = '';
 		if(!formData[fieldsetSlug]) {return}
 		formData[fieldsetSlug][fieldSlug] = value;
 		this.setState({
 			formData: formData
 		});
+
 		this.props.sendFormData(formData);
 		// this.props.sendActiveCorner(fieldsetSlug);
 		// this.props.sendActiveFieldset(fieldsetSlug);
@@ -101,23 +102,22 @@ class Form extends React.Component {
 						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
 						Schema[setKey].fields[fieldKey].options = opts;
 					}
-					if(field.type=='blocks') {
-						const blockFields = Schema[setKey].fields[fieldKey].fields;
-						const blockFieldKeys = Object.keys(blockFields);
-						for(let blockFieldKey of blockFieldKeys) {
+					if(field.type=='blocks'||field.type=='group') {
+						const objKey= field.type=='blocks' ? 'types' : 'fields';
+						const subFields = Schema[setKey].fields[fieldKey].fields;
+						const subFieldKeys = Object.keys(subFields);
+						for(let subFieldKey of subFieldKeys) {
 							const blockTypes = translations[[setKey, fieldKey, 'types'].join('_')];
-							Schema[setKey].fields[fieldKey].types = [];
+							Schema[setKey].fields[fieldKey][objKey] = {};
 							if(blockTypes) { for(let blockType of blockTypes) {
-								blockType.slug = slugify(blockType.label,{lower:true});
-								Schema[setKey].fields[fieldKey].types.push(blockType);
+								let blockTypeSlug = blockType.slug || slugify(blockType.label,{lower:true});
+								Schema[setKey].fields[fieldKey][objKey][blockTypeSlug] = blockType;
 							} }
-								
-							Schema[setKey].fields[fieldKey].fields[blockFieldKey].text = {
-								label: translations[[setKey, fieldKey, blockFieldKey, 'label'].join('_')],
-								placeholder: translations[[setKey, fieldKey, blockFieldKey, 'placeholder'].join('_')],
-								desc: translations[[setKey, fieldKey, blockFieldKey, 'desc'].join('_')]
+							Schema[setKey].fields[fieldKey].fields[subFieldKey].text = {
+								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
+								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
+								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
 							}
-							// console.log(Schema[setKey]);
 						}
 					}
 				}

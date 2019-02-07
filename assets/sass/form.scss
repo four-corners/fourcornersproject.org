@@ -28,7 +28,11 @@ fieldset {
 	}
 }
 .field {
-	margin: 1rem .25rem .25rem;
+	margin: 1rem .25rem 2rem .25rem;
+}
+.fields-group {
+	display: flex;
+	flex-direction: row;
 }
 section {
 	margin: 0 auto 2rem auto;
@@ -39,17 +43,9 @@ section {
 label, legend {
 	font-weight: bold;
 }
-label {
-	margin-bottom: .5rem;
-	display: inline-block;
-}
-.label-inner {
-	display: flex;
-	align-items: center;
-}
 legend {
 	width: 100%;
-	margin: 0 .25rem .5rem .25rem;
+	margin: 0 .25rem;
 	display: block;
 	@include lgText;	
 	line-height: 1.5em;
@@ -65,7 +61,7 @@ legend {
 			height: 1rem;
 			position: absolute;
 			right: .75rem;
-	    top: calc(50% - .75rem);
+			top: calc(50% - .75rem);
 			transform: rotate(45deg);
 			border: solid $medium;
 			border-width: 0 2px 2px 0;
@@ -85,9 +81,12 @@ legend {
 			// border-color: $light;	
 		}
 	}
-	fieldset.expand &::after {
-		top: calc(50% - .25rem);
-		transform: rotate(-135deg);
+	fieldset.expand & {
+		color: $blue;
+		&::after {
+			top: calc(50% - .25rem);
+			transform: rotate(-135deg);
+		}
 	}
 	#authorship &,
 	#backstory &,
@@ -97,9 +96,9 @@ legend {
 			width: 2rem;
 			height: 2rem;
 			position: absolute;
-	    right: -3rem;
-	    top: .1rem;
-	    background-size: 2rem;
+			right: -3rem;
+			top: .1rem;
+			background-size: 2rem;
 			background-position: center;
 			background-repeat: no-repeat;
 			background-image: url(./../images/selected.svg);
@@ -117,6 +116,31 @@ legend {
 		transform: rotate(270deg);
 	}
 }
+label {
+	margin-bottom: .5rem;
+	display: inline-block;
+	position: relative;
+}
+.label-inner {
+	display: flex;
+	align-items: center;
+}
+.toggle-desc {
+	width: .75rem;
+	height: .75rem;
+	position: absolute;
+	left: calc(100% + .5rem);
+	top: calc(50% - .325rem);
+	border: 1px solid $medium;
+	border-radius: 50%;
+	font-size: .5rem;
+	line-height: 1em;
+	text-align: center;
+	&:hover {
+		background-color: $light;
+		cursor: pointer;
+	}
+}
 .desc {
 	width: 100%;
 	margin: 0 0 1rem 0;
@@ -125,13 +149,18 @@ legend {
 	background-color: $light;
 	border-radius: $radius;
 	@include smText;
-	label + & {
-		color: $medium;
-		font-style: italic;
+	display: block;
+}
+.field-desc {
+	&:not(.opened) {
+		display: none;
 	}
-	// label.show-desc + & {
-	// 	display: block;
-	// }
+	// color: $medium;
+	// font-style: italic;
+}
+.fieldset-desc {
+	margin-top: .5rem;
+	display: block;
 }
 
 .form-elem {

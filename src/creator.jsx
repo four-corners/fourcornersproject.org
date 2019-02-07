@@ -81,9 +81,6 @@ class Creator extends React.Component {
   	if(!slug) {
   		slug = '';
   	}
-  	// else if(!this.corners.includes(slug)) {
-  	// 	slug = this.state.activeCorner;
-  	// }
 		this.setState({
 			activeCorner: slug
 		});
@@ -93,16 +90,12 @@ class Creator extends React.Component {
   	if(!slug) {
   		slug = '';
   	}
-  	// else if(!this.corners.includes(slug)) {
-  	// 	slug = this.state.activeCorner;
-  	// }
 		this.setState({
 			activeFieldset: slug
 		});
   }
 
   setImgData(imgData) {
-  	// const newImgData = Object.assign(this.state.imgData, imgData);
   	const newImgData = imgData;
   	this.setState({
   		imgData: newImgData
@@ -160,13 +153,13 @@ class Creator extends React.Component {
 							// 	</div>
 							// </div>
 						}
-							<div className='col col-12 col-sm-6 left col-preview'>
+							<div className='col col-12 col-sm-6 col-md-7 left col-preview'>
 								<div className='desc'>
 									Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
 								</div>
 								{this.renderPreviewCol()}
 							</div>
-							<div className='col col-12 col-sm-6 right col-form'>
+							<div className='col col-12 col-sm-6 col-md-5 right col-form'>
 								{this.renderFormCol()}
 							</div>
 						</div>

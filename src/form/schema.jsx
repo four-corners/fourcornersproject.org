@@ -24,26 +24,49 @@ const Schema = {
 				type: 'select',
 				customize: true
 			},
-			copyright: {
-				type: 'toggle',
+			bio: {
+				type: 'textarea'
 			},
-			license: {
-				type: 'toggle',
+			website: {
+				type: 'text'
 			},
+			website: {
+				type: 'text'
+			},
+			contact: {
+				type: 'group',
+				fields: {
+					info: {
+						type: 'text',
+					},
+					rights: {
+						type: 'text',
+					}
+				}
+			}
 		}
 	},
 	backstory: {
 		fields: {
 			text: {
 				type: 'textarea'
+			},
+			audio: {
+				type: 'blocks',
+				fields: {
+					url: {
+						type: 'text',
+						format: 'uri',
+					},
+					caption: {
+						type: 'text',
+					}
+				}
 			}
 		}
 	},
 	context: {
 		fields: {
-			text: {
-				type: 'textarea'
-			},
 			media: {
 				type: 'blocks',
 				fields: {
@@ -54,29 +77,7 @@ const Schema = {
 					caption: {
 						type: 'text',
 					}
-				},
-				// options: [
-				// 	{
-				// 		slug: 'image',
-				// 		label: 'Image',
-				// 		placeholder: 'https://example.com/photo.jpg'
-				// 	},
-				// 	{
-				// 		slug: 'youtube',
-				// 		label: 'YouTube',
-				// 		placeholder: 'https://youtube.com/watch?v=abc123'
-				// 	},
-				// 	{
-				// 		slug: 'vimeo',
-				// 		label: 'Vimeo',
-				// 		placeholder: 'https://vimeo.com/123456'
-				// 	},
-				// 	{
-				// 		slug: 'soundcloud',
-				// 		label: 'SoundCloud',
-				// 		placeholder: 'https://soundcloud.com/example/audio'
-				// 	}
-				// ],
+				}
 			}
 		}
 	},
@@ -100,7 +101,6 @@ const Schema = {
 		fields: {
 			dark: {
 				type: 'checkbox',
-				// multiple: false
 			},
 			// include: {
 			// 	type: 'checkbox',

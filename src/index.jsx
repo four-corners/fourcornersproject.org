@@ -21,13 +21,14 @@ const routes = (
 				return(
 					<Router>
 						<React.Fragment>
-							<Header></Header>
+							<Header/>
 							<Switch>
 								<Route exact path={SiteSettings.path} component={Home} />
 								<Route path={SiteSettings.path+'create'} component={Creator} />
 								<Route path={SiteSettings.path+'how'} component={How} />
 								<Route path='*' component={Page} />
 							</Switch>
+							<Footer/>
 						</React.Fragment>
 					</Router>
 				)

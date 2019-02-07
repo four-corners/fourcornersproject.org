@@ -1,35 +1,23 @@
 header {
 	width: 100%;
-	padding: .5rem 0;
-	// background-color: $medium-blue;
-	// border-bottom: 1px solid $blue;
-	// box-shadow: 0 0 1px 1px rgba($darkest,.1);
+	padding: .5rem 0 .75em 0;
 	.col {
 		display: flex;
 		.col-content {
-			margin: auto;
+			// margin: auto;
 		}
 	}
 }
 #title {
 	display: table;
 	a {
-		// padding: .5rem;
 		color: $darkest;
 		display: table;
 		position: relative;
-		// &:hover, &:focus {
-		// 	color: $blue;
-		// 	outline: none;
-		// }
-	}
-	&:hover, &:focus {
-		// h1#page-title a {
-		// 	color: $black;
-		// }
-		// h1#site-title a {
-		// 	color: $blue;
-		// }
+		&:hover, &:focus {
+			color: $blue;
+			outline: none;
+		}
 	}
 	h1 {
 		display: table;
@@ -49,12 +37,12 @@ h1#site-title {
 		background-image: url(./../images/icon.svg);
 		background-repeat: no-repeat;
 		background-size: cover;
-		transition: opacity 200ms ease-in-out;
+		transition: opacity 200ms ease;
 		content: '';
 	}
 	&::after {
 		background-position: bottom center;
-		#title:hover & {
+		#title:hover &, #title:focus & {
 			opacity: 0;
 		}
 	}
@@ -62,51 +50,19 @@ h1#site-title {
 		background-position: top center;
 	}
 }
-// div {
-// 	width: 1rem;
-// 	height: 1rem;
-// 	position: absolute;
-// 	background-image: url(./../images/corner.svg);
-// 	background-repeat: no-repeat;
-// 	background-position: center;
-// 	background-size: contain;
-// 	&:nth-child(1) {
-// 		right: -.4rem;
-// 		bottom: 0rem;
-// 	}
-// 	&:nth-child(2) {
-// 		left: -.4rem;
-// 		bottom: 0rem;
-// 		transform: rotate(90deg);
-// 	}
-// 	&:nth-child(3) {
-// 		left: -.4rem;
-// 		top: .2rem;
-// 		transform: rotate(180deg);
-// 	}
-// 	&:nth-child(4) {
-// 		right: -.4rem;
-// 		top: .2rem;
-// 		transform: rotate(270deg);
-// 	}
-// }
 #nav {
 	clear: both;
 	margin-bottom: -5px;
 	display: table;
 	a, a:visited {
-		display: table;
-		margin: 0 .5rem .5rem 0;
-		padding: .5rem;
+		display: inline-table;
+		margin: 0 1rem .5rem 0;
 		float: left;
-		color: $darkest;
-		box-shadow: 0 0 1px 1px rgba($darkest,.1);
-		background-color: $lighten;
-		border: 1px solid $blue;
-		border-radius: $radius;
-		@include focus;
-		&:hover {
-			background-color: $lightest;
+		color: $dark;
+		border-bottom: 1px solid $blue;
+		@include mdText;
+		&:hover, &:focus {
+			color: $darkest;
 		}
 	}
 }

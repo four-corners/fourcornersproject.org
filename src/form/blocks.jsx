@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Label from './label.jsx';
 const slugify = require('slugify');
 
 class Blocks extends React.Component {
@@ -14,17 +15,15 @@ class Blocks extends React.Component {
 	}
 
 	onChange(e) {
-		const select = e.target;
-		const name = select.name;
-		const value = select.value;
-
+		const input = e.target;
+		const name = input.name;
+		const value = input.value;
 		const nameArr = name.split('_');
 		const fieldsetKey = nameArr[0];
 		const blockKey = nameArr[1];
 		const fieldKey = nameArr[2];
-
 		const fieldName = [fieldsetKey, blockKey].join('_');
-		const index = Number(select.dataset.index);
+		const index = Number(input.parentElement.parentElement.dataset.index);
 
 		let blocks = this.state.blocks;
 		let block = blocks[index];
@@ -36,7 +35,6 @@ class Blocks extends React.Component {
 		this.setState({
 			blocks: blocks
 		});
-
 		this.props.onChange(fieldName, blocks);
 	}
 
@@ -90,72 +88,65 @@ class Blocks extends React.Component {
 
 	renderBlocks() {
 		let blocks = [];
-		this.state.blocks.map((blockData, i) => {
-			const block = this.renderBlock(blockData, i);
-			blocks.push(block);
+		this.state.blocks.map((block, i) => {
+			blocks.push(
+				this.renderBlock(block, i)
+			);
 		});
 		return blocks;
 	}
 
-	renderBlock(blockData, i) {
+	renderBlock(block, i) {
 		const fieldset = this.props.fieldset;
 		const id = this.props.id;
 		const data = this.props.data;
 		if(!data.types){return null}
-		const type = data.types[i];
-		const typeLabel = type.label;
-		const typeSlug = slugify(typeLabel,{lower:true});
-		const typeName = [fieldset, id, 'source'].join('_');
+		const type = data.types[block.source];
+		if(!type){return null}
+		type.slug = slugify(type.label,{lower:true});
+		type.name = [fieldset, id, 'source'].join('_');
 		const fields = data.fields;
 		const fieldKeys = Object.keys(fields);
 		let fieldElems = [];
 		fieldKeys.map((fieldKey, j) => {
 			const fieldData = fields[fieldKey];
-			const field = this.renderField(fieldKey, fieldData, i, j);
+			const field = this.renderField(fieldKey, fieldData, type, j);
 			fieldElems.push(field);
 		});
 		return(
-			<div className="block-widget" data-slug={blockData.sourceSlug} key={i}>
+			<div className="block-widget" data-slug={block.sourceSlug} data-index={i} key={i}>
 				<input
-					name={typeName}
+					name={type.name}
 					type='hidden'
-					value={typeSlug}
+					value={type.slug}
 					onChange={this.onChange.bind(this)} />
+
 				{fieldElems}
+
 				<div
 					className="delete-block"
-					data-index={i}
 					onClick={this.deleteBlock.bind(this)}/>
 			</div>
 		);
 	}
 
-	renderField(fieldKey, fieldData, blockIndex, fieldIndex) {
+	renderField(fieldKey, fieldData, type, fieldIndex) {
 		const fieldset = this.props.fieldset;
 		const id = this.props.id;
 		const data = this.props.data;
 		const name = [fieldset, id, fieldKey].join('_');
 		let strings = fieldData.text;
-		let placeholder = null;
 		if(fieldKey == 'url') {
-			const type = data.types[blockIndex];
-			strings = {
-				label: type.label+' URL',
-				placeholder: type.placeholder
-			};
+			strings = Object.assign(strings, type);
+			strings.label = strings.label+' URL';
 		}
 		return(
 			<div className="field input" key={fieldIndex}>
-				{strings && strings.label ?
-					<label name={name}>
-						{strings.label}
-					</label>
-				: ''}
-				{strings && strings.desc ? <div className='desc'>{strings.desc}</div> : ''}
+				<Label strings={strings} fieldId={id} />
 				<input
 					name={name}
 					type={'text'}
-					data-index={blockIndex}
+					// data-index={blockIndex}
 					placeholder={strings.placeholder}
 					className='form-elem'
 					onChange={this.onChange.bind(this)}/>
@@ -168,20 +159,21 @@ class Blocks extends React.Component {
 		const types = data.types;
 		if(!types){return}
 		let buttons = [];
-		types.map((type, i) => {
-			const button = this.renderButton(type, i);
+		Object.keys(types).map((key, i) => {
+			let type = types[key];
+			const button = this.renderButton(type, key);
 			buttons.push(button);
 		});
 		return buttons;
 	}
 
-	renderButton(type, i) {
+	renderButton(type, slug) {
 		return (
 			<div className="button add-block"
-				data-slug={type.slug}
-				key={i}
+				data-slug={slug}
+				key={slug}
 				onClick={this.addBlock.bind(this)}>
-				{type.label}
+				Add {type.label}
 			</div>
 		);
 	}
@@ -195,11 +187,12 @@ class Blocks extends React.Component {
 		this.setState({
 			blocks: blocks
 		});
+		this.props.sendActiveCorner(this.props.fieldset);
 	}
 
 	deleteBlock(e) {
 		let blocks = this.state.blocks;
-		const index = e.target.dataset.index;
+		const index = e.target.parentElement.dataset.index;
 		delete blocks[index];
 		this.setState({
 			blocks: blocks
@@ -211,7 +204,6 @@ class Blocks extends React.Component {
 		const text = this.props.data.text;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
-		console.log(this.props);
 		return(
 			<div className="field input">
 

@@ -47,11 +47,13 @@ class Home extends React.Component {
 		return (
 			<main id='home'>
 				<div className='max-width'>
-					{
-						this.state.page ?
-						this.renderHome() :
-						null
-					}
+					<div className='row'>
+						<div className='col col-12 col-sm-6 col-md-7'>
+							{ this.state.page ?
+								this.renderHome() :
+								null }
+						</div>
+					</div>
 				</div>
 			</main>
 		);

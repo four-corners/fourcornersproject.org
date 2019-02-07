@@ -18,7 +18,7 @@ $light-blue: rgba($blue,.05);
 
 
 $darkest: #000;
-$dark: #262225;
+$dark: #443c42;
 $darken: rgba($darkest,.5);
 
 $medium: #c4c4c4;
@@ -93,6 +93,11 @@ $radius: 4px;
 @mixin smText {
 	font-size: .8rem;
 	line-height: 1.4em;
+}
+
+@mixin mdText {
+	font-size: 1.2rem;
+	line-height: 1.7em;
 }
 
 @mixin lgText {

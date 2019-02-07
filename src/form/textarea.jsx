@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Label from './label.jsx';
 
 class Textarea extends React.Component {
 
@@ -18,19 +19,14 @@ class Textarea extends React.Component {
 
 	render() {
 		const id = this.props.id;
-		const text = this.props.data.text;
-		const placeholder = text.placeholder;
+		const strings = this.props.data.text;
+		const placeholder = strings.placeholder;
 		const fieldset = this.props.fieldset;
 		const rows = this.props.data.rows;
 		const name = [fieldset, id].join('_');
 		return(
 			<div className="field input">
-				{text && text.label ?
-					<label name={id}>
-						{text.label}
-					</label>
-				: ''}
-				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
+				<Label strings={strings} fieldId={id} />
 				<textarea
 					name={name}
 					className='form-elem'

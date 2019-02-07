@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Label from './label.jsx';
 
 import { asNumber } from 'react-jsonschema-form/lib/utils';
 
@@ -53,7 +54,7 @@ class Select extends React.Component {
 
 	render() {
 		const id = this.props.id;
-		const text = this.props.data.text;
+		const strings = this.props.data.text;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
 		const options = this.props.data.options;
@@ -62,12 +63,7 @@ class Select extends React.Component {
 
 		return(
 			<div className='field select'>
-				{text && text.label ?
-					<label name={id}>
-						{text.label}
-					</label>
-				: ''}
-				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
+				<Label strings={strings} fieldId={id} />
 				<select
 					name={name}
 					className='form-elem'

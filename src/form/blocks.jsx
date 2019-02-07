@@ -113,8 +113,14 @@ class Blocks extends React.Component {
 			const field = this.renderField(fieldKey, fieldData, type, j);
 			fieldElems.push(field);
 		});
+
 		return(
-			<div className="block-widget" data-slug={block.sourceSlug} data-index={i} key={i}>
+			<div
+				className='block-widget'
+				data-slug={block.sourceSlug}
+				data-index={i}
+				key={i}>
+
 				<input
 					name={type.name}
 					type='hidden'
@@ -124,7 +130,8 @@ class Blocks extends React.Component {
 				{fieldElems}
 
 				<div
-					className="delete-block"
+					className='delete-block'
+					data-index={i}
 					onClick={this.deleteBlock.bind(this)}/>
 			</div>
 		);
@@ -135,13 +142,14 @@ class Blocks extends React.Component {
 		const id = this.props.id;
 		const data = this.props.data;
 		const name = [fieldset, id, fieldKey].join('_');
-		let strings = fieldData.text;
+		let strings = Object.assign({},fieldData.text);
 		if(fieldKey == 'url') {
-			strings = Object.assign(strings, type);
-			strings.label = strings.label+' URL';
+			// console.log(type);
+			strings = type;
+			// strings.label = type.label+' URL';
 		}
 		return(
-			<div className="field input" key={fieldIndex}>
+			<div className='field input' key={fieldIndex}>
 				<Label strings={strings} fieldId={id} />
 				<input
 					name={name}
@@ -192,8 +200,8 @@ class Blocks extends React.Component {
 
 	deleteBlock(e) {
 		let blocks = this.state.blocks;
-		const index = e.target.parentElement.dataset.index;
-		delete blocks[index];
+		const index = e.target.dataset.index;
+		blocks.splice(index,1);
 		this.setState({
 			blocks: blocks
 		});

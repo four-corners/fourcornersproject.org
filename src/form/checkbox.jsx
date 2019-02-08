@@ -17,12 +17,14 @@ class Checkbox extends React.Component {
 	}
 
 	render() {
-		const id = this.props.id;
-		const text = this.props.data.text;
-		const fieldset = this.props.fieldset;
+		const props = this.props;
+		const id = props.id;
+		const text = props.data.text;
+		const style = props.data.style;
+		const fieldset = props.fieldset;
 		const name = [fieldset, id].join('_');
 		return(
-			<div className="field input">
+			<div className={'field checkbox '+(style?style:'')}>
 				<div className='checkbox-widget'>
 					<input className='toggle'
 						id={id}

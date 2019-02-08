@@ -60,7 +60,6 @@ class Select extends React.Component {
 		const options = this.props.data.options;
 		const value = this.state.value;
 		const customize = this.props.data.customize;
-
 		return(
 			<div className='field select'>
 				<Label strings={strings} fieldId={id} />

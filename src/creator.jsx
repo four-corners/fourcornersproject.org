@@ -135,40 +135,24 @@ class Creator extends React.Component {
 
 	render() {
 		let lang = this.state.lang;
-		if(this.state.creator && this.state.creator.ID) {
-			return (
-				<main id='creator'>
-					<div className='max-width'>
-						<div className='row' data-sticky-container>
-						{
-							// <div className='col col-12 col-sm-6'>
-							// 	<div className='col-content'>
-							// 		<div className='intro-text desc'>
-							// 		</div>
-							// 	</div>
-							// </div>
-							// <div className='col col-12 col-sm-6'>
-							// 	<div className='col-content'>
-									
-							// 	</div>
-							// </div>
-						}
-							<div className='col col-12 col-sm-6 col-md-7 left col-preview'>
-								<div className='desc'>
-									Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
-								</div>
-								{this.renderPreviewCol()}
+		const ready = this.state.creator && this.state.creator.ID;
+		return (
+			<main id='creator'>
+				<div className='max-width'>
+					<div className='row' data-sticky-container>
+						<div className='col col-12 col-sm-6 col-md-7 left col-preview'>
+							<div className='desc'>
+								Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
 							</div>
-							<div className='col col-12 col-sm-6 col-md-5 right col-form'>
-								{this.renderFormCol()}
-							</div>
+							{ this.renderPreviewCol() }
+						</div>
+						<div className='col col-12 col-sm-6 col-md-5 right col-form'>
+							{ ready ? this.renderFormCol() : null }
 						</div>
 					</div>
-				</main>
-			);
-		} else {
-			return null;
-		}
+				</div>
+			</main>
+		);
 	}
 }
 

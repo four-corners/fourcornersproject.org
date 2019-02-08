@@ -10,6 +10,7 @@ class Blocks extends React.Component {
 		this.state = {
 			value: '',
 			blocks: [],
+			superIndex: 0,
 			mediaData: []
 		};
 	}
@@ -23,18 +24,19 @@ class Blocks extends React.Component {
 		const blockKey = nameArr[1];
 		const fieldKey = nameArr[2];
 		const fieldName = [fieldsetKey, blockKey].join('_');
-		const index = Number(input.parentElement.parentElement.dataset.index);
+		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
 
-		let blocks = this.state.blocks;
-		let block = blocks[index];
-		blocks[index][fieldKey] = value;
-
-		if(blocks[index].url) {
-			this.getMediaData(blocks[index], fieldsetKey, index);
+		let blocks = this.state.blocks.slice(0);
+		let block = blocks[blockIndex];
+		block[fieldKey] = value;
+		if(block.url) {
+			this.getMediaData(block, fieldsetKey, blockIndex);
 		}
+
 		this.setState({
 			blocks: blocks
 		});
+
 		this.props.onChange(fieldName, blocks);
 	}
 
@@ -89,6 +91,7 @@ class Blocks extends React.Component {
 	renderBlocks() {
 		let blocks = [];
 		this.state.blocks.map((block, i) => {
+			if(block.deleted){return}
 			blocks.push(
 				this.renderBlock(block, i)
 			);
@@ -96,7 +99,7 @@ class Blocks extends React.Component {
 		return blocks;
 	}
 
-	renderBlock(block, i) {
+	renderBlock(block, blockIndex) {
 		const fieldset = this.props.fieldset;
 		const id = this.props.id;
 		const data = this.props.data;
@@ -108,55 +111,50 @@ class Blocks extends React.Component {
 		const fields = data.fields;
 		const fieldKeys = Object.keys(fields);
 		let fieldElems = [];
-		fieldKeys.map((fieldKey, j) => {
+		fieldKeys.map((fieldKey, fieldIndex) => {
 			const fieldData = fields[fieldKey];
-			const field = this.renderField(fieldKey, fieldData, type, j);
+			const field = this.renderField(fieldKey, fieldData, type, block.index, fieldIndex);
 			fieldElems.push(field);
 		});
-
 		return(
 			<div
 				className='block-widget'
 				data-slug={block.sourceSlug}
-				data-index={i}
-				key={i}>
+				data-index={blockIndex}
+				key={block.index}>
 
 				<input
 					name={type.name}
 					type='hidden'
-					value={type.slug}
-					onChange={this.onChange.bind(this)} />
+					// onChange={this.onChange.bind(this)}
+					value={type.slug} />
 
 				{fieldElems}
 
 				<div
 					className='delete-block'
-					data-index={i}
 					onClick={this.deleteBlock.bind(this)}/>
 			</div>
 		);
 	}
 
-	renderField(fieldKey, fieldData, type, fieldIndex) {
+	renderField(fieldKey, fieldData, type, blockIndex, fieldIndex) {
 		const fieldset = this.props.fieldset;
 		const id = this.props.id;
 		const data = this.props.data;
-		const name = [fieldset, id, fieldKey].join('_');
+		const name = [fieldset, id, fieldKey, blockIndex, fieldIndex].join('_');
 		let strings = Object.assign({},fieldData.text);
 		if(fieldKey == 'url') {
-			// console.log(type);
 			strings = type;
-			// strings.label = type.label+' URL';
 		}
 		return(
-			<div className='field input' key={fieldIndex}>
+			<div className='field input' key={name}>
 				<Label strings={strings} fieldId={id} />
 				<input
+					className='form-elem'
 					name={name}
 					type={'text'}
-					// data-index={blockIndex}
 					placeholder={strings.placeholder}
-					className='form-elem'
 					onChange={this.onChange.bind(this)}/>
 			</div>
 		);
@@ -188,23 +186,29 @@ class Blocks extends React.Component {
 
 	addBlock(e) {
 		e.preventDefault();
-		let blocks = this.state.blocks;
-		blocks.push({
-			source: e.target.dataset.slug
-		});
+		const fieldName = [this.props.fieldset, this.props.id].join('_')
+		const newBlocks = this.state.blocks.concat([{
+			source: e.target.dataset.slug,
+			index: this.state.superIndex
+		}])
 		this.setState({
-			blocks: blocks
+			blocks: newBlocks,
+			superIndex: this.state.superIndex+1
 		});
+		this.props.onChange(fieldName, newBlocks);
 		this.props.sendActiveCorner(this.props.fieldset);
 	}
 
 	deleteBlock(e) {
 		let blocks = this.state.blocks;
-		const index = e.target.dataset.index;
-		blocks.splice(index,1);
+		const blockElem = e.target.parentElement;
+		const index = Number(blockElem.dataset.index);
+		const fieldName = [this.props.fieldset, this.props.id].join('_');
+		const newBlocks = this.state.blocks.filter((b, i) => i !== index)
 		this.setState({
-			blocks: blocks
+			blocks: newBlocks
 		});
+		this.props.onChange(fieldName, newBlocks);
 	}
  
 	render() {

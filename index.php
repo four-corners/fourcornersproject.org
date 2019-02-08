@@ -20,9 +20,7 @@
 	</head>
 	<body <?php body_class(); ?>>
 		<div id="page">
-			<div id="content">
-			</div>
-			<?php wp_footer(); ?>
 		</div>			
 	</body>
+	<?php wp_footer(); ?>
 </html>

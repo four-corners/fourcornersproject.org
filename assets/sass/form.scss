@@ -11,7 +11,12 @@
 .error-detail {
 	display: none !important;
 }
-
+.col-form {
+	min-height: 100vh;
+	@include sm {
+		min-height: unset;
+	}
+}
 fieldset {
 	width: 100%;
 	margin-bottom: 1rem;
@@ -29,6 +34,13 @@ fieldset {
 }
 .field {
 	margin: 1rem .25rem 2rem .25rem;
+	&.half {
+		width: 50%;
+		float: left;
+	}
+	&.checkbox {
+		margin-bottom: .25rem;
+	}
 }
 .fields-group {
 	display: flex;

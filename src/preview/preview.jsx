@@ -169,11 +169,9 @@ class Embed extends React.Component {
 	}
 
 	render() {
-		const fields = this.props.creator.acf;
+		const creator = this.props.creator;
 		const entries = ['story','author','publication','url','date'];
 		const inputClass = (this.props.imgLoaded?'has-image':'');
-		// this.props.imgFocus?' focus':''
-		// const dropClass = 'drop'+(this.props.imgLoaded?' under card':' over');
 		return(
 			<div className='col-inner'>
 				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
@@ -181,7 +179,7 @@ class Embed extends React.Component {
 
 						<div id='preview' className={inputClass}>
 							<Module
-								creator={this.props.creator}
+								creator={creator}
 								formData={this.props.formData}
 								imgData={this.props.imgData}
 								mediaData={this.props.mediaData}
@@ -197,7 +195,7 @@ class Embed extends React.Component {
 
 									<fieldset className={this.state.expand ? 'expand' : 'collapse'}>
 										<legend onClick={this.toggleExpand.bind(this)}>
-											<span>{this.props.creator.acf['embed_title']}</span>
+											<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
 										</legend>
 										<div className="fieldset-inner">
 											<div className="field">

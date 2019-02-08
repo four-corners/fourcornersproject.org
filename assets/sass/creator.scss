@@ -15,9 +15,4 @@
 	form {
 		// padding: 0 0 2rem 0;
 	}
-	@include sm {
-		.row {
-			flex-direction: column-reverse;
-		}
-	}
 }

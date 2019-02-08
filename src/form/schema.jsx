@@ -99,14 +99,20 @@ const Schema = {
 	},
 	opts: {
 		fields: {
+			cutline: {
+				type: 'checkbox',
+				style: 'half'
+			},
 			dark: {
 				type: 'checkbox',
+				style: 'half'
 			},
-			// include: {
-			// 	type: 'checkbox',
-			// 	// multiple: true,
-			// 	options: ['js','css']
-			// }
+			include_js: {
+				type: 'checkbox',
+			},
+			include_css: {
+				type: 'checkbox',
+			}
 		}
 	}
 };

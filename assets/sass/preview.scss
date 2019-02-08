@@ -1,6 +1,3 @@
-.col-form {
-	min-height: 100vh;
-}
 .sticky {
 	overflow-y: auto;
 	@include sm {
@@ -141,7 +138,7 @@
 		// margin: .25rem;
 	}
 	.field {
-		margin-top: 0;
+		margin-bottom: .25rem;
 	}
 	fieldset {
 		border: none;

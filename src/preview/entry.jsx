@@ -40,6 +40,9 @@ class Entry extends React.Component {
 		const fieldKey = this.props.fieldSlug;
 		if(!this.props.fieldData){return}
 		this.props.fieldData.forEach((obj, i) => {
+
+			if(obj.deleted) {return}
+			
 			let subRowInner = '';
 			if(obj.source == 'image' || !obj.source) {
 				subRowInner = obj.url ? <img src={obj.url} alt=''/> : null;

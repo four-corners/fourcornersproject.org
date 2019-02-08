@@ -77,20 +77,19 @@ class Module extends React.Component {
 		const embedData = {};
 		{formData.map((obj) => this.corners.includes(obj[0]) ? embedData[obj[0]]=obj[1]:'')}
 		const panels = [];
-		const fields = this.props.creator.acf;
+		const creator = this.props.creator;
 		{Object.entries(embedData).forEach((obj,i) => {
 			const cornerSlug = obj[0];
 			const cornerTitleKey = [cornerSlug, 'title'].join('_');
-			const cornerTitle = fields[cornerTitleKey];
 			const data = obj[1];
 			const entries = [];
 			Object.entries(data).forEach((obj,i) => {
 				const fieldSlug = obj[0];
 				const fieldData = obj[1];
 				let fieldLabel = '';
-				if(!['media','links'].includes(fieldSlug)) {
+				if(!['media','links'].includes(fieldSlug) && creator && creator.acf) {
 					const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
-					fieldLabel = fields[fieldLabelKey];
+					fieldLabel = creator.acf[fieldLabelKey];
 				}
 				const mediaData = this.props.mediaData[cornerSlug];
 				if(fieldData) {
@@ -114,7 +113,7 @@ class Module extends React.Component {
 					<div className='fc-scroll'>
 						<div className='fc-inner'>
 							<div className='fc-panel-title'>
-								<span>{cornerTitle}</span>
+								<span>{creator&&creator.acf ? creator.acf[cornerTitleKey] : null }</span>
 								<div className='fc-icon fc-expand' onClick={this.toggleExpandPanel.bind(this)}/>
 								<div className='fc-icon fc-close' onClick={this.collapsePanel.bind(this)}/>
 							</div>
@@ -145,12 +144,26 @@ class Module extends React.Component {
 		return corners;
 	}
 
+	renderCutline() {
+		const data = this.props.formData;
+		if(!data){return}
+		const opts = data.opts;
+		if(!opts||!opts.cutline){return}
+		return (
+			<div className='fc-cutline'>
+				{data.authorship.credit}
+				<a href="https://fourcornersproject.org" target="_blank">Four Corners</a>
+			</div>
+		);
+	}
+
 	render() {
 		const imgData = this.props.imgData;
 		const imgSrc = imgData ? imgData.imgSrc : null;
 		const imgLoaded = imgData ? imgData.imgLoaded : null;
+		const opts = this.props.formData.opts;
 		let className = 'fc-embed';
-		if(this.props.formData.opts&&this.props.formData.opts.dark) {
+		if(opts&&opts.dark) {
 			className += ' fc-dark';
 		}
 		if(this.state.expandPanel) {
@@ -161,14 +174,17 @@ class Module extends React.Component {
 		}
 		const activeCorner = this.props.activeCorner;
 		return(
-			<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
-				{!imgLoaded?<div className="no-photo"><h2>No photo</h2></div>:''}
-				<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
-					<img src={imgSrc} className='fc-img'/>
+			<React.Fragment>
+				<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
+					{!imgLoaded?<div className="no-photo"><h2>No photo</h2></div>:''}
+					<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
+						<img src={imgSrc} className='fc-img'/>
+					</div>
+					{this.renderCorners()}
+					{this.renderPanels()}
 				</div>
-				{this.renderCorners()}
-				{this.renderPanels()}
-			</div>
+				{this.renderCutline()}
+			</React.Fragment>
 		)
 
 	}

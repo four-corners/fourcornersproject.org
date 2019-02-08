@@ -101,8 +101,17 @@ class Form extends React.Component {
 					if(field.type=='select') {
 						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
 						Schema[setKey].fields[fieldKey].options = opts;
-					}
-					if(field.type=='blocks'||field.type=='group') {
+					} else if(field.type=='checkbox') {
+						if(field.fields&&field.fields.length) {
+							Schema[setKey].fields[fieldKey].options = {};
+							for(let optKey of field.fields) {
+								Schema[setKey].fields[fieldKey].options[optKey] = {
+									label: translations[[setKey, fieldKey, optKey, 'label'].join('_')],
+									desc: translations[[setKey, fieldKey, optKey, 'desc'].join('_')]
+								};
+							}
+						}
+					} else if(field.type=='blocks'||field.type=='group') {
 						const objKey= field.type=='blocks' ? 'types' : 'fields';
 						const subFields = Schema[setKey].fields[fieldKey].fields;
 						const subFieldKeys = Object.keys(subFields);

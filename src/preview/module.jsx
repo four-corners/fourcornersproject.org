@@ -89,19 +89,21 @@ class Module extends React.Component {
 			const cornerTitleKey = [cornerSlug, 'title'].join('_');
 			const panelData = obj[1];
 			let panelInner = '';
-			switch(cornerSlug) {
-				case 'authorship':
-					panelInner = <Authorship panelData={panelData} />
-					break;
-				case 'backstory':
-					panelInner = <Backstory panelData={panelData} />
-					break;
-				case 'imagery':
-					panelInner = <Imagery panelData={panelData} mediaData={this.props.mediaData.imagery} />
-					break;
-				case 'links':
-					panelInner = <Links panelData={panelData} />
-					break;
+			if(Object.keys(panelData).length) {
+				switch(cornerSlug) {
+					case 'authorship':
+						panelInner = <Authorship panelData={panelData} />;
+						break;
+					case 'backstory':
+						panelInner = <Backstory panelData={panelData} />;
+						break;
+					case 'imagery':
+						panelInner = <Imagery panelData={panelData} mediaData={this.props.mediaData.imagery} />;
+						break;
+					case 'links':
+						panelInner = <Links panelData={panelData} />;
+						break;
+				}
 			}
 			// const entries = [];
 			// Object.entries(data).forEach((obj,i) => {

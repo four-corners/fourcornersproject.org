@@ -118,7 +118,7 @@ class Header extends React.Component {
 			<header className='header'>
 				<div className='max-width'>
 					<div className='row'>
-						<div className='col col-12 col-sm-6 col-md-7 left'>
+						<div className='col col-12 col-sm-6 col-md-5 col-lg-4 left'>
 							<div className='col-content'>
 								<div id='title'>
 									{
@@ -132,7 +132,7 @@ class Header extends React.Component {
 								</div>
 							</div>
 						</div>
-						<div className='col col-12 col-sm-6 col-md-5 right'>
+						<div className='col col-12 col-sm-6 col-md-7 col-lg-8 right'>
 							<div className='col-content'>
 								{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
 								{this.state ? this.renderMenu() : null}

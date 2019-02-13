@@ -151,6 +151,9 @@ class Form extends React.Component {
 		return (
 			<div className='col-inner'>
 				<div id='forms' className='col-content'>
+					<div className='desc'>
+						{this.props.creator.post_content}
+					</div>
 					<form
 						onFocus={this.onFocus.bind(this)}>
 						{this.renderSchema()}

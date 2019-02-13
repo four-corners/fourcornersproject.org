@@ -76,6 +76,9 @@ const Schema = {
 					},
 					caption: {
 						type: 'text',
+					},
+					credit: {
+						type: 'text',
 					}
 				}
 			}

@@ -12,13 +12,14 @@ class Backstory extends React.Component {
 		const text = panelData.text;
 		const textArray = text?text.split(/\n/g):[];
 		return (
+			textArray&&textArray.length ?
 			<div className='fc-row'>
 				{textArray.map((str,i) => {
 					return (
 						str ? <p key={i}>{str}</p> : <br key={i}/>
 					);
 				})}
-			</div>
+			</div> : null
 		);
 	}
 

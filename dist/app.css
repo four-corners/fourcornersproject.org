@@ -2015,6 +2015,9 @@ h1#site-title {
   .explainer p {
     color: #c4c4c4; }
 
+#creator .col-content {
+  margin-top: 1.75em; }
+
 #creator .card {
   margin: 0 auto 2rem auto;
   overflow: hidden; }
@@ -2108,8 +2111,6 @@ h1#site-title {
     margin: .25rem; }
   #embed-output .field {
     margin-bottom: .25rem; }
-  #embed-output fieldset {
-    border: none; }
   #embed-output textarea.output {
     direction: ltr !important;
     word-break: break-all;

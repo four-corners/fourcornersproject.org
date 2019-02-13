@@ -1,6 +1,12 @@
 import React from 'react';
 
 import i18n from './../i18n.jsx';
+
+import Authorship from './panels/authorship.jsx';
+import Backstory from './panels/backstory.jsx';
+import Imagery from './panels/imagery.jsx';
+import Links from './panels/links.jsx';
+
 import Entry from './entry.jsx';
 // import FourCorners from './../../assets/js/four-corners.min.js';
 
@@ -8,7 +14,7 @@ class Module extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.corners = ['context','links','authorship','backstory'];
+		this.corners = ['imagery','links','authorship','backstory'];
 		this.state = {
 			fourCorners: null,
 			formData: {},
@@ -81,45 +87,66 @@ class Module extends React.Component {
 		{Object.entries(embedData).forEach((obj,i) => {
 			const cornerSlug = obj[0];
 			const cornerTitleKey = [cornerSlug, 'title'].join('_');
-			const data = obj[1];
-			const entries = [];
-			Object.entries(data).forEach((obj,i) => {
-				const fieldSlug = obj[0];
-				const fieldData = obj[1];
-				let fieldLabel = '';
-				if(!['media','links'].includes(fieldSlug) && creator && creator.acf) {
-					const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
-					fieldLabel = creator.acf[fieldLabelKey];
-				}
-				const mediaData = this.props.mediaData[cornerSlug];
-				if(fieldData) {
-					entries.push(
-						<Entry
-							cornerSlug={cornerSlug}
-							fieldLabel={fieldLabel}
-							fieldSlug={fieldSlug}
-							fieldData={fieldData}
-							mediaData={mediaData}
-							key={i} />
-					);
-				}
-			});
+			const panelData = obj[1];
+			let panelInner = '';
+			switch(cornerSlug) {
+				case 'authorship':
+					panelInner = <Authorship panelData={panelData} />
+					break;
+				case 'backstory':
+					panelInner = <Backstory panelData={panelData} />
+					break;
+				case 'imagery':
+					panelInner = <Imagery panelData={panelData} mediaData={this.props.mediaData.imagery} />
+					break;
+				case 'links':
+					panelInner = <Links panelData={panelData} />
+					break;
+			}
+			// const entries = [];
+			// Object.entries(data).forEach((obj,i) => {
+				// console.log(obj);
+				// const fieldSlug = obj[0];
+				// const fieldData = obj[1];
+				// let fieldLabel = '';
+				// if(!['media','links'].includes(fieldSlug) && creator && creator.acf) {
+				// 	const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
+				// 	fieldLabel = creator.acf[fieldLabelKey];
+				// }
+				// const mediaData = this.props.mediaData[cornerSlug];
+				// if(fieldData) {
+				// 	entries.push(
+				// 		<Entry
+				// 			cornerSlug={cornerSlug}
+				// 			fieldLabel={fieldLabel}
+				// 			fieldSlug={fieldSlug}
+				// 			fieldData={fieldData}
+				// 			mediaData={mediaData}
+				// 			key={i} />
+				// 	);
+				// }
+			// });
+
+			const title = creator&&creator.acf ? creator.acf[cornerTitleKey] : '&nbsp;';
 			let className = 'fc-panel fc-'+cornerSlug;
 			if(this.props.activeCorner == cornerSlug) {
 				className += ' fc-active';
 			}
 			panels.push(
 				<div className={className} data-fc-slug={cornerSlug} key={i}>
+					<div className='fc-panel-title'>
+						{title}
+						<div className='fc-icon fc-expand' onClick={this.toggleExpandPanel.bind(this)}/>
+						<div className='fc-icon fc-close' onClick={this.collapsePanel.bind(this)}/>
+					</div>
+					<div className='fc-panel-title fc-pseudo'>{title}</div>
+					{panelInner ?
 					<div className='fc-scroll'>
 						<div className='fc-inner'>
-							<div className='fc-panel-title'>
-								<span>{creator&&creator.acf ? creator.acf[cornerTitleKey] : null }</span>
-								<div className='fc-icon fc-expand' onClick={this.toggleExpandPanel.bind(this)}/>
-								<div className='fc-icon fc-close' onClick={this.collapsePanel.bind(this)}/>
-							</div>
-							{entries}
+							{panelInner}
 						</div>
 					</div>
+					:''}
 				</div>
 			);
 		})}

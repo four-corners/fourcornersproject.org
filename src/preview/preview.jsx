@@ -39,13 +39,13 @@ class Embed extends React.Component {
 		window.removeEventListener('resize', this.onScroll.bind(this));
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return true;
-	}
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	return true;
+	// }
 
-	componentDidUpdate(prevProps) {
+	// componentDidUpdate(prevProps) {
 
-	}
+	// }
 
 	// onDropLoad(e) {
 	// 	// console.log('Image Loaded');
@@ -170,7 +170,6 @@ class Embed extends React.Component {
 
 	render() {
 		const creator = this.props.creator;
-		const entries = ['story','author','publication','url','date'];
 		const inputClass = (this.props.imgLoaded?'has-image':'');
 		return(
 			<div className='col-inner'>
@@ -178,6 +177,7 @@ class Embed extends React.Component {
 					<div className='col-content'>
 
 						<div id='preview' className={inputClass}>
+						
 							<Module
 								creator={creator}
 								formData={this.props.formData}

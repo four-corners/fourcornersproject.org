@@ -2117,6 +2117,10 @@ h1#site-title {
     font-size: .8rem;
     line-height: 1.4em; }
 
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
 *[readonly] {
   background-color: #f6f6f6 !important; }
 
@@ -2224,7 +2228,7 @@ legend {
               transform: rotate(-135deg); }
   #authorship legend span::before,
   #backstory legend span::before,
-  #context legend span::before,
+  #imagery legend span::before,
   #links legend span::before {
     width: 2rem;
     height: 2rem;
@@ -2241,7 +2245,7 @@ legend {
   #backstory legend span::before {
     -webkit-transform: rotate(90deg);
             transform: rotate(90deg); }
-  #context legend span::before {
+  #imagery legend span::before {
     -webkit-transform: rotate(180deg);
             transform: rotate(180deg); }
   #links legend span::before {

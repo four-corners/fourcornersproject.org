@@ -31,11 +31,11 @@ class Entry extends React.Component {
 		array.forEach(function(str, i) {
 			paragraphs.push(<p key={i}>{str}</p>);
 		});
-		return <div className='fc-row-inner'>{paragraphs}</div>;
+		return <div className='fc-row'>{paragraphs}</div>;
 	}
 
 	renderMedia() {
-		const subRows = [];
+		const rows = [];
 		const fieldsetKey = this.props.cornerSlug;
 		const fieldKey = this.props.fieldSlug;
 		if(!this.props.fieldData){return}
@@ -43,20 +43,20 @@ class Entry extends React.Component {
 
 			if(obj.deleted) {return}
 			
-			let subRowInner = '';
+			let mediaWrap = '';
 			if(obj.source == 'image' || !obj.source) {
-				subRowInner = obj.url ? <img src={obj.url} alt=''/> : null;
+				mediaWrap = obj.url ? <div className='fc-media'><img src={obj.url} alt=''/></div> : null;
 			} else {
 				const media = this.props.mediaData[i];
-				subRowInner = media ? <div className='fc-media' dangerouslySetInnerHTML={{__html: media.html}} /> : null;
+				mediaWrap = media ? <div className='fc-media' dangerouslySetInnerHTML={{__html: media.html}} /> : null;
 			}
 			const mediaCaption = obj.caption ? <div className='fc-sub-caption'>{obj.caption}</div> : null;
-			if(subRowInner||mediaCaption) {
-				const subRow = <div className='fc-sub-row' key={i}>{subRowInner}{mediaCaption}</div>;
-				subRows.push(subRow);
+			if(mediaWrap||mediaCaption) {
+				const row = <div className='fc-row' key={i}>{mediaWrap}{mediaCaption}</div>;
+				rows.push(row);
 			}
 		});
-		return subRows.length ? <div className='fc-row-inner'>{subRows}</div> : null;
+		return rows.length ? rows : null;
 	}
 
 	extractHostname(url) {
@@ -88,39 +88,36 @@ class Entry extends React.Component {
 	}
 
 	renderLinks() {
-		const subRows = [];
+		const rows = [];
 		this.props.fieldData.forEach((obj, i) => {
-			const subRow = <div className='fc-sub-row' key={i}>
-					<a href={obj.url} target='_blank'>{obj.title}</a>
-					{obj.url ? <div className='fc-sub-url'>{this.extractRootDomain(obj.url)}</div> : ''}
-				</div>;
-			subRows.push(subRow);
+			const row = obj.title||obj.url ?
+				<div className='fc-row' key={i}>
+					<a href={obj.url} target='_blank' className='fc-card'>
+						{obj.title}
+						{obj.url ? <div className='fc-sub-url'>{this.extractRootDomain(obj.url)}</div> : ''}
+					</a>
+				</div> : null;
+			if(row) { rows.push(row) }
 		});
-		return <div className='fc-row-inner'>{subRows}</div>;
+		return rows;
 	}
 
 	// renderLinks() {
-	// 	const subRows = [];
+	// 	const rows = [];
 	// 	const fieldsetKey = this.props.cornerSlug;
 	// 	const fieldKey = this.props.fieldSlug;
 	// 	if(!this.props.fieldData){return}
 	// 	this.props.fieldData.forEach((obj, i) => {
-	// 		let subRowInner = '';
-	// 		const subRow = <div className='fc-sub-row' key={i}>
+	// 		let mediaWrap = '';
+	// 		const row = <div className='fc-sub-row' key={i}>
 	// 			{obj.title ? <div className='fc-sub-title'>{obj.title}</div> : ''}
 	// 			<div className='fc-sub-url'>{this.wrapUrls(obj.url)}</div>
 	// 		</div>;
-	// 		subRows.push(subRow);
+	// 		rows.push(row);
 	// 	});
-	// 	return <div className='fc-row-inner'>{subRows}</div>;
+	// 	return <div className='fc-row-inner'>{rows}</div>;
 	// }
 
-	renderLicense() {
-		const url = this.props.fieldData;
-		let text = 'License this photo';
-		let link = <span>{text} <a href={url} target='_blank'>{url}</a></span>
-		return link;
-	}
 
 	renderEntry() {
 		switch(this.props.fieldSlug) {
@@ -129,9 +126,6 @@ class Entry extends React.Component {
 				break;
 			case 'links':
 				return this.renderLinks();
-				break;
-			case 'license':
-				return this.renderLicense();
 				break;
 			case 'text':
 				return this.renderText();
@@ -146,7 +140,7 @@ class Entry extends React.Component {
 		const cornerKey = this.props.cornerSlug;
 		const fieldKey = this.props.fieldSlug;
 		const entry = (this.props.fieldData ? this.renderEntry() : null);
-		return entry ? <div className={'fc-row fc-'+fieldKey}>{entry}</div> : null;
+		return entry ? entry : null;
 	}
 }
 

@@ -19,12 +19,9 @@ class Group extends React.Component {
 		const value = input.value;
 		const nameArr = name.split('_');
 		const fieldsetKey = nameArr[0];
-		// const fieldKey = nameArr[1];
-		// const fieldKey = nameArr[2];
-		// const fieldName = [fieldsetKey, fieldKey].join('_');
-		// const index = Number(input.parentElement.parentElement.dataset.index);
-
-		// this.props.onChange(fieldName, fields);
+		const fieldKey = [nameArr[2],nameArr[1]].join('-');
+		const fieldName = [fieldsetKey, fieldKey].join('_');
+		this.props.onChange(fieldName, value);
 	}
 
 

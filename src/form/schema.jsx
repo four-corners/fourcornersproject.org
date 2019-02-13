@@ -13,12 +13,12 @@ const Schema = {
 	},
 	authorship: {
 		fields: {
-			credit: {
-				type: 'text'
-			},
 			caption: {
 				type: 'textarea',
 				rows: 2
+			},
+			credit: {
+				type: 'text'
 			},
 			ethics: {
 				type: 'select',
@@ -65,7 +65,7 @@ const Schema = {
 			}
 		}
 	},
-	context: {
+	imagery: {
 		fields: {
 			media: {
 				type: 'blocks',

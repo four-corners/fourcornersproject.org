@@ -1,3 +1,6 @@
+* {
+	box-sizing: border-box;
+}
 *[readonly] {
 	background-color: $light !important;
 }
@@ -102,7 +105,7 @@ legend {
 	}
 	#authorship &,
 	#backstory &,
-	#context &,
+	#imagery &,
 	#links & {
 		span::before {
 			width: 2rem;
@@ -121,7 +124,7 @@ legend {
 	#backstory & span::before {
 		transform: rotate(90deg);
 	}
-	#context & span::before {
+	#imagery & span::before {
 		transform: rotate(180deg);
 	}
 	#links & span::before {

@@ -18,7 +18,7 @@ class Form extends React.Component {
 			formData: {
 				'authorship':{},
 				'backstory':{},
-				'context':{},
+				'imagery':{},
 				'links':{},
 				'opts':{}
 			},
@@ -54,7 +54,7 @@ class Form extends React.Component {
 		const nameArr = name.split('_');
 		let fieldsetSlug = nameArr[0];
 		let fieldSlug = nameArr[1];
-		let subFieldSlug = '';
+		// if(nameArr[2]){fieldSlug+='_'+nameArr[2]}
 		if(!formData[fieldsetSlug]) {return}
 		formData[fieldsetSlug][fieldSlug] = value;
 		this.setState({

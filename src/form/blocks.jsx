@@ -10,8 +10,8 @@ class Blocks extends React.Component {
 		this.state = {
 			value: '',
 			blocks: [],
+			blockMedia: [],
 			superIndex: 0,
-			mediaData: []
 		};
 	}
 
@@ -26,7 +26,7 @@ class Blocks extends React.Component {
 		const fieldName = [fieldsetKey, blockKey].join('_');
 		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
 
-		let blocks = this.state.blocks.slice(0);
+		let blocks = this.state.blocks;
 		let block = blocks[blockIndex];
 		block[fieldKey] = value;
 		if(block.url) {
@@ -45,9 +45,9 @@ class Blocks extends React.Component {
 		const source = obj.source;
 		const that = this;
 		const uri = encodeURIComponent(url);
-		const mediaData = Object.assign({},this.state.mediaData);
 		let req = '';
-		mediaData[fieldsetKey] = [];
+		const blockMedia = this.state.blockMedia.slice(0);
+		const mediaData = Object.assign({}, this.state.blockMedia);
 		switch(source) {
 			case 'youtube':
 				// req = 'https://www.youtube.com/oembed?url='+uri;
@@ -60,11 +60,12 @@ class Blocks extends React.Component {
 				req = 'https://soundcloud.com/oembed?format=json&url='+uri;
 				break;
 			default:
-				return false;
+				req = null
 				break;
 		}
-		const headers = new Headers();
-		fetch(req, {
+		if(req) {
+			const headers = new Headers();
+			fetch(req, {
 				method: 'GET',
 				headers: headers,
 	      mode: 'cors',
@@ -75,17 +76,26 @@ class Blocks extends React.Component {
 				return res.json();
 			})
 			.then(res => {
-				mediaData[fieldsetKey][index] = {
+				blockMedia[index] = {
 					html:res.html,
 					width: res.width,
 					height: res.height
 				};
-				this.setState({mediaData: mediaData});
+				this.setState({blockMedia: blockMedia});
+				mediaData[fieldsetKey] = blockMedia;
 				this.props.sendMediaData(mediaData);
 			})
 			.catch(function(err) {
 				console.log(err);
 			});
+		} else {
+			blockMedia[index] = {
+				url: uri
+			};
+			this.setState({blockMedia: blockMedia});
+			mediaData[fieldsetKey] = blockMedia;
+			this.props.sendMediaData(mediaData);
+		}
 	}
 
 	renderBlocks() {
@@ -201,14 +211,21 @@ class Blocks extends React.Component {
 
 	deleteBlock(e) {
 		let blocks = this.state.blocks;
+		const fieldset = this.props.fieldset;
 		const blockElem = e.target.parentElement;
 		const index = Number(blockElem.dataset.index);
-		const fieldName = [this.props.fieldset, this.props.id].join('_');
-		const newBlocks = this.state.blocks.filter((b, i) => i !== index)
+		const fieldName = [fieldset, this.props.id].join('_');
+		const newBlocks = this.state.blocks.filter((b, i) => i !== index);
+		const newBlockMedia = this.state.blockMedia.filter((b, i) => i !== index);
 		this.setState({
-			blocks: newBlocks
+			blocks: newBlocks,
+			blockMedia: newBlockMedia
 		});
 		this.props.onChange(fieldName, newBlocks);
+
+		let newMediaData = Object.assign({}, this.props.mediaData);
+		newMediaData[fieldset] = newBlockMedia;
+		this.props.sendMediaData(newMediaData);
 	}
  
 	render() {

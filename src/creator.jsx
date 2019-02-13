@@ -15,17 +15,17 @@ class Creator extends React.Component {
 			creator: {},
 			lang: 'en',
 			formData: {
-				'context':{},
+				'imagery':{},
 				'links':{},
 				'authorship':{},
 				'backstory':{}
 			},
 			imgData: {},
-			mediaData: {context:[]},
+			mediaData: {imagery:[]},
 			activeCorner: null,
 			activeFieldset: null
 		};
-		this.corners = ['context','links','authorship','backstory'];
+		this.corners = ['imagery','links','authorship','backstory'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 		this.outputRef = React.createRef();
 	}
@@ -138,19 +138,45 @@ class Creator extends React.Component {
 		const ready = this.state.creator && this.state.creator.ID;
 		return (
 			<main id='creator'>
+
+				{/*<div className='max-width'>
+					<div className='row'>
+
+						<div className='col col-12 col-sm-6 left col-creator'>
+							<h2>Create now</h2>
+							<h4>Use our creator tool to quickly build a Four Corners to embed on your website</h4>
+						</div>
+
+						<div className='col col-12 col-sm-6 left col-plugins'>
+							<h2>Create later</h2>
+							<h4>Install Four Corners onto your website or CMS</h4>
+							<h5>Coming soon</h5>
+						</div>
+
+						<div className='col col-12 col-partner'>
+							<h4>Would you like to integrate Four Corners into your publishing platform. Contact us!</h4>
+						</div>
+
+					</div>
+				</div>*/}
+
 				<div className='max-width'>
 					<div className='row' data-sticky-container>
+
 						<div className='col col-12 col-sm-6 col-md-7 left col-preview'>
 							<div className='desc'>
 								Fill in the content for each of the Four Corners below. You can begin working on whichever corner that you prefer. Although it is not required to fill in information for all of the Four Corners, it is highly recommended for a better experience by the reader.  Only the corners that are utilized will appear to the viewer.
 							</div>
 							{ this.renderPreviewCol() }
 						</div>
+
 						<div className='col col-12 col-sm-6 col-md-5 right col-form'>
 							{ ready ? this.renderFormCol() : null }
 						</div>
+					
 					</div>
 				</div>
+
 			</main>
 		);
 	}

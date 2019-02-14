@@ -20,6 +20,9 @@ const Schema = {
 			credit: {
 				type: 'text'
 			},
+			copyright: {
+				type: 'text'
+			},
 			ethics: {
 				type: 'select',
 				customize: true

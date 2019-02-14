@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Label from './label.jsx';
-const slugify = require('slugify');
 
 class Group extends React.Component {
 
@@ -61,10 +60,15 @@ class Group extends React.Component {
 
 	render() {
 		const id = this.props.id;
+		const data = this.props.data;
+		const strings = data.text;
 		const fieldset = this.props.fieldset;
 		const name = [fieldset, id].join('_');
 		return(
 			<div className='fields-group'>
+				<div className='field-desc desc opened'>
+					{strings.desc}
+				</div>
 				{this.renderGroup()}
 			</div>
 		);

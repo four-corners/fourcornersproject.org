@@ -46,8 +46,11 @@ fieldset {
 	}
 }
 .fields-group {
-	display: flex;
-	flex-direction: row;
+	// display: flex;
+	// flex-direction: row;
+	.field:not(:last-child) {
+		// margin-bottom: 0;
+	}
 }
 section {
 	margin: 0 auto 2rem auto;
@@ -60,7 +63,8 @@ label, legend {
 }
 legend {
 	width: 100%;
-	margin: 0 .25rem;
+	// margin: 0 .25rem;
+	margin: 0;
 	display: block;
 	@include lgText;	
 	line-height: 1.5em;
@@ -107,12 +111,15 @@ legend {
 	#backstory &,
 	#imagery &,
 	#links & {
+		span {
+			padding-left: 3rem;
+		}
 		span::before {
 			width: 2rem;
 			height: 2rem;
 			position: absolute;
-			right: -3rem;
-			top: .1rem;
+			left: 0;
+			top: .05rem;
 			background-size: 2rem;
 			background-position: center;
 			background-repeat: no-repeat;

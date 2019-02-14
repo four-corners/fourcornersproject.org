@@ -2168,15 +2168,6 @@ fieldset {
   .field.checkbox {
     margin-bottom: .25rem; }
 
-.fields-group {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row; }
-
 section {
   margin: 0 auto 2rem auto; }
 
@@ -2188,7 +2179,7 @@ label, legend {
 
 legend {
   width: 100%;
-  margin: 0 .25rem;
+  margin: 0;
   display: block;
   font-size: 1.5rem;
   line-height: 1.7em;
@@ -2227,6 +2218,11 @@ legend {
       top: calc(50% - .25rem);
       -webkit-transform: rotate(-135deg);
               transform: rotate(-135deg); }
+  #authorship legend span,
+  #backstory legend span,
+  #imagery legend span,
+  #links legend span {
+    padding-left: 3rem; }
   #authorship legend span::before,
   #backstory legend span::before,
   #imagery legend span::before,
@@ -2234,8 +2230,8 @@ legend {
     width: 2rem;
     height: 2rem;
     position: absolute;
-    right: -3rem;
-    top: .1rem;
+    left: 0;
+    top: .05rem;
     background-size: 2rem;
     background-position: center;
     background-repeat: no-repeat;

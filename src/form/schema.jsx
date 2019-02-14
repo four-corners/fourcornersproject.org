@@ -35,14 +35,14 @@ const Schema = {
 			},
 			contact: {
 				type: 'group',
-				fields: {
-					info: {
-						type: 'text',
+				fields: [
+					{
+						type: 'text'
 					},
-					rights: {
-						type: 'text',
+					{
+						type: 'text'
 					}
-				}
+				]
 			}
 		}
 	},

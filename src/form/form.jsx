@@ -111,8 +111,8 @@ class Form extends React.Component {
 								};
 							}
 						}
-					} else if(field.type=='blocks'||field.type=='group') {
-						const objKey= field.type=='blocks' ? 'types' : 'fields';
+					} else if(field.type=='blocks') {
+						const objKey = 'types';
 						const subFields = Schema[setKey].fields[fieldKey].fields;
 						const subFieldKeys = Object.keys(subFields);
 						for(let subFieldKey of subFieldKeys) {
@@ -122,6 +122,24 @@ class Form extends React.Component {
 								let blockTypeSlug = blockType.slug || slugify(blockType.label,{lower:true});
 								Schema[setKey].fields[fieldKey][objKey][blockTypeSlug] = blockType;
 							} }
+							Schema[setKey].fields[fieldKey].fields[subFieldKey].text = {
+								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
+								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
+								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
+							}
+						}
+					} else if(field.type=='group') {
+						const objKey = 'fields';
+						const subFields = Schema[setKey].fields[fieldKey].fields;
+						const subFieldKeys = Object.keys(subFields);
+						for(let subFieldKey of subFieldKeys) {
+							const subFieldTypes = translations[[setKey, fieldKey, 'types'].join('_')];
+							Schema[setKey].fields[fieldKey][objKey] = {};
+							if(subFieldTypes) {
+								subFieldTypes.forEach(function(subFieldType, subFieldIndex) {
+									Schema[setKey].fields[fieldKey][objKey][subFieldIndex] = subFieldType;
+								});
+							}
 							Schema[setKey].fields[fieldKey].fields[subFieldKey].text = {
 								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
 								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],

@@ -2168,6 +2168,16 @@ fieldset {
   .field.checkbox {
     margin-bottom: .25rem; }
 
+.fields-group {
+  margin: 1rem .25rem 2rem .25rem; }
+  .fields-group .field {
+    margin: 0 0 .5rem 0; }
+    .fields-group .field label {
+      font-size: .8rem;
+      line-height: 1.4em; }
+    .fields-group .field:last-child {
+      margin: 0; }
+
 section {
   margin: 0 auto 2rem auto; }
 

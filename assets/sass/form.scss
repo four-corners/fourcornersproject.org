@@ -46,10 +46,15 @@ fieldset {
 	}
 }
 .fields-group {
-	// display: flex;
-	// flex-direction: row;
-	.field:not(:last-child) {
-		// margin-bottom: 0;
+	margin: 1rem .25rem 2rem .25rem;
+	.field {
+		margin: 0 0 .5rem 0;
+		label {
+			@include smText;
+		}
+		&:last-child {
+			margin: 0;
+		}
 	}
 }
 section {

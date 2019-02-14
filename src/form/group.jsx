@@ -66,9 +66,7 @@ class Group extends React.Component {
 		const name = [fieldset, id].join('_');
 		return(
 			<div className='fields-group'>
-				<div className='field-desc desc opened'>
-					{strings.desc}
-				</div>
+				<Label strings={strings} fieldId={id} />
 				{this.renderGroup()}
 			</div>
 		);

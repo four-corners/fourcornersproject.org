@@ -48,7 +48,7 @@ class Authorship extends React.Component {
 
 			<React.Fragment>
 
-				{panelData['caption']||panelData['credit']||panelData['ethics'] ?
+				{panelData['caption']||panelData['credit']||panelData['credit']||panelData['ethics'] ?
 				<div className="fc-row">
 			
 					{panelData['caption'] ?
@@ -61,6 +61,11 @@ class Authorship extends React.Component {
 							<span className="fc-label">Photograph by</span>
 							{panelData['credit']}
 						</div>: ''}
+
+					{panelData['copyright'] ?
+						<div className="fc-field">
+							<em>{panelData['copyright']}</em>
+						</div>: ''}
 					
 					{panelData['ethics'] ?
 						<div className="fc-field">
@@ -70,7 +75,7 @@ class Authorship extends React.Component {
 
 				</div> : ''}
 
-				{panelData['bio']||panelData['website']||panelData['info-contact']||panelData['rights-contact'] ?
+				{panelData['bio']||panelData['website']||panelData['0-contact']||panelData['1-contact'] ?
 				<div className="fc-row fc-about">
 
 					<div className="fc-about-label">About the photographer</div>
@@ -82,21 +87,23 @@ class Authorship extends React.Component {
 					<div className="fc-field fc-contact">
 
 						{panelData['website'] ?
-						<div className="fc-field fc-card fc-half">
+						<div className="fc-field fc-card">
 							<div className="fc-label">Website</div>
 							{this.createLink(panelData['website'])}
 						</div>: ''}
 
-						{panelData['info-contact'] ?
-						<div className="fc-field fc-card fc-half">
+						{console.log(panelData)}
+
+						{panelData['0-contact'] ?
+						<div className="fc-field fc-card">
 							<div className="fc-label">For more info contact</div>
-							{this.createLink(panelData['info-contact'])}
+							{this.createLink(panelData['0-contact'])}
 						</div>: ''}
 
-						{panelData['rights-contact'] ?
-						<div className="fc-field fc-card fc-half">
+						{panelData['1-contact'] ?
+						<div className="fc-field fc-card">
 							<div className="fc-label">For reproduction rights contact</div>
-							{this.createLink(panelData['rights-contact'])}
+							{this.createLink(panelData['1-contact'])}
 						</div>: ''}
 
 					</div>

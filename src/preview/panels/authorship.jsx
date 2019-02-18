@@ -48,67 +48,61 @@ class Authorship extends React.Component {
 
 			<React.Fragment>
 
-				{panelData['caption']||panelData['credit']||panelData['credit']||panelData['ethics'] ?
 				<div className="fc-row">
 			
 					{panelData['caption'] ?
-						<div className="fc-field">
+						<div className="fc-field" data-fc-field="caption">
 							<em>{panelData['caption']}</em>
 						</div>: ''}
 					
 					{panelData['credit'] ?
-						<div className="fc-field">
-							<span className="fc-label">Photograph by</span>
-							{panelData['credit']}
+						<div className="fc-field" data-fc-field="credit">
+							<div className="fc-label">Credit</div>
+							<div className="fc-content">{panelData['credit']}</div>
 						</div>: ''}
 
-					{panelData['copyright'] ?
-						<div className="fc-field">
-							<em>{panelData['copyright']}</em>
+					{panelData['license'] ?
+						<div className="fc-field" data-fc-field="license">
+							<div className="fc-label">License</div>
+							<div className="fc-content">{panelData['license']}</div>
 						</div>: ''}
 					
 					{panelData['ethics'] ?
-						<div className="fc-field">
-							<span className="fc-label">Code of ethics</span>
-							{panelData['ethics']}
+						<div className="fc-field" data-fc-field="ethics">
+							<div className="fc-label">Code of ethics</div>
+							<div className="fc-content">{panelData['ethics']}</div>
 						</div>: ''}
 
-				</div> : ''}
 
-				{panelData['bio']||panelData['website']||panelData['0-contact']||panelData['1-contact'] ?
-				<div className="fc-row fc-about">
+					{panelData['bio'] ?
+					<div className="fc-field" data-fc-field="bio">
+						<div className="fc-label">Bio</div>
+						<div className="fc-content">{panelData['bio']}</div>
+					</div>: ''}
 
-					<div className="fc-about-label">About the photographer</div>
-						{panelData['bio'] ?
-						<div className="fc-field">
-							{panelData['bio']}
-						</div>: ''}
+				<div className="fc-field fc-contact">
 
-					<div className="fc-field fc-contact">
+					{panelData['website'] ?
+					<div className="fc-field fc-card" data-fc-field="website">
+						<div className="fc-label">Website</div>
+						<div className="fc-content">{this.createLink(panelData['website'])}</div>
+					</div>: ''}
 
-						{panelData['website'] ?
-						<div className="fc-field fc-card">
-							<div className="fc-label">Website</div>
-							{this.createLink(panelData['website'])}
-						</div>: ''}
+					{panelData['0-contact'] ?
+					<div className="fc-field fc-card" data-fc-field="0-contact">
+						<div className="fc-label">For more info contact</div>
+						<div className="fc-content">{this.createLink(panelData['0-contact'])}</div>
+					</div>: ''}
 
-						{console.log(panelData)}
+					{panelData['1-contact'] ?
+					<div className="fc-field fc-card" data-fc-field="1-contact">
+						<div className="fc-label">For reproduction rights contact</div>
+						<div className="fc-content">{this.createLink(panelData['1-contact'])}</div>
+					</div>: ''}
 
-						{panelData['0-contact'] ?
-						<div className="fc-field fc-card">
-							<div className="fc-label">For more info contact</div>
-							{this.createLink(panelData['0-contact'])}
-						</div>: ''}
+				</div>
 
-						{panelData['1-contact'] ?
-						<div className="fc-field fc-card">
-							<div className="fc-label">For reproduction rights contact</div>
-							{this.createLink(panelData['1-contact'])}
-						</div>: ''}
-
-					</div>
-
-				</div> : ''}
+			</div>
 
 			</React.Fragment>
 			

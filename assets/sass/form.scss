@@ -25,15 +25,16 @@ fieldset {
 	margin-bottom: 1rem;
 	padding-bottom: 1rem;
 	border-bottom: 1px solid $medium;
-	.fieldset-inner {
-		overflow: hidden;
-	}
 	&.collapse .fieldset-inner {
 		height: 0;
 	}
 	&.expand .fieldset-inner {
 		height: auto;
+		margin-top: 1em;
 	}
+}
+.fieldset-inner {
+	overflow: hidden;
 }
 .field {
 	margin: 1rem .25rem 2rem .25rem;
@@ -57,6 +58,28 @@ fieldset {
 		}
 	}
 }
+.field-toggle {
+	.field {
+		margin-left: 0;
+		margin-right: 0;
+	}
+}
+.field-toggle-checkboxes {
+	display: flex;
+	.field {
+		width: 50%;
+	}
+}
+.field-toggle-fields {
+
+}
+.field-toggle-field {
+	&:not(.active) {
+		display: none;
+	}
+}
+
+
 section {
 	margin: 0 auto 2rem auto;
 }
@@ -68,7 +91,6 @@ label, legend {
 }
 legend {
 	width: 100%;
-	// margin: 0 .25rem;
 	margin: 0;
 	display: block;
 	@include lgText;	
@@ -217,7 +239,7 @@ select {
 	overflow-y: scroll;
 	padding: 0;
 	&:not(.opened) {
-		height: calc(10rem + 2px);
+		height: 10rem;
 	}
 	textarea {
 		// width: calc(100% - .75rem);
@@ -274,18 +296,20 @@ select {
 			opacity: .7;
 		}
 		&::before, &::after {
-			height: calc(2.25rem + 2px);
+			width: 2.25rem;
+			height: 2.25rem;
 			display: block;
+			flex: none;
 			border-radius: $radius;
-			content: '';
 			border: 1px solid $blue;
+			content: '';
 		}
 		&::before {
 			background: $lightest;
 			margin-right: .5rem;
 		}
 		&::after {
-			width: calc(2.25rem + 2px);
+			width: 2.25rem;
 			position: absolute;
 			left: 0;
 			top: 0;
@@ -310,7 +334,7 @@ select {
 	flex-direction: rows;
 	label.checkbox {
 		&::before {
-			width: calc(2.25rem + 2px);
+			width: 2.25rem;
 		}
 		&::after {
 			opacity: 0;
@@ -360,7 +384,7 @@ select {
 }
 
 .file.field {
-	label.btn {
+	label.button {
 		width: auto;
 		display: table;
 		// font-weight: normal;
@@ -412,25 +436,55 @@ select {
 	}
 }
 .blocks-buttons {
-	// margin-top: -.5rem;
-	// label {
-		// width: auto;
-		// margin-right: .5rem;
-	// }
 	.button {
 		display: inline-block;
 	}
 }
-.delete-block {
-	width: 1.5rem;
-	height: 1.5rem;
+.widget-buttons {
 	position: absolute;
 	right: .5rem;
 	top: .625rem;
-	// background-size: contain;
-	// background-position: center;
-	// background-repeat: no-repeat;
-	// background-image: url(./../images/x.svg);
+}
+.widget-button {
+	width: 1.5rem;
+	height: 1.5rem;
+	display: inline-block;
+	position: relative;
+	&:hover {
+		cursor: pointer;
+	}
+}
+.move-block {
+	&::before, &::after {
+		position: absolute;
+		border: solid $medium;
+		content: '';
+		@include fastTrans(border-color);
+	}
+	&::before {
+		width: 0;
+		height: 1rem;
+		top: 0;
+		left: calc(50% - 1px);
+		border-width: 0 1px;
+		
+	}
+	&::after {
+		width: .75rem;
+		height: .75rem;
+		left: .375rem;
+		border-width: 0 2px 2px 0;
+		transform: rotate(-135deg);
+	}
+	&[data-dir="up"]::after {
+		transform: rotate(-135deg);
+	}
+	&[data-dir="down"]::after {
+		bottom: .5rem;
+		transform: rotate(45deg);
+	}
+}
+.delete-block {
 	&::before, &::after {
 		width: .75rem;
 		height: .75rem;
@@ -449,9 +503,6 @@ select {
 		bottom: calc(50% - .825rem);
 		transform: rotate(-135deg);
 	}
-	&:hover {
-		cursor: pointer;
-	}
 }
 .has-error {
 	input, select, textarea {
@@ -459,7 +510,7 @@ select {
 	}
 }
 .button {
-	height: calc(2.25rem + 2px);
+	height: 2.25rem;
 	width: auto;
 	margin: 0 .5rem .5rem 0;
 	padding: .325rem .75rem;
@@ -471,9 +522,6 @@ select {
 	@include shadow;
 	@include border;
 	@include focus;
-	&.btn-add, &.btn-danger {
-		width: calc(2.25rem + 2px);
-	}
 	&::after {
 		font-weight: normal;
 	}
@@ -490,22 +538,4 @@ select {
 			cursor: default;
 		}
 	}
-}
-i.glyphicon {
-	display: none;
-}
-.btn-add::after {
-	content: '+';
-}
-.array-item-move-up::after {
-	content: 'Move Up';
-}
-.array-item-move-down::after {
-	content: 'Move Down';
-}
-.array-item-remove::after {
-	content: '×';
-}
-legend {
-	position: relative;
 }

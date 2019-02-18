@@ -5,6 +5,7 @@ import Select from './select.jsx';
 import Blocks from './blocks.jsx';
 import Group from './group.jsx';
 import Checkbox from './checkbox.jsx';
+import Toggle from './toggle.jsx';
 
 import React from 'react';
 // import PropTypes from 'prop-types';
@@ -39,8 +40,8 @@ class Fieldset extends React.Component {
 	}
 
 	onToggle() {
-		const slug = this.props.id;
-		const newActiveFieldset = slug==this.props.activeFieldset?null:slug;
+		const setKey = this.props.setKey;
+		const newActiveFieldset = setKey==this.props.activeFieldset?null:setKey;
 		if(newActiveFieldset) {
 			this.props.sendActiveCorner(newActiveFieldset);
 		}
@@ -48,28 +49,20 @@ class Fieldset extends React.Component {
 	}
 
 	renderFields() {
-		// const components = [
-		// 	'text': Text,
-		// 	'textarea': Textarea,
-		// 	'toggle': Toggle,
-		// 	'select': Select,
-		// 	'file': File,
-		// 	'blocks': Blocks
-		// ];
-
 		const fields = this.props.data.fields;
 		const fieldKeys = Object.keys(fields);
 		const fieldElems = [];
 
 		for(let fieldKey of fieldKeys) {
 			const field = fields[fieldKey];
+			const setKey = this.props.setKey;
 			switch(field.type) {
 				case 'text':
 					fieldElems.push(
 						<Text
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
@@ -77,9 +70,9 @@ class Fieldset extends React.Component {
 				case 'textarea':
 					fieldElems.push(
 						<Textarea
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
@@ -87,9 +80,9 @@ class Fieldset extends React.Component {
 				case 'checkbox':
 					fieldElems.push(
 						<Checkbox
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
@@ -97,9 +90,9 @@ class Fieldset extends React.Component {
 				case 'select':
 					fieldElems.push(
 						<Select
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
@@ -107,9 +100,9 @@ class Fieldset extends React.Component {
 				case 'file':
 					fieldElems.push(
 						<File
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange}
 							sendImgData={this.props.sendImgData} />
@@ -118,9 +111,9 @@ class Fieldset extends React.Component {
 				case 'blocks':
 					fieldElems.push(
 						<Blocks
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange}
 							sendActiveCorner={this.props.sendActiveCorner}
@@ -130,9 +123,20 @@ class Fieldset extends React.Component {
 				case 'group':
 					fieldElems.push(
 						<Group
-							id={fieldKey}
-							fieldset={this.props.id}
-							data={field}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
+							key={fieldElems.length}
+							onChange={this.props.onChange}
+							sendMediaData={this.props.sendMediaData} />
+					);
+					break;
+				case 'toggle':
+					fieldElems.push(
+						<Toggle
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
 							key={fieldElems.length}
 							onChange={this.props.onChange}
 							sendMediaData={this.props.sendMediaData} />
@@ -148,15 +152,16 @@ class Fieldset extends React.Component {
 
 	render() {
 		const data = this.props.data;
-		const text = data.text;
-		const expand = this.props.id==this.props.activeFieldset;
+		const setKey = this.props.setKey;
+		const strings = data.strings;
+		const expand = setKey==this.props.activeFieldset;
 		return (
-			<fieldset id={this.props.id} className={expand?'expand':'collapse'}>
+			<fieldset id={setKey} className={expand?'expand':'collapse'}>
 				<legend onClick={this.onToggle.bind(this)}>
-					<span>{text.title}</span>
+					<span>{strings.title}</span>
 				</legend>
 				<div className='fieldset-inner'>
-					{text.desc ? <div className='fieldset-desc desc'>{text.desc}</div> : '' }
+					{strings.desc ? <div className='fieldset-desc desc'>{strings.desc}</div> : '' }
 					{this.renderFields()}
 				</div>
 			</fieldset>

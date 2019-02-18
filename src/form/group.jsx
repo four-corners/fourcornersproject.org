@@ -25,9 +25,9 @@ class Group extends React.Component {
 
 
 	renderGroup() {
-		const data = this.props.data;
-		if(!data){return}
-		const fields = data.fields;
+		const field = this.props.field;
+		if(!field){return}
+		const fields = field.fields;
 		const fieldKeys = Object.keys(fields);
 		let fieldElems = [];
 		fieldKeys.map((fieldKey, i) => {
@@ -41,16 +41,16 @@ class Group extends React.Component {
 	renderField(fieldKey, fieldData, fieldIndex) {
 		const fieldset = this.props.fieldset;
 		const id = this.props.id;
-		const data = this.props.data;
-		const strings = data.text;
+		const field = this.props.field;
+		const strings = field.strings;
 		const name = [fieldset, id, fieldKey].join('_');
 		return(
 			<div className='field input' key={fieldIndex}>
-				<Label strings={fieldData} id={id} />
+				{this.props.hideLabel?'':
+				<Label strings={fieldData} id={id} />}
 				<input
 					name={name}
 					type={'text'}
-					// data-index={fieldIndex}
 					placeholder={fieldData.placeholder}
 					className='form-elem'
 					onChange={this.onChange.bind(this)}/>
@@ -59,14 +59,14 @@ class Group extends React.Component {
 	}
 
 	render() {
-		const id = this.props.id;
-		const data = this.props.data;
-		const strings = data.text;
-		const fieldset = this.props.fieldset;
-		const name = [fieldset, id].join('_');
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const field = this.props.field;
+		const strings = field.strings;
+		// const name = [setKey, fieldKey].join('_');
 		return(
 			<div className='fields-group'>
-				<Label strings={strings} fieldId={id} />
+				<Label strings={strings} setKey={setKey} />
 				{this.renderGroup()}
 			</div>
 		);

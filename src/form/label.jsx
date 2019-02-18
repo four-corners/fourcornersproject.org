@@ -32,7 +32,7 @@ class Label extends React.Component {
 		return (
 			<div className='field-label'>
 				{strings && strings.label ?
-					<label name={this.props.id} htmlFor={this.props.id}>
+					<label name={this.props.fieldKey} htmlFor={this.props.fieldKey}>
 						{strings.label}
 						{this.renderToggle()}
 					</label>

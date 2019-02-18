@@ -53,34 +53,35 @@ class Select extends React.Component {
 	}
 
 	render() {
-		const id = this.props.id;
-		const strings = this.props.data.text;
-		const fieldset = this.props.fieldset;
-		const name = [fieldset, id].join('_');
-		const options = this.props.data.options;
+		const fieldKey = this.props.fieldKey;
+		const strings = this.props.field.strings;
+		const setKey = this.props.setKey;
+		const name = [setKey, fieldKey].join('_');
+		const options = this.props.field.options;
 		const value = this.state.value;
-		const customize = this.props.data.customize;
+		const customize = this.props.field.customize;
 		return(
 			<div className='field select'>
-				<Label strings={strings} fieldId={id} />
+				{this.props.hideLabel?'':
+				<Label strings={strings} fieldKey={fieldKey} />}
 				<select
 					name={name}
 					className='form-elem'
 					value={this.state.value}
 					ref={this.selectRef}
 					onChange={this.onChange}>
-					{options.map(({ desc, label }, i) => {
+					{options ? options.map(({ desc, label }, i) => {
 						return(
 							<option key={i} value={desc}>{label+(desc ? ': '+desc : '')}</option>
 						);
-					})}
+					}) : ''}
 				</select>
 
 				<div
-					data-id={id}
+					data-field={fieldKey}
 					className='select-widget form-elem'
 					data-value={typeof value === 'undefined' ? '' : value}>
-					{options.map(({ desc, label }, i) => {
+					{options ? options.map(({ desc, label }, i) => {
 						const canCustomize = customize && i == 0;
 						if(canCustomize) { desc = this.state.customText }
 						let optClassName = value === desc ? 'option selected' : 'option';
@@ -101,7 +102,7 @@ class Select extends React.Component {
 								: '' }
 							</div>
 						);
-					})}
+					}) : ''}
 				</div>
 
 			</div>

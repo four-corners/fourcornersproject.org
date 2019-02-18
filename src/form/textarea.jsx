@@ -18,15 +18,16 @@ class Textarea extends React.Component {
 	}
 
 	render() {
-		const id = this.props.id;
-		const strings = this.props.data.text;
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const strings = this.props.field.strings;
 		const placeholder = strings.placeholder;
-		const fieldset = this.props.fieldset;
-		const rows = this.props.data.rows;
-		const name = [fieldset, id].join('_');
+		const rows = this.props.field.rows;
+		const name = [setKey, fieldKey].join('_');
 		return(
 			<div className="field input">
-				<Label strings={strings} fieldId={id} />
+				{this.props.hideLabel?'':
+				<Label strings={strings} fieldId={fieldKey} />}
 				<textarea
 					name={name}
 					className='form-elem'

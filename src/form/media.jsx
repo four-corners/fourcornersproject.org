@@ -49,13 +49,13 @@ class SelectWidget extends React.Component {
 		// const { options, enumDisabled } = this.props.options;
 		const options = this.props.options;
 		const emptyValue = '';
-		const id = this.props.id;
+		const fieldKey = this.props.fieldKey;
 		// const schema = this.props.schema;
 		return (
 			<div className='select-widget'>
 				<select
-					id={id}
-					name={id}
+					id={fieldKey}
+					name={fieldKey}
 					required={this.props.required}
 					value={this.state.value}
 					onChange={
@@ -75,7 +75,7 @@ class SelectWidget extends React.Component {
 				</select>
 
 				<div
-					data-id={id}
+					data-id={fieldKey}
 					className='select-widget-dropdown form-control'
 					data-value={typeof value === 'undefined' ? emptyValue : value}>
 					{options.map(({ value, label }, i) => {

@@ -163,12 +163,12 @@ class Creator extends React.Component {
 				<div className='max-width'>
 					<div className='row' data-sticky-container>
 
-						<div className='col col-12 col-sm-6 col-md-7 left col-preview'>
-							{ this.renderPreviewCol() }
+						<div className='col col-12 col-sm-6 col-md-5 left col-form'>
+							{ ready ? this.renderFormCol() : null }
 						</div>
 
-						<div className='col col-12 col-sm-6 col-md-5 right col-form'>
-							{ ready ? this.renderFormCol() : null }
+						<div className='col col-12 col-sm-6 col-md-7 right col-preview'>
+							{ this.renderPreviewCol() }
 						</div>
 					
 					</div>

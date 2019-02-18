@@ -19,8 +19,8 @@ class Checkbox extends React.Component {
 	render() {
 		const props = this.props;
 		const id = props.id;
-		const text = props.data.text;
-		const style = props.data.style;
+		const strings = props.field.strings;
+		const style = props.field.style;
 		const fieldset = props.fieldset;
 		const name = [fieldset, id].join('_');
 		return(
@@ -34,13 +34,13 @@ class Checkbox extends React.Component {
 						onChange={this.onChange.bind(this)} />
 					<label className='checkbox' htmlFor={id}>
 						<div className='label-inner'>
-							{text && text.label ?
-								<span>{text.label}</span>
+							{strings && strings.label ?
+								<span>{strings.label}</span>
 							: ''}
 						</div>
 					</label>
 				</div>
-				{text && text.desc ? <div className='desc'>{text.desc}</div> : ''}
+				{strings && strings.desc ? <div className='desc'>{strings.desc}</div> : ''}
 			</div>
 		);
 	}

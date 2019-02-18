@@ -41,6 +41,10 @@ class Module extends React.Component {
 		this.setState(stateChange);
 	}
 
+	onClick(e) {
+		this.props.sendActiveFieldset('photo')
+	}
+
 	onFocus(e) {
 		e.target.setSelectionRange(0, e.target.value.length);
 	}
@@ -205,8 +209,12 @@ class Module extends React.Component {
 		return(
 			<React.Fragment>
 				<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
-					{!imgLoaded?<div className="no-photo"><h2>No photo</h2></div>:''}
-					<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
+					{!imgLoaded?
+					<div
+						className="no-photo" onClick={this.onClick.bind(this)}>
+						<h2>Add your photo</h2>
+					</div>:''}
+					<div className={imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
 						<img src={imgSrc} className='fc-img'/>
 					</div>
 					{this.renderCorners()}

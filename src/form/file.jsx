@@ -40,9 +40,7 @@ class File extends React.Component {
 			this.props.sendImgData(imgData);
 		}
 		pseudoImg.onerror = (e) => {
-			const placeholderSrc = SiteSettings.url.theme+'/assets/images/placeholder.svg';
 			imgData = {
-				imgSrc: placeholderSrc,
 				imgLoaded: false
 			}
 			this.setState(imgData);
@@ -52,15 +50,16 @@ class File extends React.Component {
 	}
 
 	render() {
-		const id = this.props.id;
-		const strings = this.props.data.text;
-		const fieldset = this.props.fieldset;
-		const name = [fieldset, id].join('_');
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const strings = this.props.field.strings;
+		const name = [setKey, fieldKey].join('_');
 		return(
 			<div className="field file">
-				<Label strings={strings} fieldId={id} />
+				{this.props.hideLabel?'':
+				<Label strings={strings} feildKey={fieldKey} />}
 				<input
-					id={id}
+					id={fieldKey}
 					name={name}
 					type='url'
 					className='form-control'

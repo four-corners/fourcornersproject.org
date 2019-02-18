@@ -20,8 +20,22 @@ const Schema = {
 			credit: {
 				type: 'text'
 			},
-			copyright: {
-				type: 'text'
+			license: {
+				type: 'toggle',
+				fields: {
+					copyright: {
+						type: 'text',
+						// fields: {
+							
+						// }
+					},
+					commons: {
+						type: 'select',
+						// fields: {
+							
+						// }
+					}
+				}
 			},
 			ethics: {
 				type: 'select',

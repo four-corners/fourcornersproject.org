@@ -71,7 +71,6 @@ class Form extends React.Component {
 	}
 
 	onError(e) {
-		// console.log('Error', e);
 	}
 
 	renderSchema() {
@@ -85,15 +84,14 @@ class Form extends React.Component {
 		for(let setKey of setKeys) {
 			const fields = Schema[setKey].fields;
 			const fieldKeys = Object.keys(fields);
-			Schema[setKey].text = {
+			Schema[setKey].strings = {
 				title: translations[[setKey, 'title'].join('_')],
 				desc: translations[[setKey, 'desc'].join('_')]
 			}
 			for(let fieldKey of fieldKeys) {
 				let field = fields[fieldKey];
-				// console.log(field);
 				if(field) {
-					Schema[setKey].fields[fieldKey].text = {
+					Schema[setKey].fields[fieldKey].strings = {
 						label: translations[[setKey, fieldKey, 'label'].join('_')],
 						desc: translations[[setKey, fieldKey, 'desc'].join('_')],
 						placeholder: translations[[setKey, fieldKey, 'placeholder'].join('_')],
@@ -101,7 +99,8 @@ class Form extends React.Component {
 					if(field.type=='select') {
 						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
 						Schema[setKey].fields[fieldKey].options = opts;
-					} else if(field.type=='checkbox') {
+					}
+					else if(field.type=='checkbox') {
 						if(field.fields&&field.fields.length) {
 							Schema[setKey].fields[fieldKey].options = {};
 							for(let optKey of field.fields) {
@@ -111,24 +110,31 @@ class Form extends React.Component {
 								};
 							}
 						}
-					} else if(field.type=='blocks') {
+					}
+					else if(field.type=='blocks'||field.type=='toggle') {
 						const objKey = 'types';
 						const subFields = Schema[setKey].fields[fieldKey].fields;
 						const subFieldKeys = Object.keys(subFields);
 						for(let subFieldKey of subFieldKeys) {
+							const subField = subFields[subFieldKey];
 							const blockTypes = translations[[setKey, fieldKey, 'types'].join('_')];
 							Schema[setKey].fields[fieldKey][objKey] = {};
 							if(blockTypes) { for(let blockType of blockTypes) {
 								let blockTypeSlug = blockType.slug || slugify(blockType.label,{lower:true});
 								Schema[setKey].fields[fieldKey][objKey][blockTypeSlug] = blockType;
 							} }
-							Schema[setKey].fields[fieldKey].fields[subFieldKey].text = {
+							Schema[setKey].fields[fieldKey].fields[subFieldKey].strings = {
 								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
 								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
 								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
 							}
+							if(subField.type=='select') {
+								const opts = translations[[setKey, fieldKey, subFieldKey, 'options'].join('_')];
+								Schema[setKey].fields[fieldKey].fields[subFieldKey].options = opts;
+							}
 						}
-					} else if(field.type=='group') {
+					}
+					else if(field.type=='group') {
 						const objKey = 'fields';
 						const subFields = Schema[setKey].fields[fieldKey].fields;
 						const subFieldKeys = Object.keys(subFields);
@@ -140,7 +146,7 @@ class Form extends React.Component {
 									Schema[setKey].fields[fieldKey][objKey][subFieldIndex] = subFieldType;
 								});
 							}
-							Schema[setKey].fields[fieldKey].fields[subFieldKey].text = {
+							Schema[setKey].fields[fieldKey].fields[subFieldKey].strings = {
 								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
 								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
 								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
@@ -150,7 +156,7 @@ class Form extends React.Component {
 				}
 			}
 			const fieldset = <Fieldset
-				id={setKey}
+				setKey={setKey}
 				data={Schema[setKey]}
 				key={setKey}
 				onChange={this.onChange.bind(this)}

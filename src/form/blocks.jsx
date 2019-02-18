@@ -20,17 +20,17 @@ class Blocks extends React.Component {
 		const name = input.name;
 		const value = input.value;
 		const nameArr = name.split('_');
-		const fieldsetKey = nameArr[0];
+		const setKey = nameArr[0];
 		const blockKey = nameArr[1];
 		const fieldKey = nameArr[2];
-		const fieldName = [fieldsetKey, blockKey].join('_');
+		const fieldName = [setKey, blockKey].join('_');
 		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
 
 		let blocks = this.state.blocks;
 		let block = blocks[blockIndex];
 		block[fieldKey] = value;
 		if(block.url) {
-			this.getMediaData(block, fieldsetKey, blockIndex);
+			this.getMediaData(block, setKey, blockIndex);
 		}
 
 		this.setState({
@@ -40,7 +40,7 @@ class Blocks extends React.Component {
 		this.props.onChange(fieldName, blocks);
 	}
 
-	getMediaData(obj, fieldsetKey, index) {
+	getMediaData(obj, setKey, index) {
 		const url = obj.url;
 		const source = obj.source;
 		const that = this;
@@ -82,7 +82,7 @@ class Blocks extends React.Component {
 					height: res.height
 				};
 				this.setState({blockMedia: blockMedia});
-				mediaData[fieldsetKey] = blockMedia;
+				mediaData[setKey] = blockMedia;
 				this.props.sendMediaData(mediaData);
 			})
 			.catch(function(err) {
@@ -93,7 +93,7 @@ class Blocks extends React.Component {
 				url: uri
 			};
 			this.setState({blockMedia: blockMedia});
-			mediaData[fieldsetKey] = blockMedia;
+			mediaData[setKey] = blockMedia;
 			this.props.sendMediaData(mediaData);
 		}
 	}
@@ -110,21 +110,21 @@ class Blocks extends React.Component {
 	}
 
 	renderBlock(block, blockIndex) {
-		const fieldset = this.props.fieldset;
-		const id = this.props.id;
-		const data = this.props.data;
-		if(!data.types){return null}
-		const type = data.types[block.source];
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const field = this.props.field;
+		if(!field.types){return null}
+		const type = field.types[block.source];
 		if(!type){return null}
 		type.slug = slugify(type.label,{lower:true});
-		type.name = [fieldset, id, 'source'].join('_');
-		const fields = data.fields;
-		const fieldKeys = Object.keys(fields);
-		let fieldElems = [];
-		fieldKeys.map((fieldKey, fieldIndex) => {
-			const fieldData = fields[fieldKey];
-			const field = this.renderField(fieldKey, fieldData, type, block.index, fieldIndex);
-			fieldElems.push(field);
+		type.name = [setKey, fieldKey, 'source'].join('_');
+		const subFields = field.fields;
+		const subFieldKeys = Object.keys(subFields);
+		let subFieldElems = [];
+		subFieldKeys.map((subFieldKey, subFieldIndex) => {
+			const subFieldData = subFields[subFieldKey];
+			const subField = this.renderField(subFieldKey, subFieldData, type, block.index, subFieldIndex);
+			subFieldElems.push(subField);
 		});
 		return(
 			<div
@@ -139,27 +139,44 @@ class Blocks extends React.Component {
 					// onChange={this.onChange.bind(this)}
 					value={type.slug} />
 
-				{fieldElems}
+				{subFieldElems}
 
-				<div
-					className='delete-block'
-					onClick={this.deleteBlock.bind(this)}/>
+				<div className='widget-buttons'>
+
+					<div
+						data-dir='up'
+						data-new-index={blockIndex-1}
+						className='widget-button move-block'
+						onClick={this.moveBlock.bind(this)}/>
+
+					<div
+						data-dir='down'
+						data-new-index={blockIndex+1}
+						className='widget-button move-block'
+						onClick={this.moveBlock.bind(this)}/>
+
+					<div
+						className='widget-button delete-block'
+						onClick={this.deleteBlock.bind(this)}/>
+
+				</div>
 			</div>
 		);
 	}
 
-	renderField(fieldKey, fieldData, type, blockIndex, fieldIndex) {
-		const fieldset = this.props.fieldset;
-		const id = this.props.id;
+	renderField(subFieldKey, subFieldData, type, blockIndex, subFieldIndex) {
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
 		const data = this.props.data;
-		const name = [fieldset, id, fieldKey, blockIndex, fieldIndex].join('_');
-		let strings = Object.assign({},fieldData.text);
-		if(fieldKey == 'url') {
+		const name = [setKey, fieldKey, subFieldKey, blockIndex, subFieldIndex].join('_');
+		let strings = Object.assign({}, subFieldData.strings);
+
+		if(subFieldKey == 'url') {
 			strings = type;
 		}
 		return(
 			<div className='field input' key={name}>
-				<Label strings={strings} fieldId={id} />
+				<Label strings={strings} fieldKey={fieldKey} />
 				<input
 					className='form-elem'
 					name={name}
@@ -171,8 +188,8 @@ class Blocks extends React.Component {
 	}
 
 	renderButtons() {
-		const data = this.props.data;
-		const types = data.types;
+		const field = this.props.field;
+		const types = field.types;
 		if(!types){return}
 		let buttons = [];
 		Object.keys(types).map((key, i) => {
@@ -185,7 +202,7 @@ class Blocks extends React.Component {
 
 	renderButton(type, slug) {
 		return (
-			<div className="button add-block"
+			<div className='button add-block'
 				data-slug={slug}
 				key={slug}
 				onClick={this.addBlock.bind(this)}>
@@ -196,7 +213,7 @@ class Blocks extends React.Component {
 
 	addBlock(e) {
 		e.preventDefault();
-		const fieldName = [this.props.fieldset, this.props.id].join('_')
+		const fieldName = [this.props.setKey, this.props.fieldKey].join('_')
 		const newBlocks = this.state.blocks.concat([{
 			source: e.target.dataset.slug,
 			index: this.state.superIndex
@@ -206,15 +223,16 @@ class Blocks extends React.Component {
 			superIndex: this.state.superIndex+1
 		});
 		this.props.onChange(fieldName, newBlocks);
-		this.props.sendActiveCorner(this.props.fieldset);
+		this.props.sendActiveCorner(this.props.setKey);
 	}
 
 	deleteBlock(e) {
 		let blocks = this.state.blocks;
-		const fieldset = this.props.fieldset;
-		const blockElem = e.target.parentElement;
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const blockElem = e.target.parentElement.parentElement;
 		const index = Number(blockElem.dataset.index);
-		const fieldName = [fieldset, this.props.id].join('_');
+		const fieldName = [setKey, fieldKey].join('_');
 		const newBlocks = this.state.blocks.filter((b, i) => i !== index);
 		const newBlockMedia = this.state.blockMedia.filter((b, i) => i !== index);
 		this.setState({
@@ -224,15 +242,45 @@ class Blocks extends React.Component {
 		this.props.onChange(fieldName, newBlocks);
 
 		let newMediaData = Object.assign({}, this.props.mediaData);
-		newMediaData[fieldset] = newBlockMedia;
+		newMediaData[setKey] = newBlockMedia;
+		this.props.sendMediaData(newMediaData);
+	}
+
+	moveBlock(e) {
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const fieldName = [setKey, fieldKey].join('_');
+
+		const blockElem = e.target.parentElement.parentElement;
+		const index = Number(blockElem.dataset.index);
+		const newIndex = e.target.dataset.newIndex;
+		let newBlocks = this.state.blocks;
+		let newBlockMedia = this.state.blockMedia;
+		// return if no where to go
+		if(!newBlocks[newIndex]){return}
+
+		let block = newBlocks.splice(index, 1)[0];
+		newBlocks.splice(newIndex, 0, block);
+
+		let mediaBlock = newBlockMedia.splice(index, 1)[0];
+		newBlockMedia.splice(newIndex, 0, mediaBlock);
+		
+		this.setState({
+			blocks: newBlocks,
+			blockMedia: newBlockMedia
+		});
+		this.props.onChange(fieldName, newBlocks);
+
+		let newMediaData = Object.assign({}, this.props.mediaData);
+		newMediaData[setKey] = newBlockMedia;
 		this.props.sendMediaData(newMediaData);
 	}
  
 	render() {
-		const id = this.props.id;
-		const text = this.props.data.text;
-		const fieldset = this.props.fieldset;
-		const name = [fieldset, id].join('_');
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const strings = this.props.field.strings;
+		const name = [setKey, fieldKey].join('_');
 		return(
 			<div className="field input">
 

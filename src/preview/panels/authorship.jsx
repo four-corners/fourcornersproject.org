@@ -59,23 +59,37 @@ class Authorship extends React.Component {
 						<div className="fc-field" data-fc-field="credit">
 							<span className="fc-label">Credit</span>
 							<div className="fc-content">{panelData['credit']}</div>
-						</div>: ''}
+						</div> : ''}
 
 					{panelData['license'] ?
 						<div className="fc-field" data-fc-field="license">
 							<span className="fc-label">License</span>
-							<div className="fc-content">
-								{console.log(panelData['license'])}
+							<span className="fc-content">
 								{panelData['license'].type=='copyright'?'© ':''}
-								{panelData['license'].desc}
-							</div>
-						</div>: ''}
+
+								{panelData['license'].url ?
+								<a href={panelData['license'].url} target="_blank">
+									{panelData['license'].label ? panelData['license'].label : ''}
+								</a> :
+								panelData['license'].label ? panelData['license'].label : ''}
+							</span>
+							{/*<div className="fc-content">
+								<div className="fc-sub-caption">
+									{panelData['license'].desc ? panelData['license'].desc : ''}
+								</div>
+							</div>*/}
+						</div> : ''}
 					
 					{panelData['ethics'] ?
 						<div className="fc-field" data-fc-field="ethics">
 							<span className="fc-label">Code of ethics</span>
-							<div className="fc-content">{panelData['ethics']}</div>
-						</div>: ''}
+							<span className="fc-content">
+								<span>{panelData['ethics'].label}</span>
+							</span>
+							<div className="fc-content">
+								<div className="fc-sub-caption">{panelData['ethics'].desc}</div>
+							</div>
+						</div> : ''}
 
 
 					{panelData['bio'] ?

@@ -24,9 +24,13 @@ class Toggle extends React.Component {
 		let fieldKey = nameArr[1];
 		let subFieldKey = nameArr[2];
 		let value = {
-			desc: subValue,
 			type: subFieldKey
 		};
+		if(typeof subValue == 'object') {
+			value = Object.assign(value, subValue);
+		} else {
+			value.label = subValue;
+		}
 
 		let values = Object.assign({},this.state.values);
 		values[subFieldKey] = value;

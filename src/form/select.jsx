@@ -15,35 +15,26 @@ class Select extends React.Component {
 		this.selectRef = React.createRef();
 	}
 
-	componentDidMount() {
-
-	}
-
-	componentWillUnmount() {
-		
-	}
-
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		
-	}
-
 	onClick(e) {
 		e.preventDefault();
 		if(e.target.parentElement.classList.contains('toggle-desc')) {
 			return;
 		}
 		const custom = e.currentTarget.classList.contains('custom');
-		const newValue = e.currentTarget.dataset.value;
+		let newValue = e.currentTarget.dataset.value;
+
+		try {
+			newValue = JSON.parse(newValue);
+		} catch(err) {
+			console.warn(err);
+		}
+
 		this.setState({
 			value: newValue,
 			custom: custom
 		});
 		const name = this.selectRef.current.name;
 		this.props.onChange(name, newValue);
-	}
-
-	onChange() {
-		
 	}
 
 	onChangeCustom(e) {
@@ -72,11 +63,11 @@ class Select extends React.Component {
 					name={name}
 					className='form-elem'
 					value={this.state.value}
-					ref={this.selectRef}
-					onChange={this.onChange}>
+					ref={this.selectRef}>
 					{options ? options.map(({ desc, label }, i) => {
+						const value = JSON.stringify(options[i]);
 						return(
-							<option key={i} value={desc}>{label+(desc ? ': '+desc : '')}</option>
+							<option key={i} value={value}>{label+(desc ? ': '+desc : '')}</option>
 						);
 					}) : ''}
 				</select>
@@ -86,6 +77,7 @@ class Select extends React.Component {
 					className='select-widget form-elem'
 					data-value={typeof value === 'undefined' ? '' : value}>
 					{options ? options.map(({ desc, label }, i) => {
+						const value = JSON.stringify(options[i]);
 						const canCustomize = customize && i == 0;
 						if(canCustomize) { desc = this.state.customText }
 						let optClassName = value === desc ? 'option selected' : 'option';
@@ -94,7 +86,7 @@ class Select extends React.Component {
 							<div
 								key={i}
 								className={optClassName}
-								data-value={desc}
+								data-value={value}
 								onClick={this.onClick.bind(this)}>
 								{canCustomize ?
 									<React.Fragment>

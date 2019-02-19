@@ -259,13 +259,20 @@ select {
 		padding: .375rem;
 		border-bottom: 1px solid $light;
 		@include fastTrans;
-		.option-label {
-
+		label {
+			pointer-events: none;
+			margin: 0;
+		}
+		.toggle-desc {
+			pointer-events: all;
 		}
 		.desc {
 			padding: unset;
 			background-color: unset;
 			background-radius: unset;
+		}
+		textarea {
+			@include smText;
 		}
 		&.selected, &.selected:hover {
 			background-color: rgba($blue,.25);

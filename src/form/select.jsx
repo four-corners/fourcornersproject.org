@@ -10,9 +10,14 @@ class Select extends React.Component {
 		super(props);
 		this.state = {
 			custom: false,
-			customText: ''
+			customText: '',
+			value: '',
 		};
 		this.selectRef = React.createRef();
+	}
+
+	onChange(e) {
+
 	}
 
 	onClick(e) {
@@ -38,9 +43,13 @@ class Select extends React.Component {
 	}
 
 	onChangeCustom(e) {
-		const newValue = e.currentTarget.value;
+		const customText = e.currentTarget.value;
+		const newValue = {
+			desc: customText
+		};
 		this.setState({
-			customText: newValue,
+			custom: true,
+			customText: customText,
 			value: newValue
 		});
 		const name = this.selectRef.current.name;
@@ -62,12 +71,15 @@ class Select extends React.Component {
 				<select
 					name={name}
 					className='form-elem'
-					value={this.state.value}
-					ref={this.selectRef}>
-					{options ? options.map(({ desc, label }, i) => {
-						const value = JSON.stringify(options[i]);
+					value={value}
+					ref={this.selectRef}
+					onChange={this.onChange}>
+					{options ? options.map((option, i) => {
+						const optStr = JSON.stringify(option);
+						let label = option.label;
+						let desc = option.desc;
 						return(
-							<option key={i} value={value}>{label+(desc ? ': '+desc : '')}</option>
+							<option key={i} value={optStr}>{label+(desc ? ': '+desc : '')}</option>
 						);
 					}) : ''}
 				</select>
@@ -76,17 +88,21 @@ class Select extends React.Component {
 					data-field={fieldKey}
 					className='select-widget form-elem'
 					data-value={typeof value === 'undefined' ? '' : value}>
-					{options ? options.map(({ desc, label }, i) => {
-						const value = JSON.stringify(options[i]);
+					{options ? options.map((option, i) => {
+						let label = option.label;
+						let desc = option.desc;
 						const canCustomize = customize && i == 0;
-						if(canCustomize) { desc = this.state.customText }
-						let optClassName = value === desc ? 'option selected' : 'option';
+						if(canCustomize) {
+							option.desc = this.state.customText;
+						}
+						const optStr = JSON.stringify(option);
+						let optClassName = value.desc === option.desc ? 'option selected' : 'option';
 						optClassName += canCustomize ? ' custom' : '';
 						return (
 							<div
 								key={i}
 								className={optClassName}
-								data-value={value}
+								data-value={optStr}
 								onClick={this.onClick.bind(this)}>
 								{canCustomize ?
 									<React.Fragment>
@@ -94,10 +110,10 @@ class Select extends React.Component {
 										{desc?<div className='option-desc desc'>{desc}</div>:''}
 										<textarea
 											name={name+'Custom'}
-											className='form-elem desc'
+											className='form-elem'
 											onChange={this.onChangeCustom.bind(this)}/>
 									</React.Fragment>
-								: <Label strings={options[i]} fieldKey={fieldKey}/>}
+								: <Label strings={option} fieldKey={fieldKey}/>}
 							</div>
 						);
 					}) : ''}

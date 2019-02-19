@@ -45,14 +45,20 @@ class Toggle extends React.Component {
 		const input = e.target;
 		const name = input.name;
 		const id = input.id;
-		const subFieldKey = id.split('_')[1];
-		let value = this.state.values[subFieldKey];
+		const checked = this.state.checked;
+		let subFieldKey = id.split('_')[1];
+		let newChecked, newValue;
+		if(checked != subFieldKey) {
+			newChecked = subFieldKey;
+			newValue = this.state.values[subFieldKey];
+		}
+		
 		this.setState({
-			checked: subFieldKey,
-			value: value
+			checked: newChecked,
+			value: newValue
 		});
 
-		this.props.onChange(name, value);
+		this.props.onChange(name, newValue);
 	}
 
 	renderCheckboxes() {

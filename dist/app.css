@@ -2384,10 +2384,18 @@ select {
     border-bottom: 1px solid #f6f6f6;
     -webkit-transition: all 200ms ease;
     transition: all 200ms ease; }
+    .select-widget .option label {
+      pointer-events: none;
+      margin: 0; }
+    .select-widget .option .toggle-desc {
+      pointer-events: all; }
     .select-widget .option .desc {
       padding: unset;
       background-color: unset;
       background-radius: unset; }
+    .select-widget .option textarea {
+      font-size: .8rem;
+      line-height: 1.4em; }
     .select-widget .option.selected, .select-widget .option.selected:hover {
       background-color: rgba(128, 189, 255, 0.25); }
     .select-widget .option:hover {

@@ -29,7 +29,7 @@ class Select extends React.Component {
 
 	onClick(e) {
 		e.preventDefault();
-		if(e.target.classList.contains('toggle-desc')) {
+		if(e.target.parentElement.classList.contains('toggle-desc')) {
 			return;
 		}
 		const custom = e.currentTarget.classList.contains('custom');

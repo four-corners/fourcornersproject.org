@@ -2297,20 +2297,24 @@ label {
 
 .toggle-desc {
   width: .75rem;
-  height: .75rem;
-  position: absolute;
-  left: calc(100% + .5rem);
-  top: calc(50% - .325rem);
-  background-color: #fff;
-  border: 1px solid #c4c4c4;
-  border-radius: 50%;
-  font-size: .5rem;
-  line-height: 1em;
-  text-align: center; }
-  .toggle-desc:hover {
-    background-color: rgba(128, 189, 255, 0.05);
-    border-color: #7b7883;
-    cursor: pointer; }
+  height: 1rem;
+  margin: 0 0 0 .25rem;
+  display: inline-block;
+  vertical-align: middle; }
+  .toggle-desc div {
+    width: .75rem;
+    height: .75rem;
+    background-color: #fff;
+    border: 1px solid #c4c4c4;
+    border-radius: 50%;
+    font-size: .5rem;
+    line-height: 1em;
+    text-align: center;
+    display: table; }
+    .toggle-desc div:hover {
+      background-color: rgba(128, 189, 255, 0.05);
+      border-color: #7b7883;
+      cursor: pointer; }
 
 .desc {
   width: 100%;

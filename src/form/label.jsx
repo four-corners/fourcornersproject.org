@@ -10,9 +10,18 @@ class Label extends React.Component {
 	}
 
 	onClick(e) {
+		e.preventDefault();
 		this.setState({
 			opened: !this.state.opened
 		});
+	}
+
+	onMouseEnter(e) {
+		// console.log(e);
+	}
+
+	onMouseLeave(e) {
+		// console.log(e);
 	}
 
 	renderToggle() {
@@ -20,6 +29,8 @@ class Label extends React.Component {
 			this.props.strings.desc ?
 				<div
 					className='toggle-desc'
+					onMouseEnter={this.onMouseEnter.bind(this)}
+					onMouseLeave={this.onMouseLeave.bind(this)}
 					onClick={this.onClick.bind(this)}>
 				?</div>
 			: null

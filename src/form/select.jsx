@@ -28,6 +28,10 @@ class Select extends React.Component {
 	}
 
 	onClick(e) {
+		e.preventDefault();
+		if(e.target.classList.contains('toggle-desc')) {
+			return;
+		}
 		const custom = e.currentTarget.classList.contains('custom');
 		const newValue = e.currentTarget.dataset.value;
 		this.setState({
@@ -92,14 +96,16 @@ class Select extends React.Component {
 								className={optClassName}
 								data-value={desc}
 								onClick={this.onClick.bind(this)}>
-								<div className='option-label'>{label}</div>
-								{ desc ? <div className='option-desc'>{desc}</div> : '' }
-								{ canCustomize ?
-									<textarea
-									name={name+'Custom'}
-									className='form-elem desc'
-									onChange={this.onChangeCustom.bind(this)}/> 
-								: '' }
+								{canCustomize ?
+									<React.Fragment>
+										<label>{label}</label>
+										{desc?<div className='option-desc desc'>{desc}</div>:''}
+										<textarea
+											name={name+'Custom'}
+											className='form-elem desc'
+											onChange={this.onChangeCustom.bind(this)}/>
+									</React.Fragment>
+								: <Label strings={options[i]} fieldKey={fieldKey}/>}
 							</div>
 						);
 					}) : ''}

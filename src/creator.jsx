@@ -15,17 +15,20 @@ class Creator extends React.Component {
 			creator: {},
 			lang: 'en',
 			formData: {
-				'imagery':{},
-				'links':{},
 				'authorship':{},
-				'backstory':{}
+				'backstory':{},
+				'imagery':{},
+				'links':{}
 			},
 			imgData: {},
-			mediaData: {imagery:[]},
+			mediaData: {
+				imagery:[],
+				backstory:[]
+			},
 			activeCorner: null,
 			activeFieldset: null
 		};
-		this.corners = ['imagery','links','authorship','backstory'];
+		this.corners = ['imagery','authorship','backstory','links'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 		this.outputRef = React.createRef();
 	}

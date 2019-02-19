@@ -27,6 +27,9 @@ class Imagery extends React.Component {
 					{obj.caption ?
 					<div className='fc-sub-caption'>{obj.caption}</div>
 					: ''}
+					{obj.credit ?
+					<div className='fc-sub-credit'>{obj.credit}</div>
+					: ''}
 				</div>
 			);
 		});

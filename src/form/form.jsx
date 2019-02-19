@@ -50,6 +50,7 @@ class Form extends React.Component {
 	}
 
 	onChange(name, value) {
+		// console.log(name, value);
 		const formData = this.state.formData;
 		const nameArr = name.split('_');
 		let fieldsetSlug = nameArr[0];

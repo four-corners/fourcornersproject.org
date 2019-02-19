@@ -25,15 +25,9 @@ const Schema = {
 				fields: {
 					copyright: {
 						type: 'text',
-						// fields: {
-							
-						// }
 					},
 					commons: {
 						type: 'select',
-						// fields: {
-							
-						// }
 					}
 				}
 			},
@@ -68,7 +62,7 @@ const Schema = {
 			text: {
 				type: 'textarea'
 			},
-			audio: {
+			media: {
 				type: 'blocks',
 				fields: {
 					url: {
@@ -76,6 +70,9 @@ const Schema = {
 						format: 'uri',
 					},
 					caption: {
+						type: 'text',
+					},
+					credit: {
 						type: 'text',
 					}
 				}

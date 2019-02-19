@@ -7,9 +7,6 @@ import Backstory from './panels/backstory.jsx';
 import Imagery from './panels/imagery.jsx';
 import Links from './panels/links.jsx';
 
-import Entry from './entry.jsx';
-// import FourCorners from './../../assets/js/four-corners.min.js';
-
 class Module extends React.Component {
 
 	constructor(props) {
@@ -99,7 +96,7 @@ class Module extends React.Component {
 						panelInner = <Authorship panelData={panelData} />;
 						break;
 					case 'backstory':
-						panelInner = <Backstory panelData={panelData} />;
+						panelInner = <Backstory panelData={panelData} mediaData={this.props.mediaData.backstory} />;
 						break;
 					case 'imagery':
 						panelInner = <Imagery panelData={panelData} mediaData={this.props.mediaData.imagery} />;
@@ -109,29 +106,6 @@ class Module extends React.Component {
 						break;
 				}
 			}
-			// const entries = [];
-			// Object.entries(data).forEach((obj,i) => {
-				// console.log(obj);
-				// const fieldSlug = obj[0];
-				// const fieldData = obj[1];
-				// let fieldLabel = '';
-				// if(!['media','links'].includes(fieldSlug) && creator && creator.acf) {
-				// 	const fieldLabelKey = [cornerSlug, fieldSlug, 'label'].join('_');
-				// 	fieldLabel = creator.acf[fieldLabelKey];
-				// }
-				// const mediaData = this.props.mediaData[cornerSlug];
-				// if(fieldData) {
-				// 	entries.push(
-				// 		<Entry
-				// 			cornerSlug={cornerSlug}
-				// 			fieldLabel={fieldLabel}
-				// 			fieldSlug={fieldSlug}
-				// 			fieldData={fieldData}
-				// 			mediaData={mediaData}
-				// 			key={i} />
-				// 	);
-				// }
-			// });
 
 			const title = creator&&creator.acf ? creator.acf[cornerTitleKey] : '&nbsp;';
 			let className = 'fc-panel fc-'+cornerSlug;

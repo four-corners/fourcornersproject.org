@@ -110,6 +110,7 @@ class Blocks extends React.Component {
 	}
 
 	renderBlock(block, blockIndex) {
+		const blocks = this.state.blocks;
 		const setKey = this.props.setKey;
 		const fieldKey = this.props.fieldKey;
 		const field = this.props.field;
@@ -126,6 +127,8 @@ class Blocks extends React.Component {
 			const subField = this.renderField(subFieldKey, subFieldData, type, block.index, subFieldIndex);
 			subFieldElems.push(subField);
 		});
+		const upIndex = blockIndex-1;
+		const downIndex = blockIndex+1;
 		return(
 			<div
 				className='block-widget'
@@ -143,17 +146,20 @@ class Blocks extends React.Component {
 
 				<div className='widget-buttons'>
 
+					{upIndex>=0?
 					<div
 						data-dir='up'
-						data-new-index={blockIndex-1}
+						data-new-index={upIndex}
 						className='widget-button move-block'
 						onClick={this.moveBlock.bind(this)}/>
-
+					:''}
+					{downIndex<blocks.length?
 					<div
 						data-dir='down'
-						data-new-index={blockIndex+1}
+						data-new-index={downIndex}
 						className='widget-button move-block'
 						onClick={this.moveBlock.bind(this)}/>
+					:''}
 
 					<div
 						className='widget-button delete-block'

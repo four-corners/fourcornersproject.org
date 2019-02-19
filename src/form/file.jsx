@@ -8,25 +8,9 @@ class File extends React.Component {
 		super(props);
 		this.state = {
 			imgSrc: '',
-			// srcMode: 'url',
-			// urlSrc: '',
-			// fileSrc: '',
-			imgLoaded: false,
-			// imgValid: false
+			imgLoaded: false
 		};
 	}
-
-	componentDidUpdate() {
-		// console.log(this.state)
-	}
-
-	// updateSrcMode(srcMode) {
-	// 	const imgData = Object.assign({}, this.state);
-	// 	imgData.srcMode = srcMode;
-	// 	imgData.imgSrc = imgData[srcMode+'Src'];
-	// 	this.setState(imgData);
-	// 	this.props.sendImgData(imgData);
-	// }
 
 	onChangeSrc(src) {
 		let imgData;

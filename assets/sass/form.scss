@@ -180,13 +180,15 @@ label {
 	position: absolute;
 	left: calc(100% + .5rem);
 	top: calc(50% - .325rem);
+	background-color: $lightest;
 	border: 1px solid $medium;
 	border-radius: 50%;
 	font-size: .5rem;
 	line-height: 1em;
 	text-align: center;
 	&:hover {
-		background-color: $light;
+		background-color: $light-blue;
+		border-color: $dark;
 		cursor: pointer;
 	}
 }
@@ -199,6 +201,9 @@ label {
 	border-radius: $radius;
 	@include smText;
 	display: block;
+	p:last-of-type {
+		margin: 0;
+	}
 }
 .field-desc {
 	&:not(.opened) {
@@ -252,8 +257,10 @@ select {
 		.option-label {
 
 		}
-		.option-desc {
-			@include smText;
+		.desc {
+			padding: unset;
+			background-color: unset;
+			background-radius: unset;
 		}
 		&.selected, &.selected:hover {
 			background-color: rgba($blue,.25);
@@ -431,8 +438,9 @@ select {
 	// label {
 		// margin: 0 .325rem;
 	// }
-	.field:first-child {
-		margin-top: 0;
+	.field {
+		margin-top: .5rem;
+		margin-bottom: .5rem;
 	}
 }
 .blocks-buttons {
@@ -450,59 +458,74 @@ select {
 	height: 1.5rem;
 	display: inline-block;
 	position: relative;
+	background-size: 1em;
+	background-position: center;
+	background-repeat: no-repeat;
 	&:hover {
 		cursor: pointer;
 	}
 }
 .move-block {
-	&::before, &::after {
-		position: absolute;
-		border: solid $medium;
-		content: '';
-		@include fastTrans(border-color);
-	}
-	&::before {
-		width: 0;
-		height: 1rem;
-		top: 0;
-		left: calc(50% - 1px);
-		border-width: 0 1px;
+	background-image: url(./../images/move.svg);
+	// &::before, &::after {
+	// 	position: absolute;
+	// 	border: solid $medium;
+	// 	content: '';
+	// 	@include fastTrans(border-color);
+	// }
+	// &::before {
+	// 	width: 0;
+ //    height: .625rem;
+	// 	left: calc(50% - 1px);
+	// 	top: .375rem;
+	// 	border-width: 0 1px;
 		
+	// }
+	// &::after {
+	// 	width: .75rem;
+	// 	height: .75rem;
+	// 	left: .375rem;
+	// 	bottom: .375rem;
+	// 	border-width: 0 2px 2px 0;
+	// 	transform: rotate(-135deg);
+	// }
+	&[data-dir="up"] {
+
 	}
-	&::after {
-		width: .75rem;
-		height: .75rem;
-		left: .375rem;
-		border-width: 0 2px 2px 0;
-		transform: rotate(-135deg);
+	&[data-dir="down"] {
+		transform: rotate(180deg);
+		// &::before {
+		// 	bottom: .375rem;
+		// }
+		// &::after {
+		// 	bottom: .375rem;
+		// 	transform: rotate(45deg);
+		// }
 	}
-	&[data-dir="up"]::after {
-		transform: rotate(-135deg);
-	}
-	&[data-dir="down"]::after {
-		bottom: .5rem;
-		transform: rotate(45deg);
+	&[data-new-index=""] {
+		opacity: .2;
 	}
 }
 .delete-block {
-	&::before, &::after {
-		width: .75rem;
-		height: .75rem;
-		position: absolute;
-		left: .375rem;
-		border: solid $medium;
-		border-width: 0 2px 2px 0;
-		content: '';
-		@include fastTrans(border-color);
-	}
-	&::before {
-		top: calc(50% - .825rem);
-		transform: rotate(45deg);
-	}
-	&::after {
-		bottom: calc(50% - .825rem);
-		transform: rotate(-135deg);
-	}
+	background-image: url(./../images/close.svg);
+	// &::before, &::after {
+	// 	width: .75rem;
+	// 	height: .75rem;
+	// 	position: absolute;
+	// 	left: .375rem;
+	// 	border: solid $medium;
+	// 	border-width: 0 2px 2px 0;
+	// 	content: '';
+	// 	@include fastTrans(border-color);
+	// }
+	// &::before {
+	// 	top: calc(50% - .825rem);
+	// 	transform: rotate(45deg);
+	// }
+	// &::after {
+	// 	bottom: calc(50% - .825rem);
+	// 	transform: rotate(-135deg);
+	// }
 }
 .has-error {
 	input, select, textarea {

@@ -11,17 +11,44 @@ class Toggle extends React.Component {
 		super(props);
 		this.state = {
 			value: '',
+			values: {},
 			checked: null,
 			mediaData: []
 		};
 	}
 
+	onChange(name, subValue) {
+		const formData = this.state.formData;
+		const nameArr = name.split('_');
+		let fieldsetSlug = nameArr[0];
+		let fieldKey = nameArr[1];
+		let subFieldKey = nameArr[2];
+		let value = {
+			desc: subValue,
+			type: subFieldKey
+		};
+
+		let values = Object.assign({},this.state.values);
+		values[subFieldKey] = value;
+		this.setState({
+			values: values,
+			value: value
+		});
+		this.props.onChange(name, value);
+	}
+
 	onToggle(e) {
 		const input = e.target;
+		const name = input.name;
 		const id = input.id;
+		const subFieldKey = id.split('_')[1];
+		let value = this.state.values[subFieldKey];
 		this.setState({
-			checked: id
+			checked: subFieldKey,
+			value: value
 		});
+
+		this.props.onChange(name, value);
 	}
 
 	renderCheckboxes() {
@@ -44,7 +71,7 @@ class Toggle extends React.Component {
 		const field = this.props.field;
 		const strings = field.fields[subFieldKey].strings;
 		const name = [setKey, fieldKey].join('_');
-		const subFieldName = [setKey, fieldKey, subFieldKey].join('_');
+		const subFieldName = [fieldKey, subFieldKey].join('_');
 		const checked = this.state.checked;
 		return(
 			<div className='field checkbox' key={subFieldIndex}>
@@ -53,7 +80,7 @@ class Toggle extends React.Component {
 						id={subFieldName}
 						name={name}
 						type='checkbox'
-						checked={checked == subFieldName}
+						checked={checked == subFieldKey}
 						onChange={this.onToggle.bind(this)}
 						/>
 					<label className='checkbox' htmlFor={subFieldName}>
@@ -64,7 +91,7 @@ class Toggle extends React.Component {
 						</div>
 					</label>
 				</div>
-				{strings && strings.desc ? <div className='desc'>{strings.desc}</div> : ''}
+				
 			</div>
 		);
 	}
@@ -88,10 +115,11 @@ class Toggle extends React.Component {
 		const fieldKey = this.props.fieldKey;
 		const field = this.props.field;
 		const subField = field.fields[subFieldKey];
+		const subStrings = subField.strings;
 		const name = [setKey, subFieldKey].join('_');
-		const subFieldName = [setKey, fieldKey, subFieldKey].join('_');
+		const subFieldName = [fieldKey, subFieldKey].join('_');
 		const checked = this.state.checked;
-		const show = checked == subFieldName;
+		const show = checked == subFieldKey;
 		const className = 'field-toggle-field'+(show?' active':'');
 		let fieldElem;
 		switch(subField.type) {
@@ -99,34 +127,40 @@ class Toggle extends React.Component {
 				fieldElem = <Text
 						key={i}
 						setKey={setKey}
-						fieldKey={fieldKey}
+						fieldKey={subFieldName}
 						field={subField}
 						hideLabel={true}
-						onChange={this.props.onChange} />
+						onChange={this.onChange.bind(this)} />
 				break;
 			case 'textarea':
 				fieldElem = <Textarea
 						key={i}
 						setKey={setKey}
-						fieldKey={fieldKey}
+						fieldKey={subFieldName}
 						field={subField}
 						hideLabel={true}
-						onChange={this.props.onChange} />
+						onChange={this.onChange.bind(this)} />
 				break;
 			case 'select':
 				fieldElem = <Select
 						key={i}
 						setKey={setKey}
-						fieldKey={fieldKey}
+						fieldKey={subFieldName}
 						field={subField}
 						hideLabel={true}
-						onChange={this.props.onChange} />
+						onChange={this.onChange.bind(this)} />
 				break;
 			default:
 				break;
 		}
 		return (
 			<div className={className} key={i}>
+				{subStrings&&subStrings.desc?
+				<div
+					className='desc'
+					dangerouslySetInnerHTML={ { __html: subStrings.desc } }>
+				</div> : ''}
+
 				{fieldElem}
 			</div> 
 		);

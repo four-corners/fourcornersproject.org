@@ -57,26 +57,30 @@ class Authorship extends React.Component {
 					
 					{panelData['credit'] ?
 						<div className="fc-field" data-fc-field="credit">
-							<div className="fc-label">Credit</div>
+							<span className="fc-label">Credit</span>
 							<div className="fc-content">{panelData['credit']}</div>
 						</div>: ''}
 
 					{panelData['license'] ?
 						<div className="fc-field" data-fc-field="license">
-							<div className="fc-label">License</div>
-							<div className="fc-content">{panelData['license']}</div>
+							<span className="fc-label">License</span>
+							<div className="fc-content">
+								{console.log(panelData['license'])}
+								{panelData['license'].type=='copyright'?'© ':''}
+								{panelData['license'].desc}
+							</div>
 						</div>: ''}
 					
 					{panelData['ethics'] ?
 						<div className="fc-field" data-fc-field="ethics">
-							<div className="fc-label">Code of ethics</div>
+							<span className="fc-label">Code of ethics</span>
 							<div className="fc-content">{panelData['ethics']}</div>
 						</div>: ''}
 
 
 					{panelData['bio'] ?
 					<div className="fc-field" data-fc-field="bio">
-						<div className="fc-label">Bio</div>
+						<span className="fc-label">Bio</span>
 						<div className="fc-content">{panelData['bio']}</div>
 					</div>: ''}
 

@@ -27,6 +27,8 @@ class Embed extends React.Component {
 		this.includeJSRef = React.createRef();
 		this.includeCSSRef = React.createRef();
 		this.stickyRef = React.createRef();
+		this.cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
+		this.jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 	}
 
 	componentDidMount() {
@@ -155,16 +157,16 @@ class Embed extends React.Component {
 		let auxData = {
 			lang: i18n.language,
 		}
-		const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
-		const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
+		// const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
+		// const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 
 		let safeFormData = Object.assign(formData, auxData);
 		let stringData = JSON.stringify(safeFormData)
 			.replace(/'/g, '&apos;');
 		let imgHtml = imgData.imgLoaded ? "<img class='fc-img' src='"+imgData.imgSrc+"'/>":'';
 		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'>"+imgHtml+"</div>";
-		stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
-		stringHtml += (this.state.includeJs?'<script src="'+jsCDN+'" type="text/javascript"></script>':'');
+		// stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
+		// stringHtml += (this.state.includeJs?'<script src="'+jsCDN+'" type="text/javascript"></script>':'');
 		return stringHtml;
 	}
 
@@ -193,12 +195,13 @@ class Embed extends React.Component {
 								
 								<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
-									<fieldset className={this.state.expand ? 'expand' : 'collapse'}>
-										<legend onClick={this.toggleExpand.bind(this)}>
+									<fieldset>
+										<legend>
 											<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
 										</legend>
 										<div className="fieldset-inner">
 											<div className="field">
+												<div className='desc'>Paste this into your website.</div>
 												<textarea className='output form-elem'
 													id='json'
 													readOnly={true}
@@ -208,8 +211,35 @@ class Embed extends React.Component {
 													onFocus={this.onFocus.bind(this)}
 													onBlur={this.onBlur.bind(this)} />
 											</div>
-											
-											<div className='desc'>Paste this into your website.</div>
+
+											<div className="fields-group">
+
+												<div className="field">
+													{/*<div className='desc'>Paste this into your website.</div>*/}
+													<label>Javascript library</label>
+													<textarea className='output form-elem'
+														id='jsCDN'
+														readOnly={true}
+														// ref={this.outputRef}
+														rows={1}
+														value={this.jsCDN}
+														onFocus={this.onFocus.bind(this)}
+														onBlur={this.onBlur.bind(this)} />
+												</div>
+
+												<div className="field">
+													{/*<div className='desc'>Paste this into your website.</div>*/}
+													<label>CSS library</label>
+													<textarea className='output form-elem'
+														id='cssCDN'
+														readOnly={true}
+														// ref={this.outputRef}
+														rows={1}
+														value={this.cssCDN}
+														onFocus={this.onFocus.bind(this)}
+														onBlur={this.onBlur.bind(this)} />
+												</div>
+											</div>
 
 										</div>
 									</fieldset>

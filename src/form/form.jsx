@@ -50,22 +50,17 @@ class Form extends React.Component {
 	}
 
 	onChange(name, value) {
-		
 		const formData = this.state.formData;
 		const nameArr = name.split('_');
 		let fieldsetSlug = nameArr[0];
 		let fieldSlug = nameArr[1];
-		// if(nameArr[2]){fieldSlug+='_'+nameArr[2]}
 		if(!formData[fieldsetSlug]) {return}
 		formData[fieldsetSlug][fieldSlug] = value;
-		// console.log(formData);
 		this.setState({
 			formData: formData
 		});
 
 		this.props.sendFormData(formData);
-		// this.props.sendActiveCorner(fieldsetSlug);
-		// this.props.sendActiveFieldset(fieldsetSlug);
 	}
 
 	onToggle(e) {

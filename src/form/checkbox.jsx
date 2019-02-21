@@ -18,21 +18,21 @@ class Checkbox extends React.Component {
 
 	render() {
 		const props = this.props;
-		const id = props.id;
+		const fieldKey = props.fieldKey;
 		const strings = props.field.strings;
 		const style = props.field.style;
-		const fieldset = props.fieldset;
-		const name = [fieldset, id].join('_');
+		const setKey = props.setKey;
+		const name = [setKey, fieldKey].join('_');
 		return(
 			<div className={'field checkbox '+(style?style:'')}>
 				<div className='checkbox-widget'>
 					<input className='toggle'
-						id={id}
+						id={fieldKey}
 						name={name}
 						type='checkbox'
 						defaultChecked={false}
 						onChange={this.onChange.bind(this)} />
-					<label className='checkbox' htmlFor={id}>
+					<label className='checkbox' htmlFor={fieldKey}>
 						<div className='label-inner'>
 							{strings && strings.label ?
 								<span>{strings.label}</span>

@@ -57,22 +57,19 @@ class Authorship extends React.Component {
 						</div>: ''}
 					
 					{panelData['credit'] || hasCopyright ?
-						<div className="fc-field" data-fc-field="credit">
-							{/*<span className="fc-label">Credit</span>*/}
-							<div className="fc-content">
-								{hasCopyright ?
-									<span className="fc-copyright">
-										{panelData['license'].label ?
-											<span>{panelData['license'].label}</span>
-										: ''}
-									</span>
-								:''}
-								{panelData['credit']}
-							</div>
-
-
-
-						</div> : ''}
+					<div className="fc-field" data-fc-field="credit">
+						{/*<span className="fc-label">Credit</span>*/}
+						<div className="fc-content">
+							{hasCopyright ?
+								<span className="fc-copyright">
+									{panelData['license'].label ?
+										<span>{panelData['license'].label}</span>
+									: ''}
+								</span>
+							:''}
+							{panelData['credit']}
+						</div>
+					</div> : ''}
 
 					{panelData['license'] &&
 					panelData['license'].type=='commons' ?

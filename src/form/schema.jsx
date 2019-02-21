@@ -123,12 +123,6 @@ const Schema = {
 			dark: {
 				type: 'checkbox',
 				style: 'half'
-			},
-			include_js: {
-				type: 'checkbox',
-			},
-			include_css: {
-				type: 'checkbox',
 			}
 		}
 	}

@@ -1810,6 +1810,13 @@ html {
 body {
   overflow-y: scroll; }
 
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; }
+
+::-webkit-scrollbar-thumb {
+  background: transparent; }
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -2117,7 +2124,9 @@ h1#site-title {
   #embed-output form {
     margin: .25rem; }
   #embed-output .field {
-    margin-bottom: .25rem; }
+    margin-bottom: .25rem;
+    margin-left: 0;
+    margin-right: 0; }
   #embed-output textarea.output {
     direction: ltr !important;
     word-break: break-all;
@@ -2158,8 +2167,9 @@ h1#site-title {
 fieldset {
   width: 100%;
   margin-bottom: 1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #c4c4c4; }
+  padding-bottom: 1rem; }
+  fieldset.collapse, fieldset.expand {
+    border-bottom: 1px solid #c4c4c4; }
   fieldset.collapse .fieldset-inner {
     height: 0; }
   fieldset.expand .fieldset-inner {
@@ -2173,6 +2183,9 @@ fieldset {
   margin: 1rem .25rem 2rem .25rem; }
   .field.half {
     width: 50%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 .25rem;
     float: left; }
   .field.checkbox {
     margin-bottom: .25rem; }
@@ -2214,16 +2227,17 @@ legend {
   width: 100%;
   margin: 0;
   display: block;
-  font-size: 1.5rem;
-  line-height: 1.7em;
-  line-height: 1.5em;
+  position: relative;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  position: relative;
+  color: #c4c4c4;
   -webkit-transition: all 200ms ease;
-  transition: all 200ms ease; }
+  transition: all 200ms ease;
+  font-size: 1.5rem;
+  line-height: 1.7em;
+  line-height: 1.5em; }
   legend span {
     position: relative; }
   fieldset.expand legend::after, fieldset.collapse legend::after {
@@ -2239,18 +2253,22 @@ legend {
     content: '';
     -webkit-transition: border-color 200ms ease;
     transition: border-color 200ms ease; }
+  fieldset.expand legend span::before, fieldset.collapse legend span::before {
+    opacity: .5; }
   fieldset.expand legend:hover, fieldset.collapse legend:hover {
     cursor: pointer; }
-  fieldset.collapse legend:not(:hover) {
-    color: #c4c4c4; }
-    fieldset.collapse legend:not(:hover) span::before {
-      opacity: .5; }
+  fieldset.collapse:hover legend {
+    color: #000; }
   fieldset.expand legend {
     color: #80bdff; }
     fieldset.expand legend::after {
       top: calc(50% - .25rem);
       -webkit-transform: rotate(-135deg);
               transform: rotate(-135deg); }
+  fieldset.collapse:hover legend span::before, fieldset.expand legend span::before {
+    opacity: 1; }
+  fieldset.collapse:hover legend::after, fieldset.expand legend::after {
+    border-color: #000; }
   #authorship legend span,
   #backstory legend span,
   #imagery legend span,

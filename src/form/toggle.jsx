@@ -23,42 +23,46 @@ class Toggle extends React.Component {
 		let fieldsetSlug = nameArr[0];
 		let fieldKey = nameArr[1];
 		let subFieldKey = nameArr[2];
-		let value = {
+		let newValue = {
 			type: subFieldKey
 		};
 		if(typeof subValue == 'object') {
-			value = Object.assign(value, subValue);
+			newValue = Object.assign(newValue, subValue);
 		} else {
-			value.label = subValue;
+			newValue.label = subValue;
 		}
 
-		let values = Object.assign({},this.state.values);
-		values[subFieldKey] = value;
+		let newValues = Object.assign({},this.state.values);
+		newValues[subFieldKey] = newValue;
 		this.setState({
-			values: values,
-			value: value
+			values: newValues,
+			value: newValue
 		});
-		this.props.onChange(name, value);
+		// console.log(name, newValue);
+		this.props.onChange(name, newValue);
 	}
 
 	onToggle(e) {
 		const input = e.target;
 		const name = input.name;
 		const id = input.id;
-		const checked = this.state.checked;
-		let subFieldKey = id.split('_')[1];
+		const checked = input.checked;
+		const prevChecked = this.state.checked;
+		let subFieldKey = id.split('_')[2];
 		let newChecked, newValue;
-		if(checked != subFieldKey) {
+		if(prevChecked != subFieldKey && checked) {
 			newChecked = subFieldKey;
 			newValue = this.state.values[subFieldKey];
 		}
-		
 		this.setState({
 			checked: newChecked,
 			value: newValue
 		});
-
-		this.props.onChange(name, newValue);
+		if(checked) {
+			this.onChange(name, newValue);
+		} else {
+			this.props.onChange(name, newValue);
+		}
 	}
 
 	renderCheckboxes() {
@@ -81,14 +85,14 @@ class Toggle extends React.Component {
 		const field = this.props.field;
 		const strings = field.fields[subFieldKey].strings;
 		const name = [setKey, fieldKey].join('_');
-		const subFieldName = [fieldKey, subFieldKey].join('_');
+		const subFieldName = [setKey, fieldKey, subFieldKey].join('_');
 		const checked = this.state.checked;
 		return(
 			<div className='field checkbox' key={subFieldIndex}>
 				<div className='checkbox-widget'>
 					<input className='toggle'
 						id={subFieldName}
-						name={name}
+						name={subFieldName}
 						type='checkbox'
 						checked={checked == subFieldKey}
 						onChange={this.onToggle.bind(this)}

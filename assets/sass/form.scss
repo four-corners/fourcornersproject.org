@@ -204,8 +204,8 @@ label {
 	display: block;
 	background-color: $light;
 	border-radius: $radius;
+	font-style: italic;
 	@include smText;
-	display: block;
 	p:last-of-type {
 		margin: 0;
 	}
@@ -267,6 +267,7 @@ select {
 			pointer-events: all;
 		}
 		.desc {
+			margin: .5rem 0;
 			padding: unset;
 			background-color: unset;
 			background-radius: unset;

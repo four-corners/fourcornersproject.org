@@ -2323,9 +2323,9 @@ label {
   display: block;
   background-color: #f6f6f6;
   border-radius: 4px;
+  font-style: italic;
   font-size: .8rem;
-  line-height: 1.4em;
-  display: block; }
+  line-height: 1.4em; }
   .desc p:last-of-type {
     margin: 0; }
 
@@ -2390,6 +2390,7 @@ select {
     .select-widget .option .toggle-desc {
       pointer-events: all; }
     .select-widget .option .desc {
+      margin: .5rem 0;
       padding: unset;
       background-color: unset;
       background-radius: unset; }

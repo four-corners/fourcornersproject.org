@@ -44,6 +44,7 @@ class Authorship extends React.Component {
 
 	render() {
 		const panelData = this.props.panelData;	
+		const hasCopyright = panelData['license']&&panelData['license'].type=='copyright';
 		return (
 
 			<React.Fragment>
@@ -55,40 +56,43 @@ class Authorship extends React.Component {
 							<em>{panelData['caption']}</em>
 						</div>: ''}
 					
-					{panelData['credit'] ?
+					{panelData['credit'] || hasCopyright ?
 						<div className="fc-field" data-fc-field="credit">
-							<span className="fc-label">Credit</span>
-							<div className="fc-content">{panelData['credit']}</div>
+							{/*<span className="fc-label">Credit</span>*/}
+							<div className="fc-content">
+								{hasCopyright ?
+									<span className="fc-copyright">
+										{panelData['license'].label ?
+											<span>{panelData['license'].label}</span>
+										: ''}
+									</span>
+								:''}
+								{panelData['credit']}
+							</div>
+
+
+
 						</div> : ''}
 
-					{panelData['license'] ?
+					{panelData['license'] &&
+					panelData['license'].type=='commons' ?
 						<div className="fc-field" data-fc-field="license">
 							<span className="fc-label">License</span>
 							<span className="fc-content">
-								{panelData['license'].type=='copyright'?'© ':''}
-
 								{panelData['license'].url ?
 								<a href={panelData['license'].url} target="_blank">
 									{panelData['license'].label ? panelData['license'].label : ''}
 								</a> :
 								panelData['license'].label ? panelData['license'].label : ''}
 							</span>
-							{/*<div className="fc-content">
-								<div className="fc-sub-caption">
-									{panelData['license'].desc ? panelData['license'].desc : ''}
-								</div>
-							</div>*/}
 						</div> : ''}
 					
 					{panelData['ethics'] ?
 						<div className="fc-field" data-fc-field="ethics">
 							<span className="fc-label">Code of ethics</span>
 							<span className="fc-content">
-								<span>{panelData['ethics'].label}</span>
-							</span>
-							<div className="fc-content">
 								<div className="fc-sub-caption">{panelData['ethics'].desc}</div>
-							</div>
+							</span>
 						</div> : ''}
 
 

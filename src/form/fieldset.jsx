@@ -56,54 +56,55 @@ class Fieldset extends React.Component {
 		for(let fieldKey of fieldKeys) {
 			const field = fields[fieldKey];
 			const setKey = this.props.setKey;
+			const index = fieldElems.length;
 			switch(field.type) {
 				case 'text':
 					fieldElems.push(
 						<Text
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
 					break;
 				case 'textarea':
 					fieldElems.push(
 						<Textarea
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
 					break;
 				case 'checkbox':
 					fieldElems.push(
 						<Checkbox
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
 					break;
 				case 'select':
 					fieldElems.push(
 						<Select
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
 							onChange={this.props.onChange} />
 					);
 					break;
 				case 'file':
 					fieldElems.push(
 						<File
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
 							onChange={this.props.onChange}
 							sendImgData={this.props.sendImgData} />
 					);

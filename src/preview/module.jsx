@@ -159,7 +159,7 @@ class Module extends React.Component {
 		return (
 			<div className='fc-cutline'>
 				{data.authorship.credit}
-				<a href="https://fourcornersproject.org" target="_blank">Four Corners</a>
+				<a href="https://fourcornersproject.org" target="_blank"></a>
 			</div>
 		);
 	}

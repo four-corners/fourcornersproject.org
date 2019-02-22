@@ -39,46 +39,56 @@ fieldset {
 	overflow: hidden;
 }
 .field {
-	margin: 1rem .25rem 2rem .25rem;
+	width: 100%;
+	padding: 1rem .25rem 2rem .25rem;
 	&.half {
-		width: 50%;
-		margin-left: 0;
-		margin-right: 0;
-		padding: 0 .25rem;
-		float: left;
+		width: calc(50% - .5rem);
+		// padding: 0 .5rem;
+	}
+	&.one-third {
+		width: calc(33.33% - .5rem);
+		// padding: 0 .5rem;
+	}
+	&.two-thirds {
+		width: calc(66.66% - .5rem);
+		// padding: 0 .5rem;
 	}
 	&.checkbox {
-		margin-bottom: .25rem;
+		padding-bottom: .25rem;
 	}
 }
+.fields-group, .field-toggle-checkboxes {
+	width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+	justify-content: space-between;
+}
 .fields-group {
-	margin: 1rem .25rem 2rem .25rem;
+	padding: 0 .25rem 2rem .25rem;
 	.field {
-		margin: 0 0 .5rem 0;
+		padding: 0 0 .5rem 0;
 		label {
 			@include smText;
 		}
 		&:last-child {
-			margin: 0;
+			padding: 0;
 		}
 	}
 }
 .field-toggle {
 	.field {
-		margin-left: 0;
-		margin-right: 0;
-	}
-}
-.field-toggle-checkboxes {
-	display: flex;
-	.field {
-		width: 50%;
+		padding-left: 0;
+		padding-right: 0;
 	}
 }
 .field-toggle-fields {
-
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
 }
 .field-toggle-field {
+	width: 100%;
 	&:not(.active) {
 		display: none;
 	}
@@ -88,8 +98,9 @@ fieldset {
 section {
 	margin: 0 auto 2rem auto;
 }
-.form-group {
-	position: relative;
+
+.field-label {
+	width: 100%;
 }
 label, legend {
 	font-weight: bold;
@@ -187,20 +198,24 @@ label {
 }
 .toggle-desc {
 	width: .75rem;
-	height: 1rem;
 	margin: 0 0 0 .25rem;
 	display: inline-block;
   vertical-align: middle;
+  transform: translateY(-1px);
 	div {
 		width: .75rem;
 		height: .75rem;
+		display: table;
 		background-color: $lightest;
+		background-image: url(./../images/question.svg);
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: contain;
 		border: 1px solid $medium;
 		border-radius: 50%;
 		font-size: .5rem;
 		line-height: 1em;
 		text-align: center;
-		display: table;
 		&:hover {
 			background-color: $light-blue;
 			border-color: $dark;
@@ -463,8 +478,8 @@ select {
 		// margin: 0 .325rem;
 	// }
 	.field {
-		margin-top: .5rem;
-		margin-bottom: .5rem;
+		padding-top: .5rem;
+		padding-bottom: .5rem;
 	}
 }
 .blocks-buttons {

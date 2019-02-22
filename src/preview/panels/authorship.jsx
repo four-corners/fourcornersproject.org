@@ -44,80 +44,91 @@ class Authorship extends React.Component {
 
 	render() {
 		const panelData = this.props.panelData;	
-		const hasCopyright = panelData['license']&&panelData['license'].type=='copyright';
+		const hasCopyright = panelData.license&&panelData.license.type=='copyright';
 		return (
 
 			<React.Fragment>
 
 				<div className="fc-row">
 			
-					{panelData['caption'] ?
+					{panelData.caption ?
 						<div className="fc-field" data-fc-field="caption">
-							<em>{panelData['caption']}</em>
+							<em>{panelData.caption}</em>
 						</div>: ''}
 					
-					{panelData['credit'] || hasCopyright ?
+					{hasCopyright||panelData.credit ?
 					<div className="fc-field" data-fc-field="credit">
-						{/*<span className="fc-label">Credit</span>*/}
 						<div className="fc-content">
 							{hasCopyright ?
 								<span className="fc-copyright">
-									{panelData['license'].label ?
-										<span>{panelData['license'].label}</span>
+									{panelData.license.year ?
+										<span>{panelData.license.year}</span>
 									: ''}
+									<span>
+										{panelData.credit ?
+											panelData.credit
+										: ''}
+										{panelData.license.holder ?
+											(panelData.credit ? '/' : '')+(panelData.license.holder)
+										: ''}
+									</span>
+
 								</span>
-							:''}
-							{panelData['credit']}
+							:<span>{panelData.credit}</span>}
 						</div>
 					</div> : ''}
 
-					{panelData['license'] &&
-					panelData['license'].type=='commons' ?
+					{panelData.license &&
+					panelData.license.type=='commons' ?
 						<div className="fc-field" data-fc-field="license">
 							<span className="fc-label">License</span>
 							<span className="fc-content">
-								{panelData['license'].url ?
-								<a href={panelData['license'].url} target="_blank">
-									{panelData['license'].label ? panelData['license'].label : ''}
+								{panelData.license.url ?
+								<a href={panelData.license.url} target="_blank">
+									{panelData.license.label ? panelData.license.label : ''}
 								</a> :
-								panelData['license'].label ? panelData['license'].label : ''}
+								panelData.license.label ? panelData.license.label : ''}
 							</span>
 						</div> : ''}
 					
-					{panelData['ethics'] ?
+					{panelData.ethics ?
 						<div className="fc-field" data-fc-field="ethics">
 							<span className="fc-label">Code of ethics</span>
 							<span className="fc-content">
-								<div className="fc-sub-caption">{panelData['ethics'].desc}</div>
+								<div className="fc-sub-caption">{panelData.ethics.desc}</div>
 							</span>
 						</div> : ''}
 
 
-					{panelData['bio'] ?
+					{panelData.bio ?
 					<div className="fc-field" data-fc-field="bio">
 						<span className="fc-label">Bio</span>
-						<div className="fc-content">{panelData['bio']}</div>
+						<div className="fc-content">{panelData.bio}</div>
 					</div>: ''}
 
 				<div className="fc-field fc-contact">
 
-					{panelData['website'] ?
+					{panelData.website ?
 					<div className="fc-field fc-card" data-fc-field="website">
 						<div className="fc-label">Website</div>
-						<div className="fc-content">{this.createLink(panelData['website'])}</div>
+						<div className="fc-content">{this.createLink(panelData.website)}</div>
 					</div>: ''}
 
-					{panelData['0-contact'] ?
-					<div className="fc-field fc-card" data-fc-field="0-contact">
-						<div className="fc-label">For more info contact</div>
-						<div className="fc-content">{this.createLink(panelData['0-contact'])}</div>
-					</div>: ''}
+					{panelData.contact ? 
 
-					{panelData['1-contact'] ?
-					<div className="fc-field fc-card" data-fc-field="1-contact">
-						<div className="fc-label">For reproduction rights contact</div>
-						<div className="fc-content">{this.createLink(panelData['1-contact'])}</div>
-					</div>: ''}
+						(panelData.contact.info ?
+						<div className="fc-field fc-card" data-fc-field="contact-info">
+							<div className="fc-label">For more info contact</div>
+							<div className="fc-content">{this.createLink(panelData.contact.info)}</div>
+						</div>: '')
+
+						(panelData.contact.rights ?
+						<div className="fc-field fc-card" data-fc-field="contact-rights">
+							<div className="fc-label">For reproduction rights contact</div>
+							<div className="fc-content">{this.createLink(panelData.contact.rights)}</div>
+						</div>: '')
+
+					: ''}
 
 				</div>
 

@@ -12,47 +12,47 @@ class Group extends React.Component {
 		};
 	}
 
+	onFocus(e) {
+		return
+	}
+
 	onChange(e) {
 		const input = e.target;
 		const name = input.name;
 		const value = input.value;
-		const nameArr = name.split('_');
-		const fieldsetKey = nameArr[0];
-		const fieldKey = [nameArr[2],nameArr[1]].join('-');
-		const fieldName = [fieldsetKey, fieldKey].join('_');
-		this.props.onChange(fieldName, value);
+		this.props.onChange(name, value);
 	}
 
 
 	renderGroup() {
 		const field = this.props.field;
 		if(!field){return}
-		const fields = field.fields;
-		const fieldKeys = Object.keys(fields);
-		let fieldElems = [];
-		fieldKeys.map((fieldKey, i) => {
-			const fieldData = fields[fieldKey];
-			const field = this.renderField(fieldKey, fieldData, i);
-			fieldElems.push(field);
+		const subFields = field.fields;
+		const subFieldKeys = Object.keys(subFields);
+		let subFieldElems = [];
+		subFieldKeys.map((subFieldKey, i) => {
+			const subFieldData = subFields[subFieldKey];
+			const subField = this.renderSubField(subFieldKey, subFieldData, i);
+			subFieldElems.push(subField);
 		});
-		return fieldElems;
+		return subFieldElems;
 	}
 
-	renderField(fieldKey, fieldData, fieldIndex) {
-		const fieldset = this.props.fieldset;
-		const id = this.props.id;
-		const field = this.props.field;
-		const strings = field.strings;
-		const name = [fieldset, id, fieldKey].join('_');
+	renderSubField(subFieldKey, subFieldData, subFieldIndex) {
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
+		const style = subFieldData.style;
+		const strings = subFieldData.strings;
+		const name = [setKey, fieldKey, subFieldKey].join('_');
 		return(
-			<div className='field input' key={fieldIndex}>
-				{this.props.hideLabel?'':
-				<Label strings={fieldData} id={id} />}
+			<div className={'field input '+style} key={subFieldIndex}>
+				<Label strings={strings} fieldKey={subFieldKey} />
 				<input
 					name={name}
 					type={'text'}
-					placeholder={fieldData.placeholder}
+					placeholder={subFieldData.placeholder}
 					className='form-elem'
+					onFocus={this.onFocus.bind(this)}
 					onChange={this.onChange.bind(this)}/>
 			</div>
 		);
@@ -63,10 +63,10 @@ class Group extends React.Component {
 		const fieldKey = this.props.fieldKey;
 		const field = this.props.field;
 		const strings = field.strings;
-		// const name = [setKey, fieldKey].join('_');
 		return(
 			<div className='fields-group'>
-				<Label strings={strings} setKey={setKey} />
+				{this.props.hideLabel?'':
+				<Label strings={strings} setKey={setKey} />}
 				{this.renderGroup()}
 			</div>
 		);

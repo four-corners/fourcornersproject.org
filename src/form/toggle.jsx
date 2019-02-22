@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Text from './text.jsx';
 import Textarea from './textarea.jsx';
 import Select from './select.jsx';
+import Group from './group.jsx';
 import Label from './label.jsx';
 
 class Toggle extends React.Component {
@@ -23,23 +24,24 @@ class Toggle extends React.Component {
 		let fieldsetSlug = nameArr[0];
 		let fieldKey = nameArr[1];
 		let subFieldKey = nameArr[2];
-		let newValue = {
-			type: subFieldKey
-		};
+		let thisFieldKey = nameArr[3];
+		let fieldName = [nameArr[0],nameArr[1]].join('_');
+		let newValue = Object.assign({},this.state.value);
+		if(!this.state.value.length) {
+			newValue.type = subFieldKey;
+		}
 		if(typeof subValue == 'object') {
 			newValue = Object.assign(newValue, subValue);
 		} else {
-			newValue.label = subValue;
+			newValue[thisFieldKey] = subValue;
 		}
-
 		let newValues = Object.assign({},this.state.values);
 		newValues[subFieldKey] = newValue;
 		this.setState({
 			values: newValues,
 			value: newValue
 		});
-		// console.log(name, newValue);
-		this.props.onChange(name, newValue);
+		this.props.onChange(fieldName, newValue);
 	}
 
 	onToggle(e) {
@@ -88,7 +90,7 @@ class Toggle extends React.Component {
 		const subFieldName = [setKey, fieldKey, subFieldKey].join('_');
 		const checked = this.state.checked;
 		return(
-			<div className='field checkbox' key={subFieldIndex}>
+			<div className='field checkbox half' key={subFieldIndex}>
 				<div className='checkbox-widget'>
 					<input className='toggle'
 						id={subFieldName}
@@ -163,6 +165,16 @@ class Toggle extends React.Component {
 						field={subField}
 						hideLabel={true}
 						onChange={this.onChange.bind(this)} />
+				break;
+			case 'group':
+				fieldElem = <Group
+						key={i}
+						setKey={setKey}
+						fieldKey={subFieldName}
+						field={subField}
+						hideLabel={true}
+						onChange={this.onChange.bind(this)}
+						sendMediaData={this.props.sendMediaData} />
 				break;
 			default:
 				break;

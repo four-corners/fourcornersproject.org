@@ -27,8 +27,11 @@ class Embed extends React.Component {
 		this.includeJSRef = React.createRef();
 		this.includeCSSRef = React.createRef();
 		this.stickyRef = React.createRef();
-		this.cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
-		this.jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
+
+		this.cssURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
+		this.jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
+		this.cssCDN = '<link href="'+this.cssURL+'" rel="stylesheet" type="text/css">';
+		this.jsCDN = '<script src="'+this.jsURL+'" type="text/javascript"></script>';
 	}
 
 	componentDidMount() {
@@ -200,47 +203,32 @@ class Embed extends React.Component {
 											<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
 										</legend>
 										<div className="fieldset-inner">
-											<div className="field">
-												<div className='desc'>Paste this into your website.</div>
-												<textarea className='output form-elem'
-													id='json'
-													readOnly={true}
-													ref={this.outputRef}
-													rows={3}
-													value={this.embedCode(this.props.formData)}
-													onFocus={this.onFocus.bind(this)}
-													onBlur={this.onBlur.bind(this)} />
-											</div>
-
 											<div className="fields-group">
-
 												<div className="field">
-													{/*<div className='desc'>Paste this into your website.</div>*/}
-													<label>Javascript library</label>
+													<label>Required libraries</label>
+													<div className='desc'>Paste this into head tag of your website.</div>
 													<textarea className='output form-elem'
-														id='jsCDN'
+														id='libraries'
 														readOnly={true}
 														// ref={this.outputRef}
-														rows={1}
-														value={this.jsCDN}
+														rows={2}
+														value={this.jsCDN+this.cssCDN}
 														onFocus={this.onFocus.bind(this)}
 														onBlur={this.onBlur.bind(this)} />
 												</div>
-
 												<div className="field">
-													{/*<div className='desc'>Paste this into your website.</div>*/}
-													<label>CSS library</label>
+													<label>Embed code</label>
+													<div className='desc'>Paste this into the body of your website.</div>
 													<textarea className='output form-elem'
-														id='cssCDN'
+														id='json'
 														readOnly={true}
-														// ref={this.outputRef}
-														rows={1}
-														value={this.cssCDN}
+														ref={this.outputRef}
+														rows={3}
+														value={this.embedCode(this.props.formData)}
 														onFocus={this.onFocus.bind(this)}
 														onBlur={this.onBlur.bind(this)} />
 												</div>
 											</div>
-
 										</div>
 									</fieldset>
 								</form>

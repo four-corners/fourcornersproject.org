@@ -24,7 +24,17 @@ const Schema = {
 				type: 'toggle',
 				fields: {
 					copyright: {
-						type: 'text',
+						type: 'group',
+						fields: {
+							'year': {
+								type: 'text',
+								style: 'one-third'
+							},
+							'holder': {
+								type: 'text',
+								style: 'two-thirds'
+							}
+						}
 					},
 					commons: {
 						type: 'select',
@@ -46,14 +56,14 @@ const Schema = {
 			},
 			contact: {
 				type: 'group',
-				fields: [
-					{
+				fields: {
+					'info': {
 						type: 'text'
 					},
-					{
+					'rights': {
 						type: 'text'
 					}
-				]
+				}
 			}
 		}
 	},

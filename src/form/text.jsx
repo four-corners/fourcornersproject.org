@@ -18,12 +18,14 @@ class Text extends React.Component {
 	}
 
 	render() {
-		const setKey = this.props.setKey;
-		const fieldKey = this.props.fieldKey;
-		const strings = this.props.field.strings;
+		const props = this.props;
+		const setKey = props.setKey;
+		const fieldKey = props.fieldKey;
+		const strings = props.field.strings;
+		const style = props.field.style;
 		const name = [setKey, fieldKey].join('_');
 		return(
-			<div className="field input">
+			<div className={'field input '+(style?style:'')}>
 				{this.props.hideLabel?'':
 				<Label strings={strings} fieldKey={fieldKey} />}
 				<input

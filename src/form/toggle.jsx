@@ -27,7 +27,7 @@ class Toggle extends React.Component {
 		let thisFieldKey = nameArr[3];
 		let fieldName = [nameArr[0],nameArr[1]].join('_');
 		let newValue = Object.assign({},this.state.value);
-		if(!this.state.value.length) {
+		if(!newValue.length) {
 			newValue.type = subFieldKey;
 		}
 		if(typeof subValue == 'object') {
@@ -45,11 +45,11 @@ class Toggle extends React.Component {
 	}
 
 	onToggle(e) {
+		const prevChecked = this.state.checked;
 		const input = e.target;
-		const name = input.name;
 		const id = input.id;
 		const checked = input.checked;
-		const prevChecked = this.state.checked;
+		let name = input.name;
 		let subFieldKey = id.split('_')[2];
 		let newChecked, newValue;
 		if(prevChecked != subFieldKey && checked) {
@@ -63,6 +63,7 @@ class Toggle extends React.Component {
 		if(checked) {
 			this.onChange(name, newValue);
 		} else {
+			name = name.substr(0,name.lastIndexOf('_'));
 			this.props.onChange(name, newValue);
 		}
 	}

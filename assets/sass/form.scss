@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 *[readonly] {
-	background-color: $light !important;
+	background-color: $lighter !important;
 }
 *[disabled] {
 	background-color: $lightest !important;
@@ -22,9 +22,8 @@
 }
 fieldset {
 	width: 100%;
-	margin-bottom: 1rem;
-	padding-bottom: 1rem;
-	&.collapse, &.expand {
+	// margin-bottom: 1rem;	
+	#forms & {
 		border-bottom: 1px solid $medium;
 	}
 	&.collapse .fieldset-inner {
@@ -32,15 +31,18 @@ fieldset {
 	}
 	&.expand .fieldset-inner {
 		height: auto;
-		margin-top: 1em;
+		// margin-top: 1em;
 	}
 }
 .fieldset-inner {
 	overflow: hidden;
 }
+
+//FIELD
 .field {
 	width: 100%;
-	padding: 1rem .25rem 2rem .25rem;
+	padding: 1rem .25rem 1.25rem .25rem;
+	// border-bottom: 1px solid $medium-blue;
 	&.half {
 		width: calc(50% - .5rem);
 		// padding: 0 .5rem;
@@ -54,7 +56,31 @@ fieldset {
 		// padding: 0 .5rem;
 	}
 	&.checkbox {
-		padding-bottom: .25rem;
+		border: 0;
+		padding-top: .25rem;
+		&:not(:last-of-type) {
+			padding-bottom: .25rem;
+		}
+	}
+	&:first-of-type {
+		
+	}
+	&:last-of-type {
+		border: 0;
+	}
+	&.input, &.field-toggle, &.select, &.fields-group {
+		// test
+		// margin: 1rem 0;
+		// padding: .5rem .75rem;
+		// border: 0;
+		// border-radius: $radius;
+		// background: $lighter;
+		// test
+	}
+	.field {
+		padding-left: 0;
+		padding-right: 0;
+		background-color: transparent;
 	}
 }
 .fields-group, .field-toggle-checkboxes {
@@ -63,23 +89,31 @@ fieldset {
   flex-direction: row;
   flex-wrap: wrap;
 	justify-content: space-between;
+	.field {
+		border: 0;
+	}
 }
 .fields-group {
-	padding: 0 .25rem 2rem .25rem;
 	.field {
-		padding: 0 0 .5rem 0;
+		// test
+		// padding: 0 0 .5rem 0;
+		// test
 		label {
 			@include smText;
 		}
 		&:last-child {
-			padding: 0;
+			// padding-bottom: 0;
 		}
 	}
 }
 .field-toggle {
 	.field {
-		padding-left: 0;
-		padding-right: 0;
+		// padding-left: 0;
+		// padding-right: 0;
+		padding: 0;
+	}
+	.field-group {
+		padding: 0 .25rem;
 	}
 }
 .field-toggle-fields {
@@ -105,9 +139,17 @@ section {
 label, legend {
 	font-weight: bold;
 }
+label {
+	// test
+	// margin-bottom: 1rem;
+	// test
+	display: inline-block;
+	position: relative;
+}
 legend {
 	width: 100%;
 	margin: 0;
+	padding: 1rem 0;
 	display: block;
 	position: relative;
 	user-select: none;
@@ -116,6 +158,8 @@ legend {
 	@include lgText;
 	line-height: 1.5em;
 	span {
+		min-height: 2rem;
+    display: block;
 		position: relative;
 	}
 	fieldset.expand &, fieldset.collapse & {
@@ -187,14 +231,41 @@ legend {
 		transform: rotate(270deg);
 	}
 }
-label {
-	margin-bottom: .5rem;
-	display: inline-block;
-	position: relative;
-}
 .label-inner {
 	display: flex;
 	align-items: center;
+}
+//DESC
+.desc {
+	width: 100%;
+	margin: 0 0 1rem 0;
+	padding: .5rem;
+	display: table;
+	background-color: $light;
+	// test
+	// background-color: $medium-blue;
+	// background-color: $darken;
+	// border: 1px solid $medium-blue;
+	// color: $blue;
+	// test
+	border-radius: $radius;
+	font-style: italic;
+	white-space: pre-line;
+	@include smText;
+	p:last-of-type {
+		margin: 0;
+	}
+}
+.field-desc {
+	&:not(.opened) {
+		display: none;
+	}
+	// color: $medium;
+	// font-style: italic;
+}
+.fieldset-desc {
+	margin-top: .5rem;
+	display: block;
 }
 .toggle-desc {
 	width: .75rem;
@@ -216,37 +287,14 @@ label {
 		font-size: .5rem;
 		line-height: 1em;
 		text-align: center;
-		&:hover {
+		&:hover, &:focus {
 			background-color: $light-blue;
 			border-color: $dark;
 			cursor: pointer;
 		}
 	}
 }
-.desc {
-	width: 100%;
-	margin: 0 0 1rem 0;
-	padding: .5rem;
-	display: block;
-	background-color: $light;
-	border-radius: $radius;
-	font-style: italic;
-	@include smText;
-	p:last-of-type {
-		margin: 0;
-	}
-}
-.field-desc {
-	&:not(.opened) {
-		display: none;
-	}
-	// color: $medium;
-	// font-style: italic;
-}
-.fieldset-desc {
-	margin-top: .5rem;
-	display: block;
-}
+
 
 .form-elem {
 	width: 100%;
@@ -283,7 +331,7 @@ select {
 	}
 	.option {
 		padding: .375rem;
-		border-bottom: 1px solid $light;
+		border-bottom: 1px solid $lighter;
 		@include fastTrans;
 		label {
 			pointer-events: none;
@@ -306,7 +354,7 @@ select {
 		}
 		&:hover {
 			cursor: pointer;
-			background-color: $light;
+			background-color: $lighter;
 		}
 	}
 	.custom {
@@ -332,6 +380,7 @@ select {
 		width: auto;
 		position: relative;
 		display: flex;
+		margin: 0;
 		opacity: 0.5;
 		flex-direction: rows-reverse;
 		flex-wrap: no-wrap;
@@ -472,8 +521,16 @@ select {
 	position: relative;
 	overflow: hidden;
 	padding: 0 .325rem .75rem .325rem;
+
+
+
+	// margin: 1rem auto;
+	padding: .5rem .75rem;
+	border: 0;
+	border-radius: $radius;
+	background: $lighter;
 	@include shadow;
-	@include border;
+	// @include border;
 	// label {
 		// margin: 0 .325rem;
 	// }
@@ -591,7 +648,7 @@ select {
 		margin: 0;
 	}
 	&:hover {
-		background-color: $light;
+		background-color: $lighter;
 		cursor: pointer;
 	}
 	&[disabled] {

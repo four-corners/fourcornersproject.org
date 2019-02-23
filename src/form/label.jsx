@@ -28,7 +28,10 @@ class Label extends React.Component {
 		return (
 			this.props.strings.desc ?
 				<div className='toggle-desc'>
-					<div onClick={this.onClick.bind(this)}></div>
+					<div
+						onClick={this.onClick.bind(this)}
+						onFocus={this.onClick.bind(this)}>
+					</div>
 				</div>
 			: null
 		);

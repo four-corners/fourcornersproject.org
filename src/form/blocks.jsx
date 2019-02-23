@@ -21,15 +21,14 @@ class Blocks extends React.Component {
 		const value = input.value;
 		const nameArr = name.split('_');
 		const setKey = nameArr[0];
-		const blockKey = nameArr[1];
-		const fieldKey = nameArr[2];
-		const fieldName = [setKey, blockKey].join('_');
+		const fieldKey = nameArr[1];
+		const subFieldKey = nameArr[2];
+		const fieldName = [setKey, fieldKey].join('_');
 		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
-
 		let blocks = this.state.blocks;
 		let block = blocks[blockIndex];
-		block[fieldKey] = value;
-		if(block.url) {
+		block[subFieldKey] = value;
+		if(fieldKey == 'media' && block.url) {
 			this.getMediaData(block, setKey, blockIndex);
 		}
 
@@ -181,7 +180,7 @@ class Blocks extends React.Component {
 			strings = type;
 		}
 		return(
-			<div className='field input' key={name}>
+			<div className='field' key={name}>
 				<Label strings={strings} fieldKey={fieldKey} />
 				<input
 					className='form-elem'
@@ -245,8 +244,9 @@ class Blocks extends React.Component {
 			blocks: newBlocks,
 			blockMedia: newBlockMedia
 		});
-		this.props.onChange(fieldName, newBlocks);
 
+		this.props.onChange(fieldName, newBlocks);
+		this.props.sendActiveCorner(setKey);
 		let newMediaData = Object.assign({}, this.props.mediaData);
 		newMediaData[setKey] = newBlockMedia;
 		this.props.sendMediaData(newMediaData);
@@ -288,7 +288,7 @@ class Blocks extends React.Component {
 		const strings = this.props.field.strings;
 		const name = [setKey, fieldKey].join('_');
 		return(
-			<div className="field input">
+			<div className="field">
 
 				<div className="blocks-widget">
 					{this.renderBlocks()}

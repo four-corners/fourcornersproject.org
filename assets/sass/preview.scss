@@ -137,9 +137,12 @@
 	}
 }
 #embed-output {
-	padding: 2rem 0 0 0;
+	padding: 2rem 0 5rem 0;
 	form {
 		margin: .25rem;
+	}
+	legend span {
+		margin-left: .25rem;
 	}
 	button {
 		// margin: .25rem;
@@ -148,6 +151,7 @@
 		margin-bottom: .25rem;
 		margin-left: 0;
 		margin-right: 0;
+		padding: 0 .25rem;
 	}
 	textarea.output {
 		direction: ltr !important;

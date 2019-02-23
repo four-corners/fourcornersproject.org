@@ -50,6 +50,7 @@ class Group extends React.Component {
 				<input
 					name={name}
 					type={'text'}
+					defaultValue={subFieldData.default?strings.placeholder:''}
 					placeholder={subFieldData.placeholder}
 					className='form-elem'
 					onFocus={this.onFocus.bind(this)}
@@ -64,7 +65,7 @@ class Group extends React.Component {
 		const field = this.props.field;
 		const strings = field.strings;
 		return(
-			<div className='fields-group'>
+			<div className='field fields-group'>
 				{this.props.hideLabel?'':
 				<Label strings={strings} setKey={setKey} />}
 				{this.renderGroup()}

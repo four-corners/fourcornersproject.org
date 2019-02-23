@@ -30,6 +30,8 @@ class Text extends React.Component {
 				<Label strings={strings} fieldKey={fieldKey} />}
 				<input
 					name={name}
+					placeholder={strings.placeholder}
+					defaultValue={props.field.default?strings.placeholder:''}
 					className='form-elem'
 					onChange={this.onChange.bind(this)} />
 			</div>

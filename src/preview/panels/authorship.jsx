@@ -79,6 +79,7 @@ class Authorship extends React.Component {
 					</div> : ''}
 
 					{panelData.license &&
+					panelData.license.label &&
 					panelData.license.type=='commons' ?
 						<div className="fc-field" data-fc-field="license">
 							<span className="fc-label">License</span>
@@ -91,7 +92,8 @@ class Authorship extends React.Component {
 							</span>
 						</div> : ''}
 					
-					{panelData.ethics ?
+					{panelData.ethics &&
+					panelData.ethics.desc ?
 						<div className="fc-field" data-fc-field="ethics">
 							<span className="fc-label">Code of ethics</span>
 							<span className="fc-content">
@@ -114,19 +116,21 @@ class Authorship extends React.Component {
 						<div className="fc-content">{this.createLink(panelData.website)}</div>
 					</div>: ''}
 
-					{panelData.contact ? 
+					{panelData.contact ?
 
-						(panelData.contact.info ?
-						<div className="fc-field fc-card" data-fc-field="contact-info">
-							<div className="fc-label">For more info contact</div>
-							<div className="fc-content">{this.createLink(panelData.contact.info)}</div>
-						</div>: '')
+						<div>
+							{panelData.contact.info ?
+							<div className="fc-field fc-card" data-fc-field="contact-info">
+								<div className="fc-label">For more info contact</div>
+								<div className="fc-content">{this.createLink(panelData.contact.info)}</div>
+							</div>: ''}
 
-						(panelData.contact.rights ?
-						<div className="fc-field fc-card" data-fc-field="contact-rights">
-							<div className="fc-label">For reproduction rights contact</div>
-							<div className="fc-content">{this.createLink(panelData.contact.rights)}</div>
-						</div>: '')
+							{panelData.contact.rights ?
+							<div className="fc-field fc-card" data-fc-field="contact-rights">
+								<div className="fc-label">For reproduction rights contact</div>
+								<div className="fc-content">{this.createLink(panelData.contact.rights)}</div>
+							</div>: ''}
+						</div>
 
 					: ''}
 

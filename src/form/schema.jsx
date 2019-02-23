@@ -28,7 +28,8 @@ const Schema = {
 						fields: {
 							'year': {
 								type: 'text',
-								style: 'one-third'
+								style: 'one-third',
+								default: true
 							},
 							'holder': {
 								type: 'text',

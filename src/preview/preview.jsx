@@ -44,63 +44,6 @@ class Embed extends React.Component {
 		window.removeEventListener('resize', this.onScroll.bind(this));
 	}
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return true;
-	// }
-
-	// componentDidUpdate(prevProps) {
-
-	// }
-
-	// onDropLoad(e) {
-	// 	// console.log('Image Loaded');
-	// 	// this.setState({ imgLoaded: 'loaded' });
-	// }
-
-	// onDropError(e) {
-	// 	// console.log('Image Failed'); 
-	// 	// this.setState({ imgLoaded: 'failed' });
-	// }
-
-	// onChangeDrop(e) {
-	// 	let imgSrc = e.target.value;
-	// 	let pseudoImg = new Image();
-	// 	pseudoImg.onload = (e) => {
-	// 		this.setState({
-	// 			imgSrc: imgSrc,
-	// 			imgLoaded: true
-	// 		});
-	// 	}
-	// 	pseudoImg.onerror = (e) => {
-	// 		this.setState({
-	// 			imgSrc: placeholderSrc,
-	// 			imgLoaded: false
-	// 		});
-	// 	}
-	// 	pseudoImg.src = imgSrc;
-	// }
-
-	// onDrop(file) {
-	// 	let imgSrc = URL.createObjectURL(file[0]);
-	// 	this.setState({
-	// 		imgSrc: imgSrc,
-	// 		imgLoaded: true,
-	// 		imgFocus: false
-	// 	});
-	// }
-
-	// onFocusDrop(e) {
-	// 	this.setState({
-	// 		imgFocus: true
-	// 	});
-	// }
-
-	// onBlurDrop(e) {
-	// 	this.setState({
-	// 		imgFocus: false
-	// 	});
-	// }
-
 	onChangeOpts(e) {
 		let stateChange = {
 			formData: this.props.formData
@@ -123,10 +66,12 @@ class Embed extends React.Component {
 		console.log('Error', e);
 	}
 
-	toggleExpand(e) {
+	onToggle(e) {
 		e.preventDefault();
+		let id = e.currentTarget.parentElement.id;
+		if(id==this.state.expand) {id = null}
 		this.setState({
-			expand: !this.state.expand
+			expand: id
 		});
 	}
 
@@ -198,27 +143,16 @@ class Embed extends React.Component {
 								
 								<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
-									<fieldset>
+									<fieldset id='embedPhoto'>
 										<legend>
 											<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
 										</legend>
 										<div className="fieldset-inner">
 											<div className="fields-group">
 												<div className="field">
-													<label>Required libraries</label>
-													<div className='desc'>Paste this into head tag of your website.</div>
-													<textarea className='output form-elem'
-														id='libraries'
-														readOnly={true}
-														// ref={this.outputRef}
-														rows={2}
-														value={this.jsCDN+this.cssCDN}
-														onFocus={this.onFocus.bind(this)}
-														onBlur={this.onBlur.bind(this)} />
-												</div>
-												<div className="field">
-													<label>Embed code</label>
-													<div className='desc'>Paste this into the body of your website.</div>
+													{creator&&creator.acf&&creator.acf['embed_desc'] ?
+													<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['embed_desc'] }}></div>
+													: ''}
 													<textarea className='output form-elem'
 														id='json'
 														readOnly={true}
@@ -231,6 +165,30 @@ class Embed extends React.Component {
 											</div>
 										</div>
 									</fieldset>
+
+									<fieldset id='addScripts' className={this.state.expand=='addScripts'?'expand':'collapse'}>
+										<legend onClick={this.onToggle.bind(this)}>
+											<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
+										</legend>
+										<div className="fieldset-inner">
+											<div className="fields-group">
+												<div className="field">
+													{creator&&creator.acf&&creator.acf['scripts_desc'] ?
+													<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['scripts_desc'] }}></div>
+													: ''}
+													<textarea className='output form-elem'
+														id='libraries'
+														readOnly={true}
+														// ref={this.outputRef}
+														rows={2}
+														value={this.jsCDN+this.cssCDN}
+														onFocus={this.onFocus.bind(this)}
+														onBlur={this.onBlur.bind(this)} />
+												</div>
+											</div>
+										</div>
+									</fieldset>
+
 								</form>
 							</div>
 						</div>

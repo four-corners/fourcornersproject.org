@@ -42,7 +42,7 @@ fieldset {
 .field {
 	width: 100%;
 	padding: 1rem .25rem 1.25rem .25rem;
-	// border-bottom: 1px solid $medium-blue;
+	// border-bottom: 1px solid $mediumBlue;
 	&.half {
 		width: calc(50% - .5rem);
 		// padding: 0 .5rem;
@@ -129,9 +129,9 @@ fieldset {
 }
 
 
-section {
-	margin: 0 auto 2rem auto;
-}
+// section {
+// 	margin: 0 auto 2rem auto;
+// }
 
 .field-label {
 	width: 100%;
@@ -243,9 +243,9 @@ legend {
 	display: table;
 	background-color: $light;
 	// test
-	// background-color: $medium-blue;
+	// background-color: $mediumBlue;
 	// background-color: $darken;
-	// border: 1px solid $medium-blue;
+	// border: 1px solid $mediumBlue;
 	// color: $blue;
 	// test
 	border-radius: $radius;
@@ -288,7 +288,7 @@ legend {
 		line-height: 1em;
 		text-align: center;
 		&:hover, &:focus {
-			background-color: $light-blue;
+			background-color: $lightBlue;
 			border-color: $dark;
 			cursor: pointer;
 		}
@@ -529,7 +529,7 @@ select {
 	border: 0;
 	border-radius: $radius;
 	background: $lighter;
-	@include shadow;
+	@include smallShadow;
 	// @include border;
 	// label {
 		// margin: 0 .325rem;
@@ -638,7 +638,7 @@ select {
 	box-shadow: 0 0 1px 1px rgba($darkest,.1);
 	background-color: $lightest;
 	font-weight: 700;
-	@include shadow;
+	@include smallShadow;
 	@include border;
 	@include focus;
 	&::after {

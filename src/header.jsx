@@ -122,9 +122,9 @@ class Header extends React.Component {
 						<div className='col col-12 col-sm-6 col-md-5 left'>
 							<div className='col-content'>
 								<div id='title'>
-									<h1 id="site-title">
+									<h2 id="site-title">
 										<Link to={SiteSettings.path}>Four Corners</Link>
-									</h1>
+									</h2>
 								</div>
 							</div>
 						</div>

@@ -5,13 +5,113 @@
 // 	}
 // }
 
+#home {
+	// padding-top: 0;
+}
+
+#intro {
+	.fc-embed {
+		background-color: $lightBlue;
+		mix-blend-mode: multiply;
+		@include smallShadow;
+		@include border;
+	}
+	.fc-corner {
+		// filter: none;
+		&::after, &::before {
+			// background-color: $mediumBlue;
+		}
+	}
+}
+
+#about {
+	background-color: $mediumBlue;
+	color: $darkest;
+}
+
+.content-block {
+	padding: .5rem .75rem;
+	background-color: $lightBlue;
+	border-radius: $radius;
+}
+
+.corner-block {
+	height: 100%;
+  display: table;
+	background-color: $light;
+	// padding: 0;
+	@include mediumShadow;
+}
+
+.corner-blocks {
+	align-items: stretch;
+	.col-content {
+		height: 100%;
+		margin-bottom: 0;
+	}
+}
+
+.prompt-link {
+	a {
+		position: relative;
+		&::after {
+			width: 3rem;
+			height: 1.5rem;
+			margin-left: .5rem;
+			display: inline-block;
+			background-image: url(./../images/right-arrow.svg);
+			background-repeat: no-repeat;
+			background-size: cover;
+			content: '';
+			@include fastTrans;
+		}
+		&:hover {
+			color: $darkest;
+			&::after {
+				filter: brightness(0);
+			}
+		}
+	}
+}
+
+h1.corner-title {
+	position: relative;
+	font-size: 3vw;
+	line-height: 1em;
+	margin-bottom: .5rem;
+	text-align: center;
+	div::before {
+		width: 4rem;
+		height: 4rem;
+		display: block;
+		margin: 1rem auto;
+		background-size: 4rem;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-image: url(./../images/selected.svg);
+		content: '';
+		@include fastTrans;
+	}
+	&#backstory div::before {
+		transform: rotate(90deg);
+	}
+	&#imagery div::before {
+		transform: rotate(180deg);
+	}
+	&#links div::before {
+		transform: rotate(270deg);
+	}
+}
+
+
+
 .explainer {
 	min-height: 15rem;
 	padding: 2rem 0;
 	margin: 3rem 0;
-	background-color: $medium-blue;
+	background-color: $mediumBlue;
 	border-radius: $radius;
-	@include shadow;
+	@include smallShadow;
 	.col {
 		display: flex;
 		align-items: center;
@@ -25,7 +125,7 @@
 	.fc-embed {
 		border-radius: $radius;
 		mix-blend-mode: multiply;
-		@include shadow;
+		@include smallShadow;
 		.fc-photo {
 
 		}

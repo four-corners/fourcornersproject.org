@@ -1,11 +1,12 @@
 header {
 	width: 100%;
 	padding: .5rem 0 .75em 0;
-	border-bottom: 1px solid $medium;
+	background-color: $lightBlue;
+	// border-bottom: 1px solid $medium;
 	.col {
 		display: flex;
 		.col-content {
-			// margin: auto;
+			margin: 0;
 		}
 	}
 }
@@ -24,40 +25,42 @@ header {
 		display: table;
 	}
 }
-h1#page-title a {
-	color: $medium;
-}
-h1#site-title {
+h2#site-title {
 	position: relative;
-	&::before, &::after {
-		width: 2rem;
-		height: 2rem;
-		position: absolute;
-		right: -3rem;
-		top: .5rem;
-		background-image: url(./../images/icon.svg);
-		background-repeat: no-repeat;
-		background-size: cover;
-		transition: opacity 200ms ease;
-		content: '';
-	}
-	&::after {
-		background-position: bottom center;
-		#title:hover &, #title:focus & {
-			opacity: 0;
+	font-weight: bold;
+	a {
+		padding: 0 2rem 0 0;
+		&::before, &::after {
+			width: 1.5rem;
+			height: 1.5rem;
+			position: absolute;
+			right: 0rem;
+			top: .325rem;
+			background-image: url(./../images/icon.svg);
+			background-repeat: no-repeat;
+			background-size: cover;
+			transition: opacity 200ms ease;
+			content: '';
 		}
-	}
-	&::before {
-		background-position: top center;
+		&::after {
+			background-position: bottom center;
+			#title:hover &, #title:focus & {
+				opacity: 0;
+			}
+		}
+		&::before {
+			background-position: top center;
+		}
 	}
 }
 #nav {
-	clear: both;
+	// clear: both;
+	float: right;
 	margin-bottom: -5px;
 	display: table;
 	a, a:visited {
 		display: inline-table;
-		margin: 0 1rem .5rem 0;
+		margin: 0 0 .5rem 1rem;
 		float: left;
 		color: $dark;
 		border-bottom: 1px solid $blue;

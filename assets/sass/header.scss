@@ -9,6 +9,14 @@ header {
 			margin: 0;
 		}
 	}
+	@include md {
+		.col {
+			margin-top: 0;
+			margin-bottom: 0;
+			padding-top: .5rem;
+			padding-bottom: .5rem;
+		}
+	}
 }
 #title {
 	display: table;
@@ -25,21 +33,23 @@ header {
 		display: table;
 	}
 }
-h2#site-title {
+h3#site-title {
 	position: relative;
 	font-weight: bold;
 	a {
 		padding: 0 2rem 0 0;
+		@include fastTrans;
 		&::before, &::after {
 			width: 1.5rem;
 			height: 1.5rem;
 			position: absolute;
 			right: 0rem;
-			top: .325rem;
+			top: .5rem;
 			background-image: url(./../images/icon.svg);
 			background-repeat: no-repeat;
 			background-size: cover;
-			transition: opacity 200ms ease;
+			// transition: opacity 200ms ease;
+			@include fastTrans;
 			content: '';
 		}
 		&::after {
@@ -64,9 +74,16 @@ h2#site-title {
 		float: left;
 		color: $dark;
 		border-bottom: 1px solid $blue;
-		@include mdText;
+		@include smText;
 		&:hover, &:focus {
 			color: $darkest;
+		}
+	}
+	@include md {
+		float: none;
+		a, a:visited {
+			margin-left: 0;
+			margin-right: .5rem;
 		}
 	}
 }

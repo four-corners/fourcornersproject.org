@@ -80,6 +80,7 @@ fieldset {
 	.field {
 		padding-left: 0;
 		padding-right: 0;
+		padding-top: 0;
 		background-color: transparent;
 	}
 }
@@ -99,7 +100,7 @@ fieldset {
 		// padding: 0 0 .5rem 0;
 		// test
 		label {
-			@include smText;
+			@include xsText;
 		}
 		&:last-child {
 			// padding-bottom: 0;
@@ -155,8 +156,8 @@ legend {
 	user-select: none;
 	color: $medium;
 	@include fastTrans;
-	@include lgText;
-	line-height: 1.5em;
+	@include mdText;
+	// line-height: 1.5em;
 	span {
 		min-height: 2rem;
     display: block;
@@ -242,16 +243,10 @@ legend {
 	padding: .5rem;
 	display: table;
 	background-color: $light;
-	// test
-	// background-color: $mediumBlue;
-	// background-color: $darken;
-	// border: 1px solid $mediumBlue;
-	// color: $blue;
-	// test
 	border-radius: $radius;
 	font-style: italic;
 	white-space: pre-line;
-	@include smText;
+	@include xsText;
 	p:last-of-type {
 		margin: 0;
 	}
@@ -347,7 +342,7 @@ select {
 			background-radius: unset;
 		}
 		textarea {
-			@include smText;
+			@include xsText;
 		}
 		&.selected, &.selected:hover {
 			background-color: rgba($blue,.25);
@@ -427,6 +422,7 @@ select {
 
 .checkbox-widget {
 	flex-direction: rows;
+	margin-bottom: .5rem;
 	label.checkbox {
 		&::before {
 			width: 2.25rem;

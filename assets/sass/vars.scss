@@ -82,23 +82,28 @@ $radius: 4px;
 	border-bottom: .2rem solid;
 }
 
-@mixin smText {
+@mixin xsText {
 	font-size: .8rem;
 	line-height: 1.4em;
 }
 
-@mixin mdText {
+@mixin smText {
 	font-size: 1.2rem;
 	line-height: 1.6em;
 }
 
-@mixin lgText {
+@mixin mdText {
 	font-size: 1.5rem;
-	line-height: 1.7em;
+  line-height: 1.7em;
+}
+
+@mixin lgText {
+	font-size: 2.3rem;
+  line-height: 1.2em;
 }
 
 @mixin xlText {
-	font-size: 2.3rem;
+	font-size: 3.2rem;
 	line-height: 1.2em;
 }
 
@@ -108,17 +113,17 @@ $radius: 4px;
 	}
 }
 @mixin md {
-	@media (min-width: 768px) {
+	@media (max-width: 768px) {
 		@content;
 	}
 }
 @mixin lg {
-	@media (min-width: 992px) {
+	@media (max-width: 992px) {
 		@content;
 	}
 }
 @mixin xl {
-	@media (min-width: 1200px) {
+	@media (max-width: 1200px) {
 		@content;
 	}
 }

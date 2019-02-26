@@ -58,7 +58,9 @@ h2 {
 }
 h3 {
 	@include mdText;
-	// @include strong;
+}
+h4 {
+	@include smText;
 }
 strong {
 	@include strong;

@@ -61,7 +61,7 @@ class Authorship extends React.Component {
 						<div className="fc-content">
 							{hasCopyright ?
 								<div className="fc-copyright">
-									{panelData.license.year!=null ? <span>{panelData.license.year}</span> : 2019}
+									{panelData.license.year!=null ? <span>{panelData.license.year}</span> : <span>2019</span>}
 									<span>
 										{panelData.credit ? panelData.credit : ''}
 										{panelData.license.holder ? (panelData.credit ? '/' : '')+(panelData.license.holder) : ''}

@@ -70,15 +70,15 @@ class Home extends React.Component {
 				<section id="home-intro">
 					<div className='max-width'>
 						<div className='row'>
-
+							<div className='col col-12'>
+								<h2>An initiative to increase authorship and credibility in visual media.</h2>
+							</div>
 							<div className='col col-12 col-lg-6 left'>
 								<div className='col-content'>
-									<h2>An initiative to increase authorship and credibility in visual media.</h2>
-									<br/>
 									<div className='content-block'>
 										<h3>Photographs are made in a fraction of a second, billions everyday. But image-makers know so much more about the circumstances of what occurred as they were making the photograph. <strong>The Four Corners project allows specific information to be embedded in each of the photograph’s four corners, where it is available for an interested reader to explore.</strong> This increased contextualization strengthens both the authorship of the photographer and the credibility of the image.</h3>
 									</div>
-									<br/><br/>
+									
 									
 									{/*<h2 className='corner-title' id='authorship'>
 										<div>Authorship</div>
@@ -97,16 +97,20 @@ class Home extends React.Component {
 
 							<div className='col col-12 col-lg-6 right'>
 								<div className='col-content'>
-									<img id='corners-preview' src={SiteSettings.url.theme+'/assets/images/corners.svg'}/>
+									<div className='content-block'>
+										<img id='corners-preview' src={SiteSettings.url.theme+'/assets/images/corners.svg'}/>
+									</div>
 									{/*<div className='fc-embed' data-fc='{"authorship":{"caption":"Earthrise was photographed by astronaut William Anders on the first human mission to the moon, Apollo 8, on Christmas Eve, December 24, 1968. It was the first time that earthlings were able to see their fragile planet hovering in space in full color, and is widely credited for sparking the environmental movement.","credit":"William Anders","license":{"type":"commons","label":"Public Domain","url":"","desc":"No Known Copyright","image":false},"bio":"William Anders is a former NASA astronaut, engineer, and US Air Force Major general. He is best known for being one of the three first humans to leave Earth’s orbit to circle the moon, and for his Earthrise photograph. "},"backstory":{"text":"On Christmas Eve, 1968, at the end of an enormously turbulent year that was rife with political upheaval, astronaut Bill Anders photographed the Earth from his perch on an Apollo spacecraft. As they began the fourth of 10 orbits, a view of the planet filled one of the windows. “Oh, my God! Look at that picture over there! Here’s the Earth coming up. Wow, is that pretty!” Anders exclaimed, before photographing it first in black and white, and then again in color.\n\nEarthrise, as the photograph was called, was placed on a U.S. postage stamp and is credited with inspiring Earth Day, celebrated for the first time by millions on April 22, 1970, sixteen months after Anders made the image.\n"},"imagery":{"media":[{"source":"youtube","index":1,"url":"https://www.youtube.com/watch?v=Pu7NUQEHfe4","caption":"Earthrise: The Story Behind William Anders&apos; Apollo 8 Photograph","credit":"Time Magazine"},{"source":"image","index":0,"url":"https://upload.wikimedia.org/wikipedia/commons/6/6e/Scott_1371%2C_Apollo_8.jpg"}]},"links":{"links":[{"source":"link","index":0,"title":"100 Most Influential Images of All Time","url":"http://100photos.time.com/photos/nasa-earthrise-apollo-8#photograph"},{"source":"link","index":1,"title":"Earthrise: how the iconic image changed the world The Guardian","url":"https://www.theguardian.com/science/2018/dec/24/earthrise-how-the-iconic-image-changed-the-world"}]},"opts":{},"lang":"en"}'><img className='fc-img' src='http://dujye7n3e5wjl.cloudfront.net/photographs/1080-tall/time-100-influential-photos-william-anders-nasa-earthrise-62.jpg'/></div>*/}
 									{/*<Module photo='https://c1.staticflickr.com/9/8644/16485195465_bbd6234362_b.jpg'/>*/}
-									<br/>
-									<div className='content-block'>
-										<h3>Are you a photographer or publisher?</h3>
-										<h2 className='prompt-link'>
-											<Link to={SiteSettings.path+'create'}><u>Try it out!</u></Link>
-										</h2>
-									</div>
+								</div>
+							</div>
+
+							<div className='col col-12'>
+								<div className='content-block'>
+									<h3>Are you a photographer or publisher?</h3>
+									<h2 className='prompt-link'>
+										<Link to={SiteSettings.path+'create'}><u>Try it out!</u></Link>
+									</h2>
 								</div>
 							</div>
 

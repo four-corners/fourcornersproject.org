@@ -60,20 +60,13 @@ class Authorship extends React.Component {
 					<div className="fc-field" data-fc-field="credit">
 						<div className="fc-content">
 							{hasCopyright ?
-								<span className="fc-copyright">
-									{panelData.license.year ?
-										<span>{panelData.license.year}</span>
-									: ''}
+								<div className="fc-copyright">
+									{panelData.license.year!=null ? <span>{panelData.license.year}</span> : 2019}
 									<span>
-										{panelData.credit ?
-											panelData.credit
-										: ''}
-										{panelData.license.holder ?
-											(panelData.credit ? '/' : '')+(panelData.license.holder)
-										: ''}
+										{panelData.credit ? panelData.credit : ''}
+										{panelData.license.holder ? (panelData.credit ? '/' : '')+(panelData.license.holder) : ''}
 									</span>
-
-								</span>
+								</div>
 							:<span>{panelData.credit}</span>}
 						</div>
 					</div> : ''}
@@ -106,15 +99,17 @@ class Authorship extends React.Component {
 					<div className="fc-field" data-fc-field="bio">
 						<span className="fc-label">Bio</span>
 						<div className="fc-content">{panelData.bio}</div>
-					</div>: ''}
+					</div> : ''}
 
+
+				{panelData.website || panelData.contact ?
 				<div className="fc-field fc-contact">
 
 					{panelData.website ?
 					<div className="fc-field fc-card" data-fc-field="website">
 						<div className="fc-label">Website</div>
 						<div className="fc-content">{this.createLink(panelData.website)}</div>
-					</div>: ''}
+					</div> : ''}
 
 					{panelData.contact ?
 
@@ -123,18 +118,18 @@ class Authorship extends React.Component {
 							<div className="fc-field fc-card" data-fc-field="contact-info">
 								<div className="fc-label">For more info contact</div>
 								<div className="fc-content">{this.createLink(panelData.contact.info)}</div>
-							</div>: ''}
+							</div> : ''}
 
 							{panelData.contact.rights ?
 							<div className="fc-field fc-card" data-fc-field="contact-rights">
 								<div className="fc-label">For reproduction rights contact</div>
 								<div className="fc-content">{this.createLink(panelData.contact.rights)}</div>
-							</div>: ''}
+							</div> : ''}
 						</div>
 
 					: ''}
 
-				</div>
+				</div> : ''}
 
 			</div>
 

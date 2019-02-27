@@ -3,7 +3,7 @@ import SchemaForm from 'react-jsonschema-form';
 import Dropzone from 'react-dropzone';
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import i18n from '../i18n.jsx';
+import i18n from '../../i18n.jsx';
 import Module from './module.jsx';
 
 // let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';

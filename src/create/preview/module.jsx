@@ -1,6 +1,6 @@
 import React from 'react';
 
-import i18n from './../i18n.jsx';
+import i18n from '../../i18n.jsx';
 
 import Authorship from './panels/authorship.jsx';
 import Backstory from './panels/backstory.jsx';

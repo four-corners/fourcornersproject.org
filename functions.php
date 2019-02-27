@@ -1,6 +1,7 @@
 <?php
 function four_corners_scripts() {
-	$ver = '1.0.3';
+
+	$ver = '1.0.4';
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	// wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
@@ -31,6 +32,7 @@ function four_corners_scripts() {
 			)
 		)
 	) );
+
 }
 add_action( 'wp_enqueue_scripts', 'four_corners_scripts' );
 
@@ -39,6 +41,7 @@ register_nav_menus( array(
 ) );
 
 function register_creators() {
+
 	register_post_type( 'creators',
 		array(
 			'labels' => array(
@@ -52,10 +55,12 @@ function register_creators() {
 			'supports' => array('title', 'thumbnail', 'editor')
 		)
 	);
+
 }
 add_action( 'init', 'register_creators' );
 
 function get_translations_json( $req ) {
+
 	$lang = $req['lang'];
 	$obj = (object) array(
 		'test' => 'Four Corners'
@@ -64,6 +69,7 @@ function get_translations_json( $req ) {
 }
 
 function get_langs() {
+
 	$args = array(
 		'fields' => 'slug'
 	);
@@ -79,10 +85,12 @@ function get_langs() {
 		);
 	}
 	return json_encode( $langs );
+
 }
 
 
 function creators_endpoint( $req ) {
+
 	$args = array(
 		'post_type' => 'creators',
 		'posts_per_page'=> -1, 
@@ -97,9 +105,11 @@ function creators_endpoint( $req ) {
 		$creators[$key]->acf = get_fields( $creator->ID );
 	}
 	return $creators;
+
 }
 
 function creator_endpoint( $req ) {
+
 	$lang = $req['lang'];
 	$args = array(
 		'post_type' => 'creators',
@@ -111,9 +121,11 @@ function creator_endpoint( $req ) {
 	$acf = get_fields( $creator->ID );
 	$creator->acf = $acf;
 	return $creator;
+
 }
 
 function page_endpoint( $req ) {
+
 	$slug = $req['slug'];
 	$lang = $req['lang'];
 	$args = array(
@@ -126,9 +138,11 @@ function page_endpoint( $req ) {
 	$acf = get_fields( $page->ID );
 	$page->acf = $acf;
 	return $page;
+
 }
 
 function menu_endpoint() {
+
 	$menu_items = wp_get_nav_menu_items( 'main' );
 	foreach ( $menu_items as $i => $menu_item ) {
 		if( $post = get_post( $menu_item->object_id ) ) {
@@ -136,9 +150,27 @@ function menu_endpoint() {
 		}
 	}
 	return $menu_items;
+
+}
+
+function options_endpoint() {
+
+	$options = array();
+	$option_keys = array( 'alert' );
+	foreach( $option_keys as $i => $option_key ) {
+		$option = get_field( $option_key , 'option' );
+		$options[$option_key ] = $option;
+	}
+	return $options;
+
 }
 
 add_action( 'rest_api_init', function () {
+
+	register_rest_route( 'wp/v2', '/options', array(
+		'methods' => 'GET',
+		'callback' => 'options_endpoint'
+	));
 
 	register_rest_route( 'wp/v2', '/menu', array(
 		'methods' => 'GET',
@@ -171,5 +203,11 @@ add_action( 'rest_api_init', function () {
 	));
 
 });
+
+if( function_exists('acf_add_options_page') ) {
+	
+	acf_add_options_page();
+	
+}
 
 show_admin_bar( false );

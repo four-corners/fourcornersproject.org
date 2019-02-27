@@ -2,8 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 // import SchemaForm from 'react-jsonschema-form';
 
-import i18n from './i18n.jsx';
-import Header from './header.jsx';
+import i18n from '../i18n.jsx';
+import Header from '../header.jsx';
 import Form from './form/form.jsx';
 import Preview from './preview/preview.jsx';
 
@@ -29,7 +29,7 @@ class Creator extends React.Component {
 			activeFieldset: null
 		};
 		this.corners = ['imagery','authorship','backstory','links'];
-		this.onLanguageChanged = this.onLanguageChanged.bind(this);
+		// this.onLanguageChanged = this.onLanguageChanged.bind(this);
 		this.outputRef = React.createRef();
 	}
 
@@ -58,9 +58,9 @@ class Creator extends React.Component {
 		i18n.off('languageChanged', this.onLanguageChanged);
 	}
 
-	componentDidUpdate() {
-		// console.log(this.state.activeCorner);
-	}
+	// componentDidUpdate() {
+	// 	// console.log(this.state.activeCorner);
+	// }
 
 	onLanguageChanged(lang) {
 		this.setState({

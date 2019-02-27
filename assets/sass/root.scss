@@ -6,7 +6,6 @@ html, body {
 	// font-family: sans-serif;
 	background-color: $lightest;
 	overflow-x: hidden;
-	text-rendering: geometricPrecision;
 }
 html {
 	overflow: hidden;
@@ -23,6 +22,7 @@ body {
 }
 * {
 	box-sizing: border-box;
+	text-rendering: optimizeLegibility;
 }
 .rtl, .rtl * {
 	text-align: right;
@@ -41,6 +41,7 @@ main {
 	min-height: 100vh;
 	margin: auto;
 	padding: 2rem 0;
+	position: relative;
 }
 section {
 	padding: 1rem 0;	
@@ -115,6 +116,24 @@ a, a:visited, a:hover {
 	@include sm {
 		padding: 0rem;
 	}
+}
+.content-block {
+	padding: .5rem .75rem;
+	margin: 0 0 1rem 0;
+	background-color: $lightBlue;
+	border-radius: $radius;
+	&:empty {
+		min-height: 6em;
+	}
+}
+.loading-block {
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: $light;
 }
 @include sm {
 	.half-max-width {

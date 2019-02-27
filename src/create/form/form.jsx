@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import SchemaForm from 'react-jsonschema-form';
 import isUrl from 'validator/lib/isUrl';
 
-import i18n from '../i18n.jsx';
+import i18n from '../../i18n.jsx';
 import Schema from './schema.jsx';
 import Fieldset from './fieldset.jsx';
 
@@ -212,7 +212,7 @@ class Form extends React.Component {
 		return (
 			<div className='col-inner'>
 				<div id='forms' className='col-content'>
-					<div className='desc'>
+					<div className='content-block'>
 						{this.props.creator.post_content}
 					</div>
 					<form

@@ -9,7 +9,7 @@
 	// padding-top: 0;
 }
 
-#intro {
+#home-intro {
 	.fc-embed {
 		background-color: $lightBlue;
 		mix-blend-mode: multiply;
@@ -24,15 +24,14 @@
 	}
 }
 
-#about {
+#home-about {
 	background-color: $mediumBlue;
 	color: $darkest;
 }
 
-.content-block {
-	padding: .5rem .75rem;
-	background-color: $lightBlue;
-	border-radius: $radius;
+#corners-preview {
+	width: 100%;
+	height: auto;
 }
 
 .corner-block {

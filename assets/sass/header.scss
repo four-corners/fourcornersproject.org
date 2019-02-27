@@ -87,3 +87,27 @@ h3#site-title {
 		}
 	}
 }
+#alert {
+	width: 100%;
+	padding: .25rem;
+	@include xsText;
+	background-color: $mediumBlue;
+	color: $darkest;
+	text-align: center;
+	.alert-inner {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	a {
+		color: $darkest;
+		text-decoration: underline;
+	}
+	p {
+		
+		margin: 0 .25em;
+	}
+	@include sm {
+		text-align: left;
+	}
+}

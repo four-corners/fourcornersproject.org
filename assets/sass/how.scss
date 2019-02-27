@@ -25,15 +25,15 @@
 	}
 	.fc-embed {
 		border-radius: $radius;
-		background-color: transparent;
-		mix-blend-mode: multiply;
+		// background-color: transparent;
+		// mix-blend-mode: multiply;
 		transform: translate3d(0,0,0);
 		@include smallShadow;
 		.fc-photo {
 
 		}
 		img {
-			filter: grayscale(1);
+			// filter: grayscale(1);
 		}
 		.fc-corner {
 			&[data-slug='context'] {

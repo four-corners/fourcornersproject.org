@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import ReactHtmlParser from 'react-html-parser';
 
 import i18n from './i18n.jsx';
 
@@ -12,7 +13,7 @@ class Header extends React.Component {
 			langs: {},
 			menu: []
 		};
-		this.onLanguageChanged = this.onLanguageChanged.bind(this);
+		// this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
 
 	componentDidMount() {
@@ -43,8 +44,20 @@ class Header extends React.Component {
 				that.setState({ menu: res });
 			});
 
+		let optionsReq = SiteSettings.url.api + 'options';
+		fetch(optionsReq)
+			.then(function(res) {
+				if (!res.ok) {
+					throw Error(res.statusText);
+				}
+				return res.json();
+			})
+			.then(function(res) {
+				that.setState({ options: res });
+			});
 
-		// i18n.on('languageChanged', this.onLanguageChanged);
+
+		i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
 	componentWillUnmount() {
@@ -77,7 +90,6 @@ class Header extends React.Component {
           // );
         // })}
 			// </ul>
-
 
 			<select onChange={this.changeLang.bind(this)} className='form-control'>
 				{Object.keys(this.state.langs).map(function( slug, index ){
@@ -115,30 +127,41 @@ class Header extends React.Component {
 	render() {
 		let lang = this.state.lang;
 		return(
-			<header className='header'>
-				<div className='max-width'>
-					<div className='row'>
-						
-						<div className='col col-12 col-md-4 left'>
-							<div className='col-content'>
-								<div id='title'>
-									<h3 id="site-title">
-										<Link to={SiteSettings.path}>Four Corners</Link>
-									</h3>
+			<React.Fragment>
+				
+				<header className='header'>
+					<div className='max-width'>
+						<div className='row'>
+							
+							<div className='col col-12 col-md-4 left'>
+								<div className='col-content'>
+									<div id='title'>
+										<h3 id="site-title">
+											<Link to={SiteSettings.path}>Four Corners</Link>
+										</h3>
+									</div>
 								</div>
 							</div>
-						</div>
 
-						<div className='col col-12 col-md-8 right'>
-							<div className='col-content'>
-								{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
-								{this.state ? this.renderMenu() : null}
+							<div className='col col-12 col-md-8 right'>
+								<div className='col-content'>
+									{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
+									{this.state ? this.renderMenu() : null}
+								</div>
 							</div>
-						</div>
 
+						</div>
+					</div>
+				</header>
+				{this.state.options&&this.state.options.alert ?
+				<div id='alert'>
+					<div className='alert-inner'>
+						{ReactHtmlParser(this.state.options.alert)}
 					</div>
 				</div>
-			</header>
+				: ''}
+				
+			</React.Fragment>
 		)
 	}
 

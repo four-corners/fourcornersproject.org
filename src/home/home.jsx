@@ -129,7 +129,7 @@ class Home extends React.Component {
 
 							<div className='col col-12 col-md-6 right'>
 								<div className='col-content'>
-									<h3>The platform is free and open source. It is the first major advance in contextualizing the photograph since the caption. It is also the first time that a photographer can immediately inform the reader of his or her own code of ethics as an image-maker.</h3>
+									<h3>The platform is free and open source. <strong>It is the first major advance in contextualizing the photograph since the caption.</strong> It is also the first time that a photographer can immediately inform the reader of his or her own code of ethics as an image-maker.</h3>
 									{/*this.state.page ?
 										this.renderHome() :
 									''*/}

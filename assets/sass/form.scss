@@ -150,18 +150,19 @@ label {
 legend {
 	width: 100%;
 	margin: 0;
-	padding: 1rem 0;
 	display: block;
 	position: relative;
-	user-select: none;
-	color: $medium;
-	@include fastTrans;
 	@include mdText;
-	// line-height: 1.5em;
 	span {
 		min-height: 2rem;
     display: block;
 		position: relative;
+	}
+	fieldset & {
+		padding: 1rem 0;
+		color: $medium;
+		user-select: none;
+		@include fastTrans;
 	}
 	fieldset.expand &, fieldset.collapse & {
 		&::after {
@@ -245,7 +246,7 @@ legend {
 	background-color: $light;
 	border-radius: $radius;
 	font-style: italic;
-	white-space: pre-line;
+	// white-space: pre-line;
 	@include xsText;
 	p:last-of-type {
 		margin: 0;
@@ -443,12 +444,6 @@ select {
 	input:focus + label::before {
 		@include highlight;
 	}
-	// button {
-	// 	width: 100%;
-	// 	position: absolute;
-	// 	left: 0;
-	// 	top: 0;
-	// }
 	input[type="file"] {
 		@include hidden;
 	}
@@ -478,7 +473,6 @@ select {
 	label.button {
 		width: auto;
 		display: table;
-		// font-weight: normal;
 	}
 	.checkbox-content {
 		width: 100%;
@@ -491,51 +485,23 @@ select {
 		@include hidden;
 	}
 }
-
-// .field-array {
-// 	legend {
-// 		font-size: inherit;
-// 	}
-// 	.row {
-// 		margin-left: 0;
-// 		margin-right: 0;
-// 	}
-
-// 	.field-object {
-// 		margin-bottom: 0;
-// 		padding-bottom: 0;
-// 		border-bottom: 0;
-// 	}
-// }
-// .array-item-list.row {
-// 	margin-left: 0;
-// 	margin-right: 0;
-// }
 .block-widget {
 	width: 100%;
 	margin: 0 auto 1rem auto;
 	position: relative;
 	overflow: hidden;
 	padding: 0 .325rem .75rem .325rem;
-
-
-
-	// margin: 1rem auto;
 	padding: .5rem .75rem;
 	border: 0;
 	border-radius: $radius;
 	background: $lighter;
 	@include smallShadow;
-	// @include border;
-	// label {
-		// margin: 0 .325rem;
-	// }
 	.field {
 		padding-top: .5rem;
 		padding-bottom: .5rem;
 	}
 }
-.blocks-buttons {
+.buttons-group {
 	.button {
 		display: inline-block;
 	}
@@ -624,6 +590,14 @@ select {
 		background-color: rgba(red,.2) !important;
 	}
 }
+.buttons-label {
+	height: 2.25rem;
+	width: auto;
+	margin: 0 .25rem .5rem 0;
+	padding: .325rem .75rem .325rem 0;
+	display: inline-block;
+	font-weight: 700;
+}
 .button {
 	height: 2.25rem;
 	width: auto;
@@ -640,7 +614,7 @@ select {
 	&::after {
 		font-weight: normal;
 	}
-	&:last-of-type {
+	&:last-child {
 		margin: 0;
 	}
 	&:hover {

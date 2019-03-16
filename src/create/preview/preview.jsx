@@ -14,9 +14,6 @@ class Embed extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			// imgLoaded: false,
-			// imgFocus: false,
-			// imgSrc: placeholderSrc,
 			includeCss: false,
 			includeJs: false,
 			stickyStyle: {},
@@ -76,28 +73,28 @@ class Embed extends React.Component {
 	}
 
 	onScroll(e) {
-		const sticky = this.stickyRef.current;
-		if(!sticky){return}
-		const parent = sticky.parentElement;
-		const rect = parent.getBoundingClientRect();
-		const top = rect.top;
-		const left = rect.left;
-		const width = rect.width;
-		const height = rect.height;
-		const winHeight = window.innerHeight;
-		let stickyStyle = {};
-		if(top <= 0 && height >= winHeight) {
-			stickyStyle = {
-				width: width+'px',
-				height: '100%',
-				position: 'fixed',
-				top: 0,
-				left: left+'px',
-			};	
-		}
-		this.setState({
-			stickyStyle: stickyStyle
-		});
+		// const sticky = this.stickyRef.current;
+		// if(!sticky){return}
+		// const parent = sticky.parentElement;
+		// const rect = parent.getBoundingClientRect();
+		// const top = rect.top;
+		// const left = rect.left;
+		// const width = rect.width;
+		// const height = rect.height;
+		// const winHeight = window.innerHeight;
+		// let stickyStyle = {};
+		// if(top <= 0 && height >= winHeight) {
+		// 	stickyStyle = {
+		// 		width: width+'px',
+		// 		height: '100%',
+		// 		position: 'fixed',
+		// 		top: 0,
+		// 		left: left+'px',
+		// 	};	
+		// }
+		// this.setState({
+		// 	stickyStyle: stickyStyle
+		// });
 	}
 
 	embedCode(formData) {

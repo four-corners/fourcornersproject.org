@@ -41,7 +41,7 @@ class Label extends React.Component {
 		const strings = this.props.strings;
 		const className = 'field-desc desc'+(this.state.opened?' opened':'');
 		return (
-			<div className='field-label'>
+			<div className='field-label' id={this.props.id}>
 				{strings && strings.label ?
 					<label name={this.props.fieldKey} htmlFor={this.props.fieldKey}>
 						{strings.label}

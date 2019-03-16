@@ -6,8 +6,16 @@ class Checkbox extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: '',
+			value: false,
 		};
+	}
+
+	componentDidUpdate() {
+		if(this.props.fieldValue != this.state.value) {
+			this.setState({
+				value: this.props.fieldValue
+			});
+		}
 	}
 
 	onChange(e) {
@@ -23,6 +31,7 @@ class Checkbox extends React.Component {
 		const style = props.field.style;
 		const setKey = props.setKey;
 		const name = [setKey, fieldKey].join('_');
+		const value = this.state.value;
 		return(
 			<div className={'field checkbox '+(style?style:'')}>
 				<div className='checkbox-widget'>
@@ -30,7 +39,7 @@ class Checkbox extends React.Component {
 						id={fieldKey}
 						name={name}
 						type='checkbox'
-						defaultChecked={false}
+						checked={value ? value : false}
 						onChange={this.onChange.bind(this)} />
 					<label className='checkbox' htmlFor={fieldKey}>
 						<div className='label-inner'>

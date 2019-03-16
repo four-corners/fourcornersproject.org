@@ -16,6 +16,15 @@ class Select extends React.Component {
 		this.selectRef = React.createRef();
 	}
 
+	componentDidUpdate() {
+		const fieldValue = this.props.fieldValue;
+		if(fieldValue && fieldValue != this.state.value) {
+			this.setState({
+				value: fieldValue
+			});
+		}
+	}
+
 	onChange(e) {
 
 	}

@@ -1,8 +1,11 @@
 header {
 	width: 100%;
-	padding: .5rem 0 .75em 0;
-	background-color: $lightBlue;
-	// border-bottom: 1px solid $medium;
+	padding: .5rem 0;
+	background-color: $mediumBlue;
+	// position: sticky;
+	// top: 0;
+	// left: 0;
+	// z-index: 10;
 	.col {
 		display: flex;
 		.col-content {
@@ -18,52 +21,55 @@ header {
 		}
 	}
 }
-#title {
+#site-title {
 	display: table;
 	a {
-		color: $darkest;
 		display: table;
-		position: relative;
-		&:hover, &:focus {
-			color: $blue;
-			outline: none;
-		}
-	}
-	h1 {
-		display: table;
-	}
-}
-h3#site-title {
-	position: relative;
-	font-weight: bold;
-	a {
 		padding: 0 2rem 0 0;
+		position: relative;
+		color: $darkest;
+		line-height: 1.2em;
 		@include fastTrans;
-		&::before, &::after {
-			width: 1.5rem;
-			height: 1.5rem;
-			position: absolute;
-			right: 0rem;
-			top: .5rem;
-			background-image: url(./../images/icon.svg);
-			background-repeat: no-repeat;
-			background-size: cover;
-			// transition: opacity 200ms ease;
-			@include fastTrans;
-			content: '';
-		}
-		&::after {
-			background-position: bottom center;
-			#title:hover &, #title:focus & {
-				opacity: 0;
+		svg {
+			width: auto;
+			height: 2rem;
+			* {
+				fill: $darkest;
 			}
 		}
-		&::before {
-			background-position: top center;
-		}
+		// &::before, &::after {
+		// 	width: 1.5rem;
+		// 	height: 1.5rem;
+		// 	position: absolute;
+		// 	right: 0rem;
+		// 	top: .25rem;
+		// 	background-image: url(./../images/icon.svg);
+		// 	background-repeat: no-repeat;
+		// 	background-size: cover;
+		// 	// transition: opacity 200ms ease;
+		// 	@include fastTrans;
+		// 	content: '';
+		// }
+		// &::after {
+		// 	background-position: bottom center;
+		// }
+		// &::before {
+		// 	background-position: top center;
+		// }
+		// &:hover, &:focus, &:active {
+		// 	color: $blue;
+		// 	outline: none;
+		// 	&::after {
+		// 		opacity: 0;
+		// 	}
+		// }
 	}
+	// h3 {
+	// 	position: relative;
+	// 	font-weight: bold;
+	// }
 }
-#nav {
+nav#main-nav {
 	// clear: both;
 	float: right;
 	margin-bottom: -5px;
@@ -72,11 +78,12 @@ h3#site-title {
 		display: inline-table;
 		margin: 0 0 .5rem 1rem;
 		float: left;
-		color: $dark;
-		border-bottom: 1px solid $blue;
+		color: $darkest;
+		border-bottom: 2px solid $blue;
 		@include smText;
 		&:hover, &:focus {
-			color: $darkest;
+			// color: $blue;
+			border-bottom-color: $darkest;
 		}
 	}
 	@include md {
@@ -91,8 +98,8 @@ h3#site-title {
 	width: 100%;
 	padding: .25rem;
 	@include xsText;
-	background-color: $mediumBlue;
-	color: $darkest;
+	background-color: $darkest;
+	color: $lightBlue;
 	text-align: center;
 	.alert-inner {
 		display: flex;
@@ -100,7 +107,7 @@ h3#site-title {
 		justify-content: center;
 	}
 	a {
-		color: $darkest;
+		color: $mediumBlue;
 		text-decoration: underline;
 	}
 	p {

@@ -4,7 +4,6 @@ import ReactHtmlParser from 'react-html-parser';
 // import SchemaForm from 'react-jsonschema-form';
 
 import i18n from '../i18n.jsx';
-import Header from '../header.jsx';
 import FourCorners from '../../assets/js/four-corners.min.js';
 
 class How extends React.Component {

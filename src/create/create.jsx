@@ -1,11 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-// import SchemaForm from 'react-jsonschema-form';
 
 import i18n from '../i18n.jsx';
 import Header from '../header.jsx';
 import Form from './form/form.jsx';
 import Preview from './preview/preview.jsx';
+import Importer from './importer.jsx';
 
 class Creator extends React.Component {
 	
@@ -18,7 +18,8 @@ class Creator extends React.Component {
 				'authorship':{},
 				'backstory':{},
 				'imagery':{},
-				'links':{}
+				'links':{},
+				'opts': {}
 			},
 			imgData: {},
 			mediaData: {
@@ -29,7 +30,6 @@ class Creator extends React.Component {
 			activeFieldset: null
 		};
 		this.corners = ['imagery','authorship','backstory','links'];
-		// this.onLanguageChanged = this.onLanguageChanged.bind(this);
 		this.outputRef = React.createRef();
 	}
 
@@ -98,12 +98,26 @@ class Creator extends React.Component {
 		});
   }
 
-  setImgData(imgData) {
-  	const newImgData = imgData;
-  	this.setState({
-  		imgData: newImgData
-  	});
-  }
+  setImgSrc(src) {
+		let imgData;
+		let pseudoImg = new Image();
+		pseudoImg.onload = (e) => { 
+			this.setState({
+	  		imgData: {
+					imgSrc: src,
+					imgLoaded: true,
+				}
+	  	});
+		}
+		pseudoImg.onerror = (e) => {
+			this.setState({
+	  		imgData: {
+					imgLoaded: false
+				}
+	  	});
+		}
+		pseudoImg.src = src;
+	}
 
 	renderFormCol() {
 		return (
@@ -111,13 +125,14 @@ class Creator extends React.Component {
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
+				imgData={this.state.imgData}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
 				sendActiveFieldset={this.setActiveFieldset.bind(this)}
 				sendFormData={this.setFormData.bind(this)}
 				sendMediaData={this.setMediaData.bind(this)}
-				sendImgData={this.setImgData.bind(this)} />
+				sendImgSrc={this.setImgSrc.bind(this)} />
 		);
 	}
 
@@ -164,8 +179,17 @@ class Creator extends React.Component {
 				</div>*/}
 
 				<div className='max-width'>
+					<div className='row'>
+						<div className='col col-12 col-sm-6 col-md-5 left'>
+							<h2>Create your own</h2>
+						</div>
+						<div className='col col-12 col-sm-6 col-md-7 right'>
+							<Importer
+								sendFormData={this.setFormData.bind(this)}
+								sendImgSrc={this.setImgSrc.bind(this)} />
+						</div>
+					</div>
 					<div className='row' data-sticky-container>
-
 						<div className='col col-12 col-sm-6 col-md-5 left col-form'>
 							{ ready ? this.renderFormCol() : null }
 						</div>

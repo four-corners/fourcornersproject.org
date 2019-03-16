@@ -11,6 +11,14 @@ class Textarea extends React.Component {
 		};
 	}
 
+	componentDidUpdate() {
+		if(this.props.fieldValue != this.state.value) {
+			this.setState({
+				value: this.props.fieldValue
+			});
+		}
+	}
+
 	onChange(e) {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -32,6 +40,7 @@ class Textarea extends React.Component {
 					name={name}
 					className='form-elem'
 					rows={rows ? rows : 6}
+					value={this.state.value}
 					placeholder={placeholder}
 					onChange={this.onChange.bind(this)} />
 			</div>

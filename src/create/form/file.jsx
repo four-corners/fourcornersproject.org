@@ -7,31 +7,44 @@ class File extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			imgSrc: '',
-			imgLoaded: false
-		};
+			value: ''
+		}
 	}
 
-	onChangeSrc(src) {
-		let imgData;
-		let pseudoImg = new Image();
-		pseudoImg.onload = (e) => {
-			imgData = {
-				imgSrc: src,
-				imgLoaded: true,
-			}
-			this.setState(imgData);
-			this.props.sendImgData(imgData);
+	componentDidUpdate() {
+		const imgSrc = this.props.fieldValue.imgSrc;
+		if(imgSrc && imgSrc != this.state.value) {
+			this.setState({
+				value: imgSrc
+			});
 		}
-		pseudoImg.onerror = (e) => {
-			imgData = {
-				imgLoaded: false
-			}
-			this.setState(imgData);
-			this.props.sendImgData(imgData);
-		}
-		pseudoImg.src = src;
 	}
+
+	onChange(e) {
+		this.props.sendImgSrc(e.target.value);
+	}
+
+
+	// onChangeSrc(src) {
+	// 	let imgData;
+	// 	let pseudoImg = new Image();
+	// 	pseudoImg.onload = (e) => {
+	// 		imgData = {
+	// 			imgSrc: src,
+	// 			imgLoaded: true,
+	// 		}
+	// 		this.setState(imgData);
+	// 		this.props.sendImgData(imgData);
+	// 	}
+	// 	pseudoImg.onerror = (e) => {
+	// 		imgData = {
+	// 			imgLoaded: false
+	// 		}
+	// 		this.setState(imgData);
+	// 		this.props.sendImgData(imgData);
+	// 	}
+	// 	pseudoImg.src = src;
+	// }
 
 	render() {
 		const setKey = this.props.setKey;
@@ -43,14 +56,13 @@ class File extends React.Component {
 				{this.props.hideLabel?'':
 				<Label strings={strings} feildKey={fieldKey} />}
 				<input
+					className='form-control'
 					id={fieldKey}
 					name={name}
 					type='url'
-					className='form-control'
+					value={this.state.value}
 					placeholder='https://sample.org/photo.jpg'
-					onChange={(e => {
-						this.onChangeSrc(e.target.value);
-					})} />
+					onChange={this.onChange.bind(this)} />
 			</div>
 		);
 	}

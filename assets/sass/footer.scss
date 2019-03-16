@@ -1,10 +1,23 @@
 footer {
 	width: 100%;
 	padding: .5rem 0;
-	.col {
-		display: flex;
-		.col-content {
-			margin: auto;
+	background-color: $mediumBlue;
+	a, a:visited {
+		color: $darkest;
+		border-bottom: 1px solid $blue;
+		&:hover, &:focus {
+			color: $darkest;
+			border-bottom-color: $darkest;
+		}
+	}
+	nav {
+		ol {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		li {
+			margin: 0 0 .5rem 0;
 		}
 	}
 }

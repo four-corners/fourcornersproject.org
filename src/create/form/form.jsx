@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'react-dom';
-import SchemaForm from 'react-jsonschema-form';
 import isUrl from 'validator/lib/isUrl';
 
 import i18n from '../../i18n.jsx';
@@ -36,7 +35,11 @@ class Form extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-
+		if(this.props.formData != this.state.formData) {
+			this.setState({
+				formData: this.props.formData
+			})
+		}
 	}
 
 	onFocus(e) {
@@ -172,16 +175,18 @@ class Form extends React.Component {
 			}
 			fieldsets.push(
 				<Fieldset
+					key={setKey}
 					setKey={setKey}
 					data={Schema[setKey]}
-					key={setKey}
+					formData={this.state.formData}
+					imgData={this.props.imgData}
 					onChange={this.onChange.bind(this)}
 					activeCorner={this.props.activeCorner}
 					activeFieldset={this.props.activeFieldset}
 					sendActiveCorner={this.props.sendActiveCorner}
 					sendActiveFieldset={this.props.sendActiveFieldset}
 					sendMediaData={this.props.sendMediaData}
-					sendImgData={this.props.sendImgData} />
+					sendImgSrc={this.props.sendImgSrc} />
 			);
 		}
 		return fieldsets;
@@ -212,6 +217,7 @@ class Form extends React.Component {
 		return (
 			<div className='col-inner'>
 				<div id='forms' className='col-content'>
+
 					<div className='content-block'>
 						{this.props.creator.post_content}
 					</div>

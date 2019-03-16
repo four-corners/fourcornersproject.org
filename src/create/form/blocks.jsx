@@ -8,11 +8,23 @@ class Blocks extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			value: '',
 			blocks: [],
 			blockMedia: [],
 			superIndex: 0,
 		};
+	}
+
+	componentDidUpdate() {
+		const fieldValue = this.props.fieldValue;
+		if(fieldValue && fieldValue != this.state.blocks) {
+			fieldValue.map((block, blockIndex) => {
+				fieldValue[blockIndex].index = blockIndex;
+			});
+			this.setState({
+				blocks: fieldValue,
+				superIndex: fieldValue.length+1
+			});
+		}
 	}
 
 	onChange(e) {
@@ -49,7 +61,6 @@ class Blocks extends React.Component {
 		const mediaData = Object.assign({}, this.state.blockMedia);
 		switch(source) {
 			case 'youtube':
-				// req = 'https://www.youtube.com/oembed?url='+uri;
 				req = 'https://noembed.com/embed?url='+uri;
 				break;
 			case 'vimeo':
@@ -109,22 +120,26 @@ class Blocks extends React.Component {
 	}
 
 	renderBlock(block, blockIndex) {
-		const blocks = this.state.blocks;
-		const setKey = this.props.setKey;
-		const fieldKey = this.props.fieldKey;
-		const field = this.props.field;
+		const blocks = this.state.blocks,
+					setKey = this.props.setKey,
+					fieldKey = this.props.fieldKey,
+					field = this.props.field,
+					subFields = field.fields,
+					subFieldKeys = Object.keys(subFields),
+					subFieldValue = null;
 		if(!field.types){return null}
-		const type = field.types[block.source];
-		if(!type){return null}
-		type.slug = slugify(type.label,{lower:true});
-		type.name = [setKey, fieldKey, 'source'].join('_');
-		const subFields = field.fields;
-		const subFieldKeys = Object.keys(subFields);
+		const typeStrings = field.types[block.source];
+		if(!typeStrings){return null}
+		typeStrings.slug = slugify(typeStrings.label,{lower:true});
+		typeStrings.name = [setKey, fieldKey, 'source'].join('_');
+
 		let subFieldElems = [];
 		subFieldKeys.map((subFieldKey, subFieldIndex) => {
-			const subFieldData = subFields[subFieldKey];
-			const subField = this.renderField(subFieldKey, subFieldData, type, block.index, subFieldIndex);
-			subFieldElems.push(subField);
+			const subFieldData = subFields[subFieldKey],
+						subFieldValue = block[subFieldKey];
+			subFieldElems.push(
+				this.renderField(subFieldKey, subFieldData, subFieldValue, typeStrings, block.index, subFieldIndex)
+			);
 		});
 		const upIndex = blockIndex-1;
 		const downIndex = blockIndex+1;
@@ -136,10 +151,9 @@ class Blocks extends React.Component {
 				key={block.index}>
 
 				<input
-					name={type.name}
+					name={typeStrings.name}
 					type='hidden'
-					// onChange={this.onChange.bind(this)}
-					value={type.slug} />
+					value={typeStrings.slug} />
 
 				{subFieldElems}
 
@@ -169,23 +183,26 @@ class Blocks extends React.Component {
 		);
 	}
 
-	renderField(subFieldKey, subFieldData, type, blockIndex, subFieldIndex) {
-		const setKey = this.props.setKey;
-		const fieldKey = this.props.fieldKey;
-		const data = this.props.data;
+	renderField(subFieldKey, subFieldData, subFieldValue, typeStrings, blockIndex, subFieldIndex) {
+		const setKey = this.props.setKey,
+					fieldKey = this.props.fieldKey,
+					data = this.props.data;
 		const name = [setKey, fieldKey, subFieldKey, blockIndex, subFieldIndex].join('_');
-		let strings = Object.assign({}, subFieldData.strings);
-
+		let strings;
 		if(subFieldKey == 'url') {
-			strings = type;
+			strings = typeStrings;
+		} else {
+			strings = Object.assign({}, subFieldData.strings);
 		}
+		console.log(strings);
 		return(
-			<div className='field' key={name}>
+			<div className='field' key={subFieldIndex}>
 				<Label strings={strings} fieldKey={fieldKey} />
 				<input
-					className='form-elem'
 					name={name}
+					className='form-elem'
 					type={'text'}
+					value={subFieldValue}
 					placeholder={strings.placeholder}
 					onChange={this.onChange.bind(this)}/>
 			</div>
@@ -197,19 +214,19 @@ class Blocks extends React.Component {
 		const types = field.types;
 		if(!types){return}
 		let buttons = [];
-		Object.keys(types).map((key, i) => {
-			let type = types[key];
-			const button = this.renderButton(type, key);
+		Object.keys(types).map((typeKey, i) => {
+			let type = types[typeKey];
+			const button = this.renderButton(type, typeKey, i);
 			buttons.push(button);
 		});
 		return buttons;
 	}
 
-	renderButton(type, slug) {
+	renderButton(type, typeKey, i) {
 		return (
-			<div className='button add-block'
-				data-slug={slug}
-				key={slug}
+			<div key={i}
+				className='button add-block'
+				data-slug={typeKey}
 				onClick={this.addBlock.bind(this)}>
 				Add {type.label}
 			</div>
@@ -222,7 +239,7 @@ class Blocks extends React.Component {
 		const newBlocks = this.state.blocks.concat([{
 			source: e.target.dataset.slug,
 			index: this.state.superIndex
-		}])
+		}]);
 		this.setState({
 			blocks: newBlocks,
 			superIndex: this.state.superIndex+1
@@ -288,13 +305,14 @@ class Blocks extends React.Component {
 		const strings = this.props.field.strings;
 		const name = [setKey, fieldKey].join('_');
 		return(
-			<div className="field">
+			<div className='field'>
 
-				<div className="blocks-widget">
+				<div className='blocks-widget'>
 					{this.renderBlocks()}
 				</div>
 
-				<div className="blocks-buttons">
+				<div className='buttons-group'>
+					{/*<div className='buttons-label'>Add media from</div>*/}
 					{this.renderButtons()}
 				</div>
 

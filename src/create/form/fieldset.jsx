@@ -49,15 +49,30 @@ class Fieldset extends React.Component {
 	}
 
 	renderFields() {
-		const fields = this.props.data.fields;
-		const fieldKeys = Object.keys(fields);
-		const fieldElems = [];
+		const formData = this.props.formData,
+					fields = this.props.data.fields,
+					fieldKeys = Object.keys(fields),
+					fieldElems = [];
 
 		for(let fieldKey of fieldKeys) {
-			const field = fields[fieldKey];
-			const setKey = this.props.setKey;
-			const index = fieldElems.length;
+			const field = fields[fieldKey],
+						setKey = this.props.setKey,
+						index = fieldElems.length;
+			let fieldValue = formData[setKey] ? formData[setKey][fieldKey] : null;
+
 			switch(field.type) {
+				case 'file':
+					fieldElems.push(
+						<File
+							key={index}
+							setKey={setKey}
+							fieldKey={fieldKey}
+							field={field}
+							fieldValue={this.props.imgData}
+							onChange={this.props.onChange}
+							sendImgSrc={this.props.sendImgSrc} />
+					);
+					break;
 				case 'text':
 					fieldElems.push(
 						<Text
@@ -65,6 +80,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange} />
 					);
 					break;
@@ -75,6 +91,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange} />
 					);
 					break;
@@ -85,6 +102,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange} />
 					);
 					break;
@@ -95,27 +113,18 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange} />
-					);
-					break;
-				case 'file':
-					fieldElems.push(
-						<File
-							key={index}
-							setKey={setKey}
-							fieldKey={fieldKey}
-							field={field}
-							onChange={this.props.onChange}
-							sendImgData={this.props.sendImgData} />
 					);
 					break;
 				case 'blocks':
 					fieldElems.push(
 						<Blocks
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange}
 							sendActiveCorner={this.props.sendActiveCorner}
 							sendMediaData={this.props.sendMediaData} />
@@ -124,10 +133,11 @@ class Fieldset extends React.Component {
 				case 'group':
 					fieldElems.push(
 						<Group
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange}
 							sendMediaData={this.props.sendMediaData} />
 					);
@@ -135,10 +145,11 @@ class Fieldset extends React.Component {
 				case 'toggle':
 					fieldElems.push(
 						<Toggle
+							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							key={fieldElems.length}
+							fieldValue={fieldValue}
 							onChange={this.props.onChange}
 							sendMediaData={this.props.sendMediaData} />
 					);

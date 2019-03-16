@@ -38,6 +38,7 @@ add_action( 'wp_enqueue_scripts', 'four_corners_scripts' );
 
 register_nav_menus( array(
 	'main' => 'Main',
+	'footer' => 'Footer',
 ) );
 
 function register_creators() {
@@ -58,6 +59,31 @@ function register_creators() {
 
 }
 add_action( 'init', 'register_creators' );
+
+function get_alert() {
+	if( $alert = get_field( 'alert', 'option' ) ):
+		echo '<div id="alert">';
+			echo '<div class="alert-inner">';
+				echo $alert;
+			echo '</div>';
+		echo '</div>';
+	endif;
+}
+
+function get_local_page( $slug ) {
+	$page = get_page_by_path( $slug );
+	$page_id = $page->ID;
+	$local_id = pll_get_post( $page_id, pll_current_language() );
+	$local_page = get_page( $local_id );
+	return $local_page;
+}
+
+function get_local_link( $slug ) {
+	$local_page = get_local_page( $slug );
+	$local_page_id = $local_page->ID;
+	$local_link = get_permalink( $local_page_id );
+	return $local_link;
+}
 
 function get_translations_json( $req ) {
 
@@ -88,6 +114,61 @@ function get_langs() {
 
 }
 
+function info_endpoint() {
+
+	return (object) array(
+		'title' => get_bloginfo( 'title' ),
+		'tagline' => get_bloginfo( 'description' )
+	);
+
+}
+
+function options_endpoint() {
+
+	$options = array();
+	$option_keys = array(
+		'alert',
+		'authorship_brief',
+		'backstory_brief',
+		'imagery_brief',
+		'links_brief'
+	);
+	foreach( $option_keys as $i => $option_key ) {
+		$option = get_field( $option_key , 'option' );
+		$options[$option_key ] = $option;
+	}
+	return $options;
+
+}
+
+function menu_endpoint() {
+
+	$menu_items = wp_get_nav_menu_items( 'main' );
+	foreach ( $menu_items as $i => $menu_item ) {
+		if( $post = get_post( $menu_item->object_id ) ) {
+			$menu_items[$i]->slug = $post->post_name;	
+		}
+	}
+	return $menu_items;
+
+}
+
+function page_endpoint( $req ) {
+
+	$slug = $req['slug'];
+	$lang = $req['lang'];
+	$args = array(
+		'post_type' => 'page',
+		'posts_per_page'=> 1, 
+		'numberposts'=> 1,
+		'name' => $slug
+	);
+	$page = get_posts( $args )[0];
+	$acf = get_fields( $page->ID );
+	$page->acf = $acf;
+	return $page;
+
+}
 
 function creators_endpoint( $req ) {
 
@@ -124,46 +205,6 @@ function creator_endpoint( $req ) {
 
 }
 
-function page_endpoint( $req ) {
-
-	$slug = $req['slug'];
-	$lang = $req['lang'];
-	$args = array(
-		'post_type' => 'page',
-		'posts_per_page'=> 1, 
-		'numberposts'=> 1,
-		'name' => $slug
-	);
-	$page = get_posts( $args )[0];
-	$acf = get_fields( $page->ID );
-	$page->acf = $acf;
-	return $page;
-
-}
-
-function menu_endpoint() {
-
-	$menu_items = wp_get_nav_menu_items( 'main' );
-	foreach ( $menu_items as $i => $menu_item ) {
-		if( $post = get_post( $menu_item->object_id ) ) {
-			$menu_items[$i]->slug = $post->post_name;	
-		}
-	}
-	return $menu_items;
-
-}
-
-function options_endpoint() {
-
-	$options = array();
-	$option_keys = array( 'alert' );
-	foreach( $option_keys as $i => $option_key ) {
-		$option = get_field( $option_key , 'option' );
-		$options[$option_key ] = $option;
-	}
-	return $options;
-
-}
 
 add_action( 'rest_api_init', function () {
 
@@ -172,9 +213,19 @@ add_action( 'rest_api_init', function () {
 		'callback' => 'options_endpoint'
 	));
 
+	register_rest_route( 'wp/v2', '/info', array(
+		'methods' => 'GET',
+		'callback' => 'info_endpoint'
+	));
+
 	register_rest_route( 'wp/v2', '/menu', array(
 		'methods' => 'GET',
 		'callback' => 'menu_endpoint'
+	));
+
+	register_rest_route( 'wp/v2', '/page/', array(
+		'methods' => 'GET',
+		'callback' => 'page_endpoint'
 	));
 
 	register_rest_route( 'wp/v2', '/creators', array(
@@ -185,11 +236,6 @@ add_action( 'rest_api_init', function () {
 	register_rest_route( 'wp/v2', '/creator/(?P<lang>[a-zA-Z0-9-]+)', array(
 		'methods' => 'GET',
 		'callback' => 'creator_endpoint'
-	));
-
-	register_rest_route( 'wp/v2', '/page/', array(
-		'methods' => 'GET',
-		'callback' => 'page_endpoint'
 	));
 
 	register_rest_route( 'wp/v2', '/translation/(?P<lang>[a-zA-Z0-9-]+)', array(
@@ -203,6 +249,11 @@ add_action( 'rest_api_init', function () {
 	));
 
 });
+
+pll_register_string( 'Corner Names', 'authorship', 'Four Corners', false );
+pll_register_string( 'Corner Names', 'backstory', 'Four Corners', false );
+pll_register_string( 'Corner Names', 'imagery', 'Four Corners', false );
+pll_register_string( 'Corner Names', 'links', 'Four Corners', false );
 
 if( function_exists('acf_add_options_page') ) {
 	

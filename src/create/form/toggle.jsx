@@ -18,6 +18,17 @@ class Toggle extends React.Component {
 		};
 	}
 
+	componentDidUpdate() {
+		const fieldValue = this.props.fieldValue;
+		if(fieldValue != this.state.value) {
+			this.setState({
+				value: fieldValue,
+				values: {fieldValue},
+				checked: fieldValue ? fieldValue.type : null
+			});
+		}
+	}
+
 	onChange(name, subValue) {
 		const formData = this.state.formData;
 		const nameArr = name.split('_');
@@ -128,17 +139,19 @@ class Toggle extends React.Component {
 	}
 
 	renderField(subFieldKey, subFieldData, i) {
-		const setKey = this.props.setKey;
-		const fieldKey = this.props.fieldKey;
-		const field = this.props.field;
-		const subField = field.fields[subFieldKey];
-		const subStrings = subField.strings;
-		const name = [setKey, subFieldKey].join('_');
-		const subFieldName = [fieldKey, subFieldKey].join('_');
-		const checked = this.state.checked;
-		const show = checked == subFieldKey;
-		const className = 'field-toggle-field'+(show?' active':'');
-		let fieldElem;
+		const setKey = this.props.setKey,
+					fieldKey = this.props.fieldKey,
+					field = this.props.field,
+					subField = field.fields[subFieldKey],
+					subStrings = subField.strings,
+					name = [setKey, subFieldKey].join('_'),
+					subFieldName = [fieldKey, subFieldKey].join('_'),
+					checked = this.state.checked,
+					show = checked == subFieldKey,
+					className = 'field-toggle-field'+(show?' active':'');
+		let fieldElem,
+				fieldValue = this.props.fieldValue;
+
 		switch(subField.type) {
 			case 'text':
 				fieldElem = <Text
@@ -146,6 +159,7 @@ class Toggle extends React.Component {
 						setKey={setKey}
 						fieldKey={subFieldName}
 						field={subField}
+						fieldValue={fieldValue}
 						hideLabel={true}
 						onChange={this.onChange.bind(this)} />
 				break;
@@ -155,6 +169,7 @@ class Toggle extends React.Component {
 						setKey={setKey}
 						fieldKey={subFieldName}
 						field={subField}
+						fieldValue={fieldValue}
 						hideLabel={true}
 						onChange={this.onChange.bind(this)} />
 				break;
@@ -164,6 +179,7 @@ class Toggle extends React.Component {
 						setKey={setKey}
 						fieldKey={subFieldName}
 						field={subField}
+						fieldValue={fieldValue}
 						hideLabel={true}
 						onChange={this.onChange.bind(this)} />
 				break;
@@ -173,6 +189,7 @@ class Toggle extends React.Component {
 						setKey={setKey}
 						fieldKey={subFieldName}
 						field={subField}
+						fieldValue={fieldValue}
 						hideLabel={true}
 						onChange={this.onChange.bind(this)}
 						sendMediaData={this.props.sendMediaData} />

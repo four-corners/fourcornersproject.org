@@ -11,6 +11,14 @@ class Text extends React.Component {
 		};
 	}
 
+	componentDidUpdate() {
+		if(this.props.fieldValue != this.state.value) {
+			this.setState({
+				value: this.props.fieldValue
+			});
+		}
+	}
+
 	onChange(e) {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -24,15 +32,19 @@ class Text extends React.Component {
 		const strings = props.field.strings;
 		const style = props.field.style;
 		const name = [setKey, fieldKey].join('_');
+		let defaultValue = props.field.default?strings.placeholder:'';
+		if(this.state.value) {
+			defaultValue = this.state.value;
+		}
 		return(
 			<div className={'field input '+(style?style:'')}>
 				{this.props.hideLabel?'':
 				<Label strings={strings} fieldKey={fieldKey} />}
 				<input
 					name={name}
-					placeholder={strings.placeholder}
-					defaultValue={props.field.default?strings.placeholder:''}
 					className='form-elem'
+					value={this.state.value ? this.state.value : defaultValue}
+					placeholder={strings.placeholder}
 					onChange={this.onChange.bind(this)} />
 			</div>
 		);

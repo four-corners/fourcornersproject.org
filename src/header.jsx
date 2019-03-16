@@ -118,7 +118,7 @@ class Header extends React.Component {
 			});
 		}
 		return (
-			<nav id='nav'>
+			<nav id='main-nav'>
 				{linkElems}
 			</nav>
 		);
@@ -135,10 +135,9 @@ class Header extends React.Component {
 							
 							<div className='col col-12 col-md-4 left'>
 								<div className='col-content'>
-									<div id='title'>
-										<h3 id="site-title">
-											<Link to={SiteSettings.path}>Four Corners</Link>
-										</h3>
+									<div id='site-title'>
+											<Link to={SiteSettings.path}>
+											</Link>
 									</div>
 								</div>
 							</div>

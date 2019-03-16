@@ -3,9 +3,6 @@ import { render } from 'react-dom';
 import { NamespacesConsumer } from 'react-i18next';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Header from './header';
-import Footer from './footer';
-
 import Home from './home/home';
 import About from './about/about';
 import How from './how/how';
@@ -25,17 +22,44 @@ const routes = (
 				return(
 					<Router>
 						<React.Fragment>
-							<Header/>
 							<Switch>
-								<Route exact path={SiteSettings.path} component={Home} />
-								<Route path={SiteSettings.path+'about'} component={About} />
-								<Route path={SiteSettings.path+'how'} component={How} />
-								{/*<Route path={SiteSettings.path+'gallery'} component={Gallery} />*/}
-								{/*<Route path={SiteSettings.path+'contact'} component={Contact} />*/}
-								<Route path={SiteSettings.path+'create'} component={Creator} />
+								<Route exact
+									path={SiteSettings.path}
+									render={(props) =>
+									<Home />
+								} />
+								<Route exact
+									path={SiteSettings.path+'about'}
+									render={(props) =>
+										<About />
+									}
+								/>
+								<Route
+									path={SiteSettings.path+'how'}
+									render={(props) =>
+										<How />
+									}
+								/>
+								<Route
+									path={SiteSettings.path+'gallery'}
+									render={(props) =>
+										<Gallery />
+									}
+								/>
+								<Route
+									path={SiteSettings.path+'contact'}
+									render={(props) =>
+										<Contact />
+									}
+								/>
+								<Route
+									path={SiteSettings.path+'create'}
+									render={(props) =>
+										<Creator />
+									}
+								/>
 								<Route path='*' component={Page} />
 							</Switch>
-							<Footer/>
 						</React.Fragment>
 					</Router>
 				)

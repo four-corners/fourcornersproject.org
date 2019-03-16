@@ -129,11 +129,9 @@ const Schema = {
 		fields: {
 			cutline: {
 				type: 'checkbox',
-				style: 'half'
 			},
 			dark: {
 				type: 'checkbox',
-				style: 'half'
 			}
 		}
 	}

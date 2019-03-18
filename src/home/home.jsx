@@ -133,7 +133,7 @@ class Home extends React.Component {
 
 									<div id='home-subscribe'>
 										<Subscribe
-											label={<h3><strong>Subscribe to recieve updates</strong></h3>}
+											label={<h3><strong>Subscribe to receive updates</strong></h3>}
 											formUrl={this.state.options.subscribe}/>
 									</div>
 

@@ -19,14 +19,14 @@ class Importer extends React.Component {
 
 
 	openPopup(e) {
-		e.preventDefault();
+		if(e){e.preventDefault()}
 		this.setState({
 			openPopup: true
 		});
 	}
 
 	closePopup(e) {
-		e.preventDefault();
+		if(e){e.preventDefault()}
 		this.setState({
 			openPopup: false
 		});
@@ -43,14 +43,18 @@ class Importer extends React.Component {
 		const value = e.target.querySelector('textarea').value;
 		try {
 			const embedHtml = ReactHtmlParser(value)[0];
-			const	embedImgSrc = embedHtml.props.children[0].props.src;
 			const	embedJSON = JSON.parse(embedHtml.props['data-fc']);
-			this.props.sendImgSrc(embedImgSrc);
 			this.props.sendFormData(embedJSON);
+
+			if(embedHtml.props.children.length) {
+				const embedImgSrc = embedHtml.props.children[0].props.src;
+				this.props.sendImgSrc(embedImgSrc);
+			}
 			this.closePopup();
 		} catch (e) {
 			console.log(e);
 		}
+
 	}
 
 	onError(e) {

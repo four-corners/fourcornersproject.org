@@ -5,6 +5,7 @@ import i18n from './../i18n.jsx';
 import { Link, NavLink } from 'react-router-dom';
 import NotFound from './../not-found';
 import Demo from './demo';
+import Subscribe from './subscribe';
 
 class Home extends React.Component {
 
@@ -12,7 +13,8 @@ class Home extends React.Component {
 		super(props);
 		this.state = {
 			page: {},
-			info: {}
+			info: {},
+			options: {}
 		};
 		this.cornersInfo = [
 			{'title': 'Author\u00ADship','slug': 'authorship'},
@@ -114,7 +116,7 @@ class Home extends React.Component {
 				<section id="home-intro">
 					<div className='max-width'>
 						<div className='row'>
-							<div className='col col-12 col-sm-6'>
+							<div className='col col-12 col-md-6'>
 								<div className='col-content'>
 									<h1 id='site-tagline'>{this.state.info.tagline}</h1>
 									{/*<div className='border-block'>
@@ -125,19 +127,26 @@ class Home extends React.Component {
 									<Link to={SiteSettings.path+'create'} className='prompt-button'>
 										<u>Try it out</u>
 									</Link>
-									<Link to={SiteSettings.path+'create'} className='prompt-button'>
-										<u>Contribute</u>
+									<Link to={SiteSettings.path+'how'} className='prompt-button'>
+										<u>Learn more</u>
 									</Link>
+
+									<div id='home-subscribe'>
+										<Subscribe
+											label={<h3><strong>Subscribe to recieve updates</strong></h3>}
+											formUrl={this.state.options.subscribe}/>
+									</div>
 
 								</div>
 							</div>
 							{/*<div className='col col-1 col-gap'></div>*/}
-							<div className='col col-12 col-sm-6'>
+							<div className='col col-12 col-md-6'>
 								<div className='col-content'>
 									<Demo cornersInfo={this.cornersInfo} options={this.state.options}/>
-									{/*<div className='border-block'>
+									<br/>
+									{<div className='border-block'>
 										{ReactHtmlParser(this.state.page.post_content)}
-									</div>*/}
+									</div>}
 								</div>
 							</div>
 
@@ -157,33 +166,7 @@ class Home extends React.Component {
 					</div>
 				</section>*/}
 
-				{/*<section>
-					<div className='max-width'>
-						<div className='row'>
-							<div className='col col-12 col-lg-6 left'>
-								<div className='col-content'>
-									<div className='content-block'>{ReactHtmlParser(this.state.page.post_content)}</div>
-								</div>
-							</div>
-
-							<div className='col col-12 col-lg-6 right'>
-								<div className='col-content'>
-									<div className='content-block'>
-										{<img id='corners-preview' src={SiteSettings.url.theme+'/assets/images/corners.svg'}/>}
-									</div>
-								</div>
-							</div>
-
-							<div className='col col-12'>
-								<div className='content-block'>
-									<h3>Are you a photographer or publisher?</h3>
-									<h2 className='prompt-link'>{<Link to={SiteSettings.path+'create'}><u>Try it out!</u></Link>}</h2>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</section>*/}
+				{/*ReactHtmlParser(this.state.page.post_content)*/}
 
 				<section id="home-about">
 					<div className='max-width'>
@@ -211,7 +194,7 @@ class Home extends React.Component {
 
 							<div className='col col-12 col-lg-6 left'>
 								<div className='col-content'>
-									<Link to={SiteSettings.path+'gallery'} className='prompt-button full'>
+									<Link to={SiteSettings.path+'how'} className='prompt-button full'>
 										<u>How it works</u>
 									</Link>
 								</div>

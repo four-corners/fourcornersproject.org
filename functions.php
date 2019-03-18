@@ -1,7 +1,7 @@
 <?php
 function four_corners_scripts() {
 
-	$ver = '1.0.4';
+	$ver = '1.0.5';
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	// wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
@@ -131,7 +131,8 @@ function options_endpoint() {
 		'authorship_brief',
 		'backstory_brief',
 		'imagery_brief',
-		'links_brief'
+		'links_brief',
+		'subscribe'
 	);
 	foreach( $option_keys as $i => $option_key ) {
 		$option = get_field( $option_key , 'option' );

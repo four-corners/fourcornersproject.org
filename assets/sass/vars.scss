@@ -2,7 +2,8 @@
 
 $blue: #80bdff;
 $mediumBlue: #afd5ff;
-$lightBlue: #f4f7fe;
+$lightBlue: #a6cdfe;
+$lightestBlue: #f4f7fe;
 
 $darkest: #181819;
 $dark: #7b7883;
@@ -82,13 +83,21 @@ $radius: 4px;
 	border-bottom: .2rem solid;
 }
 
+@mixin baseText {
+	font-size: 16px;
+	line-height: 1.6em;
+	@include md {
+		font-size: 13px;
+	}
+}
+
 @mixin xsText {
 	font-size: .8rem;
 	line-height: 1.4em;
 }
 
 @mixin smText {
-	font-size: 1.2rem;
+	font-size: 1rem;
 	line-height: 1.6em;
 }
 
@@ -105,6 +114,9 @@ $radius: 4px;
 @mixin xlText {
 	font-size: 3.2rem;
 	line-height: 1.2em;
+	@include lg {
+		font-size: 2.6rem;
+	}
 }
 
 @mixin sm {

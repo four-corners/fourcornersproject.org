@@ -29,7 +29,7 @@ class Preview extends React.Component {
 		this.jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+this.cdnVer+'/dist/four-corners.min.js';
 		this.cssCDN = '<link href="'+this.cssURL+'" rel="stylesheet" type="text/css">';
 		this.jsCDN = '<script src="'+this.jsURL+'" type="text/javascript"></script>';
-		this.jsInit = '<script type="text/javascript">new Four Corners()</script>';
+		this.jsInit = '<script type="text/javascript">new FourCorners()</script>';
 	}
 
 	componentDidMount() {

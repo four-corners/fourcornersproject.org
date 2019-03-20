@@ -5,7 +5,7 @@ import i18n from '../i18n.jsx';
 import Header from '../header.jsx';
 import Form from './form/form.jsx';
 import Preview from './preview/preview.jsx';
-import Importer from './importer.jsx';
+import Popup from './popup.jsx';
 
 class Creator extends React.Component {
 	
@@ -14,6 +14,7 @@ class Creator extends React.Component {
 		this.state = {
 			creator: {},
 			lang: 'en',
+			imgData: {},
 			formData: {
 				'authorship':{},
 				'backstory':{},
@@ -21,7 +22,6 @@ class Creator extends React.Component {
 				'links':{},
 				'opts': {}
 			},
-			imgData: {},
 			mediaData: {
 				imagery:[],
 				backstory:[]
@@ -29,6 +29,7 @@ class Creator extends React.Component {
 			activeCorner: null,
 			activeFieldset: null
 		};
+		this.timestamp = Date.now();
 		this.corners = ['imagery','authorship','backstory','links'];
 		this.outputRef = React.createRef();
 	}
@@ -69,6 +70,15 @@ class Creator extends React.Component {
 	}
 
 	setFormData(newData) {
+		if(!newData){return}
+		let history = localStorage.getItem('FourCornersHistory');
+		let newHistory = JSON.parse(history) || {};
+		newHistory[this.timestamp] = {
+			lang: this.state.lang,
+			dateCreated: new Date(),
+			formData: newData
+		};
+		localStorage.setItem('FourCornersHistory', JSON.stringify(newHistory));
 		this.setState({
 			formData: newData
 		});
@@ -184,7 +194,14 @@ class Creator extends React.Component {
 							<h2>Create your own</h2>
 						</div>
 						<div className='col col-12 col-sm-6 col-md-7 right'>
-							<Importer
+							{/*<History
+								popup={this.state.popup}
+								openPopup={this.openPopup.bind(this)}
+								closePopup={this.closePopup.bind(this)}
+								sendFormData={this.setFormData.bind(this)}
+								sendImgSrc={this.setImgSrc.bind(this)} />*/}
+							<Popup
+								lang={this.state.lang}
 								sendFormData={this.setFormData.bind(this)}
 								sendImgSrc={this.setImgSrc.bind(this)} />
 						</div>

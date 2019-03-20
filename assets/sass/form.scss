@@ -599,7 +599,7 @@ select {
 	font-weight: 700;
 }
 .button {
-	height: 2.5rem;
+	// height: 2.5rem;
 	width: auto;
 	margin: 0 .5rem .5rem 0;
 	padding: .325rem .75rem;
@@ -615,7 +615,7 @@ select {
 		font-weight: normal;
 	}
 	&:last-child {
-		margin: 0;
+		margin-right: 0;
 	}
 	&:hover {
 		background-color: $lighter;

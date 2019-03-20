@@ -194,7 +194,6 @@ class Blocks extends React.Component {
 		} else {
 			strings = Object.assign({}, subFieldData.strings);
 		}
-		console.log(strings);
 		return(
 			<div className='field' key={subFieldIndex}>
 				<Label strings={strings} fieldKey={fieldKey} />

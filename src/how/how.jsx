@@ -4,7 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 // import SchemaForm from 'react-jsonschema-form';
 
 import i18n from '../i18n.jsx';
-import FourCorners from '../../assets/js/four-corners.min.js';
+// import FourCorners from '../../assets/js/four-corners.min.js';
 
 class How extends React.Component {
 	
@@ -34,7 +34,7 @@ class How extends React.Component {
 			.then(function(res) {
 				if(res) {
 					self.setState({ page: res });
-					self.initEmbeds();
+					// self.initEmbeds();
 				}
 			});
 		i18n.on('languageChanged', this.onLanguageChanged);
@@ -45,14 +45,30 @@ class How extends React.Component {
 	}
 
 	componentDidUpdate() {
-		// let self = this;
-		// setTimeout(function() {
-		// 	const fourCorners = FourCorners.prototype.init({
-		// 		cutline: false,
-		// 		active: 'authorship'
-		// 	});
-		// 	// console.log(fourCorners);
-		// });
+		if(!this.state.page||!this.state.page.acf) {return}
+		this.slugs.forEach((slug, i) => {
+			if(!this.state.embedHtmls[slug]) {
+				const fields = this.state.page.acf;
+				const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
+				let embedHtmls = this.state.embedHtmls;
+				embedHtmls[slug] = <div className='embed-wrapper' data-slug={slug}>{embedHtml}</div>;
+				this.setState({
+					embedHtmls: embedHtmls
+				});
+			} else if(!this.state.embeds[slug]) {
+				const embedHtml = this.state.embedHtmls[slug];
+				const embed = new FourCorners({
+					elem: '.embed-wrapper [data-slug="'+slug+'"] .fc-embed',
+					active: slug,
+					interactive: false
+				});
+				let embeds = this.state.embeds;
+				embeds[slug] = embed;
+				this.setState({
+					embeds: embeds
+				});
+			}
+		});
 	}
 
 	onLanguageChanged(lang) {
@@ -62,22 +78,7 @@ class How extends React.Component {
 	}
 
 	initEmbeds() {
-		this.slugs.forEach((slug, i) => {
-			if(this.state.page&&this.state.page.acf) {
-				const fields = this.state.page.acf;
-				const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
-				let embedHtmls = this.state.embedHtmls;
-				embedHtmls[slug] = embedHtml;
-				this.setState({
-					embedHtmls: embedHtmls
-				});
-				const fourCorners = FourCorners.prototype.init({
-					cutline: false,
-					active: slug
-				});
-
-			}
-		});
+		
 	}
 
 	renderIntro() {
@@ -106,6 +107,24 @@ class How extends React.Component {
 			</div>
 		);
 		return intro;
+	}
+
+	renderEmbed(slug, i) {
+		if(!this.state.page, !this.state.page.acf){return}
+		const fields = this.state.page.acf;
+		const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
+		// let embedHtmls = this.state.embedHtmls;
+		// embedHtmls[slug] = <div className='embed-wrapper' data-slug={slug}>{embedHtml}</div>;
+		// this.setState({
+		// 	embedHtmls: embedHtmls
+		// });
+		return (
+			<div key={i}
+				className='embed-wrapper'
+				data-slug={slug}>
+				{embedHtml}
+			</div>
+		);
 	}
 
 	renderRow(slug, i) {

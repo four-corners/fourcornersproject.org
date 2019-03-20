@@ -1,6 +1,6 @@
 import React from 'react';
-
 import i18n from '../../i18n.jsx';
+// import FourCorners from '@four-corners/four-corners';
 
 import Authorship from './panels/authorship.jsx';
 import Backstory from './panels/backstory.jsx';
@@ -21,7 +21,7 @@ class Module extends React.Component {
 
 	componentDidMount() {
 		let self = this;
-		const fourCorners = FourCorners.default.prototype.init();
+		const fourCorners = new FourCorners();
 		if(!fourCorners) {return}
 		self.fourCorners = fourCorners[0];
 	}
@@ -189,7 +189,7 @@ class Module extends React.Component {
 						<h2>Add your photo</h2>
 					</div>:''}
 					<div className={imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
-						<img src={imgSrc} className='fc-img'/>
+						{ imgSrc ? <img src={imgSrc} className='fc-img'/> : '' }
 					</div>
 					{this.renderCorners()}
 					{this.renderPanels()}

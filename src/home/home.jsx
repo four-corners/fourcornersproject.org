@@ -27,10 +27,9 @@ class Home extends React.Component {
 
 	componentDidMount() {
 		let self = this;
-		const fourCorners = FourCorners.default.prototype.init();
-		if(!fourCorners) {return}
-		self.fourCorners = fourCorners[0];
-
+		// const fourCorners = new FourCorners();
+		// if(!fourCorners) {return}
+		// self.fourCorners = fourCorners[0];
 		let lang = i18n.language;
 		let pageReq = SiteSettings.url.api+'page?slug=home&lang='+lang;
 		fetch(pageReq)

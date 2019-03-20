@@ -9,7 +9,7 @@ import Module from './module.jsx';
 // let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
 
-class Embed extends React.Component {
+class Preview extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -24,11 +24,12 @@ class Embed extends React.Component {
 		this.includeJSRef = React.createRef();
 		this.includeCSSRef = React.createRef();
 		this.stickyRef = React.createRef();
-
-		this.cssURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
-		this.jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
+		this.cdnVer = '1.1.2';
+		this.cssURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+this.cdnVer+'/dist/four-corners.min.css';
+		this.jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+this.cdnVer+'/dist/four-corners.min.js';
 		this.cssCDN = '<link href="'+this.cssURL+'" rel="stylesheet" type="text/css">';
 		this.jsCDN = '<script src="'+this.jsURL+'" type="text/javascript"></script>';
+		this.jsInit = '<script type="text/javascript">new Four Corners()</script>';
 	}
 
 	componentDidMount() {
@@ -176,9 +177,8 @@ class Embed extends React.Component {
 													<textarea className='output form-elem'
 														id='libraries'
 														readOnly={true}
-														// ref={this.outputRef}
-														rows={2}
-														value={this.jsCDN+this.cssCDN}
+														rows={3}
+														value={this.jsCDN+this.jsInit+this.cssCDN}
 														onFocus={this.onFocus.bind(this)}
 														onBlur={this.onBlur.bind(this)} />
 												</div>
@@ -196,4 +196,4 @@ class Embed extends React.Component {
 	}
 }
 
-export default Embed;
+export default Preview;

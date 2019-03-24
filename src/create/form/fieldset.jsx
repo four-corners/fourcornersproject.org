@@ -168,8 +168,8 @@ class Fieldset extends React.Component {
 		const strings = data.strings;
 		const expand = setKey==this.props.activeFieldset;
 		return (
-			<fieldset id={setKey} className={expand?'expand':'collapse'}>
-				<legend onClick={this.onToggle.bind(this)}>
+			<fieldset id={setKey} className={'toggler '+(expand?'expand':'collapse')}>
+				<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
 					<span>{strings.title}</span>
 				</legend>
 				<div className='fieldset-inner'>

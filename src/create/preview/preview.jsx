@@ -107,8 +107,7 @@ class Preview extends React.Component {
 		// const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
 
 		let safeFormData = Object.assign(formData, auxData);
-		let stringData = JSON.stringify(safeFormData)
-			.replace(/'/g, '&apos;');
+		let stringData = JSON.stringify(safeFormData).replace(/'/g, '&apos;');
 		let imgHtml = imgData.imgLoaded ? "<img class='fc-img' src='"+imgData.imgSrc+"'/>":'';
 		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'>"+imgHtml+"</div>";
 		// stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
@@ -163,9 +162,8 @@ class Preview extends React.Component {
 											</div>
 										</div>
 									</fieldset>
-
-									<fieldset id='addScripts' className={this.state.expand=='addScripts'?'expand':'collapse'}>
-										<legend onClick={this.onToggle.bind(this)}>
+									<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>
+										<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
 											<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
 										</legend>
 										<div className="fieldset-inner">

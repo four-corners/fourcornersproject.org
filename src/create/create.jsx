@@ -5,7 +5,7 @@ import i18n from '../i18n.jsx';
 import Header from '../header.jsx';
 import Form from './form/form.jsx';
 import Preview from './preview/preview.jsx';
-import Popup from './popup.jsx';
+import Popup from './popup/popup.jsx';
 
 class Creator extends React.Component {
 	
@@ -71,8 +71,15 @@ class Creator extends React.Component {
 
 	setFormData(newData) {
 		if(!newData){return}
-		let history = localStorage.getItem('FourCornersHistory');
-		let newHistory = JSON.parse(history) || {};
+		const history = localStorage.getItem('FourCornersHistory');
+		let historyObj;
+		try {
+			historyObj = JSON.parse(history);
+		} catch (e) {
+			historyObj = {};
+		}
+		const objIsObj = historyObj && typeof historyObj == 'object' && !Array.isArray(historyObj);
+		let newHistory = objIsObj ? historyObj : {};
 		newHistory[this.timestamp] = {
 			lang: this.state.lang,
 			dateCreated: new Date(),
@@ -194,14 +201,9 @@ class Creator extends React.Component {
 							<h2>Create your own</h2>
 						</div>
 						<div className='col col-12 col-sm-6 col-md-7 right'>
-							{/*<History
-								popup={this.state.popup}
-								openPopup={this.openPopup.bind(this)}
-								closePopup={this.closePopup.bind(this)}
-								sendFormData={this.setFormData.bind(this)}
-								sendImgSrc={this.setImgSrc.bind(this)} />*/}
 							<Popup
 								lang={this.state.lang}
+								timestamp={this.timestamp}
 								sendFormData={this.setFormData.bind(this)}
 								sendImgSrc={this.setImgSrc.bind(this)} />
 						</div>

@@ -1978,6 +1978,38 @@ a:hover {
     .col-content {
       padding: 0rem; } }
 
+.toggle-label {
+  position: relative; }
+  .toggle-label::after {
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    right: .75rem;
+    top: calc(50% - .75rem);
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+    border: solid #c4c4c4;
+    border-width: 0 2px 2px 0;
+    content: '';
+    -webkit-transition: border-color 200ms ease;
+    transition: border-color 200ms ease; }
+  .toggle-label span::before {
+    opacity: .5; }
+  .toggle-label:hover {
+    cursor: pointer; }
+  .collapse:hover .toggle-label {
+    color: #181819; }
+  .expand .toggle-label {
+    color: #80bdff; }
+    .expand .toggle-label::after {
+      top: calc(50% - .25rem);
+      -webkit-transform: rotate(-135deg);
+              transform: rotate(-135deg); }
+  .collapse:hover .toggle-label span::before, .expand .toggle-label span::before {
+    opacity: 1; }
+  .collapse:hover .toggle-label::after, .expand .toggle-label::after {
+    border-color: #181819; }
+
 .content-block {
   padding: .5rem .75rem;
   margin: 0 0 1rem 0;
@@ -2422,13 +2454,16 @@ a.prompt-button {
     margin-left: .75rem; }
   .popup-link label {
     margin-bottom: .125rem; }
-  .popup-link label span:hover {
-    cursor: pointer;
-    color: #80bdff; }
+    .popup-link label a {
+      color: #181819; }
+      .popup-link label a:hover {
+        cursor: pointer;
+        color: #80bdff; }
 
 #creator-popup {
   width: 100%;
   height: 100%;
+  padding: 2rem;
   position: fixed;
   left: 0;
   top: 0;
@@ -2436,11 +2471,14 @@ a.prompt-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: rgba(255, 255, 255, 0.5);
-  pointer-events: none; }
+  background-color: rgba(255, 255, 255, 0.5); }
   #creator-popup .content-block {
+    max-height: 100%;
     padding: 1rem;
+    position: relative;
+    z-index: 12;
     pointer-events: all;
+    overflow-y: scroll;
     border-width: 1px;
     border-style: solid;
     border-color: #80bdff;
@@ -2457,24 +2495,50 @@ a.prompt-button {
     margin: 1rem 0 0 0; }
   #embed-import:not(.opened) #creator-popup {
     display: none; }
+  #creator-popup .tab-content {
+    width: 80%;
+    max-width: 50rem;
+    max-height: 40rem;
+    margin: auto; }
+    #creator-popup .tab-content:not(.opened) {
+      display: none; }
+  #creator-popup .saved-state {
+    border: solid #80bdff;
+    border-width: 0 1px 1px 1px;
+    background-color: #fff; }
+    #creator-popup .saved-state .toggle-label {
+      padding: 1rem; }
+      #creator-popup .saved-state .toggle-label::after {
+        right: 1.25rem; }
+      #creator-popup .saved-state .toggle-label:hover {
+        background-color: #f9f9fb; }
+    #creator-popup .saved-state .saved-inner {
+      width: 100%;
+      overflow-y: hidden; }
+      #creator-popup .saved-state .saved-inner .row {
+        padding: 1rem; }
+    #creator-popup .saved-state .fc-embed {
+      -webkit-box-shadow: 0 0 1px 1px rgba(24, 24, 25, 0.1);
+              box-shadow: 0 0 1px 1px rgba(24, 24, 25, 0.1); }
+    #creator-popup .saved-state:first-child {
+      border-top-width: 1px; }
+    #creator-popup .saved-state.collapse .saved-inner {
+      height: 0; }
+    #creator-popup .saved-state.expand .toggle-label {
+      background-color: #f9f9fb;
+      border-bottom: 1px solid #80bdff; }
+    #creator-popup .saved-state.expand .saved-inner {
+      height: auto;
+      display: table;
+      background-color: #f9f9fb; }
 
-.tab-content {
-  width: 50%;
-  max-width: 50rem;
-  margin: auto; }
-  .tab-content:not(.opened) {
-    display: none; }
-
-.saved-state {
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-  border: solid #80bdff;
-  border-width: 0 0 1px 0;
-  background-color: rgba(255, 255, 255, 0.5); }
-  .saved-state:first-child {
-    border-top-width: 1px; }
-  .saved-state:hover {
-    cursor: pointer; }
+#popup-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 11; }
 
 .sticky {
   overflow-y: auto; }
@@ -2699,7 +2763,6 @@ legend {
   width: 100%;
   margin: 0;
   display: block;
-  position: relative;
   font-size: 1.5rem;
   line-height: 1.6em; }
   legend span {
@@ -2715,35 +2778,6 @@ legend {
             user-select: none;
     -webkit-transition: all 200ms ease;
     transition: all 200ms ease; }
-  fieldset.expand legend::after, fieldset.collapse legend::after {
-    width: 1rem;
-    height: 1rem;
-    position: absolute;
-    right: .75rem;
-    top: calc(50% - .75rem);
-    -webkit-transform: rotate(45deg);
-            transform: rotate(45deg);
-    border: solid #c4c4c4;
-    border-width: 0 2px 2px 0;
-    content: '';
-    -webkit-transition: border-color 200ms ease;
-    transition: border-color 200ms ease; }
-  fieldset.expand legend span::before, fieldset.collapse legend span::before {
-    opacity: .5; }
-  fieldset.expand legend:hover, fieldset.collapse legend:hover {
-    cursor: pointer; }
-  fieldset.collapse:hover legend {
-    color: #181819; }
-  fieldset.expand legend {
-    color: #80bdff; }
-    fieldset.expand legend::after {
-      top: calc(50% - .25rem);
-      -webkit-transform: rotate(-135deg);
-              transform: rotate(-135deg); }
-  fieldset.collapse:hover legend span::before, fieldset.expand legend span::before {
-    opacity: 1; }
-  fieldset.collapse:hover legend::after, fieldset.expand legend::after {
-    border-color: #181819; }
   #authorship legend span,
   #backstory legend span,
   #imagery legend span,
@@ -2805,6 +2839,7 @@ legend {
 
 .toggle-desc {
   width: .75rem;
+  height: .75rem;
   margin: 0 0 0 .25rem;
   display: inline-block;
   vertical-align: middle;
@@ -3116,6 +3151,8 @@ select {
     opacity: .5; }
     .button[disabled]:hover {
       cursor: default; }
+  .button.red {
+    border-color: crimson; }
 
 footer {
   width: 100%;

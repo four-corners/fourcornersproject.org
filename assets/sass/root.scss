@@ -122,6 +122,50 @@ a:hover {
 		padding: 0rem;
 	}
 }
+
+.toggler {
+
+}
+.toggle-label {
+	position: relative;
+	&::after {
+		width: 1rem;
+		height: 1rem;
+		position: absolute;
+		right: .75rem;
+		top: calc(50% - .75rem);
+		transform: rotate(45deg);
+		border: solid $medium;
+		border-width: 0 2px 2px 0;
+		content: '';
+		@include fastTrans(border-color);
+	}
+	span::before {
+		opacity: .5;
+	}
+	&:hover {
+		cursor: pointer;
+	}
+	.collapse:hover & {
+		color: $darkest;
+	}
+	.expand & {
+		color: $blue;
+		&::after {
+			top: calc(50% - .25rem);
+			transform: rotate(-135deg);
+		}
+	}
+	.collapse:hover &, .expand & {
+		span::before {
+			opacity: 1;
+		}
+		&::after {
+			border-color: $darkest;
+		}
+	}
+}
+
 .content-block {
 	padding: .5rem .75rem;
 	margin: 0 0 1rem 0;

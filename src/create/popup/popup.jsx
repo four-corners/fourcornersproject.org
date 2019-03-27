@@ -13,8 +13,8 @@ class Popup extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			activeDesc: false,
-			activeTab: false
+			activeDesc: null,
+			activeTab: null
 		};
 		// this.translations = this.props.creator.acf;
 	}
@@ -22,13 +22,19 @@ class Popup extends React.Component {
 	toggleDesc(e) {
 		const elem = e.currentTarget;
 		let activeDesc;
-		if(!e || this.state.activeDesc == elem.dataset.tab) {
-			activeDesc = false;
+		if(this.state.activeDesc == elem.dataset.tab) {
+			activeDesc = null;
 		} else {
 			activeDesc = elem.dataset.tab;
 		}
 		this.setState({
 			activeDesc: activeDesc
+		});
+	}
+
+	openDesc(e) {
+		this.setState({
+			activeDesc: e.currentTarget.dataset.tab
 		});
 	}
 
@@ -40,7 +46,7 @@ class Popup extends React.Component {
 
 	closePopup(e) {
 		this.setState({
-			activeTab: false
+			activeTab: null
 		});
 	}
 
@@ -49,14 +55,13 @@ class Popup extends React.Component {
 			const embedHtml = ReactHtmlParser(value)[0];
 			const	dataString = embedHtml.props['data-fc'];
 			const dataJSON = JSON.parse(dataString);
+
+
+
 			this.props.sendFormData(dataJSON);
-			if(embedHtml.props.children.length) {
-				const embedImgSrc = embedHtml.props.children[0].props.src;
-				this.props.sendImgSrc(embedImgSrc);
-			}
-			this.props.closePopup();
+			this.closePopup();
 		} catch (e) {
-			console.log(e);
+			console.warn(e);
 		}
 	}
 
@@ -75,8 +80,8 @@ class Popup extends React.Component {
 								<a href='#'
 									className='toggle-desc'
 									data-tab='import'
-									onClick={this.toggleDesc.bind(this)}
-									onFocus={this.toggleDesc.bind(this)}>
+									// onFocus={this.openDesc.bind(this)}
+									onClick={this.toggleDesc.bind(this)}>
 									<div></div>
 								</a>
 							</label>
@@ -90,8 +95,8 @@ class Popup extends React.Component {
 								<a href='#'
 									className='toggle-desc'
 									data-tab='history'
-									onClick={this.toggleDesc.bind(this)}
-									onFocus={this.toggleDesc.bind(this)}>
+									// onFocus={this.openDesc.bind(this)}
+									onClick={this.toggleDesc.bind(this)}>
 									<div></div>
 								</a>
 							</label>
@@ -123,6 +128,8 @@ class Popup extends React.Component {
 						<div className={'content-block tab-content'+(this.state.activeTab=='history'?' opened':'')}>
 							<History
 								timestamp={this.props.timestamp}
+								saveHistory={this.props.saveHistory}
+								toggleSave={this.props.toggleSave.bind(this)}
 								closePopup={this.closePopup.bind(this)}
 								updateFormData={this.updateFormData.bind(this)}/>
 						</div>

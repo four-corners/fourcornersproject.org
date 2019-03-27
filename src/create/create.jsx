@@ -14,20 +14,22 @@ class Creator extends React.Component {
 		this.state = {
 			creator: {},
 			lang: 'en',
-			imgData: {},
+			imgLoaded: false,
 			formData: {
-				'authorship':{},
-				'backstory':{},
-				'imagery':{},
-				'links':{},
-				'opts': {}
+				authorship:{},
+				backstory:{},
+				imagery:{},
+				links:{},
+				opts: {},
+				photo: {}
 			},
 			mediaData: {
 				imagery:[],
 				backstory:[]
 			},
 			activeCorner: null,
-			activeFieldset: null
+			activeFieldset: null,
+			saveHistory: true
 		};
 		this.timestamp = Date.now();
 		this.corners = ['imagery','authorship','backstory','links'];
@@ -50,18 +52,28 @@ class Creator extends React.Component {
 				that.setState({ creator: res[0] });
 			})
 			.catch(function(err) {
-				console.log(err);
+				console.warn(err);
 			});
+
+		const settings = localStorage.getItem('FourCornersSettings');
+		let settingsObj = JSON.parse(settings) || {};
+		const saveHistory = settingsObj.saveHistory;
+		if(typeof saveHistory == 'boolean') {
+			this.setState({
+				saveHistory: saveHistory
+			})
+		} else {
+			settingsObj.saveHistory = this.state.saveHistory;
+			const settingsStr = JSON.stringify(settingsObj);
+			localStorage.setItem('FourCornersSettings', settingsStr);
+		}
+
 		i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
 	componentWillUnmount() {
 		i18n.off('languageChanged', this.onLanguageChanged);
 	}
-
-	// componentDidUpdate() {
-	// 	// console.log(this.state.activeCorner);
-	// }
 
 	onLanguageChanged(lang) {
 		this.setState({
@@ -71,13 +83,25 @@ class Creator extends React.Component {
 
 	setFormData(newData) {
 		if(!newData){return}
+		this.loadImage(newData.photo);
+		// console.log(newData);
+		this.setState({
+			formData: newData
+		});
+
+		if(!this.state.saveHistory) {return}
 		const history = localStorage.getItem('FourCornersHistory');
-		let historyObj;
-		try {
-			historyObj = JSON.parse(history);
-		} catch (e) {
-			historyObj = {};
-		}
+		const historyObj = JSON.parse(history) || {};
+		let sortedHistory = Object.keys(historyObj).sort(function(a, b) {
+			return b - a;
+		});
+
+		sortedHistory.forEach(function(timestamp, i) {
+			if(i >= 10) {
+				delete historyObj[timestamp];
+			}
+		});
+
 		const objIsObj = historyObj && typeof historyObj == 'object' && !Array.isArray(historyObj);
 		let newHistory = objIsObj ? historyObj : {};
 		newHistory[this.timestamp] = {
@@ -86,9 +110,6 @@ class Creator extends React.Component {
 			formData: newData
 		};
 		localStorage.setItem('FourCornersHistory', JSON.stringify(newHistory));
-		this.setState({
-			formData: newData
-		});
   }
 
   setMediaData(mediaData) {
@@ -106,34 +127,39 @@ class Creator extends React.Component {
 		});
   }
 
-  setActiveFieldset(slug) {
-  	if(!slug) {
-  		slug = '';
-  	}
+  setActiveFieldset(slug = '') {
 		this.setState({
 			activeFieldset: slug
 		});
   }
 
-  setImgSrc(src) {
-		let imgData;
+  loadImage(photo) {
 		let pseudoImg = new Image();
 		pseudoImg.onload = (e) => { 
 			this.setState({
-	  		imgData: {
-					imgSrc: src,
-					imgLoaded: true,
-				}
+	  		imgLoaded: true
 	  	});
 		}
 		pseudoImg.onerror = (e) => {
 			this.setState({
-	  		imgData: {
-					imgLoaded: false
-				}
+	  		imgLoaded: false
 	  	});
 		}
-		pseudoImg.src = src;
+		if(photo.src) {
+			pseudoImg.src = photo.src;
+		}
+	}
+
+	toggleSave() {
+		const newVal = !this.state.saveHistory;
+		const settings = localStorage.getItem('FourCornersSettings');
+		let settingsObj = JSON.parse(settings);
+		settingsObj.saveHistory = newVal;
+		const settingsStr = JSON.stringify(settingsObj);
+		localStorage.setItem('FourCornersSettings', settingsStr);
+		this.setState({
+			saveHistory: newVal
+		});
 	}
 
 	renderFormCol() {
@@ -142,14 +168,13 @@ class Creator extends React.Component {
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
-				imgData={this.state.imgData}
+				imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
 				sendActiveFieldset={this.setActiveFieldset.bind(this)}
 				sendFormData={this.setFormData.bind(this)}
-				sendMediaData={this.setMediaData.bind(this)}
-				sendImgSrc={this.setImgSrc.bind(this)} />
+				sendMediaData={this.setMediaData.bind(this)} />
 		);
 	}
 
@@ -160,7 +185,7 @@ class Creator extends React.Component {
 				creator={this.state.creator}
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
-				imgData={this.state.imgData}
+				imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
@@ -204,8 +229,9 @@ class Creator extends React.Component {
 							<Popup
 								lang={this.state.lang}
 								timestamp={this.timestamp}
-								sendFormData={this.setFormData.bind(this)}
-								sendImgSrc={this.setImgSrc.bind(this)} />
+								saveHistory={this.state.saveHistory}
+								toggleSave={this.toggleSave.bind(this)}
+								sendFormData={this.setFormData.bind(this)} />
 						</div>
 					</div>
 					<div className='row' data-sticky-container>

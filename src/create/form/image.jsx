@@ -2,26 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Label from './label.jsx';
 
-class File extends React.Component {
+class Image extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			value: ''
-		}
+		};
 	}
 
 	componentDidUpdate() {
-		const imgSrc = this.props.fieldValue.imgSrc;
-		if(imgSrc && imgSrc != this.state.value) {
+		if(this.props.fieldValue != this.state.value) {
 			this.setState({
-				value: imgSrc
+				value: this.props.fieldValue
 			});
 		}
 	}
 
 	onChange(e) {
-		this.props.sendImgSrc(e.target.value);
+		const name = e.target.name;
+		const value = e.target.value;
+		this.props.onChange(name, value);
 	}
 
 
@@ -52,7 +53,7 @@ class File extends React.Component {
 		const strings = this.props.field.strings;
 		const name = [setKey, fieldKey].join('_');
 		return(
-			<div className="field file">
+			<div className="field image">
 				{this.props.hideLabel?'':
 				<Label strings={strings} feildKey={fieldKey} />}
 				<input
@@ -60,7 +61,6 @@ class File extends React.Component {
 					id={fieldKey}
 					name={name}
 					type='url'
-					value={this.state.value}
 					placeholder='https://sample.org/photo.jpg'
 					onChange={this.onChange.bind(this)} />
 			</div>
@@ -68,4 +68,4 @@ class File extends React.Component {
 	}
 }
 
-export default File;
+export default Image;

@@ -15,13 +15,13 @@ class Form extends React.Component {
 		this.state = {
 			mediaData: this.props.mediaData,
 			formData: {
-				'authorship':{},
-				'backstory':{},
-				'imagery':{},
-				'links':{},
-				'opts':{}
+				authorship: {},
+				backstory: {},
+				imagery: {},
+				links: {},
+				opts: {},
+				photo: {}
 			},
-			imgSrc: null
 		};
 		this.translations = this.props.creator.acf;
 	}
@@ -66,7 +66,6 @@ class Form extends React.Component {
 		} else {
 			formData[setKey][fieldKey] = value;
 		}
-		
 		this.setState({
 			formData: formData
 		});
@@ -179,14 +178,13 @@ class Form extends React.Component {
 					setKey={setKey}
 					data={Schema[setKey]}
 					formData={this.state.formData}
-					imgData={this.props.imgData}
+					imgLoaded={this.props.imgLoaded}
 					onChange={this.onChange.bind(this)}
 					activeCorner={this.props.activeCorner}
 					activeFieldset={this.props.activeFieldset}
 					sendActiveCorner={this.props.sendActiveCorner}
 					sendActiveFieldset={this.props.sendActiveFieldset}
-					sendMediaData={this.props.sendMediaData}
-					sendImgSrc={this.props.sendImgSrc} />
+					sendMediaData={this.props.sendMediaData} />
 			);
 		}
 		return fieldsets;

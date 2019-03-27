@@ -11,7 +11,7 @@ class Import extends React.Component {
 			activeRow: false,
 		};
 	}
-
+	
 	importCode(e) {
 		e.preventDefault();
 		const value = e.target.querySelector('textarea').value;

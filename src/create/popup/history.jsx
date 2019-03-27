@@ -25,20 +25,16 @@ class History extends React.Component {
 	}
 
 	renderHistory() {
-		const hiddenRows = this.state.hiddenRows;
-		const history = localStorage.getItem('FourCornersHistory');
-		let historyObj = {};
-		try {
-			historyObj = JSON.parse(history);
-		} catch (e) {
-			console.warn(e);
-		}
-		let sortedTimestamps = Object.keys(historyObj).sort(function(a, b) {
-			return new Date(b.date) - new Date(a.date);
-		});
-		let states = [];
 		const self = this;
-		sortedTimestamps.forEach(function(timestamp, i) {
+		const hiddenRows = self.state.hiddenRows;
+		const history = localStorage.getItem('FourCornersHistory');
+		let historyObj = JSON.parse(history) || {};
+		let sortedHistoryObj = Object.keys(historyObj).sort(function(a, b) {
+			return b - a;
+		});
+
+		let states = [];
+		sortedHistoryObj.forEach(function(timestamp, i) {
 			if(self.props.timestamp != timestamp) {
 				states.push(
 					<HistoryRow
@@ -59,6 +55,15 @@ class History extends React.Component {
 		);
 	}
 
+	deleteHistory() {
+		const history = localStorage.getItem('FourCornersHistory');
+		const historyObj = JSON.parse(history) || {};
+		this.setState({
+			hiddenRows: Object.keys(historyObj)
+		});
+		localStorage.removeItem('FourCornersHistory');
+	}
+
 
 	render() {
 		const history = localStorage.getItem('FourCornersHistory');
@@ -66,15 +71,23 @@ class History extends React.Component {
 			<React.Fragment>
 				<legend>View your history</legend>
 				<div className='desc'>
-					Your edit history is saved within this browser on this device using something called <code>localStoragee</code>. We do not store any of your data or pass form use to any third-parties.
+					Your edit history is saved within your browser using something called <code>localStorage</code>. This data is never transferred to a server.
 				</div>
 
-				{ history ? this.renderHistory() : 'There is no edit history found.' }
+				{ history ? this.renderHistory() : <h3>There is no edit history found.</h3> }
 
 				<div className='buttons-group'>
 					<div className='button'
 						onClick={this.props.closePopup.bind(this)}>
 						Cancel
+					</div>
+					<div className='button'
+						onClick={this.props.toggleSave.bind(this)}>
+						{this.props.saveHistory ? 'Stop' : 'Start'} saving
+					</div>
+					<div className='button red'
+						onClick={this.deleteHistory.bind(this)}>
+						Delete all
 					</div>
 				</div>
 			</React.Fragment>

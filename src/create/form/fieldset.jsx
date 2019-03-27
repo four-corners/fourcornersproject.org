@@ -1,6 +1,6 @@
 import Text from './text.jsx';
 import Textarea from './textarea.jsx';
-import File from './file.jsx';
+import Image from './image.jsx';
 import Select from './select.jsx';
 import Blocks from './blocks.jsx';
 import Group from './group.jsx';
@@ -59,18 +59,16 @@ class Fieldset extends React.Component {
 						setKey = this.props.setKey,
 						index = fieldElems.length;
 			let fieldValue = formData[setKey] ? formData[setKey][fieldKey] : null;
-
 			switch(field.type) {
-				case 'file':
+				case 'image':
 					fieldElems.push(
-						<File
+						<Image
 							key={index}
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							fieldValue={this.props.imgData}
-							onChange={this.props.onChange}
-							sendImgSrc={this.props.sendImgSrc} />
+							fieldValue={formData[setKey]}
+							onChange={this.props.onChange} />
 					);
 					break;
 				case 'text':

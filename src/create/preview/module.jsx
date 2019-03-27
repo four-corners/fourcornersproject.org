@@ -165,10 +165,10 @@ class Module extends React.Component {
 	}
 
 	render() {
-		const imgData = this.props.imgData;
-		const imgSrc = imgData ? imgData.imgSrc : null;
-		const imgLoaded = imgData ? imgData.imgLoaded : null;
-		const opts = this.props.formData.opts;
+		const formData = this.props.formData;
+		const imgLoaded = this.props.imgLoaded;
+		const imgSrc = formData.photo.src || null;
+		const opts = formData.opts;
 		let className = 'fc-embed';
 		if(opts&&opts.dark) {
 			className += ' fc-dark';
@@ -183,13 +183,13 @@ class Module extends React.Component {
 		return(
 			<React.Fragment>
 				<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
-					{!imgLoaded?
+					{!imgLoaded ?
 					<div
 						className="no-photo" onClick={this.onClick.bind(this)}>
 						<h2>Add your photo</h2>
-					</div>:''}
+					</div> : ''}
 					<div className={imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
-						{ imgSrc ? <img src={imgSrc} className='fc-img'/> : '' }
+						{ imgLoaded ? <img src={imgSrc} className='fc-img'/> : '' }
 					</div>
 					{this.renderCorners()}
 					{this.renderPanels()}

@@ -51,7 +51,7 @@ class HistoryRow extends React.Component {
 		}
 	}
 
-	deleteHistoryRow(elem) {
+	deleteHistoryRow() {
 		const history = localStorage.getItem('FourCornersHistory');
 		try {
 			const historyObj = JSON.parse(history);
@@ -65,6 +65,7 @@ class HistoryRow extends React.Component {
 				});
 			}
 		} catch (e) {
+			console.warn(e);
 			// this.renderWarning('Something went wrong.');
 		}
 	}
@@ -75,6 +76,7 @@ class HistoryRow extends React.Component {
 
 	importHistoryRow(elem) {
 		const value = this.textarea.current.dataset.value;
+		const timestamp = this.props.timestamp;
 		this.props.updateFormData(value);
 	}
 
@@ -88,10 +90,22 @@ class HistoryRow extends React.Component {
 		);
 	}
 
+	renderModule(formData, photoData) {
+		formData = Object.assign({}, formData);
+		const imgSrc = photoData ? photoData.src : null;
+		const dataStr = JSON.stringify(formData);
+		return(
+			<div className='fc-embed' data-fc={dataStr}>
+				{imgSrc ?
+					<img src={imgSrc} className='fc-img'/>
+				:''}
+			</div>
+		);
+	}
+
 	renderRow() {
 		const timestamp = this.props.timestamp;
 		const dataObj = this.props.dataObj;
-		const dataStr = JSON.stringify(dataObj.formData);
 		const dateCreated = new Date(Number(timestamp));
 		const dateFormat = {
 			weekday: 'long',
@@ -99,11 +113,14 @@ class HistoryRow extends React.Component {
 			month: 'long',
 			day: 'numeric',
 			hour: 'numeric',
-			minute: 'numeric'
+			minute: 'numeric',
+			second: 'numeric'
 		};
 		const dateString = dateCreated.toLocaleDateString(this.props.lang, dateFormat);
-		const previewEmbed = <div className='fc-embed' data-fc={dataStr}></div>
-		const previewHtml = ReactDOMServer.renderToStaticMarkup(previewEmbed);
+		const photoObj = dataObj.formData.photo;
+		const previewEmbed = this.renderModule(dataObj.formData, photoObj);
+		const previewHtml = ReactDOMServer.renderToStaticMarkup(previewEmbed).replace(/&quot;/g, '\'');
+		const importHtml = ReactDOMServer.renderToStaticMarkup(previewEmbed);
 
 		let rowClass = 'toggler saved-state';
 		rowClass += this.state.active?' expand':' collapse';
@@ -126,8 +143,8 @@ class HistoryRow extends React.Component {
 								className='output form-elem'
 								rows={6}
 								readOnly={true}
-								value={previewHtml.replace(/&quot;/g, '\'')}
-								data-value={previewHtml}
+								value={previewHtml}
+								data-value={importHtml}
 								onFocus={this.onFocus.bind(this)}>
 							</textarea>
 							<div className='buttons-group'>

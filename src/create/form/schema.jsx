@@ -6,8 +6,8 @@
 const Schema = {
 	photo: {
 		fields: {
-			file: {
-				type: 'file',
+			src: {
+				type: 'image',
 			},
 		}
 	},

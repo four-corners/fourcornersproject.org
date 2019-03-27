@@ -16,30 +16,20 @@ class Preview extends React.Component {
 		this.state = {
 			includeCss: false,
 			includeJs: false,
-			stickyStyle: {},
 			expand: false
 		};
 		this.imgInputRef = React.createRef();
 		this.outputRef = React.createRef();
 		this.includeJSRef = React.createRef();
 		this.includeCSSRef = React.createRef();
-		this.stickyRef = React.createRef();
-		this.cdnVer = '1.1.2';
-		this.cssURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+this.cdnVer+'/dist/four-corners.min.css';
-		this.jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+this.cdnVer+'/dist/four-corners.min.js';
-		this.cssCDN = '<link href="'+this.cssURL+'" rel="stylesheet" type="text/css">';
-		this.jsCDN = '<script src="'+this.jsURL+'" type="text/javascript"></script>';
-		this.jsInit = '<script type="text/javascript">new FourCorners()</script>';
 	}
 
 	componentDidMount() {
-		document.body.addEventListener('scroll', this.onScroll.bind(this));
-		window.addEventListener('resize', this.onScroll.bind(this));
+		
 	}
 
 	componentWillUnmount() {
-		document.body.removeEventListener('scroll', this.onScroll.bind(this));
-		window.removeEventListener('resize', this.onScroll.bind(this));
+		
 	}
 
 	onChangeOpts(e) {
@@ -73,119 +63,105 @@ class Preview extends React.Component {
 		});
 	}
 
-	onScroll(e) {
-		// const sticky = this.stickyRef.current;
-		// if(!sticky){return}
-		// const parent = sticky.parentElement;
-		// const rect = parent.getBoundingClientRect();
-		// const top = rect.top;
-		// const left = rect.left;
-		// const width = rect.width;
-		// const height = rect.height;
-		// const winHeight = window.innerHeight;
-		// let stickyStyle = {};
-		// if(top <= 0 && height >= winHeight) {
-		// 	stickyStyle = {
-		// 		width: width+'px',
-		// 		height: '100%',
-		// 		position: 'fixed',
-		// 		top: 0,
-		// 		left: left+'px',
-		// 	};	
-		// }
-		// this.setState({
-		// 	stickyStyle: stickyStyle
-		// });
-	}
-
 	embedCode(formData) {
-		const imgData = this.props.imgData;
+		const imgLoaded = this.props.imgLoaded;
 		let auxData = {
 			lang: i18n.language,
 		}
-		// const cssCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.css';
-		// const jsCDN = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js/dist/four-corners.min.js';
-
-		let safeFormData = Object.assign(formData, auxData);
-		let stringData = JSON.stringify(safeFormData).replace(/'/g, '&apos;');
-		let imgHtml = imgData.imgLoaded ? "<img class='fc-img' src='"+imgData.imgSrc+"'/>":'';
-		let stringHtml = "<div class='fc-embed' data-fc='"+stringData+"'>"+imgHtml+"</div>";
-		// stringHtml += (this.state.includeCss?'<link href="'+cssCDN+'" rel="stylesheet" type="text/css">':'');
-		// stringHtml += (this.state.includeJs?'<script src="'+jsCDN+'" type="text/javascript"></script>':'');
+		let stringData = this.sanitizeCode(Object.assign(formData, auxData));
+		let imgHtml = imgLoaded ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>':'';
+		let stringHtml = '<div class=\'fc-embed\' data-fc=\''+stringData+'\'>'+imgHtml+'</div>';
 		return stringHtml;
+	}
+
+	sanitizeCode(data) {
+		let cleanData = JSON.parse(JSON.stringify(data));
+		Object.keys(cleanData).forEach(function(key) {
+			const value = cleanData[key];
+			if(typeof value == 'object') {
+				Object.keys(value).forEach(function(subKey) {
+					cleanData[key][subKey] = value[subKey].replace(/'/g, '&apos;');
+				});
+			}
+		});
+		let stringData = JSON.stringify(cleanData);
+		return stringData;
 	}
 
 	render() {
 		const creator = this.props.creator;
 		const inputClass = (this.props.imgLoaded?'has-image':'');
+		const cdnVer = '1.1.2';
+		const cssURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+cdnVer+'/dist/four-corners.min.css';
+		const jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+cdnVer+'/dist/four-corners.min.js';
+		const cssCDN = '<link href="'+cssURL+'" rel="stylesheet" type="text/css">';
+		const jsCDN = '<script src="'+jsURL+'" type="text/javascript"></script>';
+		const jsInit = '<script type="text/javascript">new FourCorners()</script>';
 		return(
 			<div className='col-inner'>
-				<div className='sticky' style={this.state.stickyStyle} ref={this.stickyRef}>
-					<div className='col-content'>
+				<div className='col-content'>
+					<div id='preview' className={inputClass}>
+					
+						<Module
+							creator={creator}
+							formData={this.props.formData}
+							imgLoaded={this.props.imgLoaded}
+							mediaData={this.props.mediaData}
+							activeCorner={this.props.activeCorner}
+							activeFieldset={this.props.activeFieldset}
+							sendActiveCorner={this.props.sendActiveCorner}
+							sendActiveFieldset={this.props.sendActiveFieldset}
+							/>
 
-						<div id='preview' className={inputClass}>
-						
-							<Module
-								creator={creator}
-								formData={this.props.formData}
-								imgData={this.props.imgData}
-								mediaData={this.props.mediaData}
-								activeCorner={this.props.activeCorner}
-								activeFieldset={this.props.activeFieldset}
-								sendActiveCorner={this.props.sendActiveCorner}
-								sendActiveFieldset={this.props.sendActiveFieldset}
-								/>
+						<div id='embed-output'>
+							
+							<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
-							<div id='embed-output'>
-								
-								<form name='embed' onChange={this.onChangeOpts.bind(this)}>
-
-									<fieldset id='embedPhoto'>
-										<legend>
-											<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
-										</legend>
-										<div className="fieldset-inner">
-											<div className="fields-group">
-												<div className="field">
-													{creator&&creator.acf&&creator.acf['embed_desc'] ?
-													<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['embed_desc'] }}></div>
-													: ''}
-													<textarea className='output form-elem'
-														id='json'
-														readOnly={true}
-														ref={this.outputRef}
-														rows={3}
-														value={this.embedCode(this.props.formData)}
-														onFocus={this.onFocus.bind(this)}
-														onBlur={this.onBlur.bind(this)} />
-												</div>
+								<fieldset id='embedPhoto'>
+									<legend>
+										<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
+									</legend>
+									<div className="fieldset-inner">
+										<div className="fields-group">
+											<div className="field">
+												{creator&&creator.acf&&creator.acf['embed_desc'] ?
+												<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['embed_desc'] }}></div>
+												: ''}
+												<textarea className='output form-elem'
+													id='json'
+													readOnly={true}
+													ref={this.outputRef}
+													rows={3}
+													value={this.embedCode(this.props.formData)}
+													onFocus={this.onFocus.bind(this)}
+													onBlur={this.onBlur.bind(this)} />
 											</div>
 										</div>
-									</fieldset>
-									<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>
-										<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
-											<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
-										</legend>
-										<div className="fieldset-inner">
-											<div className="fields-group">
-												<div className="field">
-													{creator&&creator.acf&&creator.acf['scripts_desc'] ?
-													<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['scripts_desc'] }}></div>
-													: ''}
-													<textarea className='output form-elem'
-														id='libraries'
-														readOnly={true}
-														rows={3}
-														value={this.jsCDN+this.jsInit+this.cssCDN}
-														onFocus={this.onFocus.bind(this)}
-														onBlur={this.onBlur.bind(this)} />
-												</div>
+									</div>
+								</fieldset>
+								<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>
+									<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
+										<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
+									</legend>
+									<div className="fieldset-inner">
+										<div className="fields-group">
+											<div className="field">
+												{creator&&creator.acf&&creator.acf['scripts_desc'] ?
+												<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['scripts_desc'] }}></div>
+												: ''}
+												<textarea className='output form-elem'
+													id='libraries'
+													readOnly={true}
+													rows={3}
+													value={jsCDN+jsInit+cssCDN}
+													onFocus={this.onFocus.bind(this)}
+													onBlur={this.onBlur.bind(this)} />
 											</div>
 										</div>
-									</fieldset>
+									</div>
+								</fieldset>
 
-								</form>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>

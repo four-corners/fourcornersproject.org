@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'react-dom';
-// import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 import i18n from '../../i18n.jsx';
 
 // const slugify = require('slugify');
@@ -104,6 +104,7 @@ class HistoryRow extends React.Component {
 	}
 
 	renderRow() {
+		const strings = this.props.strings;
 		const timestamp = this.props.timestamp;
 		const dataObj = this.props.dataObj;
 		const dateCreated = new Date(Number(timestamp));
@@ -152,7 +153,7 @@ class HistoryRow extends React.Component {
 									className='button red'
 									data-action={'delete'}
 									onClick={this.onClickButton.bind(this)}>
-									Delete
+									{ReactHtmlParser(strings.history_delete)}
 								</div>
 								{/*<div
 									className='button'
@@ -164,7 +165,7 @@ class HistoryRow extends React.Component {
 									className='button'
 									data-action={'import'}
 									onClick={this.onClickButton.bind(this)}>
-									Import to form
+									{ReactHtmlParser(strings.history_import)}
 								</div>
 							</div>
 						</div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import ReactHtmlParser from 'react-html-parser';
 // import ReactHtmlParser from 'react-html-parser';
 import i18n from '../../i18n.jsx';
 
@@ -19,11 +20,12 @@ class Import extends React.Component {
 	}
 
 	render() {
+		const strings = this.props.strings;
 		return (
 			<form onSubmit={this.importCode.bind(this)}>
-				<legend>Import code to edit</legend>
+				<legend>{strings.import_label}</legend>
 				<div className='desc'>
-					Paste the HTML code you previously generated on this page. Clicking import will update all fields of the current form and the preview.
+					{ReactHtmlParser(strings.import_desc)}
 				</div>
 				<textarea
 					name='import-code'
@@ -36,7 +38,7 @@ class Import extends React.Component {
 					</div>
 					<input className='button'
 						type='submit'
-						value='Import'/>
+						value={strings.import_button}/>
 				</div>
 			</form>
 		);

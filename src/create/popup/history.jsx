@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
 import { render } from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
+import ReactHtmlParser from 'react-html-parser';
 // import ReactHtmlParser from 'react-html-parser';
 import i18n from '../../i18n.jsx';
 import HistoryRow from './history-row.jsx';
@@ -39,6 +40,7 @@ class History extends React.Component {
 				states.push(
 					<HistoryRow
 						key={i}
+						strings={self.props.strings}
 						dataObj={historyObj[timestamp]}
 						timestamp={timestamp}
 						lang={self.props.lang}
@@ -66,12 +68,13 @@ class History extends React.Component {
 
 
 	render() {
+		const strings = this.props.strings;
 		const history = localStorage.getItem('FourCornersHistory');
 		return (
 			<React.Fragment>
-				<legend>View your history</legend>
+				<legend>{strings.history_label}</legend>
 				<div className='desc'>
-					Your edit history is saved within your browser using something called <code>localStorage</code>. This data is never transferred to a server.
+					{ReactHtmlParser(strings.history_desc)}
 				</div>
 
 				{ history ? this.renderHistory() : <h3>There is no edit history found.</h3> }
@@ -83,11 +86,11 @@ class History extends React.Component {
 					</div>
 					<div className='button'
 						onClick={this.props.toggleSave.bind(this)}>
-						{this.props.saveHistory ? 'Stop' : 'Start'} saving
+						{this.props.saveHistory ? strings.history_opt_out : strings.history_opt_in}
 					</div>
 					<div className='button red'
 						onClick={this.deleteHistory.bind(this)}>
-						Delete all
+						{strings.history_delete_all}
 					</div>
 				</div>
 			</React.Fragment>

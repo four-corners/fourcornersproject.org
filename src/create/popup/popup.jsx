@@ -16,7 +16,7 @@ class Popup extends React.Component {
 			activeDesc: null,
 			activeTab: null
 		};
-		// this.translations = this.props.creator.acf;
+		this.strings = this.props.creator.acf || {};
 	}
 
 	toggleDesc(e) {
@@ -55,9 +55,6 @@ class Popup extends React.Component {
 			const embedHtml = ReactHtmlParser(value)[0];
 			const	dataString = embedHtml.props['data-fc'];
 			const dataJSON = JSON.parse(dataString);
-
-
-
 			this.props.sendFormData(dataJSON);
 			this.closePopup();
 		} catch (e) {
@@ -75,7 +72,7 @@ class Popup extends React.Component {
 						<div className='popup-link'>
 							<label>
 								<a onClick={this.openPopup.bind(this)} data-tab='import' href='#'>
-									Import code to edit
+									{ReactHtmlParser(this.strings.import_label)}
 								</a>
 								<a href='#'
 									className='toggle-desc'
@@ -90,7 +87,7 @@ class Popup extends React.Component {
 						<div className='popup-link'>
 							<label>
 								<a onClick={this.openPopup.bind(this)} data-tab='history' href='#'>
-									View your history
+									{ReactHtmlParser(this.strings.history_label)}
 								</a>
 								<a href='#'
 									className='toggle-desc'
@@ -107,10 +104,10 @@ class Popup extends React.Component {
 
 					<div className='popup-link-descs'>
 						<div className={'desc field-desc'+(this.state.activeDesc=='import'?' opened':'')}>
-							Have you've already created a Four Corners embed and wish to make some edits? Click the link above to import your code and make your changes in the form below.
+							{ReactHtmlParser(this.strings.import_desc)}
 						</div>
 						<div className={'desc field-desc'+(this.state.activeDesc=='history'?' opened':'')}>
-							If opted-in, your form process will be autosaved in this browser to be recovered later. This saved data is not collected by Four Corners.
+							{ReactHtmlParser(this.strings.history_desc)}
 						</div>
 					</div>
 
@@ -121,12 +118,14 @@ class Popup extends React.Component {
 
 						<div className={'content-block tab-content'+(this.state.activeTab=='import'?' opened':'')}>
 							<Import
+								strings={this.strings}
 								closePopup={this.closePopup.bind(this)}
 								updateFormData={this.updateFormData.bind(this)}/>
 						</div>
 
 						<div className={'content-block tab-content'+(this.state.activeTab=='history'?' opened':'')}>
 							<History
+								strings={this.strings}
 								timestamp={this.props.timestamp}
 								saveHistory={this.props.saveHistory}
 								toggleSave={this.props.toggleSave.bind(this)}

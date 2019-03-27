@@ -226,12 +226,15 @@ class Creator extends React.Component {
 							<h2>Create your own</h2>
 						</div>
 						<div className='col col-12 col-sm-6 col-md-7 right'>
-							<Popup
-								lang={this.state.lang}
-								timestamp={this.timestamp}
-								saveHistory={this.state.saveHistory}
-								toggleSave={this.toggleSave.bind(this)}
-								sendFormData={this.setFormData.bind(this)} />
+							{ready ?
+								<Popup
+									lang={this.state.lang}
+									creator={this.state.creator}
+									timestamp={this.timestamp}
+									saveHistory={this.state.saveHistory}
+									toggleSave={this.toggleSave.bind(this)}
+									sendFormData={this.setFormData.bind(this)} />
+							: '' }
 						</div>
 					</div>
 					<div className='row' data-sticky-container>

@@ -80,7 +80,9 @@ class Preview extends React.Component {
 			const value = cleanData[key];
 			if(typeof value == 'object') {
 				Object.keys(value).forEach(function(subKey) {
-					cleanData[key][subKey] = value[subKey].replace(/'/g, '&apos;');
+					if(typeof value[subKey] == 'string') {
+						cleanData[key][subKey] = value[subKey].replace(/'/g, '&apos;');
+					}
 				});
 			}
 		});

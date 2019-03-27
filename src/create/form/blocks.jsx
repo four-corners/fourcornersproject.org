@@ -51,6 +51,10 @@ class Blocks extends React.Component {
 		this.props.onChange(fieldName, blocks);
 	}
 
+	onPsuedoChange(e) {
+		return;
+	}
+
 	getMediaData(obj, setKey, index) {
 		const url = obj.url;
 		const source = obj.source;
@@ -96,7 +100,7 @@ class Blocks extends React.Component {
 				this.props.sendMediaData(mediaData);
 			})
 			.catch(function(err) {
-				console.log(err);
+				console.warn(err);
 			});
 		} else {
 			blockMedia[index] = {
@@ -153,7 +157,8 @@ class Blocks extends React.Component {
 				<input
 					name={typeStrings.name}
 					type='hidden'
-					value={typeStrings.slug} />
+					value={typeStrings.slug}
+					onChange={this.onPsuedoChange.bind(this)} />
 
 				{subFieldElems}
 

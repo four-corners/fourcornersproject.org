@@ -1,16 +1,16 @@
 <?php
 function four_corners_scripts() {
 
-	$ver = '1.1.3';
+	$ver = '1.2.0';
+	$fc_ver = '1.1.3';
+	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	// wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
 	wp_enqueue_script( 'react_script', get_stylesheet_directory_uri() . '/dist/app'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
 
-	wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/four-corners.min.js' , array(), $ver, true );
-	wp_enqueue_style( 'four_corners_style', get_stylesheet_directory_uri() . '/assets/css/four-corners.min.css' );
-
-
+	wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/four-corners.min.js', array(), $fc_ver, true );
+	wp_enqueue_style( 'four_corners_style', get_stylesheet_directory_uri() . '/assets/css/four-corners.min.css', array(), $fc_ver, true );
 
 	// wp_enqueue_style( 'bootstrap_style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' );
 	wp_enqueue_style( 'app_style', get_stylesheet_directory_uri() . '/dist/app.css' );

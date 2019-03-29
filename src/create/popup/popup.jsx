@@ -53,8 +53,13 @@ class Popup extends React.Component {
 	updateFormData(value) {
 		try {
 			const embedHtml = ReactHtmlParser(value)[0];
+			const embedChild = embedHtml.props.children[0];
 			const	dataString = embedHtml.props['data-fc'];
-			const dataJSON = JSON.parse(dataString);
+			let dataJSON = JSON.parse(dataString);
+			if(embedChild && embedChild.props.src) {
+				if(!dataJSON.photo) {dataJSON.photo = []}
+				dataJSON.photo.src = embedChild.props.src;
+			}
 			this.props.sendFormData(dataJSON);
 			this.closePopup();
 		} catch (e) {

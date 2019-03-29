@@ -145,7 +145,7 @@ class Creator extends React.Component {
 	  		imgLoaded: false
 	  	});
 		}
-		if(photo.src) {
+		if(photo && photo.src) {
 			pseudoImg.src = photo.src;
 		}
 	}

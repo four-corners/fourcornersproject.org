@@ -167,7 +167,7 @@ class Module extends React.Component {
 	render() {
 		const formData = this.props.formData;
 		const imgLoaded = this.props.imgLoaded;
-		const imgSrc = formData.photo.src || null;
+		const imgSrc = (formData.photo ? formData.photo.src : null) || null;
 		const opts = formData.opts;
 		let className = 'fc-embed';
 		if(opts&&opts.dark) {

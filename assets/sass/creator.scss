@@ -145,6 +145,26 @@
 		}
 	}
 }
+button.close-popup {
+	width: 2rem;
+  height: 2rem;
+	position: absolute;
+	right: 1rem;
+	top: 1rem;
+	padding: 0 1rem;
+	&::after {
+		content: 'X';
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		font-weight: bold;
+		text-align: center;
+		@include mdText;
+		line-height: 1.2em;
+	}
+}
 #popup-back {
 	width: 100%;
 	height: 100%;

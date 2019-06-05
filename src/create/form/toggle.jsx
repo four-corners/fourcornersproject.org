@@ -29,14 +29,14 @@ class Toggle extends React.Component {
 		}
 	}
 
-	onChange(name, subValue) {
+	onChange(id, subValue) {
 		const formData = this.state.formData;
-		const nameArr = name.split('_');
-		let fieldsetSlug = nameArr[0];
-		let fieldKey = nameArr[1];
-		let subFieldKey = nameArr[2];
-		let thisFieldKey = nameArr[3];
-		let fieldName = [nameArr[0],nameArr[1]].join('_');
+		const idArr = id.split('_');
+		let fieldsetSlug = idArr[0];
+		let fieldKey = idArr[1];
+		let subFieldKey = idArr[2];
+		let thisFieldKey = idArr[3];
+		let fieldName = [idArr[0],idArr[1]].join('_');
 		let newValue = Object.assign({},this.state.value);
 		if(!newValue.length) {
 			newValue.type = subFieldKey;
@@ -50,7 +50,8 @@ class Toggle extends React.Component {
 		newValues[subFieldKey] = newValue;
 		this.setState({
 			values: newValues,
-			value: newValue
+			value: newValue,
+			checked: subFieldKey
 		});
 		this.props.onChange(fieldName, newValue);
 	}
@@ -58,8 +59,8 @@ class Toggle extends React.Component {
 	onToggle(e) {
 		const prevChecked = this.state.checked;
 		const input = e.target;
-		const id = input.id;
 		const checked = input.checked;
+		let id = input.id;
 		let name = input.name;
 		let subFieldKey = id.split('_')[2];
 		let newChecked, newValue;
@@ -72,10 +73,10 @@ class Toggle extends React.Component {
 			value: newValue
 		});
 		if(checked) {
-			this.onChange(name, newValue);
+			this.onChange(id, newValue);
 		} else {
-			name = name.substr(0,name.lastIndexOf('_'));
-			this.props.onChange(name, newValue);
+			id = id.substr(0,id.lastIndexOf('_'));
+			this.props.onChange(id, newValue);
 		}
 	}
 
@@ -99,19 +100,20 @@ class Toggle extends React.Component {
 		const field = this.props.field;
 		const strings = field.fields[subFieldKey].strings;
 		const name = [setKey, fieldKey].join('_');
-		const subFieldName = [setKey, fieldKey, subFieldKey].join('_');
+		const subFieldName = [setKey, fieldKey, 'type'].join('_');
+		const subFieldID = [setKey, fieldKey, subFieldKey].join('_');
 		const checked = this.state.checked;
 		return(
 			<div className='field checkbox half' key={subFieldIndex}>
 				<div className='checkbox-widget'>
 					<input className='toggle'
-						id={subFieldName}
+						id={subFieldID}
 						name={subFieldName}
 						type='checkbox'
 						checked={checked == subFieldKey}
 						onChange={this.onToggle.bind(this)}
 						/>
-					<label className='checkbox' htmlFor={subFieldName}>
+					<label className='checkbox' htmlFor={subFieldID}>
 						<div className='label-inner'>
 							{strings && strings.label ?
 								<span>{strings.label}</span>
@@ -145,7 +147,7 @@ class Toggle extends React.Component {
 					subField = field.fields[subFieldKey],
 					subStrings = subField.strings,
 					name = [setKey, subFieldKey].join('_'),
-					subFieldName = [fieldKey, subFieldKey].join('_'),
+					subFieldID = [fieldKey, subFieldKey].join('_'),
 					checked = this.state.checked,
 					show = checked == subFieldKey,
 					className = 'field-toggle-field'+(show?' active':'');
@@ -157,7 +159,7 @@ class Toggle extends React.Component {
 				fieldElem = <Text
 						key={i}
 						setKey={setKey}
-						fieldKey={subFieldName}
+						fieldKey={subFieldID}
 						field={subField}
 						fieldValue={fieldValue}
 						hideLabel={true}
@@ -167,7 +169,7 @@ class Toggle extends React.Component {
 				fieldElem = <Textarea
 						key={i}
 						setKey={setKey}
-						fieldKey={subFieldName}
+						fieldKey={subFieldID}
 						field={subField}
 						fieldValue={fieldValue}
 						hideLabel={true}
@@ -177,7 +179,7 @@ class Toggle extends React.Component {
 				fieldElem = <Select
 						key={i}
 						setKey={setKey}
-						fieldKey={subFieldName}
+						fieldKey={subFieldID}
 						field={subField}
 						fieldValue={fieldValue}
 						hideLabel={true}
@@ -187,7 +189,7 @@ class Toggle extends React.Component {
 				fieldElem = <Group
 						key={i}
 						setKey={setKey}
-						fieldKey={subFieldName}
+						fieldKey={subFieldID}
 						field={subField}
 						fieldValue={fieldValue}
 						hideLabel={true}

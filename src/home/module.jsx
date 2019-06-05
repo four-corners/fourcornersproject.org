@@ -43,7 +43,7 @@ class Module extends React.Component {
 		{self.props.cornersInfo.forEach((corner,i) => {
 			const cornerSlug = corner.slug;
 			let className = 'fc-corner fc-'+cornerSlug;
-			if(self.state.activeCorner == cornerSlug) {
+			if(self.state.activeCorner === cornerSlug) {
 				className += ' fc-active';
 			}
 			corners.push(
@@ -62,7 +62,7 @@ class Module extends React.Component {
 		const corners = [];
 		{this.props.cornersInfo.forEach((corner,i) => {
 			let className = 'corner-title';
-			if(this.state.hoveredCorner == corner.slug) {
+			if(this.state.hoveredCorner === corner.slug) {
 				className += ' active';
 			}
 			corners.push(

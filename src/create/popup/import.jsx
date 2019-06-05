@@ -16,6 +16,7 @@ class Import extends React.Component {
 	importCode(e) {
 		e.preventDefault();
 		const value = e.target.querySelector('textarea').value;
+		this.props.clearFormData();
 		this.props.updateFormData(value);
 	}
 
@@ -24,6 +25,9 @@ class Import extends React.Component {
 		return (
 			<form onSubmit={this.importCode.bind(this)}>
 				<legend>{strings.import_label}</legend>
+				<button className='button close-popup'
+					onClick={this.props.closePopup.bind(this)}>
+				</button>
 				<div className='desc'>
 					{ReactHtmlParser(strings.import_desc)}
 				</div>
@@ -32,13 +36,12 @@ class Import extends React.Component {
 					className='form-elem'
 					rows={6} />
 				<div className='buttons-group'>
-					<div className='button'
-						onClick={this.props.closePopup.bind(this)}>
-						Cancel
-					</div>
-					<input className='button'
+					<button
+						className='button'
 						type='submit'
-						value={strings.import_button}/>
+						onClick={this.importCode.bind(this)}>
+						{strings.import_button}
+					</button>
 				</div>
 			</form>
 		);

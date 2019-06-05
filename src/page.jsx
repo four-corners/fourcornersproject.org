@@ -26,7 +26,7 @@ class Page extends React.Component {
 	componentWillReceiveProps(props) {
 		let path = props.location.pathname.split('/');
 		let slug = path.pop() || path.pop();
-		if(slug==this.state.slug){return}
+		if(slug === this.state.slug){return}
 		this.setState({
 			slug: null,
 			page: null

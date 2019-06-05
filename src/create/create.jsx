@@ -14,7 +14,7 @@ class Creator extends React.Component {
 		this.state = {
 			creator: {},
 			lang: 'en',
-			imgLoaded: false,
+			// imgLoaded: false,
 			formData: {
 				authorship:{},
 				backstory:{},
@@ -81,10 +81,15 @@ class Creator extends React.Component {
 		});
 	}
 
+	clearFormData() {
+		this.setState({
+			formData: {}
+		});
+	}
+
 	setFormData(newData) {
 		if(!newData){return}
-		this.loadImage(newData.photo);
-		// console.log(newData);
+		// this.loadImage(newData.photo);
 		this.setState({
 			formData: newData
 		});
@@ -133,22 +138,22 @@ class Creator extends React.Component {
 		});
   }
 
-  loadImage(photo) {
-		let pseudoImg = new Image();
-		pseudoImg.onload = (e) => { 
-			this.setState({
-	  		imgLoaded: true
-	  	});
-		}
-		pseudoImg.onerror = (e) => {
-			this.setState({
-	  		imgLoaded: false
-	  	});
-		}
-		if(photo && photo.src) {
-			pseudoImg.src = photo.src;
-		}
-	}
+ //  loadImage(photo) {
+	// 	let pseudoImg = new Image();
+	// 	pseudoImg.onload = (e) => { 
+	// 		this.setState({
+	//   		imgLoaded: true
+	//   	});
+	// 	}
+	// 	pseudoImg.onerror = (e) => {
+	// 		this.setState({
+	//   		imgLoaded: false
+	//   	});
+	// 	}
+	// 	if(photo && photo.src) {
+	// 		pseudoImg.src = photo.src;
+	// 	}
+	// }
 
 	toggleSave() {
 		const newVal = !this.state.saveHistory;
@@ -168,7 +173,7 @@ class Creator extends React.Component {
 				lang={this.state.lang}
 				creator={this.state.creator}
 				formData={this.state.formData}
-				imgLoaded={this.state.imgLoaded}
+				// imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
@@ -185,7 +190,7 @@ class Creator extends React.Component {
 				creator={this.state.creator}
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
-				imgLoaded={this.state.imgLoaded}
+				// imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
@@ -233,6 +238,7 @@ class Creator extends React.Component {
 									timestamp={this.timestamp}
 									saveHistory={this.state.saveHistory}
 									toggleSave={this.toggleSave.bind(this)}
+									clearFormData={this.clearFormData.bind(this)}
 									sendFormData={this.setFormData.bind(this)} />
 							: '' }
 						</div>

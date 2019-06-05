@@ -23,7 +23,7 @@
 fieldset {
 	width: 100%;
 	// margin-bottom: 1rem;	
-	#forms & {
+	&.toggler {
 		border-bottom: 1px solid $medium;
 	}
 	&.collapse .fieldset-inner {
@@ -67,14 +67,8 @@ fieldset {
 	&:last-of-type {
 		border: 0;
 	}
-	&.input, &.field-toggle, &.select, &.fields-group {
-		// test
-		// margin: 1rem 0;
-		// padding: .5rem .75rem;
-		// border: 0;
-		// border-radius: $radius;
-		// background: $lighter;
-		// test
+	input[type="text"], input[type="url"] {
+
 	}
 	.field {
 		padding-left: 0;
@@ -216,8 +210,6 @@ legend {
 	&:not(.opened) {
 		display: none;
 	}
-	// color: $medium;
-	// font-style: italic;
 }
 .fieldset-desc {
 	margin-top: .5rem;
@@ -251,6 +243,13 @@ legend {
 		}
 	}
 }
+.error-desc {
+	margin: 0;
+	background-color: $lightRed;
+	border: solid $red;
+	border-width: 0 1px 1px 1px;
+	border-radius: 0 0 $radius $radius;
+}
 
 
 .form-elem {
@@ -262,6 +261,17 @@ legend {
 	padding: .375rem;
 	@include border;
 	@include focus;
+	// &:invalid, &.invalid {
+	// 	// background-color: $lightRed;
+	// 	border-radius: $radius $radius 0 0;
+	// }
+	.warn & {
+		background-color: $lightYellow;
+	}
+	.error & {
+		background-color: $lightestRed;
+		border-radius: $radius $radius 0 0;
+	}
 }
 
 select {
@@ -559,7 +569,7 @@ select {
 	display: inline-block;
 	font-weight: 700;
 }
-.button {
+button, .button {
 	// height: 2.5rem;
 	width: auto;
 	margin: 0 .5rem .5rem 0;

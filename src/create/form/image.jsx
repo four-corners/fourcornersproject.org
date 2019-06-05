@@ -12,7 +12,7 @@ class Image extends React.Component {
 	}
 
 	componentDidUpdate() {
-		if(this.props.fieldValue != this.state.value) {
+		if(this.props.fieldValue !== this.state.value) {
 			this.setState({
 				value: this.props.fieldValue
 			});
@@ -24,28 +24,6 @@ class Image extends React.Component {
 		const value = e.target.value;
 		this.props.onChange(name, value);
 	}
-
-
-	// onChangeSrc(src) {
-	// 	let imgData;
-	// 	let pseudoImg = new Image();
-	// 	pseudoImg.onload = (e) => {
-	// 		imgData = {
-	// 			imgSrc: src,
-	// 			imgLoaded: true,
-	// 		}
-	// 		this.setState(imgData);
-	// 		this.props.sendImgData(imgData);
-	// 	}
-	// 	pseudoImg.onerror = (e) => {
-	// 		imgData = {
-	// 			imgLoaded: false
-	// 		}
-	// 		this.setState(imgData);
-	// 		this.props.sendImgData(imgData);
-	// 	}
-	// 	pseudoImg.src = src;
-	// }
 
 	render() {
 		const setKey = this.props.setKey;

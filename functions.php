@@ -1,4 +1,5 @@
 <?php
+
 function four_corners_scripts() {
 
 	$ver = '1.2.1';
@@ -93,9 +94,6 @@ function get_translations_json( $req ) {
 
 function get_langs() {
 
-	$args = array(
-		'fields' => 'slug'
-	);
 	$slugs = pll_languages_list( array( 'fields' => 'slug' ) );
 	$locales = pll_languages_list( array( 'fields' => 'locale' ) );
 	$names = pll_languages_list( array( 'fields' => 'name' ) );
@@ -131,7 +129,7 @@ function options_endpoint() {
 		'links_brief',
 		'subscribe'
 	);
-	foreach( $option_keys as $i => $option_key ) {
+	foreach( $option_keys as $option_key ) {
 		$option = get_field( $option_key , 'option' );
 		$options[$option_key ] = $option;
 	}
@@ -154,7 +152,6 @@ function menu_endpoint() {
 function page_endpoint( $req ) {
 
 	$slug = $req['slug'];
-	$lang = $req['lang'];
 	$args = array(
 		'post_type' => 'page',
 		'posts_per_page'=> 1, 
@@ -168,7 +165,7 @@ function page_endpoint( $req ) {
 
 }
 
-function creators_endpoint( $req ) {
+function creators_endpoint() {
 
 	$args = array(
 		'post_type' => 'creators',

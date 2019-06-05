@@ -109,7 +109,7 @@ class Module extends React.Component {
 
 			const title = creator&&creator.acf ? creator.acf[cornerTitleKey] : '&nbsp;';
 			let className = 'fc-panel fc-'+cornerSlug;
-			if(this.props.activeCorner == cornerSlug) {
+			if(this.props.activeCorner === cornerSlug) {
 				className += ' fc-active';
 			}
 			panels.push(
@@ -137,7 +137,7 @@ class Module extends React.Component {
 		const corners = [];
 		{this.corners.forEach((cornerSlug,i) => {
 			let className = 'fc-corner fc-'+cornerSlug;
-			if(this.props.activeCorner == cornerSlug) {
+			if(this.props.activeCorner === cornerSlug) {
 				className += ' fc-active';
 			}
 			corners.push(
@@ -155,18 +155,19 @@ class Module extends React.Component {
 		const data = this.props.formData;
 		if(!data){return}
 		const opts = data.opts;
-		if(!opts||!opts.cutline){return}
+		if(!opts||(!opts.caption&&!opts.credit&&!opts.logo)){return}
 		return (
 			<div className='fc-cutline'>
-				{data.authorship.credit}
-				<a href="https://fourcornersproject.org" target="_blank"></a>
+				{opts.caption && data.authorship ? <span className="fc-caption">{data.authorship.caption}</span> : ''}
+				{opts.credit && data.authorship ? <span className="fc-credit">{data.authorship.credit}</span> : ''}
+				{opts.logo ? <a href="https://fourcornersproject.org" target="_blank"></a> : ''}
 			</div>
 		);
 	}
 
 	render() {
 		const formData = this.props.formData;
-		const imgLoaded = this.props.imgLoaded;
+		// const imgLoaded = this.props.imgLoaded;
 		const imgSrc = (formData.photo ? formData.photo.src : null) || null;
 		const opts = formData.opts;
 		let className = 'fc-embed';
@@ -178,18 +179,20 @@ class Module extends React.Component {
 		}
 		if(imgSrc) {
 			className += ' fc-loaded';	
+		} else {
+			className += ' fc-empty';
 		}
 		const activeCorner = this.props.activeCorner;
 		return(
 			<React.Fragment>
 				<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
-					{!imgLoaded ?
+					{!imgSrc ?
 					<div
 						className="no-photo" onClick={this.onClick.bind(this)}>
 						<h2>Add your photo</h2>
 					</div> : ''}
-					<div className={imgLoaded?'fc-photo fc-loaded':'fc-photo'}>
-						{ imgLoaded ? <img src={imgSrc} className='fc-img'/> : '' }
+					<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
+						{ imgSrc ? <img src={imgSrc} className='fc-img'/> : '' }
 					</div>
 					{this.renderCorners()}
 					{this.renderPanels()}

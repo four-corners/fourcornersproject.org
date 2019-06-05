@@ -89,9 +89,7 @@ class Authorship extends React.Component {
 					panelData.ethics.desc ?
 						<div className="fc-field" data-fc-field="ethics">
 							<span className="fc-label">Code of ethics</span>
-							<span className="fc-content">
-								<div className="fc-sub-caption">{panelData.ethics.desc}</div>
-							</span>
+							<span className="fc-content">{panelData.ethics.desc}</span>
 						</div> : ''}
 
 

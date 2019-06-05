@@ -7,7 +7,8 @@ const Schema = {
 	photo: {
 		fields: {
 			src: {
-				type: 'image',
+				type: 'text',
+				format: 'url'
 			},
 		}
 	},
@@ -50,7 +51,8 @@ const Schema = {
 				type: 'textarea'
 			},
 			website: {
-				type: 'text'
+				type: 'text',
+				format: 'url'
 			},
 			website: {
 				type: 'text'
@@ -78,7 +80,7 @@ const Schema = {
 				fields: {
 					url: {
 						type: 'text',
-						format: 'uri',
+						format: 'url'
 					},
 					caption: {
 						type: 'text',
@@ -97,7 +99,7 @@ const Schema = {
 				fields: {
 					url: {
 						type: 'text',
-						format: 'uri',
+						format: 'url'
 					},
 					caption: {
 						type: 'text',
@@ -119,7 +121,7 @@ const Schema = {
 					},
 					url: {
 						type: 'text',
-						format: 'uri',
+						format: 'url'
 					}
 				}
 			}
@@ -127,10 +129,16 @@ const Schema = {
 	},
 	opts: {
 		fields: {
-			cutline: {
+			dark: {
 				type: 'checkbox',
 			},
-			dark: {
+			caption: {
+				type: 'checkbox',
+			},
+			credit: {
+				type: 'checkbox',
+			},
+			logo: {
 				type: 'checkbox',
 			}
 		}

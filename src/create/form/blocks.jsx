@@ -15,11 +15,17 @@ class Blocks extends React.Component {
 	}
 
 	componentDidUpdate() {
+		const setKey = this.props.setKey;
+		const fieldKey = this.props.fieldKey;
 		const fieldValue = this.props.fieldValue;
 		if(fieldValue && fieldValue != this.state.blocks) {
 			fieldValue.map((block, blockIndex) => {
 				fieldValue[blockIndex].index = blockIndex;
+				if(fieldKey === 'media' && block.url) {
+					this.getMediaData(block, setKey, blockIndex);
+				}
 			});
+
 			this.setState({
 				blocks: fieldValue,
 				superIndex: fieldValue.length+1
@@ -40,7 +46,7 @@ class Blocks extends React.Component {
 		let blocks = this.state.blocks;
 		let block = blocks[blockIndex];
 		block[subFieldKey] = value;
-		if(fieldKey == 'media' && block.url) {
+		if(fieldKey === 'media' && block.url) {
 			this.getMediaData(block, setKey, blockIndex);
 		}
 
@@ -61,7 +67,8 @@ class Blocks extends React.Component {
 		const that = this;
 		const uri = encodeURIComponent(url);
 		let req = '';
-		const blockMedia = this.state.blockMedia.slice(0);
+		// const blockMedia = this.state.blockMedia.slice(0);
+		// console.log(blockMedia);
 		const mediaData = Object.assign({}, this.state.blockMedia);
 		switch(source) {
 			case 'youtube':
@@ -90,6 +97,7 @@ class Blocks extends React.Component {
 				return res.json();
 			})
 			.then(res => {
+				const blockMedia = this.state.blockMedia;
 				blockMedia[index] = {
 					html:res.html,
 					width: res.width,
@@ -103,6 +111,7 @@ class Blocks extends React.Component {
 				console.warn(err);
 			});
 		} else {
+			const blockMedia = this.state.blockMedia;
 			blockMedia[index] = {
 				url: uri
 			};
@@ -124,6 +133,7 @@ class Blocks extends React.Component {
 	}
 
 	renderBlock(block, blockIndex) {
+		block.index = blockIndex;
 		const blocks = this.state.blocks,
 					setKey = this.props.setKey,
 					fieldKey = this.props.fieldKey,
@@ -165,23 +175,26 @@ class Blocks extends React.Component {
 				<div className='widget-buttons'>
 
 					{upIndex>=0?
-					<div
+					<button
 						data-dir='up'
 						data-new-index={upIndex}
 						className='widget-button move-block'
-						onClick={this.moveBlock.bind(this)}/>
+						onClick={this.moveBlock.bind(this)}>
+					</button>
 					:''}
 					{downIndex<blocks.length?
-					<div
+					<button
 						data-dir='down'
 						data-new-index={downIndex}
 						className='widget-button move-block'
-						onClick={this.moveBlock.bind(this)}/>
+						onClick={this.moveBlock.bind(this)}>
+					</button>
 					:''}
 
-					<div
+					<button
 						className='widget-button delete-block'
-						onClick={this.deleteBlock.bind(this)}/>
+						onClick={this.deleteBlock.bind(this)}>
+					</button>
 
 				</div>
 			</div>
@@ -192,7 +205,7 @@ class Blocks extends React.Component {
 		const setKey = this.props.setKey,
 					fieldKey = this.props.fieldKey,
 					data = this.props.data;
-		const name = [setKey, fieldKey, subFieldKey, blockIndex, subFieldIndex].join('_');
+		const name = [setKey, fieldKey, subFieldKey, blockIndex].join('_');
 		let strings;
 		if(subFieldKey == 'url') {
 			strings = typeStrings;
@@ -205,8 +218,8 @@ class Blocks extends React.Component {
 				<input
 					name={name}
 					className='form-elem'
-					type={'text'}
-					value={subFieldValue}
+					type='text'
+					// value={subFieldValue}
 					placeholder={strings.placeholder}
 					onChange={this.onChange.bind(this)}/>
 			</div>
@@ -228,12 +241,12 @@ class Blocks extends React.Component {
 
 	renderButton(type, typeKey, i) {
 		return (
-			<div key={i}
+			<button key={i}
 				className='button add-block'
 				data-slug={typeKey}
 				onClick={this.addBlock.bind(this)}>
 				Add {type.label}
-			</div>
+			</button>
 		);
 	}
 
@@ -283,7 +296,7 @@ class Blocks extends React.Component {
 		const newIndex = e.target.dataset.newIndex;
 		let newBlocks = this.state.blocks;
 		let newBlockMedia = this.state.blockMedia;
-		// return if no where to go
+		
 		if(!newBlocks[newIndex]){return}
 
 		let block = newBlocks.splice(index, 1)[0];

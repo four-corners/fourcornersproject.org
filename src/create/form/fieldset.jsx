@@ -1,6 +1,5 @@
 import Text from './text.jsx';
 import Textarea from './textarea.jsx';
-import Image from './image.jsx';
 import Select from './select.jsx';
 import Blocks from './blocks.jsx';
 import Group from './group.jsx';
@@ -41,11 +40,16 @@ class Fieldset extends React.Component {
 
 	onToggle() {
 		const setKey = this.props.setKey;
-		const newActiveFieldset = setKey==this.props.activeFieldset?null:setKey;
-		if(newActiveFieldset) {
-			this.props.sendActiveCorner(newActiveFieldset);
+		const newActiveSetKey = setKey==this.props.activeFieldset?null:setKey;
+		if(newActiveSetKey) {
+			this.props.sendActiveCorner(newActiveSetKey);
+			const newActiveFieldset = document.querySelector('#'+newActiveSetKey);
+			// if(newActiveFieldset) {
+			// 	console.log(newActiveFieldset.offsetTop, window.innerHeight, window);
+			// }
 		}
-		this.props.sendActiveFieldset(newActiveFieldset);
+		this.props.sendActiveFieldset(newActiveSetKey);
+
 	}
 
 	renderFields() {
@@ -60,17 +64,17 @@ class Fieldset extends React.Component {
 						index = fieldElems.length;
 			let fieldValue = formData[setKey] ? formData[setKey][fieldKey] : null;
 			switch(field.type) {
-				case 'image':
-					fieldElems.push(
-						<Image
-							key={index}
-							setKey={setKey}
-							fieldKey={fieldKey}
-							field={field}
-							fieldValue={formData[setKey]}
-							onChange={this.props.onChange} />
-					);
-					break;
+				// case 'image':
+				// 	fieldElems.push(
+				// 		<Image
+				// 			key={index}
+				// 			setKey={setKey}
+				// 			fieldKey={fieldKey}
+				// 			field={field}
+				// 			fieldValue={formData[setKey]}
+				// 			onChange={this.props.onChange} />
+				// 	);
+				// 	break;
 				case 'text':
 					fieldElems.push(
 						<Text
@@ -78,7 +82,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							fieldValue={fieldValue}
+							// fieldValue={fieldValue}
 							onChange={this.props.onChange} />
 					);
 					break;
@@ -89,7 +93,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							fieldValue={fieldValue}
+							// fieldValue={fieldValue}
 							onChange={this.props.onChange} />
 					);
 					break;
@@ -100,7 +104,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							fieldValue={fieldValue}
+							// fieldValue={fieldValue}
 							onChange={this.props.onChange} />
 					);
 					break;
@@ -135,7 +139,7 @@ class Fieldset extends React.Component {
 							setKey={setKey}
 							fieldKey={fieldKey}
 							field={field}
-							fieldValue={fieldValue}
+							// fieldValue={fieldValue}
 							onChange={this.props.onChange}
 							sendMediaData={this.props.sendMediaData} />
 					);
@@ -164,7 +168,7 @@ class Fieldset extends React.Component {
 		const data = this.props.data;
 		const setKey = this.props.setKey;
 		const strings = data.strings;
-		const expand = setKey==this.props.activeFieldset;
+		const expand = setKey === this.props.activeFieldset;
 		return (
 			<fieldset id={setKey} className={'toggler '+(expand?'expand':'collapse')}>
 				<legend className='toggle-label' onClick={this.onToggle.bind(this)}>

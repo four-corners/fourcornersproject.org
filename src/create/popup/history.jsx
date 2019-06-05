@@ -25,6 +25,10 @@ class History extends React.Component {
 
 	}
 
+	// closePopup() {
+	// 	this.props.closePopup();
+	// }
+
 	renderHistory() {
 		const self = this;
 		const hiddenRows = self.state.hiddenRows;
@@ -44,6 +48,7 @@ class History extends React.Component {
 						dataObj={historyObj[timestamp]}
 						timestamp={timestamp}
 						lang={self.props.lang}
+						clearFormData={self.props.clearFormData.bind(this)}
 						updateFormData={self.props.updateFormData.bind(this)}>
 					</HistoryRow>
 				);
@@ -73,6 +78,9 @@ class History extends React.Component {
 		return (
 			<React.Fragment>
 				<legend>{strings.history_label}</legend>
+				<button className='button close-popup'
+					onClick={this.props.closePopup.bind(this)}>
+				</button>
 				<div className='desc'>
 					{ReactHtmlParser(strings.history_desc)}
 				</div>
@@ -80,18 +88,14 @@ class History extends React.Component {
 				{ history ? this.renderHistory() : <h3>There is no edit history found.</h3> }
 
 				<div className='buttons-group'>
-					<div className='button'
-						onClick={this.props.closePopup.bind(this)}>
-						Cancel
-					</div>
-					<div className='button'
+					<button className='button'
 						onClick={this.props.toggleSave.bind(this)}>
 						{this.props.saveHistory ? strings.history_opt_out : strings.history_opt_in}
-					</div>
-					<div className='button red'
+					</button>
+					<button className='button red'
 						onClick={this.deleteHistory.bind(this)}>
 						{strings.history_delete_all}
-					</div>
+					</button>
 				</div>
 			</React.Fragment>
 		);

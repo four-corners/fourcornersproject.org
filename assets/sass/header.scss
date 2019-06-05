@@ -101,6 +101,11 @@ nav#main-nav {
 	background-color: $darkest;
 	color: $lightestBlue;
 	text-align: center;
+
+
+	display: none;
+
+
 	.alert-inner {
 		display: flex;
 		flex-wrap: wrap;

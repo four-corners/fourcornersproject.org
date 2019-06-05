@@ -59,9 +59,10 @@ class Form extends React.Component {
 		const setKey = nameArr[0];
 		const fieldKey = nameArr[1];
 		const subFieldKey = nameArr[2];
-		if(!formData[setKey]) {return}
 		if(subFieldKey) {
-			if(!formData[setKey][fieldKey]){formData[setKey][fieldKey]={}}
+			if(!formData[setKey][fieldKey]){
+				formData[setKey][fieldKey]={};
+			}
 			formData[setKey][fieldKey][subFieldKey] = value;
 		} else {
 			formData[setKey][fieldKey] = value;
@@ -80,6 +81,7 @@ class Form extends React.Component {
 	onError(e) {
 	}
 
+	//NEEDS IMPROVEMENT
 	renderSchema() {
 		let fieldsets = [];
 		let lang = this.state.lang;
@@ -101,12 +103,12 @@ class Form extends React.Component {
 						desc: translations[[setKey, fieldKey, 'desc'].join('_')],
 						placeholder: translations[[setKey, fieldKey, 'placeholder'].join('_')],
 					}
-					if(field.type=='select') {
+					if(field.type === 'select') {
 
 						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
 						Schema[setKey].fields[fieldKey].options = opts;
 
-					} else if(field.type=='checkbox') {
+					} else if(field.type === 'checkbox') {
 
 						if(field.fields&&field.fields.length) {
 							Schema[setKey].fields[fieldKey].options = {};
@@ -118,7 +120,7 @@ class Form extends React.Component {
 							}
 						}
 
-					} else if(field.type=='blocks') {
+					} else if(field.type === 'blocks') {
 
 						const objKey = 'types';
 						const subFields = Schema[setKey].fields[fieldKey].fields;
@@ -142,7 +144,7 @@ class Form extends React.Component {
 							}
 						}
 
-					} else if(field.type=='toggle') {
+					} else if(field.type === 'toggle') {
 
 						const objKey = 'types';
 						const subFields = Schema[setKey].fields[fieldKey].fields;
@@ -156,17 +158,17 @@ class Form extends React.Component {
 								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
 							}
 
-							if(subField.type == 'group') {
+							if(subField.type === 'group') {
 								const subFields = this.buildGroup(Schema, setKey, fieldKey, subFieldKey);
 								Schema[setKey].fields[fieldKey].fields[subFieldKey].fields = subFields;
 							}
-							else if(subField.type == 'select') {
+							else if(subField.type === 'select') {
 								const opts = translations[[setKey, fieldKey, subFieldKey, 'options'].join('_')];
 								Schema[setKey].fields[fieldKey].fields[subFieldKey].options = opts;
 							}
 						}
 
-					} else if(field.type=='group') {
+					} else if(field.type === 'group') {
 						const subFields = this.buildGroup(Schema, setKey, fieldKey);
 						Schema[setKey].fields[fieldKey].fields = subFields;
 					}

@@ -77,6 +77,7 @@ class HistoryRow extends React.Component {
 	importHistoryRow(elem) {
 		const value = this.textarea.current.dataset.value;
 		const timestamp = this.props.timestamp;
+		this.props.clearFormData();
 		this.props.updateFormData(value);
 	}
 
@@ -149,24 +150,26 @@ class HistoryRow extends React.Component {
 								onFocus={this.onFocus.bind(this)}>
 							</textarea>
 							<div className='buttons-group'>
-								<div
-									className='button red'
-									data-action={'delete'}
-									onClick={this.onClickButton.bind(this)}>
-									{ReactHtmlParser(strings.history_delete)}
-								</div>
 								{/*<div
 									className='button'
 									data-action={'copy'}
 									onClick={this.onClickButton.bind(this)}>
 									Copy
 								</div>*/}
-								<div
+								<button
 									className='button'
-									data-action={'import'}
+									type='submit'
+									data-action='import'
 									onClick={this.onClickButton.bind(this)}>
 									{ReactHtmlParser(strings.history_import)}
-								</div>
+								</button>
+								<button
+									className='button red'
+									type='button'
+									data-action='delete'
+									onClick={this.onClickButton.bind(this)}>
+									{ReactHtmlParser(strings.history_delete)}
+								</button>
 							</div>
 						</div>
 					</div>

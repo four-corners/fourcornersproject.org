@@ -21,9 +21,10 @@ class Imagery extends React.Component {
 	renderImagery(panelData) {
 		let mediaRows = [];
 		panelData.map((obj,i) => {
+			var mediaHtml = this.renderMedia(obj, i);
 			mediaRows.push(
 				<div className='fc-row' key={i}>
-					{this.renderMedia(obj, i)}
+					{mediaHtml}
 					{obj.caption ?
 					<div className='fc-sub-caption'>{obj.caption}</div>
 					: ''}

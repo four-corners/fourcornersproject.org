@@ -81,7 +81,16 @@ class Preview extends React.Component {
 			if(typeof value == 'object') {
 				Object.keys(value).forEach(function(subKey) {
 					if(typeof value[subKey] == 'string') {
-						cleanData[key][subKey] = value[subKey].replace(/'/g, '&apos;');
+						cleanData[key][subKey] = value[subKey]
+							.replace(/'/g, '&apos;')
+							.replace(/"/g, '\"')
+							.replace(/&quot;/g, '\"')
+							.replace(/“/g, '&ldquo;')
+							.replace(/”/g, '&rdquo;')
+							.replace(/′/g, '&prime;')
+							.replace(/″/g, '&Prime;');
+							// '"“”′″
+
 					}
 				});
 			}
@@ -119,6 +128,28 @@ class Preview extends React.Component {
 							
 							<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
+								<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>
+									<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
+										<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
+									</legend>
+									<div className="fieldset-inner">
+										<div className="fields-group">
+											<div className="field">
+												{creator&&creator.acf&&creator.acf['scripts_desc'] ?
+												<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['scripts_desc'] }}></div>
+												: ''}
+												<textarea className='output form-elem'
+													id='libraries'
+													readOnly={true}
+													rows={3}
+													value={jsCDN+jsInit+cssCDN}
+													onFocus={this.onFocus.bind(this)}
+													onBlur={this.onBlur.bind(this)} />
+											</div>
+										</div>
+									</div>
+								</fieldset>
+
 								<fieldset id='embedPhoto'>
 									<legend>
 										<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
@@ -135,27 +166,6 @@ class Preview extends React.Component {
 													ref={this.outputRef}
 													rows={3}
 													value={this.embedCode(this.props.formData)}
-													onFocus={this.onFocus.bind(this)}
-													onBlur={this.onBlur.bind(this)} />
-											</div>
-										</div>
-									</div>
-								</fieldset>
-								<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>
-									<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
-										<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
-									</legend>
-									<div className="fieldset-inner">
-										<div className="fields-group">
-											<div className="field">
-												{creator&&creator.acf&&creator.acf['scripts_desc'] ?
-												<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['scripts_desc'] }}></div>
-												: ''}
-												<textarea className='output form-elem'
-													id='libraries'
-													readOnly={true}
-													rows={3}
-													value={jsCDN+jsInit+cssCDN}
 													onFocus={this.onFocus.bind(this)}
 													onBlur={this.onBlur.bind(this)} />
 											</div>

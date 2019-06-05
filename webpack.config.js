@@ -9,7 +9,7 @@ module.exports = (env, argv) => ({
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: '[name]'+(argv.mode=='development'?'':'.min')+'.js'
+		filename: '[name]'+(argv.mode==='development'?'':'.min')+'.js'
 	},
 	module: {
 		rules: [

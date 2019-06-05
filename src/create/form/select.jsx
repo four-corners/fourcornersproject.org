@@ -22,11 +22,13 @@ class Select extends React.Component {
 			this.setState({
 				value: fieldValue
 			});
+			if(!fieldValue.label) {
+				this.setState({
+					custom: fieldValue,
+					customText: fieldValue.desc
+				});
+			}
 		}
-	}
-
-	onChange(e) {
-
 	}
 
 	onClick(e) {
@@ -36,11 +38,14 @@ class Select extends React.Component {
 		}
 		const custom = e.currentTarget.classList.contains('custom');
 		let newValue = e.currentTarget.dataset.value;
-
 		try {
 			newValue = JSON.parse(newValue);
 		} catch(err) {
 			console.warn(err);
+		}
+
+		if(e.target.nodeName !== 'TEXTAREA' && e.currentTarget.classList.contains('selected')) {
+			newValue = {};
 		}
 
 		this.setState({
@@ -80,7 +85,7 @@ class Select extends React.Component {
 				<select
 					name={name}
 					className='form-elem'
-					value={value}
+					// value={value}
 					ref={this.selectRef}
 					onChange={this.onChange}>
 					{options ? options.map((option, i) => {
@@ -120,6 +125,7 @@ class Select extends React.Component {
 										<textarea
 											name={name+'Custom'}
 											className='form-elem'
+											value={this.state.customText}
 											onChange={this.onChangeCustom.bind(this)}/>
 									</React.Fragment>
 								: <Label strings={option} fieldKey={fieldKey}/>}

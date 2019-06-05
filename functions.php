@@ -2,7 +2,7 @@
 
 function four_corners_scripts() {
 
-	$ver = '1.2.1';
+	$ver = '1.2.2';
 	$fc_ver = '1.1.3';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );

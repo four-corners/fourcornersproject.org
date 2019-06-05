@@ -240,19 +240,20 @@ class Blocks extends React.Component {
 	}
 
 	renderButton(type, typeKey, i) {
+		var self = this;
 		return (
 			<button key={i}
 				className='button add-block'
 				data-slug={typeKey}
-				onClick={this.addBlock.bind(this)}>
-				Add {type.label}
+				onClick={self.addBlock.bind(this)}>
+				{"Add "+type.label}
 			</button>
 		);
 	}
 
 	addBlock(e) {
 		e.preventDefault();
-		const fieldName = [this.props.setKey, this.props.fieldKey].join('_')
+		const fieldName = [this.props.setKey, this.props.fieldKey].join('_');
 		const newBlocks = this.state.blocks.concat([{
 			source: e.target.dataset.slug,
 			index: this.state.superIndex

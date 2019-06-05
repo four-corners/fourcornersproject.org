@@ -221,8 +221,9 @@ class Form extends React.Component {
 					<div className='content-block'>
 						{this.props.creator.post_content}
 					</div>
-					<form
-						onFocus={this.onFocus.bind(this)}>
+					{/*<form
+						onFocus={this.onFocus.bind(this)}>*/}
+					<form>
 						{this.renderSchema()}
 					</form>
 				</div>

@@ -20,36 +20,13 @@ class Fieldset extends React.Component {
 		};
 	}
 
-	componentDidMount() {
-
-	}
-
-	componentWillUnmount() {
-
-	}
-
-	componentDidUpdate() {
-
-	}
-
-	toggleExpand() {
-		// this.setState({
-		// 	expand: !this.state.expand
-		// });
-	}
-
-	onToggle() {
+	onToggle(e) {
 		const setKey = this.props.setKey;
 		const newActiveSetKey = setKey==this.props.activeFieldset?null:setKey;
 		if(newActiveSetKey) {
 			this.props.sendActiveCorner(newActiveSetKey);
-			const newActiveFieldset = document.querySelector('#'+newActiveSetKey);
-			// if(newActiveFieldset) {
-			// 	console.log(newActiveFieldset.offsetTop, window.innerHeight, window);
-			// }
 		}
 		this.props.sendActiveFieldset(newActiveSetKey);
-
 	}
 
 	renderFields() {
@@ -64,17 +41,6 @@ class Fieldset extends React.Component {
 						index = fieldElems.length;
 			let fieldValue = formData[setKey] ? formData[setKey][fieldKey] : null;
 			switch(field.type) {
-				// case 'image':
-				// 	fieldElems.push(
-				// 		<Image
-				// 			key={index}
-				// 			setKey={setKey}
-				// 			fieldKey={fieldKey}
-				// 			field={field}
-				// 			fieldValue={formData[setKey]}
-				// 			onChange={this.props.onChange} />
-				// 	);
-				// 	break;
 				case 'text':
 					fieldElems.push(
 						<Text

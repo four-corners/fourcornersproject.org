@@ -15,7 +15,8 @@ class Import extends React.Component {
 	
 	importCode(e) {
 		e.preventDefault();
-		const value = e.target.querySelector('textarea').value;
+		const importTextarea = document.getElementsByName('import-code')[0];
+		const value = importTextarea.value;
 		this.props.clearFormData();
 		this.props.updateFormData(value);
 	}

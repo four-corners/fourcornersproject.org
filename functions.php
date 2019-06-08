@@ -10,8 +10,8 @@ function four_corners_scripts() {
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
 	wp_enqueue_script( 'react_script', get_stylesheet_directory_uri() . '/dist/app'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
 
-	wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/four-corners.min.js', array(), $fc_ver, true );
-	wp_enqueue_style( 'four_corners_style', get_stylesheet_directory_uri() . '/assets/css/four-corners.min.css' );
+	wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/fourcorners.min.js', array(), $fc_ver, true );
+	wp_enqueue_style( 'four_corners_style', get_stylesheet_directory_uri() . '/assets/css/fourcorners.min.css' );
 
 	// wp_enqueue_style( 'bootstrap_style', 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' );
 	wp_enqueue_style( 'app_style', get_stylesheet_directory_uri() . '/dist/app.css' );

@@ -69,7 +69,8 @@ class Preview extends React.Component {
 			lang: i18n.language,
 		}
 		let stringData = this.sanitizeCode(Object.assign(formData, auxData));
-		let imgHtml = imgLoaded ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>':'';
+		// let imgHtml = imgLoaded ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>':'';
+		let imgHtml = '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>';
 		let stringHtml = '<div class=\'fc-embed\' data-fc=\''+stringData+'\'>'+imgHtml+'</div>';
 		return stringHtml;
 	}

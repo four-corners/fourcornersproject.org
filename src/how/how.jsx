@@ -4,7 +4,7 @@ import ReactHtmlParser from 'react-html-parser';
 // import SchemaForm from 'react-jsonschema-form';
 
 import i18n from '../i18n.jsx';
-// import FourCorners from '../../assets/js/four-corners.min.js';
+import FourCorners from '../../assets/js/fourcorners.min.js';
 
 class How extends React.Component {
 	
@@ -58,10 +58,11 @@ class How extends React.Component {
 			} else if(!this.state.embeds[slug]) {
 				const embedHtml = this.state.embedHtmls[slug];
 				const embed = new FourCorners({
-					elem: '.embed-wrapper [data-slug="'+slug+'"] .fc-embed',
+					elem: '.embed-wrapper[data-slug="'+slug+'"] .fc-embed',
 					active: slug,
 					interactive: false
 				});
+				console.log(embed);
 				let embeds = this.state.embeds;
 				embeds[slug] = embed;
 				this.setState({
@@ -77,9 +78,9 @@ class How extends React.Component {
 		});
 	}
 
-	initEmbeds() {
+	// initEmbeds() {
 		
-	}
+	// }
 
 	renderIntro() {
 		let lang = this.state.lang;

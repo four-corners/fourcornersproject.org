@@ -109,7 +109,9 @@ class Popup extends React.Component {
 			//ERROR: Cannot import this photo.
 		}
 		const embedChild = embedHtml.props.children[0];
-		const	dataString = embedHtml.props['data-fc'].replace(/\'/g, '"');
+		const	dataString = embedHtml.props['data-fc'];
+		// .replace(/\'/g, '"');
+		console.log(dataString);
 		let formData = JSON.parse(dataString);
 		this.props.sendFormData(formData);
 		const self = this;

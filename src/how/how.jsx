@@ -62,7 +62,6 @@ class How extends React.Component {
 					active: slug,
 					interactive: false
 				});
-				console.log(embed);
 				let embeds = this.state.embeds;
 				embeds[slug] = embed;
 				this.setState({

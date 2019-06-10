@@ -55,6 +55,7 @@ h1 {
 h2 {
 	@include lgText;
 	@include strong;
+	margin-bottom: .5em;
 }
 h3 {
 	@include mdText;
@@ -65,6 +66,8 @@ h4 {
 strong {
 	@include strong;
 }
+p {
+}
 a, a:visited, a:hover {
 	color: $blue;
 	text-decoration: none;
@@ -72,6 +75,12 @@ a, a:visited, a:hover {
 }
 a:hover {
 	color: $darkest;
+}
+hr, .wp-block-separator {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	border: 0;
+	border-top: 1px solid $lightBlue;
 }
 // a:active {
 // 	transform: translateY(1px);
@@ -120,6 +129,9 @@ a:hover {
 	padding: .25rem 0;
 	@include sm {
 		padding: 0rem;
+	}
+	iframe {
+
 	}
 }
 

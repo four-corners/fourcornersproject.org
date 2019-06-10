@@ -1917,7 +1917,8 @@ h1 {
 h2 {
   font-size: 2.3rem;
   line-height: 1.2em;
-  font-weight: 700; }
+  font-weight: 700;
+  margin-bottom: .5em; }
 
 h3 {
   font-size: 1.5rem;
@@ -1938,6 +1939,12 @@ a, a:visited, a:hover {
 
 a:hover {
   color: #181819; }
+
+hr, .wp-block-separator {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  border: 0;
+  border-top: 1px solid #a6cdfe; }
 
 .row.reverse {
   -webkit-box-orient: horizontal;

@@ -34,7 +34,6 @@ class How extends React.Component {
 			.then(function(res) {
 				if(res) {
 					self.setState({ page: res });
-					// self.initEmbeds();
 				}
 			});
 		i18n.on('languageChanged', this.onLanguageChanged);
@@ -77,10 +76,6 @@ class How extends React.Component {
 		});
 	}
 
-	// initEmbeds() {
-		
-	// }
-
 	renderIntro() {
 		let lang = this.state.lang;
 		const page = this.state.page;
@@ -91,10 +86,6 @@ class How extends React.Component {
 						<div className='content-block'>
 							<h4>By using Four Corners you are able to add contextualizing information so that it is embedded into each of the four corners of your image. When a viewer hovers his or her mouse over the image, the Four Corners symbols appear and each corner is then clickable.</h4>
 						</div>
-						{/*page.post_content ?
-						(<div className='content-block'>
-							<h4>{ReactHtmlParser(page.post_content)}</h4>
-						</div>) : ''*/}
 					</div>
 				</div>
 				<div className='col col-12 col-lg-6 right'>
@@ -113,11 +104,6 @@ class How extends React.Component {
 		if(!this.state.page, !this.state.page.acf){return}
 		const fields = this.state.page.acf;
 		const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
-		// let embedHtmls = this.state.embedHtmls;
-		// embedHtmls[slug] = <div className='embed-wrapper' data-slug={slug}>{embedHtml}</div>;
-		// this.setState({
-		// 	embedHtmls: embedHtmls
-		// });
 		return (
 			<div key={i}
 				className='embed-wrapper'

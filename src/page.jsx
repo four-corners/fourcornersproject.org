@@ -74,7 +74,7 @@ class Page extends React.Component {
 					<div className="max-width">
 						<h1>{ReactHtmlParser(page.post_title)}</h1>
 						<div className='row'>
-							<div className='col col-12 col-sm-10 m-auto'>
+							<div className='col col-12'>
 								<div className='col-content'>
 									{page.post_content ? ReactHtmlParser(page.post_content) : ''}
 								</div>

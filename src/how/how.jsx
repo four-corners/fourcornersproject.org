@@ -60,7 +60,7 @@ class How extends React.Component {
 				const embed = new FourCorners({
 					elem: '.embed-wrapper[data-slug="'+slug+'"] .fc-embed',
 					active: slug,
-					interactive: false
+					static: true
 				});
 				let embeds = this.state.embeds;
 				embeds[slug] = embed;

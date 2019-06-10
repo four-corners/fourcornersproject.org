@@ -108,7 +108,7 @@ class Preview extends React.Component {
 		const jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+cdnVer+'/dist/four-corners.min.js';
 		const cssCDN = '<link href="'+cssURL+'" rel="stylesheet" type="text/css">';
 		const jsCDN = '<script src="'+jsURL+'" type="text/javascript"></script>';
-		const jsInit = '<script type="text/javascript">new FourCorners()</script>';
+		const jsInit = '<script type="text/javascript">window.onload=function(){new FourCorners()}</script>';
 		return(
 			<div className='col-inner'>
 				<div className='col-content'>
@@ -122,11 +122,9 @@ class Preview extends React.Component {
 							activeCorner={this.props.activeCorner}
 							activeFieldset={this.props.activeFieldset}
 							sendActiveCorner={this.props.sendActiveCorner}
-							sendActiveFieldset={this.props.sendActiveFieldset}
-							/>
+							sendActiveFieldset={this.props.sendActiveFieldset} />
 
 						<div id='embed-output'>
-							
 							<form name='embed' onChange={this.onChangeOpts.bind(this)}>
 
 								<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>

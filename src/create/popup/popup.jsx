@@ -103,25 +103,25 @@ class Popup extends React.Component {
 	// }
 
 	updateFormData(value) {
-		const embedHtml = ReactHtmlParser(value)[0];
-		if(!embedHtml){
-			return
+		try {
+			const embedHtml = ReactHtmlParser(value)[0];
+			const embedChild = embedHtml.props.children[0];
+			const	dataString = embedHtml.props['data-fc'];
+			// .replace(/\'/g, '"');
+			let formData = JSON.parse(dataString);
+			this.props.sendFormData(formData);
+			const self = this;
+			Object.keys(Schema).forEach(function(setKey) {
+				const setSchema = Schema[setKey];
+				setTimeout(function() {
+					self.updateFieldsData([setKey], setSchema, formData);
+				}, 100);
+			});
+			this.closePopup();
+		} catch(e) {
 			//ERROR: Cannot import this photo.
+			console.warn(e);
 		}
-		const embedChild = embedHtml.props.children[0];
-		const	dataString = embedHtml.props['data-fc'];
-		// .replace(/\'/g, '"');
-		console.log(dataString);
-		let formData = JSON.parse(dataString);
-		this.props.sendFormData(formData);
-		const self = this;
-		Object.keys(Schema).forEach(function(setKey) {
-			const setSchema = Schema[setKey];
-			setTimeout(function() {
-				self.updateFieldsData([setKey], setSchema, formData);
-			}, 100);
-		});
-		this.closePopup();
 	}
 
 	updateFieldsData(keys, schema, formData) {
@@ -130,7 +130,9 @@ class Popup extends React.Component {
 
 		const setKey = keys[0];
 		const setData = formData[setKey];
-
+		if(!setData){
+			return;
+		}
 		Object.keys(fieldsSchema).forEach(function(fieldKey) {
 			const fieldSchema = fieldsSchema[fieldKey];
 			const fieldData = setData[fieldKey];
@@ -163,11 +165,7 @@ class Popup extends React.Component {
 	}
 
 	updateFieldData(keys, fieldData) {
-		// console.log(keys, formData);
-		// const setKey = keys[0];
-		// const fieldKey = keys[1];
 		let fieldName, field;
-		// console.log(fieldData);
 		switch(typeof fieldData) {
 			case 'object':
 				if(Array.isArray(fieldData)) {
@@ -189,15 +187,10 @@ class Popup extends React.Component {
 				fieldName = keys.join('_');
 				field = document.getElementsByName(fieldName)[0];
 				if(field) { field.value = fieldData; }
-				// console.log(field);
 				break;
 			default:
 				break;
 		}
-
-		// const fieldName = keys.join('_');
-		// console.log(fieldName);
-		// let field = document.getElementsByName(fieldName)[0];
 	}
 
 	updateFieldValue() {

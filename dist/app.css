@@ -1946,6 +1946,9 @@ hr, .wp-block-separator {
   border: 0;
   border-top: 1px solid #a6cdfe; }
 
+iframe {
+  border: none; }
+
 .row.reverse {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;

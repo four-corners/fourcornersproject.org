@@ -70,34 +70,45 @@ class Preview extends React.Component {
 		}
 		let stringData = this.sanitizeCode(Object.assign(formData, auxData));
 		// let imgHtml = imgLoaded ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>':'';
-		let imgHtml = '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>';
+		let imgHtml = formData.photo ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>' : '';
 		let stringHtml = '<div class=\'fc-embed\' data-fc=\''+stringData+'\'>'+imgHtml+'</div>';
 		return stringHtml;
 	}
 
 	sanitizeCode(data) {
-		let cleanData = JSON.parse(JSON.stringify(data));
-		Object.keys(cleanData).forEach(function(key) {
-			const value = cleanData[key];
+		const self = this;
+		let dataObj = JSON.parse(JSON.stringify(data));
+		Object.keys(dataObj).forEach(function(key) {
+			const value = dataObj[key];
 			if(typeof value == 'object') {
 				Object.keys(value).forEach(function(subKey) {
 					if(typeof value[subKey] == 'string') {
-						cleanData[key][subKey] = value[subKey]
-							.replace(/'/g, '&apos;')
-							.replace(/"/g, '\"')
-							.replace(/&quot;/g, '\"')
-							.replace(/“/g, '&ldquo;')
-							.replace(/”/g, '&rdquo;')
-							.replace(/′/g, '&prime;')
-							.replace(/″/g, '&Prime;');
-							// '"“”′″
-
+						dataObj[key][subKey] = self.sanitizeString(value[subKey]);
+					} else if(value[subKey] instanceof Array) {
+						value[subKey].forEach(function(subObj, i) {
+							Object.keys(subObj).forEach(function(subObjKey) {
+								dataObj[key][subKey][i][subObjKey] = self.sanitizeString(subObj[subObjKey]);
+							});
+						});
 					}
 				});
 			}
 		});
-		let stringData = JSON.stringify(cleanData);
+		let stringData = JSON.stringify(dataObj);
 		return stringData;
+	}
+
+	sanitizeString(string) {
+		if(typeof string !== 'string') {
+			return string
+		}
+		return string.replace(/'/g, '&apos;')
+			.replace(/"/g, '\"')
+			.replace(/&quot;/g, '\"')
+			.replace(/“/g, '&ldquo;')
+			.replace(/”/g, '&rdquo;')
+			.replace(/′/g, '&prime;')
+			.replace(/″/g, '&Prime;');
 	}
 
 	render() {

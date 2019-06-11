@@ -67,6 +67,7 @@ strong {
 	@include strong;
 }
 p {
+
 }
 a, a:visited, a:hover {
 	color: $blue;
@@ -82,9 +83,9 @@ hr, .wp-block-separator {
 	border: 0;
 	border-top: 1px solid $lightBlue;
 }
-// a:active {
-// 	transform: translateY(1px);
-// }
+iframe {
+	border: none;
+}
 .container {
 
 }
@@ -129,9 +130,6 @@ hr, .wp-block-separator {
 	padding: .25rem 0;
 	@include sm {
 		padding: 0rem;
-	}
-	iframe {
-
 	}
 }
 

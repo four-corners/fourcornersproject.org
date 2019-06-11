@@ -1909,7 +1909,8 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: 3.2rem;
   line-height: 1.2em;
-  font-weight: 700; }
+  font-weight: 700;
+  text-align: center; }
   @media (max-width: 992px) {
     h1 {
       font-size: 2.6rem; } }
@@ -1948,6 +1949,10 @@ hr, .wp-block-separator {
 
 iframe {
   border: none; }
+
+.m-auto {
+  margin-left: auto;
+  margin-right: auto; }
 
 .row.reverse {
   -webkit-box-orient: horizontal;
@@ -2438,6 +2443,16 @@ a.prompt-button {
       color: #80bdff; }
   .how-block p {
     color: #181819; }
+
+#gallery h2 {
+  text-align: center; }
+
+#gallery hr, #gallery .wp-block-separator {
+  margin-top: 4rem;
+  margin-bottom: 3.25rem; }
+
+#creator h1 {
+  text-align: left; }
 
 #creator .card {
   margin: 0 auto 2rem auto;

@@ -51,6 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	@include xlText;
 	@include strong;
+	text-align: center;
 }
 h2 {
 	@include lgText;
@@ -86,8 +87,9 @@ hr, .wp-block-separator {
 iframe {
 	border: none;
 }
-.container {
-
+.m-auto {
+	margin-left: auto;
+	margin-right: auto;
 }
 .row {
 	&.reverse {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ReactHtmlParser from 'react-html-parser';
-// import SchemaForm from 'react-jsonschema-form';
+import FourCorners from '../../assets/js/fourcorners.min.js';
 
 import i18n from '../i18n.jsx';
 import Header from '../header.jsx';
@@ -41,7 +41,7 @@ class Gallery extends React.Component {
 	}
 
 	componentDidUpdate() {
-
+		const embeds = new FourCorners();
 	}
 
 	onLanguageChanged(lang) {
@@ -57,15 +57,11 @@ class Gallery extends React.Component {
 		return (
 			<main id="gallery">
 				<div className="max-width">
-					<h1>{ReactHtmlParser(page.post_title)}</h1>
 					<div className='row'>
-						<div className='col col-12'>
+						<div className='col col-8 m-auto'>
+							<h1>{ReactHtmlParser(page.post_title)}</h1>
 							<div className='col-content'>
-								{page.post_content ?
-									<div className='content-block'>
-										{ReactHtmlParser(page.post_content)}
-									</div>
-								: ''}
+								{page.post_content ? ReactHtmlParser(page.post_content) : ''}
 							</div>
 						</div>
 					</div>

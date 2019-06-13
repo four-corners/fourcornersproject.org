@@ -28,7 +28,7 @@ class Creator extends React.Component {
 				backstory:[]
 			},
 			activeCorner: null,
-			activeFieldset: null,
+			activeFieldset: 'photo',
 			saveHistory: true
 		};
 		this.timestamp = Date.now();

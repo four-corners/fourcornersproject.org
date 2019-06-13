@@ -218,8 +218,8 @@ class Form extends React.Component {
 			<div className='col-inner'>
 				<div id='forms' className='col-content'>
 
-					<div className='content-block'>
-						{this.props.creator.post_content}
+					<div className='content-block'
+						dangerouslySetInnerHTML={{__html: this.props.creator.post_content }}>
 					</div>
 					{/*<form
 						onFocus={this.onFocus.bind(this)}>*/}

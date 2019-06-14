@@ -267,6 +267,7 @@ class Blocks extends React.Component {
 	}
 
 	deleteBlock(e) {
+		e.preventDefault();
 		let blocks = this.state.blocks;
 		const setKey = this.props.setKey;
 		const fieldKey = this.props.fieldKey;
@@ -288,6 +289,7 @@ class Blocks extends React.Component {
 	}
 
 	moveBlock(e) {
+		e.preventDefault();
 		const setKey = this.props.setKey;
 		const fieldKey = this.props.fieldKey;
 		const fieldName = [setKey, fieldKey].join('_');

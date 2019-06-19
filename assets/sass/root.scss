@@ -29,7 +29,7 @@ body {
 #page {
 	width: 100%;
 	min-height: 100%;
-	display: table;
+	// display: table;
 }
 .page-fill {
 	width: 100%;
@@ -73,6 +73,7 @@ p {
 a, a:visited, a:hover {
 	color: $blue;
 	text-decoration: none;
+	hyphens: auto;
 	@include fastTrans(border);
 }
 a:hover {

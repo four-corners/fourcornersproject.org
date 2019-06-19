@@ -1883,8 +1883,7 @@ body {
 
 #page {
   width: 100%;
-  min-height: 100%;
-  display: table; }
+  min-height: 100%; }
 
 .page-fill {
   width: 100%;
@@ -1932,6 +1931,9 @@ strong {
 a, a:visited, a:hover {
   color: #80bdff;
   text-decoration: none;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
   -webkit-transition: border 200ms ease;
   transition: border 200ms ease; }
 

@@ -122,13 +122,14 @@ class Home extends React.Component {
 										<h3>Are you a photographer or publisher?</h3>
 										<h2 className='prompt-link'>{<Link to={SiteSettings.path+'create'}><u>Try it out!</u></Link>}</h2>
 									</div>*/}
-									
-									<Link to={SiteSettings.path+'create'} className='prompt-button'>
-										<u>Try it out</u>
-									</Link>
-									<Link to={SiteSettings.path+'how'} className='prompt-button'>
-										<u>Learn more</u>
-									</Link>
+									<div className='prompts'>
+										<Link to={SiteSettings.path+'create'} className='prompt-button'>
+											<u>Try it out</u>
+										</Link>
+										<Link to={SiteSettings.path+'how'} className='prompt-button'>
+											<u>Learn more</u>
+										</Link>
+									</div>
 
 									<div id='home-subscribe'>
 										<Subscribe

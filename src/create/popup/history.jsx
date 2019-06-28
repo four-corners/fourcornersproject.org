@@ -81,7 +81,7 @@ class History extends React.Component {
 				<button className='button close-popup'
 					onClick={this.props.closePopup.bind(this)}>
 				</button>
-				<div className='desc'>
+				<div className='desc instruct-desc'>
 					{ReactHtmlParser(strings.history_desc)}
 				</div>
 

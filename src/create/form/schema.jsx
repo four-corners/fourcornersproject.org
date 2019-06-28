@@ -83,7 +83,7 @@ const Schema = {
 						format: 'url'
 					},
 					caption: {
-						type: 'text',
+						type: 'textarea',
 					},
 					credit: {
 						type: 'text',
@@ -102,7 +102,7 @@ const Schema = {
 						format: 'url'
 					},
 					caption: {
-						type: 'text',
+						type: 'textarea',
 					},
 					credit: {
 						type: 'text',

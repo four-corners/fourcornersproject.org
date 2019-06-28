@@ -1,5 +1,13 @@
-#how {
-
+@include lg {
+	.col-content, .content-block {
+		#how .col.left & {
+			margin-bottom: auto;
+		}
+		#how .col:not(.left) & {
+			margin-top: auto;
+			margin-bottom: auto;
+		}
+	}
 }
 .how-block {
 	width: 100%;
@@ -15,10 +23,6 @@
 		align-items: center;
 		justify-content: space-around;
 		flex-wrap: wrap;
-	}
-	.col-content {
-		// height: 100%;
-		margin: auto;
 	}
 	.embed-wrapper {
 		background-color: $blue;

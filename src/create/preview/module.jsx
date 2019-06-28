@@ -188,8 +188,11 @@ class Module extends React.Component {
 				<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
 					{!imgSrc ?
 					<div
-						className="no-photo" onClick={this.onClick.bind(this)}>
-						<h2>Add your photo</h2>
+						className="no-photo">
+						<div className="no-photo-text">
+							<h2>No photo added</h2>
+							<h4>Add a link to your image file under "Add your photo"</h4>
+						</div>
 					</div> : ''}
 					<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
 						{ imgSrc ? <img src={imgSrc} className='fc-img'/> : '' }

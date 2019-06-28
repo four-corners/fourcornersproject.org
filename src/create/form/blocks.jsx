@@ -46,7 +46,8 @@ class Blocks extends React.Component {
 		let blocks = this.state.blocks;
 		let block = blocks[blockIndex];
 		block[subFieldKey] = value;
-		if(fieldKey === 'media' && block.url) {
+
+		if(fieldKey === 'media') {
 			this.getMediaData(block, setKey, blockIndex);
 		}
 
@@ -62,27 +63,28 @@ class Blocks extends React.Component {
 	}
 
 	getMediaData(obj, setKey, index) {
-		const url = obj.url;
-		const source = obj.source;
-		const that = this;
-		const uri = encodeURIComponent(url);
-		let req = '';
-		// const blockMedia = this.state.blockMedia.slice(0);
-		// console.log(blockMedia);
-		const mediaData = Object.assign({}, this.state.blockMedia);
-		switch(source) {
-			case 'youtube':
-				req = 'https://noembed.com/embed?url='+uri;
-				break;
-			case 'vimeo':
-				req = 'https://vimeo.com/api/oembed.json?url='+uri;
-				break;
-			case 'soundcloud':
-				req = 'https://soundcloud.com/oembed?format=json&url='+uri;
-				break;
-			default:
-				req = null
-				break;
+		const url = encodeURIComponent(obj.url),
+					source = obj.source,
+					mediaData = Object.assign({}, this.state.blockMedia);
+		let req;
+		if(url) {
+			switch(source) {
+				case 'youtube':
+					req = 'https://noembed.com/embed?url='+url;
+					break;
+				case 'vimeo':
+					req = 'https://vimeo.com/api/oembed.json?url='+url;
+					break;
+				case 'soundcloud':
+					req = 'https://soundcloud.com/oembed?format=json&url='+url;
+					break;
+				case 'instagram':
+					req = 'https://api.instagram.com/oembed/?url='+url;
+					break;
+				default:
+					req = null
+					break;
+			}
 		}
 		if(req) {
 			const headers = new Headers();
@@ -98,12 +100,27 @@ class Blocks extends React.Component {
 			})
 			.then(res => {
 				const blockMedia = this.state.blockMedia;
-				blockMedia[index] = {
-					html:res.html,
-					width: res.width,
-					height: res.height
+				let mediaObj = {
+					source: source
 				};
-				this.setState({blockMedia: blockMedia});
+				switch(source) {
+					case 'instagram':
+						mediaObj.url = res.thumbnail_url;
+						mediaObj.caption = res.title;
+						mediaObj.credit = "@"+res.author_name+" on Instagram";
+						mediaObj.width = res.thumbnail_width;
+						mediaObj.height = res.thumbnail_height;
+						break;
+					default:
+						mediaObj.html = res.html;
+						mediaObj.width = res.width;
+						mediaObj.height = res.height;
+						break;
+				}
+				blockMedia[index] = mediaObj;
+				this.setState({
+					blockMedia: blockMedia
+				});
 				mediaData[setKey] = blockMedia;
 				this.props.sendMediaData(mediaData);
 			})
@@ -113,7 +130,7 @@ class Blocks extends React.Component {
 		} else {
 			const blockMedia = this.state.blockMedia;
 			blockMedia[index] = {
-				url: uri
+				url: url ? url : null
 			};
 			this.setState({blockMedia: blockMedia});
 			mediaData[setKey] = blockMedia;
@@ -123,7 +140,7 @@ class Blocks extends React.Component {
 
 	renderBlocks() {
 		let blocks = [];
-		this.state.blocks.map((block, i) => {
+		this.state.blocks.forEach((block, i) => {
 			if(block.deleted){return}
 			blocks.push(
 				this.renderBlock(block, i)
@@ -215,13 +232,23 @@ class Blocks extends React.Component {
 		return(
 			<div className='field' key={subFieldIndex}>
 				<Label strings={strings} fieldKey={fieldKey} />
-				<input
-					name={name}
-					className='form-elem'
-					type='text'
-					// value={subFieldValue}
-					placeholder={strings.placeholder}
-					onChange={this.onChange.bind(this)}/>
+					{subFieldData.type == 'text' ?
+						<input
+							name={name}
+							className='form-elem'
+							type='text'
+							placeholder={strings.placeholder}
+							onChange={this.onChange.bind(this)}/>
+					: null}
+					{subFieldData.type == 'textarea' ?
+						<textarea
+							name={name}
+							className='form-elem'
+							rows='2'
+							placeholder={strings.placeholder}
+							onChange={this.onChange.bind(this)}>
+						</textarea>
+					: null}
 			</div>
 		);
 	}
@@ -258,10 +285,18 @@ class Blocks extends React.Component {
 			source: e.target.dataset.slug,
 			index: this.state.superIndex
 		}]);
+
+		const newBlockMedia = this.state.blockMedia.concat([{
+			source: e.target.dataset.slug,
+			index: this.state.superIndex
+		}]);
+
 		this.setState({
 			blocks: newBlocks,
+			blockMedia: newBlockMedia,
 			superIndex: this.state.superIndex+1
 		});
+
 		this.props.onChange(fieldName, newBlocks);
 		this.props.sendActiveCorner(this.props.setKey);
 	}
@@ -290,28 +325,27 @@ class Blocks extends React.Component {
 
 	moveBlock(e) {
 		e.preventDefault();
-		const setKey = this.props.setKey;
-		const fieldKey = this.props.fieldKey;
-		const fieldName = [setKey, fieldKey].join('_');
+		const setKey = this.props.setKey,
+					fieldKey = this.props.fieldKey,
+					fieldName = [setKey, fieldKey].join('_'),
+					blockElem = e.target.parentElement.parentElement,
+					index = Number(blockElem.dataset.index),
+					newIndex = e.target.dataset.newIndex;
+		let newBlocks = this.state.blocks,
+				newBlockMedia = this.state.blockMedia;
 
-		const blockElem = e.target.parentElement.parentElement;
-		const index = Number(blockElem.dataset.index);
-		const newIndex = e.target.dataset.newIndex;
-		let newBlocks = this.state.blocks;
-		let newBlockMedia = this.state.blockMedia;
-		
-		if(!newBlocks[newIndex]){return}
-
+		// if(!newBlocks[newIndex]){return}
 		let block = newBlocks.splice(index, 1)[0];
 		newBlocks.splice(newIndex, 0, block);
 
 		let mediaBlock = newBlockMedia.splice(index, 1)[0];
 		newBlockMedia.splice(newIndex, 0, mediaBlock);
-		
+
 		this.setState({
 			blocks: newBlocks,
 			blockMedia: newBlockMedia
 		});
+
 		this.props.onChange(fieldName, newBlocks);
 
 		let newMediaData = Object.assign({}, this.props.mediaData);

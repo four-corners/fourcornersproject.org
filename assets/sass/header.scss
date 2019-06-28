@@ -33,6 +33,10 @@ header {
 		svg {
 			width: auto;
 			height: 2rem;
+			@include md {
+				width: 100%;
+				height: auto;
+			}
 			* {
 				fill: $darkest;
 			}
@@ -86,11 +90,16 @@ nav#main-nav {
 			border-bottom-color: $darkest;
 		}
 	}
-	@include md {
+	@include lg {
 		float: none;
-		a, a:visited {
+		a {
 			margin-left: 0;
-			margin-right: .5rem;
+			margin-right: 1rem;
+		}
+	}
+	@include md {
+		a {
+			@include mdText;
 		}
 	}
 }

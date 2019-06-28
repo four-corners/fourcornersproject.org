@@ -103,23 +103,25 @@ class Popup extends React.Component {
 	// }
 
 	updateFormData(value) {
+		const self = this;
 		try {
 			const embedHtml = ReactHtmlParser(value)[0];
 			const embedChild = embedHtml.props.children[0];
 			const	dataString = embedHtml.props['data-fc'];
 			// .replace(/\'/g, '"');
 			let formData = JSON.parse(dataString);
-			this.props.sendFormData(formData);
-			const self = this;
+			self.props.sendFormData(formData);
 			Object.keys(Schema).forEach(function(setKey) {
 				const setSchema = Schema[setKey];
 				setTimeout(function() {
 					self.updateFieldsData([setKey], setSchema, formData);
 				}, 100);
 			});
-			this.closePopup();
+			self.closePopup();
 		} catch(e) {
-			//ERROR: Cannot import this photo.
+			self.setState({
+				error: "The embed code is not valid."
+			});
 			console.warn(e);
 		}
 	}
@@ -257,6 +259,8 @@ class Popup extends React.Component {
 						<div className={'content-block tab-content'+(this.state.activeTab=='import'?' opened':'')}>
 							<Import
 								strings={this.strings}
+								error={this.state.error}
+								warn={this.state.warn}
 								closePopup={this.closePopup.bind(this)}
 								clearFormData={this.props.clearFormData.bind(this)}
 								updateFormData={this.updateFormData.bind(this)}/>
@@ -265,6 +269,8 @@ class Popup extends React.Component {
 						<div className={'content-block tab-content'+(this.state.activeTab=='history'?' opened':'')}>
 							<History
 								strings={this.strings}
+								error={this.state.error}
+								warn={this.state.warn}
 								timestamp={this.props.timestamp}
 								saveHistory={this.props.saveHistory}
 								toggleSave={this.props.toggleSave.bind(this)}

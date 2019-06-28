@@ -24,7 +24,7 @@
 		<header class='header'>
 			<div class='max-width'>
 				<div class='row'>			
-					<div class='col col-sm-12 col-md-auto left'>
+					<div class='col col-12 col-lg-auto left'>
 						<div class='col-content'>
 							<div id='site-title'>
 								<!-- <h3> -->
@@ -42,7 +42,7 @@
 						</div>
 					</div>
 
-					<div class='col col-sm-12 col-md-auto right'>
+					<div class='col col-12 col-lg-auto right'>
 						<div class='col-content'>
 							<?php if( $menu_items = wp_get_nav_menu_items( 'main' ) ): ?>
 								<nav id='main-nav'>

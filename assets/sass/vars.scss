@@ -72,6 +72,10 @@ $radius: 4px;
 
 @mixin focus {
 	@include medTrans;
+	transition: background 400ms ease,
+							opacity 400ms ease,
+							color 400ms ease,
+							box-shadow 400ms ease;
 	&:focus {
 		@include highlight;
 	}
@@ -93,7 +97,7 @@ $radius: 4px;
 	font-size: 16px;
 	line-height: 1.6em;
 	@include md {
-		font-size: 13px;
+		// font-size: 1px;
 	}
 }
 

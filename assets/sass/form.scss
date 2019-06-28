@@ -206,6 +206,9 @@ legend {
 		margin: 0;
 	}
 }
+.instruct-desc {
+	// background-color: $light;
+}
 .field-desc {
 	&:not(.opened) {
 		display: none;
@@ -250,8 +253,6 @@ legend {
 	border-width: 0 1px 1px 1px;
 	border-radius: 0 0 $radius $radius;
 }
-
-
 .form-elem {
 	width: 100%;
 	color: $darkest;
@@ -272,6 +273,10 @@ legend {
 		background-color: $lightestRed;
 		border-radius: $radius $radius 0 0;
 	}
+}
+
+textarea {
+	display: block;
 }
 
 select {
@@ -337,8 +342,6 @@ select {
 		}
 	}
 }
-
-
 
 .checkbox-widget, .toggle-widget {
 	display: flex;

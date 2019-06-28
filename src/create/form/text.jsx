@@ -14,11 +14,7 @@ class Text extends React.Component {
 	}
 
 	componentDidUpdate() {
-		// if(this.props.fieldValue != this.state.value) {
-		// 	this.setState({
-		// 		value: this.props.fieldValue
-		// 	});
-		// }
+
 	}
 
 	onChange(e) {
@@ -42,7 +38,6 @@ class Text extends React.Component {
 		  		warn: 'load'
 		  	});
 		  	props.onChange(name, null);
-		  	// console.warn(e);
 			}
 			pseudoImg.src = e.currentTarget.value;
 		} else {
@@ -71,9 +66,9 @@ class Text extends React.Component {
 		const format = props.field.format || 'text';
 		const name = [setKey, fieldKey].join('_');
 		let defaultValue = props.field.default?strings.placeholder:'';
-		if(this.state.value) {
-			defaultValue = this.state.value;
-		}
+		// if(this.state.value) {
+		// 	defaultValue = this.state.value;
+		// }
 		const className = ['field', 'input'];
 		if(style){className.push(style)}
 		if(this.state.error){className.push('error')}

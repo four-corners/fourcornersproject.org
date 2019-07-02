@@ -1277,6 +1277,9 @@ mark,
   .form-control::-webkit-input-placeholder {
     color: #6c757d;
     opacity: 1; }
+  .form-control::-moz-placeholder {
+    color: #6c757d;
+    opacity: 1; }
   .form-control:-ms-input-placeholder {
     color: #6c757d;
     opacity: 1; }
@@ -2479,9 +2482,26 @@ a.prompt-button {
 #gallery h2 {
   text-align: center; }
 
-#gallery hr, #gallery .wp-block-separator {
-  margin-top: 4rem;
-  margin-bottom: 3.25rem; }
+#gallery #gallery-embeds {
+  display: table;
+  width: 100%; }
+
+#gallery .embed-col {
+  float: left;
+  -webkit-transition: none;
+  transition: none; }
+
+#gallery .fc-embed {
+  opacity: 0;
+  -webkit-transition: opacity 500ms ease-in-out;
+  transition: opacity 500ms ease-in-out; }
+  #gallery .fc-embed.loaded {
+    opacity: 1; }
+
+#gallery .embed-wrap {
+  margin-bottom: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #80bdff; }
 
 #creator h1 {
   text-align: left; }

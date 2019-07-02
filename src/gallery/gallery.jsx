@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ReactHtmlParser from 'react-html-parser';
+import Masonry from 'masonry-layout';
 import FourCorners from '../../assets/js/fourcorners.min.js';
 
 import i18n from '../i18n.jsx';
@@ -13,6 +14,7 @@ class Gallery extends React.Component {
 		this.state = {
 			lang: 'en',
 			page: {},
+			embeds: []
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
@@ -41,7 +43,30 @@ class Gallery extends React.Component {
 	}
 
 	componentDidUpdate() {
-		const embeds = new FourCorners();
+		const fcEmbeds = new FourCorners(),
+					self = this;
+
+		const grid = new Masonry("#gallery-embeds", {
+			itemSelector: ".embed-col",
+			transitionDuration: 0,
+			gutter: 0
+		});
+		
+		fcEmbeds.forEach(function(fcEmbed, i) {
+			let photo = fcEmbed.elems.photo,
+					embed = fcEmbed.elems.embed,
+					parent = embed.parentNode;
+			if(!embed.classList.contains("loaded")) {
+				photo.onload = function(e) {
+					grid.layout();
+					embed.classList.add("loaded");
+				};
+			}
+		});
+
+		window.onresize = function(e) {
+			// grid.layout();
+		};		
 	}
 
 	onLanguageChanged(lang) {
@@ -50,10 +75,36 @@ class Gallery extends React.Component {
 		});
 	}
 
+	renderEmbed() {
+		const page = this.state.page;
+		let embeds = [];
+		page.acf.embeds.forEach(function(embed, i) {
+			const embed_code = ReactHtmlParser(embed.embed_code);
+			// const embed_code = <div dangerouslySetInnerHTML={{__html: embed.embed_code}}></div>;
+			// let img = embed_code[0].props.children[0];
+
+			// img.onLoad = function() {
+			// 	conssole.log('!');
+			// };
+			// console.log(embed_code);
+			// const fcEmbed = new FourCorners(embed_code[0]);
+			// console.log(fcEmbed);
+
+			embeds.push(
+				<div className="embed-col col col-12 col-xl-6" key={i}>
+					<div className="embed-wrap">
+						<h2>{embed.title}</h2>
+						{embed_code}
+					</div>
+				</div>
+			);
+		});
+		return embeds;
+	}
+
 	render() {
 		let lang = this.state.lang;
-		const page = this.state.page;
-		
+		const page = this.state.page;		
 		return (
 			<main id="gallery">
 				<div className="max-width">
@@ -64,6 +115,9 @@ class Gallery extends React.Component {
 								{page.post_content ? ReactHtmlParser(page.post_content) : ''}
 							</div>
 						</div>
+					</div>
+					<div className='row' id='gallery-embeds'>
+						{page.acf ? this.renderEmbed() : ''}
 					</div>
 				</div>
 			</main>

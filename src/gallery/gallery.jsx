@@ -58,7 +58,6 @@ class Gallery extends React.Component {
 					parent = embed.parentNode;
 			if(!embed.classList.contains("loaded")) {
 				embed.addEventListener("onImgLoad", function(e) {
-					console.log(e);
 					grid.layout();
 					embed.classList.add("loaded");
 				});

@@ -3,7 +3,7 @@
 function four_corners_scripts() {
 
 	$ver = '1.2.4';
-	$fc_ver = '1.1.3';
+	$fc_ver = '0.2.0';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	// wp_enqueue_script( 'jquery' );

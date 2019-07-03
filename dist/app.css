@@ -2482,10 +2482,6 @@ a.prompt-button {
 #gallery h2 {
   text-align: center; }
 
-#gallery #gallery-embeds {
-  display: table;
-  width: 100%; }
-
 #gallery .embed-col {
   float: left;
   -webkit-transition: none;

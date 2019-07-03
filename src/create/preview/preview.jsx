@@ -64,13 +64,15 @@ class Preview extends React.Component {
 	}
 
 	embedCode(formData) {
-		const imgLoaded = this.props.imgLoaded;
-		let auxData = {
-			lang: i18n.language,
-		}
-		let stringData = this.sanitizeCode(Object.assign(formData, auxData));
-		// let imgHtml = imgLoaded ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>':'';
-		let imgHtml = formData.photo ? '<img class=\'fc-img\' src=\''+formData.photo.src+'\'/>' : '';
+		let imgLoaded = this.props.imgLoaded,
+				auxData = { lang: i18n.language },
+				photoSrc = formData.photo.src,
+				clonedData = JSON.parse(JSON.stringify(Object.assign(formData, auxData), {}));
+
+		delete clonedData.photo.src;
+		let stringData = this.sanitizeCode(clonedData);
+
+		let imgHtml = formData.photo ? '<img class=\'fc-img\' src=\''+photoSrc+'\'/>' : '';
 		let stringHtml = '<div class=\'fc-embed\' data-fc=\''+stringData+'\'>'+imgHtml+'</div>';
 		return stringHtml;
 	}

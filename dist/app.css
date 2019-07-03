@@ -2800,6 +2800,11 @@ fieldset {
       padding-bottom: .25rem; }
   .field:last-of-type {
     border: 0; }
+  .field.hidden {
+    position: absolute;
+    left: -999999px; }
+    .field.hidden:focus {
+      opacity: 0.00001; }
   .field .field {
     padding-left: 0;
     padding-right: 0;

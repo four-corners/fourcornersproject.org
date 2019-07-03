@@ -67,6 +67,9 @@ fieldset {
 	&:last-of-type {
 		border: 0;
 	}
+	&.hidden {
+		@include hidden;
+	}
 	input[type="text"], input[type="url"] {
 
 	}

@@ -31,6 +31,8 @@ class Text extends React.Component {
 				self.setState({
 		  		warn: false
 		  	});
+		  	props.onChange('photo_width', pseudoImg.width);
+		  	props.onChange('photo_height', pseudoImg.height);
 		  	props.onChange(name, value);
 			}
 			pseudoImg.onerror = (e) => {
@@ -71,6 +73,7 @@ class Text extends React.Component {
 		// }
 		const className = ['field', 'input'];
 		if(style){className.push(style)}
+		if(format){className.push(format)}
 		if(this.state.error){className.push('error')}
 		if(this.state.warn){className.push('warn')}
 		return(

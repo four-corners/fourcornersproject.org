@@ -10,6 +10,14 @@ const Schema = {
 				type: 'text',
 				format: 'url'
 			},
+			width: {
+				type: 'text',
+				format: 'hidden'
+			},
+			height: {
+				type: 'text',
+				format: 'hidden'
+			}
 		}
 	},
 	authorship: {

@@ -105,11 +105,14 @@ class Popup extends React.Component {
 	updateFormData(value) {
 		const self = this;
 		try {
-			const embedHtml = ReactHtmlParser(value)[0];
-			const embedChild = embedHtml.props.children[0];
-			const	dataString = embedHtml.props['data-fc'];
-			// .replace(/\'/g, '"');
+			const embedHtml = ReactHtmlParser(value)[0],
+						embedChild = embedHtml.props.children[0],
+						dataString = embedHtml.props['data-fc'];
 			let formData = JSON.parse(dataString);
+			if(embedChild) {
+				const photoSrc = embedChild.props.src;
+				formData = Object.assign(formData, {photo:{src:photoSrc}});
+			}
 			self.props.sendFormData(formData);
 			Object.keys(Schema).forEach(function(setKey) {
 				const setSchema = Schema[setKey];

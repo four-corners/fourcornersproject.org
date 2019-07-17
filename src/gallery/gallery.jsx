@@ -64,9 +64,9 @@ class Gallery extends React.Component {
 			}
 		});
 
-		window.onresize = function(e) {
+		// window.onresize = function(e) {
 			// grid.layout();
-		};		
+		// };
 	}
 
 	onLanguageChanged(lang) {

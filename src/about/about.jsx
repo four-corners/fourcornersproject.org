@@ -80,7 +80,7 @@ class About extends React.Component {
 		
 		return (
 			<main id='about'>
-				<div className='max-width'>
+				<div className='md-width'>
 					<h1>{ReactHtmlParser(page.post_title)}</h1>
 
 					<div className='row'>

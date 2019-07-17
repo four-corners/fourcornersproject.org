@@ -1964,6 +1964,11 @@ iframe {
   max-width: 80rem;
   margin: auto; }
 
+.md-width {
+  width: 90%;
+  max-width: 50rem;
+  margin: auto; }
+
 .col.left .col-content {
   float: right; }
 

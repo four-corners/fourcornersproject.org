@@ -71,7 +71,7 @@ class Page extends React.Component {
 		return (
 			<main id={this.state.slug}>
 				{page ?
-					<div className="max-width">
+					<div className="md-width">
 						<h1>{ReactHtmlParser(page.post_title)}</h1>
 						<div className='row'>
 							<div className='col col-12'>

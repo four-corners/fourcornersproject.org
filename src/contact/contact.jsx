@@ -56,7 +56,7 @@ class Contact extends React.Component {
 		
 		return (
 			<main id="contact">
-				<div className="max-width">
+				<div className="md-width">
 					<h1>{ReactHtmlParser(page.post_title)}</h1>
 					<div className='row'>
 						<div className='col col-12'>

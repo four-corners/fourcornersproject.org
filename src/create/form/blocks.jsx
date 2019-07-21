@@ -63,11 +63,24 @@ class Blocks extends React.Component {
 	}
 
 	getMediaData(obj, setKey, index) {
-		const url = encodeURIComponent(obj.url),
-					source = obj.source,
+		const source = obj.source,
 					mediaData = Object.assign({}, this.state.blockMedia);
-		let req;
-		if(url) {
+		let url = obj.url, req;
+		if(!url) {
+			return;
+		} else if(source == 'image') {
+			const blockMedia = this.state.blockMedia;
+			blockMedia[index] = {
+				url: url ? url : null,
+				source: source
+			};
+			this.setState({
+				blockMedia: blockMedia
+			});
+			mediaData[setKey] = blockMedia;
+			this.props.sendMediaData(mediaData);
+		} else {
+			url = encodeURI(url);
 			switch(source) {
 				case 'youtube':
 					req = 'https://noembed.com/embed?url='+url;
@@ -85,8 +98,6 @@ class Blocks extends React.Component {
 					req = null
 					break;
 			}
-		}
-		if(req) {
 			const headers = new Headers();
 			fetch(req, {
 				method: 'GET',
@@ -127,14 +138,6 @@ class Blocks extends React.Component {
 			.catch(function(err) {
 				console.warn(err);
 			});
-		} else {
-			const blockMedia = this.state.blockMedia;
-			blockMedia[index] = {
-				url: url ? url : null
-			};
-			this.setState({blockMedia: blockMedia});
-			mediaData[setKey] = blockMedia;
-			this.props.sendMediaData(mediaData);
 		}
 	}
 

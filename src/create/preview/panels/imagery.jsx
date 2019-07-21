@@ -10,13 +10,20 @@ class Imagery extends React.Component {
 	renderMedia(obj, i) {
 		const mediaData = this.props.mediaData,
 					mediaObj = mediaData[i];
+		let className = 'fc-media', style;
+
 		if(!mediaData[i]){return}
 		if(mediaObj.source == 'image' || mediaObj.source == 'instagram') {
 			const url = mediaObj.url;
-			return url ? <div className='fc-media'><img src={url}/></div> : '';
+			return url ? <div className={className}><img src={url}/></div> : '';
 		} else {
-			const html = mediaObj.html;
-			return html ? <div className='fc-media' dangerouslySetInnerHTML={{__html: html}}></div> : '';
+			if(Number.isInteger(mediaObj.width, mediaObj.height)) {
+				const ratio = mediaObj.height/mediaObj.width;
+				className += ' fc-responsive';
+				style = {paddingBottom:(ratio*100)+'%'};
+			}
+			let htmlObj = mediaObj.html ? <div className={className} style={style} dangerouslySetInnerHTML={{__html: mediaObj.html}}></div> : <React.Fragment></React.Fragment>;
+			return htmlObj ? htmlObj : '';
 		}
 	}
 

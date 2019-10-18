@@ -26,13 +26,28 @@ body.home {
 	.col-content {
 		padding: .25rem 0;
 	}
-	.fc-embed-demo {
-		background-color: $lightBlue;
-		padding-bottom: 70%;
-		position: relative;
-		@include smallShadow;
-		@include border;
+	.inner-content {
+		width: 80%;
+		height: 80%;
+		position: absolute;
+		left: 10%;
+		top: 10%;
+		display: table;
+		margin: auto;
 	}
+	// .col-gap {
+	// 	@include lg {
+	// 		display: none;
+	// 	}
+	// }
+}
+
+.fc-embed-demo {
+	background-color: $lightBlue;
+	padding-bottom: 70%;
+	position: relative;
+	@include smallShadow;
+	@include border;
 	.fc-corner {
 		filter: none;
 		transform: scale(1.5);
@@ -85,20 +100,6 @@ body.home {
 			margin: auto;
 		}
 	}
-	.inner-content {
-		width: 80%;
-		height: 80%;
-		position: absolute;
-		left: 10%;
-		top: 10%;
-		display: table;
-		margin: auto;
-	}
-	// .col-gap {
-	// 	@include lg {
-	// 		display: none;
-	// 	}
-	// }
 }
 
 #home-subscribe {

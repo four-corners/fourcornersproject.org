@@ -122,11 +122,16 @@ class Home extends React.Component {
 							</div>
 							<div className='col col-12 col-md-6'>
 								<div className='col-content'>
-									
-									{/*<div className='border-block'>
-										<h3>Are you a photographer or publisher?</h3>
-										<h2 className='prompt-link'>{<Link to={SiteSettings.path+'create'}><u>Try it out!</u></Link>}</h2>
-									</div>*/}
+									<Demo cornersInfo={this.cornersInfo} options={this.state.options}/>
+									{
+										// <div className='border-block'>
+										// 	{ReactHtmlParser(this.state.page.post_content)}
+										// </div>
+									}
+								</div>
+							</div>
+							<div className='col col-12 col-md-6'>
+								<div className='col-content'>
 									<div className='prompts'>
 										<Link to={SiteSettings.path+'create'} className='prompt-button'>
 											<u>Try it out</u>
@@ -135,26 +140,13 @@ class Home extends React.Component {
 											<u>Learn more</u>
 										</Link>
 									</div>
-
 									<div id='home-subscribe'>
 										<Subscribe
 											label={<h3><strong>Subscribe to receive updates</strong></h3>}
 											formUrl={this.state.options.subscribe}/>
 									</div>
-
 								</div>
 							</div>
-							{/*<div className='col col-1 col-gap'></div>*/}
-							<div className='col col-12 col-md-6'>
-								<div className='col-content'>
-									<Demo cornersInfo={this.cornersInfo} options={this.state.options}/>
-									<br/>
-									{<div className='border-block'>
-										{ReactHtmlParser(this.state.page.post_content)}
-									</div>}
-								</div>
-							</div>
-
 						</div>
 					</div>
 				</section>

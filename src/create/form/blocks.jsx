@@ -21,7 +21,7 @@ class Blocks extends React.Component {
 		if(fieldValue && fieldValue != this.state.blocks) {
 			fieldValue.map((block, blockIndex) => {
 				fieldValue[blockIndex].index = blockIndex;
-				if(fieldKey === 'media' && block.url) {
+				if(fieldKey === 'media') {
 					this.getMediaData(block, setKey, blockIndex);
 				}
 			});
@@ -63,16 +63,14 @@ class Blocks extends React.Component {
 	}
 
 	getMediaData(obj, setKey, index) {
-		const source = obj.source,
-					mediaData = Object.assign({}, this.state.blockMedia);
-		let url = obj.url, req;
-		if(!url) {
-			return;
-		} else if(source == 'image') {
-			const blockMedia = this.state.blockMedia;
+		const source = obj.source;
+		let blockMedia = this.state.blockMedia,
+				mediaData = Object.assign({}, blockMedia),
+				url = obj.url, req;
+		if(source == 'image') {
 			blockMedia[index] = {
 				url: url ? url : null,
-				source: source
+				source: 'image'
 			};
 			this.setState({
 				blockMedia: blockMedia
@@ -107,10 +105,15 @@ class Blocks extends React.Component {
 	    })
 			.then(res => {
 				if (!res.ok) {throw Error(res.statusText)}
+				this.setState({
+					blockMedia: blockMedia
+				});
+				mediaData[setKey] = blockMedia;
+				this.props.sendMediaData(mediaData);
 				return res.json();
 			})
 			.then(res => {
-				const blockMedia = this.state.blockMedia;
+				let blockMedia = this.state.blockMedia;
 				let mediaObj = {
 					source: source
 				};
@@ -172,7 +175,7 @@ class Blocks extends React.Component {
 			const subFieldData = subFields[subFieldKey],
 						subFieldValue = block[subFieldKey];
 			subFieldElems.push(
-				this.renderField(subFieldKey, subFieldData, subFieldValue, typeStrings, block.index, subFieldIndex)
+				this.renderField(subFieldKey, subFieldData, subFieldValue, typeStrings, blockIndex, subFieldIndex)
 			);
 		});
 		const upIndex = blockIndex-1;
@@ -240,6 +243,7 @@ class Blocks extends React.Component {
 							name={name}
 							className='form-elem'
 							type='text'
+							value={subFieldValue}
 							placeholder={strings.placeholder}
 							onChange={this.onChange.bind(this)}/>
 					: null}
@@ -248,6 +252,7 @@ class Blocks extends React.Component {
 							name={name}
 							className='form-elem'
 							rows='2'
+							value={subFieldValue}
 							placeholder={strings.placeholder}
 							onChange={this.onChange.bind(this)}>
 						</textarea>
@@ -337,7 +342,7 @@ class Blocks extends React.Component {
 		let newBlocks = this.state.blocks,
 				newBlockMedia = this.state.blockMedia;
 
-		// if(!newBlocks[newIndex]){return}
+
 		let block = newBlocks.splice(index, 1)[0];
 		newBlocks.splice(newIndex, 0, block);
 
@@ -350,7 +355,6 @@ class Blocks extends React.Component {
 		});
 
 		this.props.onChange(fieldName, newBlocks);
-
 		let newMediaData = Object.assign({}, this.props.mediaData);
 		newMediaData[setKey] = newBlockMedia;
 		this.props.sendMediaData(newMediaData);
@@ -369,7 +373,6 @@ class Blocks extends React.Component {
 				</div>
 
 				<div className='buttons-group'>
-					{/*<div className='buttons-label'>Add media from</div>*/}
 					{this.renderButtons()}
 				</div>
 

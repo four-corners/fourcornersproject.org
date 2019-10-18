@@ -115,9 +115,14 @@ class Home extends React.Component {
 				<section id="home-intro">
 					<div className='max-width'>
 						<div className='row'>
-							<div className='col col-12 col-md-6'>
+							<div className='col col-12'>
 								<div className='col-content'>
 									<h1 id='site-tagline'>{this.state.info.tagline}</h1>
+								</div>
+							</div>
+							<div className='col col-12 col-md-6'>
+								<div className='col-content'>
+									
 									{/*<div className='border-block'>
 										<h3>Are you a photographer or publisher?</h3>
 										<h2 className='prompt-link'>{<Link to={SiteSettings.path+'create'}><u>Try it out!</u></Link>}</h2>

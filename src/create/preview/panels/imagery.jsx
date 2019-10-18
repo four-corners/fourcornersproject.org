@@ -8,11 +8,11 @@ class Imagery extends React.Component {
 	}
 
 	renderMedia(obj, i) {
-		const mediaData = this.props.mediaData,
-					mediaObj = mediaData[i];
+		const mediaData = this.props.mediaData;
+		if(!mediaData){return}
+		const mediaObj = mediaData[i];
+		if(!mediaObj){return}
 		let className = 'fc-media', style;
-
-		if(!mediaData[i]){return}
 		if(mediaObj.source == 'image' || mediaObj.source == 'instagram') {
 			const url = mediaObj.url;
 			return url ? <div className={className}><img src={url}/></div> : '';

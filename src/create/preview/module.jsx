@@ -159,7 +159,12 @@ class Module extends React.Component {
 		return (
 			<div className='fc-cutline'>
 				{opts.caption && data.authorship ? <span className="fc-caption">{data.authorship.caption}</span> : ''}
-				{opts.credit && data.authorship ? <span className="fc-credit">{data.authorship.credit}</span> : ''}
+				{opts.credit && data.authorship ?
+					<span className="fc-credit">
+						{data.authorship.credit ? <span>{data.authorship.credit}</span> : ''}
+						{data.authorship.license && data.authorship.license.holder ? <span>{data.authorship.license.holder}</span> : ''}
+					</span>
+				: ''}
 				{opts.logo ? <a href="https://fourcornersproject.org" target="_blank"></a> : ''}
 			</div>
 		);

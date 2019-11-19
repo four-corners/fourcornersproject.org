@@ -130,6 +130,27 @@ body.home {
 #home-about {
 	background-color: $lightestBlue;
 	color: $darkest;
+	.col {
+		display: flex;
+		@include mdText;
+		@include md {
+			display: block;
+		}
+		p {
+			width: 50%;
+			&:nth-child(1) {
+				padding-right: 15px;
+			}
+			&:nth-child(2) {
+				padding-left: 15px;	
+			}
+			@include md {
+				width: 100%;
+				padding-left: 0 !important;
+				padding-right: 0 !important;
+			}
+		}
+	}
 }
 
 #corners-preview {

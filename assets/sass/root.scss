@@ -7,7 +7,12 @@ html, body {
 	@include baseText;
 }
 html {
+	// min-width: 900px;
 	overflow: hidden;
+	overflow-x: auto;
+	// @include sm {
+		// min-width: unset;
+	// }
 }
 body {
 	overflow-y: scroll;

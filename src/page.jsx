@@ -47,7 +47,7 @@ class Page extends React.Component {
 	getPage(slug) {
 		let self = this;
 		let lang = i18n.language;
-		let req = SiteSettings.url.api+'page?slug='+slug+'&lang='+lang;
+		let req = siteSettings.url.api+'page?slug='+slug+'&lang='+lang;
 		this.setState({
 			slug: slug
 		});

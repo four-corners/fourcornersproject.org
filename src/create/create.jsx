@@ -12,7 +12,8 @@ class Creator extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			creator: {},
+			// creator: {},
+			page: JSON.parse(siteSettings.current),
 			lang: 'en',
 			// imgLoaded: false,
 			formData: {
@@ -37,23 +38,22 @@ class Creator extends React.Component {
 	}
 
 	componentDidMount() {
-		let that = this;
-		let lang = i18n.language;
-		let req = SiteSettings.url.api + 'creators?lang=' + lang;
-		fetch(req)
-			.then(function(res) {
-				if (!res.ok) {
-					throw Error(res.statusText);
-				}
-				return res.json();
-			})
-			.then(function(res) {
-				if(!res.length) {return false}
-				that.setState({ creator: res[0] });
-			})
-			.catch(function(err) {
-				console.warn(err);
-			});
+		// let that = this;
+		// let lang = i18n.language;
+		// let req = siteSettings.url.api+'page?slug=create&lang='+lang;
+		// fetch(req)
+		// 	.then(function(res) {
+		// 		if (!res.ok) {
+		// 			throw Error(res.statusText);
+		// 		}
+		// 		return res.json();
+		// 	})
+		// 	.then(function(res) {
+		// 		that.setState({ creator: res });
+		// 	})
+		// 	.catch(function(err) {
+		// 		console.warn(err);
+		// 	});
 
 		const settings = localStorage.getItem('FourCornersSettings');
 		let settingsObj = JSON.parse(settings) || {};
@@ -171,7 +171,7 @@ class Creator extends React.Component {
 		return (
 			<Form
 				lang={this.state.lang}
-				creator={this.state.creator}
+				creator={this.state.page}
 				formData={this.state.formData}
 				// imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
@@ -187,7 +187,7 @@ class Creator extends React.Component {
 		return (
 			<Preview
 				lang={this.state.lang}
-				creator={this.state.creator}
+				creator={this.state.page}
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
 				// imgLoaded={this.state.imgLoaded}
@@ -200,7 +200,7 @@ class Creator extends React.Component {
 
 	render() {
 		let lang = this.state.lang;
-		const ready = this.state.creator && this.state.creator.ID;
+		const ready = this.state.page && this.state.page.ID;
 		return (
 			<main id='creator'>
 
@@ -227,14 +227,14 @@ class Creator extends React.Component {
 
 				<div className='max-width'>
 					<div className='row'>
-						<div className='col col-12 col-sm-6 col-md-5 left'>
-							<h2>Create your own</h2>
+						<div className='col col-auto'>
+							<h2>{this.state.page.post_title}</h2>
 						</div>
-						<div className='col col-12 col-sm-6 col-md-7 right'>
+						<div className='col'>
 							{ready ?
 								<Popup
 									lang={this.state.lang}
-									creator={this.state.creator}
+									creator={this.state.page}
 									timestamp={this.timestamp}
 									saveHistory={this.state.saveHistory}
 									toggleSave={this.toggleSave.bind(this)}
@@ -244,11 +244,11 @@ class Creator extends React.Component {
 						</div>
 					</div>
 					<div className='row' data-sticky-container>
-						<div className='col col-12 col-sm-6 col-md-5 left col-form'>
+						<div className='col col-12 col-md-6 col-lg-5 left col-form'>
 							{ ready ? this.renderFormCol() : null }
 						</div>
 
-						<div className='col col-12 col-sm-6 col-md-7 right col-preview'>
+						<div className='col col-12 col-md-6 col-lg-7 right col-preview'>
 							{ this.renderPreviewCol() }
 						</div>
 					

@@ -7,9 +7,10 @@ import i18n from './i18n.jsx';
 class Header extends React.Component {
 
 	constructor(props) {
+		let lang = i18n.language;
 		super(props);
 		this.state = {
-			lang: 'en',
+			lang: lang,
 			langs: {},
 			menu: []
 		};
@@ -20,7 +21,7 @@ class Header extends React.Component {
 		let that = this;
 		let lang = i18n.language;
 
-		let langReq = SiteSettings.url.api + 'get_langs';
+		let langReq = siteSettings.url.api + 'get_langs';
 		fetch(langReq)
 			.then(function(res) {
 				if (!res.ok) {
@@ -32,7 +33,7 @@ class Header extends React.Component {
 				that.setState({ langs: JSON.parse(res) });
 			});
 
-		let menuReq = SiteSettings.url.api + 'menu';
+		let menuReq = siteSettings.url.api + 'menu';
 		fetch(menuReq)
 			.then(function(res) {
 				if (!res.ok) {
@@ -41,10 +42,11 @@ class Header extends React.Component {
 				return res.json();
 			})
 			.then(function(res) {
+				console.log(menu);
 				that.setState({ menu: res });
 			});
 
-		let optionsReq = SiteSettings.url.api + 'options';
+		let optionsReq = siteSettings.url.api + 'options';
 		fetch(optionsReq)
 			.then(function(res) {
 				if (!res.ok) {
@@ -90,15 +92,14 @@ class Header extends React.Component {
           // );
         // })}
 			// </ul>
-
-			<select onChange={this.changeLang.bind(this)} className='form-control'>
+			<div onChange={this.changeLang.bind(this)} className='form-control'>
 				{Object.keys(this.state.langs).map(function( slug, index ){
 					const lang = langs[slug];
           return(
           	<option key={slug} value={slug}>{lang.name}</option>
           );
         })}
-			</select>
+			</div>
 		);
 	}
 
@@ -113,7 +114,7 @@ class Header extends React.Component {
 		if(links) {
 			linkElems = links.map( (link, i) => {
 				return (
-					<Link to={SiteSettings.path+link.slug} key={i}>{link.title}</Link>
+					<Link to={siteSettings.path+link.slug} key={i}>{link.title}</Link>
 				);
 			});
 		}
@@ -136,7 +137,7 @@ class Header extends React.Component {
 							<div className='col col-12 col-md-4 left'>
 								<div className='col-content'>
 									<div id='site-title'>
-											<Link to={SiteSettings.path}>
+											<Link to={siteSettings.path}>
 											</Link>
 									</div>
 								</div>
@@ -144,7 +145,7 @@ class Header extends React.Component {
 
 							<div className='col col-12 col-md-8 right'>
 								<div className='col-content'>
-									{/*this.state.langs ? this.renderLangList() : this.renderEmpty()*/}
+									{this.state.langs ? this.renderLangList() : this.renderEmpty()}
 									{this.state ? this.renderMenu() : null}
 								</div>
 							</div>

@@ -12,7 +12,7 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			page: {},
+			page: JSON.parse(siteSettings.current),
 			info: {},
 			options: {}
 		};
@@ -27,25 +27,22 @@ class Home extends React.Component {
 
 	componentDidMount() {
 		let self = this;
-		// const fourCorners = new FourCorners();
-		// if(!fourCorners) {return}
-		// self.fourCorners = fourCorners[0];
 		let lang = i18n.language;
-		let pageReq = SiteSettings.url.api+'page?slug=home&lang='+lang;
-		fetch(pageReq)
-			.then(function(res) {
-				if (!res.ok) {
-					throw Error(res.statusText);
-				}
-				return res.json();
-			})
-			.then(function(res) {
-				if(res) {
-					self.setState({ page: res });
-				}
-			});
+		// let pageReq = siteSettings.url.api+'page?slug=home&lang='+lang;
+		// fetch(pageReq)
+		// 	.then(function(res) {
+		// 		if (!res.ok) {
+		// 			throw Error(res.statusText);
+		// 		}
+		// 		return res.json();
+		// 	})
+		// 	.then(function(res) {
+		// 		if(res) {
+		// 			self.setState({ page: res });
+		// 		}
+		// 	});
 
-		let infoReq = SiteSettings.url.api+'info';
+		let infoReq = siteSettings.url.api+'info';
 		fetch(infoReq)
 			.then(function(res) {
 				if (!res.ok) {
@@ -59,7 +56,7 @@ class Home extends React.Component {
 				}
 			});
 
-		let options = SiteSettings.url.api+'options';
+		let options = siteSettings.url.api+'options';
 		fetch(options)
 			.then(function(res) {
 				if (!res.ok) {
@@ -133,10 +130,10 @@ class Home extends React.Component {
 							<div className='col col-12 col-md-6'>
 								<div className='col-content'>
 									<div className='prompts'>
-										<Link to={SiteSettings.path+'create'} className='prompt-button'>
-											<u>Try it out</u>
+										<Link to={siteSettings.path+'create'} className='prompt-button'>
+											<u>Create your own</u>
 										</Link>
-										<Link to={SiteSettings.path+'how'} className='prompt-button'>
+										<Link to={siteSettings.path+'how'} className='prompt-button'>
 											<u>Learn more</u>
 										</Link>
 									</div>
@@ -169,7 +166,13 @@ class Home extends React.Component {
 					<div className='max-width'>
 						<div className='row'>
 
-							<div className='col col-12 col-md-6 left'>
+							<div className="col col-12">
+
+								{ReactHtmlParser(this.state.page.post_content)}
+
+							</div>
+
+							{/*<div className='col col-12 col-md-6 left'>
 								<div className='col-content'>
 									<h3>The <strong>Four Corners Project</strong> is meant to <strong>increase the authorship and authority</strong> of the photographer and the photograph itself by providing a fixed template to add context to each of the four corners of the image. By clicking on each of the corners, the interested reader is able to find out more about what is referenced by the photograph.</h3>
 								</div>
@@ -179,7 +182,7 @@ class Home extends React.Component {
 								<div className='col-content'>
 									<h3>The platform is free and open source. <strong>It is the first major advance in contextualizing the photograph since the caption.</strong> It is also the first time that a photographer can immediately inform the reader of his or her own code of ethics as an image-maker.</h3>
 								</div>
-							</div>
+							</div>*/}
 
 						</div>
 					</div>
@@ -191,7 +194,7 @@ class Home extends React.Component {
 
 							<div className='col col-12 col-lg-6 left'>
 								<div className='col-content'>
-									<Link to={SiteSettings.path+'how'} className='prompt-button full'>
+									<Link to={siteSettings.path+'how'} className='prompt-button full'>
 										<u>How it works</u>
 									</Link>
 								</div>
@@ -199,7 +202,7 @@ class Home extends React.Component {
 
 							<div className='col col-12 col-lg-6 left'>
 								<div className='col-content'>
-									<Link to={SiteSettings.path+'gallery'} className='prompt-button full'>
+									<Link to={siteSettings.path+'gallery'} className='prompt-button full'>
 										<u>View the gallery</u>
 									</Link>
 								</div>

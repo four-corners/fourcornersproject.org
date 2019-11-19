@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import i18n from '../../i18n.jsx';
 import Module from './module.jsx';
 
-// let placeholderSrc = SiteSettings.url.theme + '/assets/images/placeholder.svg';
+// let placeholderSrc = siteSettings.url.theme + '/assets/images/placeholder.svg';
 // placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
 
 class Preview extends React.Component {

@@ -38,7 +38,7 @@
 
 			<div class='col col-6 right'>
 				<div class='col-content'>
-					The <strong>Four Corners Project</strong> is free and open source. If you would like to contribute, please read how and view the source on <a href="https://github.com/four-corners/four-corners.js" target="_blank">GitHub</a>.
+					The <strong>Four Corners Project</strong> is free and open source. You can view the source code and contribute on <a href="https://github.com/four-corners/four-corners.js" target="_blank">GitHub</a>.
 					<!-- <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">
 						<img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" />
 					</a> -->

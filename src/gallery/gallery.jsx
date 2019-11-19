@@ -13,28 +13,28 @@ class Gallery extends React.Component {
 		super(props);
 		this.state = {
 			lang: 'en',
-			page: {},
+			page: JSON.parse(siteSettings.current),
 			embeds: []
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
 
 	componentDidMount() {
-		let self = this;
-		let lang = i18n.language;
-		let req = SiteSettings.url.api+'page?slug=gallery&lang='+lang;
-		fetch(req)
-			.then(function(res) {
-				if (!res.ok) {
-					throw Error(res.statusText);
-				}
-				return res.json();
-			})
-			.then(function(res) {
-				if(res) {
-					self.setState({ page: res });
-				}
-			});
+		// let self = this;
+		// let lang = i18n.language;
+		// let req = siteSettings.url.api+'page?slug=gallery&lang='+lang;
+		// fetch(req)
+		// 	.then(function(res) {
+		// 		if (!res.ok) {
+		// 			throw Error(res.statusText);
+		// 		}
+		// 		return res.json();
+		// 	})
+		// 	.then(function(res) {
+		// 		if(res) {
+		// 			self.setState({ page: res });
+		// 		}
+		// 	});
 		i18n.on('languageChanged', this.onLanguageChanged);
 	}
 

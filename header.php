@@ -1,6 +1,6 @@
- <!DOCTYPE html>
- <html <?php language_attributes(); ?> class="no-js">
-
+<?php $curr_lang = pll_current_language(); ?>
+<!DOCTYPE html>
+<html <?php language_attributes(); ?> class="no-js">
 	<head>
 		<meta charset="<?php bloginfo( 'charset' ); ?>">
 		<meta name="viewport" content="width=device-width">
@@ -22,6 +22,29 @@
 		<?php get_alert(); ?>
 		
 		<header class='header'>
+
+			<div id="lang-switch">
+				<div class='max-width'>
+					<ul>
+						<?php
+						$langs = pll_languages_list( array(
+							'fields' => 'locale'
+						) );
+						$lang_names = pll_languages_list( array(
+							'fields' => 'name'
+						) );
+						foreach( $langs as $index => $lang ) { ?>
+							<li>
+								<?php $trans_post_id = pll_get_post( $post->ID, $lang ); ?>
+								<a href="<?= get_permalink( $trans_post_id ); ?>">
+									<?= $lang_names[$index] ?>
+								</a>
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
+			</div>
+
 			<div class='max-width'>
 				<div class='row'>			
 					<div class='col col-12 col-lg-auto left'>
@@ -43,12 +66,19 @@
 					</div>
 
 					<div class='col col-12 col-lg-auto right'>
+
 						<div class='col-content'>
 							<?php if( $menu_items = wp_get_nav_menu_items( 'main' ) ): ?>
 								<nav id='main-nav'>
 									<?php foreach( $menu_items as $i => $menu_item ) {
-										echo '<a href="'.$menu_item->url.'">'.$menu_item->title.'</a>';
-									} ?>
+										$menu_item_id = $menu_item->object_id;
+										$trans_page_id = pll_get_post( $menu_item_id, $curr_lang );
+										if( $trans_page_id ) {
+											$menu_item_id = $trans_page_id;
+										}
+										$menu_item_page = get_post( $menu_item_id ); ?>
+										<a href="<?= get_permalink( $menu_item_id ) ?>"><?= $menu_item_page->post_title ?></a>
+									<?php } ?>
 								</nav>
 							<?php endif; ?>
 						</div>

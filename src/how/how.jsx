@@ -12,30 +12,32 @@ class How extends React.Component {
 		super(props);
 		this.state = {
 			lang: 'en',
-			page: {},
 			embeds: {},
-			embedHtmls: {}
+			embedHtmls: {},
+			page: JSON.parse(siteSettings.current)
 		};
 		this.slugs = ['authorship', 'backstory', 'imagery', 'links'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
 
 	componentDidMount() {
-		let self = this;
-		let lang = i18n.language;
-		let req = SiteSettings.url.api+'page?slug=how&lang='+lang;
-		fetch(req)
-			.then(function(res) {
-				if (!res.ok) {
-					throw Error(res.statusText);
-				}
-				return res.json();
-			})
-			.then(function(res) {
-				if(res) {
-					self.setState({ page: res });
-				}
-			});
+		// let self = this;
+		// let lang = i18n.language;
+		// let req = siteSettings.url.api+'page?slug=how&lang='+lang;
+		// fetch(req)
+		// 	.then(function(res) {
+		// 		if (!res.ok) {
+		// 			throw Error(res.statusText);
+		// 		}
+		// 		return res.json();
+		// 	})
+		// 	.then(function(res) {
+		// 		if(res) {
+		// 			self.setState({ page: res });
+		// 		}
+		// 	});
+		this.activateEmbeds();
+
 		i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
@@ -44,36 +46,41 @@ class How extends React.Component {
 	}
 
 	componentDidUpdate() {
-		if(!this.state.page||!this.state.page.acf) {return}
-		this.slugs.forEach((slug, i) => {
-			if(!this.state.embedHtmls[slug]) {
-				const fields = this.state.page.acf;
-				const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
-				let embedHtmls = this.state.embedHtmls;
-				embedHtmls[slug] = <div className='embed-wrapper' data-slug={slug}>{embedHtml}</div>;
-				this.setState({
-					embedHtmls: embedHtmls
-				});
-			} else if(!this.state.embeds[slug]) {
-				const embedHtml = this.state.embedHtmls[slug];
-				const embed = new FourCorners({
-					elem: '.embed-wrapper[data-slug="'+slug+'"] .fc-embed',
-					active: slug,
-					static: true
-				});
-				let embeds = this.state.embeds;
-				embeds[slug] = embed;
-				this.setState({
-					embeds: embeds
-				});
-			}
-		});
+		this.activateEmbeds();
 	}
 
 	onLanguageChanged(lang) {
 		this.setState({
 			lang: lang
 		});
+	}
+
+	activateEmbeds() {
+		if(this.state.page && this.state.page.acf) {
+			this.slugs.forEach((slug, i) => {
+				if(!this.state.embedHtmls[slug]) {
+					const fields = this.state.page.acf;
+					const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
+					let embedHtmls = this.state.embedHtmls;
+					embedHtmls[slug] = <div className='embed-wrapper' data-slug={slug}>{embedHtml}</div>;
+					this.setState({
+						embedHtmls: embedHtmls
+					});
+				} else if(!this.state.embeds[slug]) {
+					const embedHtml = this.state.embedHtmls[slug];
+					const embed = new FourCorners({
+						elem: '.embed-wrapper[data-slug="'+slug+'"] .fc-embed',
+						active: slug,
+						static: true
+					});
+					let embeds = this.state.embeds;
+					embeds[slug] = embed;
+					this.setState({
+						embeds: embeds
+					});
+				}
+			});
+		}
 	}
 
 	renderIntro() {

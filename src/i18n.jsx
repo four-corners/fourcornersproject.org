@@ -24,7 +24,7 @@ i18n
 
 		},
 		backend: {
-			loadPath: SiteSettings.url.api+'{{ns}}/{{lng}}'
+			loadPath: siteSettings.url.api+'{{ns}}/{{lng}}'
 		}
 	});
 

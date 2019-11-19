@@ -13,14 +13,6 @@
 		max-width: calc(50% + 28rem);
 		margin: 0 0 2rem 0;
 	}
-	.col.right {
-		form {
-			// max-width: 25rem; 
-		}
-	}
-	form {
-		// padding: 0 0 2rem 0;
-	}
 }
 #embed-import {
 	height: 100%;
@@ -30,13 +22,18 @@
 	display: flex;
 	align-items: flex-end;
 	flex-direction: row-reverse;
+	@include md {
+		flex-direction: column;
+	}
+	// @include sm {
+		// align-items: unset;
+	// }
 }
 .popup-link {
-	display: inline-block;
 	&:not(:last-child) {
 		margin-left: .75rem;
-		&::after {
-	
+		@include md {
+			margin-left: 0;
 		}
 	}
 	label {

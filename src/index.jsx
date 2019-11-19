@@ -24,36 +24,36 @@ const routes = (
 						<React.Fragment>
 							<Switch>
 								<Route exact
-									path={SiteSettings.path}
+									path={siteSettings.path}
 									render={(props) =>
 									<Home />
 								} />
 								<Route exact
-									path={SiteSettings.path+'about'}
+									path={siteSettings.path+'about'}
 									render={(props) =>
 										<About />
 									}
 								/>
 								<Route
-									path={SiteSettings.path+'how'}
+									path={siteSettings.path+'how'}
 									render={(props) =>
 										<How />
 									}
 								/>
 								<Route
-									path={SiteSettings.path+'gallery'}
+									path={siteSettings.path+'gallery'}
 									render={(props) =>
 										<Gallery />
 									}
 								/>
 								<Route
-									path={SiteSettings.path+'contact'}
+									path={siteSettings.path+'contact'}
 									render={(props) =>
 										<Contact />
 									}
 								/>
 								<Route
-									path={SiteSettings.path+'create'}
+									path={siteSettings.path+'create'}
 									render={(props) =>
 										<Creator />
 									}

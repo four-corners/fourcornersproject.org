@@ -2189,7 +2189,8 @@ nav#main-nav {
   background: #80bdff;
   color: #181819;
   margin-bottom: .5rem;
-  display: none; }
+  height: 0;
+  overflow: hidden; }
   #lang-switch a {
     font-size: .8rem;
     line-height: 1.4em; }

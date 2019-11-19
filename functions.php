@@ -3,7 +3,7 @@
 function four_corners_scripts() {
 	global $post;
 
-	$ver = '1.2.8';
+	$ver = '1.2.81';
 	$fc_ver = '0.2.0';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );

@@ -138,7 +138,8 @@ nav#main-nav {
 	background: $blue;
 	color: $darkest;
 	margin-bottom: .5rem;
-	display: none;
+	height: 0;
+	overflow: hidden;
 	a {
 		@include xsText;
 	}

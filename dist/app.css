@@ -2104,7 +2104,7 @@ header {
     display: -ms-flexbox;
     display: flex; }
     header .col .col-content {
-      margin: 0; }
+      margin: .5rem 0 0 0; }
   @media (max-width: 768px) {
     header .col {
       margin-top: 0;
@@ -2187,10 +2187,7 @@ nav#main-nav {
 #lang-switch {
   width: 100%;
   background: #80bdff;
-  color: #181819;
-  margin-bottom: .5rem;
-  height: 0;
-  overflow: hidden; }
+  color: #181819; }
   #lang-switch a {
     font-size: .8rem;
     line-height: 1.4em; }

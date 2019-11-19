@@ -9,7 +9,7 @@ header {
 	.col {
 		display: flex;
 		.col-content {
-			margin: 0;
+			margin: .5rem 0 0 0;
 		}
 	}
 	@include md {
@@ -137,9 +137,6 @@ nav#main-nav {
 	width: 100%;
 	background: $blue;
 	color: $darkest;
-	margin-bottom: .5rem;
-	height: 0;
-	overflow: hidden;
 	a {
 		@include xsText;
 	}

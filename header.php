@@ -23,27 +23,29 @@
 		
 		<header class='header'>
 
-			<div id="lang-switch">
-				<div class='max-width'>
-					<ul>
-						<?php
-						$langs = pll_languages_list( array(
-							'fields' => 'locale'
-						) );
-						$lang_names = pll_languages_list( array(
-							'fields' => 'name'
-						) );
-						foreach( $langs as $index => $lang ) { ?>
-							<li>
-								<?php $trans_post_id = pll_get_post( $post->ID, $lang ); ?>
-								<a href="<?= get_permalink( $trans_post_id ); ?>">
-									<?= $lang_names[$index] ?>
-								</a>
-							</li>
-						<?php } ?>
-					</ul>
+			<?php if( is_user_logged_in() ) { ?>
+				<div id="lang-switch">
+					<div class='max-width'>
+						<ul>
+							<?php
+							$langs = pll_languages_list( array(
+								'fields' => 'locale'
+							) );
+							$lang_names = pll_languages_list( array(
+								'fields' => 'name'
+							) );
+							foreach( $langs as $index => $lang ) { ?>
+								<li>
+									<?php $trans_post_id = pll_get_post( $post->ID, $lang ); ?>
+									<a href="<?= get_permalink( $trans_post_id ); ?>">
+										<?= $lang_names[$index] ?>
+									</a>
+								</li>
+							<?php } ?>
+						</ul>
+					</div>
 				</div>
-			</div>
+			<?php } ?>
 
 			<div class='max-width'>
 				<div class='row'>			

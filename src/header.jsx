@@ -76,22 +76,6 @@ class Header extends React.Component {
 		const langs = this.state.langs;
 		const self = this;
 		return(
-			// <ul>
-				// {Object.keys(this.state.langs).map(function( slug, index ){
-					// const lang = langs[slug];
-          // return(
-          	// <li key={slug}>
-          		// <a href={lang.url}>{lang.name}</a>
-          		// {/*<NavLink
-          			// to={ '/'+slug }
-          			// activeClassName='active'
-          			// onClick={self.onLanguageChanged().bind(this)}>
-          			// {lang.name}
-          		// </NavLink>*/}
-	          // </li>
-          // );
-        // })}
-			// </ul>
 			<div onChange={this.changeLang.bind(this)} className='form-control'>
 				{Object.keys(this.state.langs).map(function( slug, index ){
 					const lang = langs[slug];
@@ -145,7 +129,6 @@ class Header extends React.Component {
 
 							<div className='col col-12 col-md-8 right'>
 								<div className='col-content'>
-									{this.state.langs ? this.renderLangList() : this.renderEmpty()}
 									{this.state ? this.renderMenu() : null}
 								</div>
 							</div>

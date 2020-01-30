@@ -44,9 +44,9 @@ class Blocks extends React.Component {
 		const fieldName = [setKey, fieldKey].join('_');
 		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
 		let blocks = this.state.blocks;
+		console.log(blocks);
 		let block = blocks[blockIndex];
 		block[subFieldKey] = value;
-
 		if(fieldKey === 'media') {
 			this.getMediaData(block, setKey, blockIndex);
 		}
@@ -64,8 +64,10 @@ class Blocks extends React.Component {
 
 	getMediaData(obj, setKey, index) {
 		const source = obj.source;
-		let blockMedia = this.state.blockMedia,
-				mediaData = Object.assign({}, blockMedia),
+		let blocks = this.state.blocks,
+				block = blocks[index],
+				blockMedia = this.state.blockMedia,
+				mediaData = Object.assign({}, blockMedia, this.props.blockMedia),
 				url = obj.url, req;
 		if(source == 'image') {
 			blockMedia[index] = {
@@ -113,17 +115,20 @@ class Blocks extends React.Component {
 				return res.json();
 			})
 			.then(res => {
-				let blockMedia = this.state.blockMedia;
 				let mediaObj = {
 					source: source
 				};
 				switch(source) {
 					case 'instagram':
 						mediaObj.url = res.thumbnail_url;
-						mediaObj.caption = res.title;
-						mediaObj.credit = "@"+res.author_name+" on Instagram";
 						mediaObj.width = res.thumbnail_width;
 						mediaObj.height = res.thumbnail_height;
+						block.caption = res.title;
+						block.credit = "@"+res.author_name+" on Instagram";
+						blocks[index] = block;
+						this.setState({
+							blocks: blocks
+						});
 						break;
 					default:
 						mediaObj.html = res.html;
@@ -281,7 +286,7 @@ class Blocks extends React.Component {
 				className='button add-block'
 				data-slug={typeKey}
 				onClick={self.addBlock.bind(this)}>
-				{"Add "+type.label}
+				{type.label}
 			</button>
 		);
 	}
@@ -341,7 +346,6 @@ class Blocks extends React.Component {
 					newIndex = e.target.dataset.newIndex;
 		let newBlocks = this.state.blocks,
 				newBlockMedia = this.state.blockMedia;
-
 
 		let block = newBlocks.splice(index, 1)[0];
 		newBlocks.splice(newIndex, 0, block);

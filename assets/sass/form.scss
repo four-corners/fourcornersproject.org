@@ -14,10 +14,19 @@
 .error-detail {
 	display: none !important;
 }
+#form-cols {
+	@include md {
+		flex-direction: column-reverse;
+	}
+}
 .col-form {
 	min-height: 100vh;
-	@include sm {
+	@include md {
 		min-height: unset;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-top: 0;
+		margin-bottom: 0;
 	}
 }
 fieldset {
@@ -35,6 +44,105 @@ fieldset {
 }
 .fieldset-inner {
 	overflow: hidden;
+}
+
+
+// ACCORDION TOGGLE
+legend {
+	width: 100%;
+	min-height: 4rem;
+	margin: 0;
+	display: block;
+	font-weight: bold;
+	@include mdText;
+	& {
+		padding: 1rem 0;
+		user-select: none;
+		@include fastTrans;
+	}
+}
+.toggle-label {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: row;
+	color: $medium;
+	&:hover {
+		cursor: pointer;
+	}
+	.collapse:hover & {
+		color: $darkest;
+	}
+	.expand & {
+		color: $blue;
+	}
+	.collapse:hover &, .expand & {
+		// span::before {
+		// 	opacity: 1;
+		// }
+		&::after {
+			border-color: $darkest;
+		}
+	}
+}
+.toggle-text, .toggle-icon, .corner-icon {
+	float: left;
+	[dir="rtl"] & {
+		float: right;
+	}
+}
+.toggle-text {
+	width: calc(100% - 5rem);
+	min-height: 2rem;
+	flex-grow: 1;
+	.corner-label & {
+		padding: 0 1rem;
+	}
+}
+.toggle-icon {
+	width: 2rem;
+	height: 2rem;
+	margin: 0 .5rem;
+	position: relative;
+	&::before {
+		content: '';
+		width: 1rem;
+		height: 1rem;
+		position: absolute;
+    left: .5rem;
+    top: .25rem;
+		border: solid $medium;
+		border-width: 0 2px 2px 0;
+		@include fastTrans(border-color);
+	}
+	.collapse & {
+		&::before {
+			transform: rotate(45deg);
+		}
+	}
+	.expand & {
+		&::before {
+			transform: rotate(-135deg);
+	    top: .75rem;
+		}
+	}
+}
+
+.corner-icon {
+	width: 2rem;
+	height: 2rem;
+	background-size: 2rem;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-image: url(./../images/selected.svg);
+	#backstory & {
+		transform: rotate(90deg);
+	}
+	#imagery & {
+		transform: rotate(180deg);
+	}
+	#links & {
+		transform: rotate(270deg);
+	}
 }
 
 //FIELD
@@ -133,66 +241,15 @@ fieldset {
 .field-label {
 	width: 100%;
 }
-label, legend {
-	font-weight: bold;
-}
 label {
-	// test
-	// margin-bottom: 1rem;
-	// test
+	font-weight: bold;
 	display: inline-block;
 	position: relative;
-}
-legend {
-	width: 100%;
-	margin: 0;
-	display: block;
-	@include mdText;
-	span {
-		min-height: 2rem;
-    display: block;
-		position: relative;
-	}
-	fieldset & {
-		padding: 1rem 0;
-		color: $medium;
-		user-select: none;
-		@include fastTrans;
-	}
-	#authorship &,
-	#backstory &,
-	#imagery &,
-	#links & {
-		span {
-			padding-left: 3rem;
-		}
-		span::before {
-			width: 2rem;
-			height: 2rem;
-			position: absolute;
-			left: 0;
-			top: .05rem;
-			background-size: 2rem;
-			background-position: center;
-			background-repeat: no-repeat;
-			background-image: url(./../images/selected.svg);
-			content: '';
-			@include fastTrans;
-		}
-	}
-	#backstory & span::before {
-		transform: rotate(90deg);
-	}
-	#imagery & span::before {
-		transform: rotate(180deg);
-	}
-	#links & span::before {
-		transform: rotate(270deg);
-	}
 }
 .label-inner {
 	display: flex;
 	align-items: center;
+	margin: 0 .5rem;
 }
 //DESC
 .desc {
@@ -224,7 +281,7 @@ legend {
 .toggle-desc {
 	width: .75rem;
 	height: .75rem;
-	margin: 0 0 0 .25rem;
+	margin: 0 .25rem;
 	display: inline-block;
   vertical-align: middle;
   transform: translateY(-1px);
@@ -367,7 +424,7 @@ select {
 			width: 2.25rem;
 			height: 2.25rem;
 			display: block;
-			flex: none;
+	
 			border-radius: $radius;
 			border: 1px solid $blue;
 			content: '';
@@ -384,6 +441,10 @@ select {
 			background: $blue;
 			@include fastTrans;
 			box-shadow: 0 0 1px 1px rgba($darkest,.1);
+			[dir="rtl"] & {
+				left: unset;
+				right: .5rem;
+			}
 		}
 	}
 	input:checked + label {
@@ -440,6 +501,10 @@ select {
 		&::after {
 			left: 2.75rem;
 		}
+		// [dir="rtl"] &::after {
+		// 	left: unset;
+		// 	right: 2.75rem;
+		// }
 	}
 	input:focus + label {
 		@include highlight;
@@ -481,6 +546,13 @@ select {
 .buttons-group {
 	.button {
 		display: inline-block;
+	}
+	.add-block {
+		padding-left: 2rem;
+		background-image: url(./../images/plus_black.svg);
+		background-size: 1rem;
+		background-position: .5rem center;
+		background-repeat: no-repeat;
 	}
 }
 .widget-buttons {
@@ -603,6 +675,10 @@ button, .button {
 		&:hover {
 			cursor: default;
 		}
+	}
+	[dir="rtl"] & {
+		margin-right: 0;
+		margin-left: .25rem;
 	}
 	&.red {
 		border-color: crimson;

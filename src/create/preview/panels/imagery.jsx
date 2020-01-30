@@ -31,17 +31,19 @@ class Imagery extends React.Component {
 		let mediaRows = [];
 		panelData.map((obj,i) => {
 			var mediaHtml = this.renderMedia(obj, i);
-			mediaRows.push(
-				<div className='fc-row' key={i}>
-					{mediaHtml}
-					{obj.caption ?
-					<div className='fc-sub-caption'>{obj.caption}</div>
-					: ''}
-					{obj.credit ?
-					<div className='fc-sub-credit'>{obj.credit}</div>
-					: ''}
-				</div>
-			);
+			if(obj.url || obj.caption || obj.credit) {
+				mediaRows.push(
+					<div className='fc-row' key={i}>
+						{mediaHtml}
+						{obj.caption ?
+						<div className='fc-sub-caption'>{obj.caption}</div>
+						: ''}
+						{obj.credit ?
+						<div className='fc-sub-credit'>{obj.credit}</div>
+						: ''}
+					</div>
+				);
+			}
 		});
 		return mediaRows;
 	}

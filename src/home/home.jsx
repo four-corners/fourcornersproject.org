@@ -12,22 +12,23 @@ class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			page: JSON.parse(siteSettings.current),
+			lang: i18n.language,
+			page: siteSettings.current,
+			strings: siteSettings.current.strings,
 			info: {},
 			options: {}
 		};
-		this.cornersInfo = [
-			{'title': 'Author\u00ADship','slug': 'authorship'},
-			{'title': 'Back\u00ADstory','slug': 'backstory'},
-			{'title': 'Related Imagery','slug': 'imagery'},
-			{'title': 'Links','slug': 'links'}
-		];
+		// this.cornersInfo = [
+		// 	{'title': 'Author\u00ADship','slug': 'authorship'},
+		// 	{'title': 'Back\u00ADstory','slug': 'backstory'},
+		// 	{'title': 'Related Imagery','slug': 'imagery'},
+		// 	{'title': 'Links','slug': 'links'}
+		// ];
 		// this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
 
 	componentDidMount() {
 		let self = this;
-		let lang = i18n.language;
 		// let pageReq = siteSettings.url.api+'page?slug=home&lang='+lang;
 		// fetch(pageReq)
 		// 	.then(function(res) {
@@ -83,27 +84,34 @@ class Home extends React.Component {
 		});
 	}
 
-	renderCornerBlocks() {
-		let corners = [];
-		const strings = this.state.page.acf || {};
-		this.cornersInfo.forEach((corner, i) => {
-			const desc = strings[corner.slug+'_desc'];
-			corners.push(
-				<div className='col col-6 col-sm-6 col-lg-3' key={i}>
+	renderTopActions() {
+		const actions = this.state.strings.top_action_buttons || [];
+		let buttons = [];
+		actions.forEach((action, i) => {
+			buttons.push(
+				<a href={action.link} className='action-button' key={i}>
+					<div className='action-text'>{action.text}</div>
+				</a>
+			);
+		});
+		return buttons;
+	}
+
+	renderBottomActions() {
+		const actions = this.state.strings.bottom_action_buttons || [];
+		let buttons = [];
+		actions.forEach((action, i) => {
+			buttons.push(
+				<div className='col col-12 col-sm-6 left' key={i}>
 					<div className='col-content'>
-
-						<div className='content-block corner-block'>
-							<h2 id={corner.slug}>
-								<div className='corner-title'>{corner.title}</div>
-							</h2>
-							<div className='corner-desc'>{desc}</div>
-						</div>
-
+						<a href={action.link} className='action-button full'>
+							<div className='action-text'>{action.text}</div>
+						</a>
 					</div>
 				</div>
 			);
 		});
-		return corners;
+		return buttons;
 	}
 
 	render() {
@@ -114,12 +122,12 @@ class Home extends React.Component {
 						<div className='row'>
 							<div className='col col-12'>
 								<div className='col-content'>
-									<h1 id='site-tagline'>{this.state.info.tagline}</h1>
+									<h1 id='site-tagline'>{this.state.strings.tagline}</h1>
 								</div>
 							</div>
 							<div className='col col-12 col-md-6'>
 								<div className='col-content'>
-									<Demo cornersInfo={this.cornersInfo} options={this.state.options}/>
+									<Demo strings={this.state.strings} />
 									{
 										// <div className='border-block'>
 										// 	{ReactHtmlParser(this.state.page.post_content)}
@@ -129,17 +137,12 @@ class Home extends React.Component {
 							</div>
 							<div className='col col-12 col-md-6'>
 								<div className='col-content'>
-									<div className='prompts'>
-										<Link to={siteSettings.path+'create'} className='prompt-button'>
-											<u>Create your own</u>
-										</Link>
-										<Link to={siteSettings.path+'how'} className='prompt-button'>
-											<u>Learn more</u>
-										</Link>
+									<div className='actions'>
+										{ this.renderTopActions() }
 									</div>
 									<div id='home-subscribe'>
 										<Subscribe
-											label={<h3><strong>Subscribe to receive updates</strong></h3>}
+											label={<h3><strong>{this.state.strings.newsletter_title}</strong></h3>}
 											formUrl={this.state.options.subscribe}/>
 									</div>
 								</div>
@@ -192,21 +195,7 @@ class Home extends React.Component {
 					<div className='max-width'>
 						<div className='row'>
 
-							<div className='col col-12 col-lg-6 left'>
-								<div className='col-content'>
-									<Link to={siteSettings.path+'how'} className='prompt-button full'>
-										<u>How it works</u>
-									</Link>
-								</div>
-							</div>
-
-							<div className='col col-12 col-lg-6 left'>
-								<div className='col-content'>
-									<Link to={siteSettings.path+'gallery'} className='prompt-button full'>
-										<u>View the gallery</u>
-									</Link>
-								</div>
-							</div>
+							{ this.renderBottomActions() }
 
 						</div>
 					</div>

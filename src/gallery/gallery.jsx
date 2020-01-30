@@ -12,8 +12,8 @@ class Gallery extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lang: 'en',
-			page: JSON.parse(siteSettings.current),
+			lang: i18n.language,
+			page: siteSettings.current,
 			embeds: []
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
@@ -78,7 +78,7 @@ class Gallery extends React.Component {
 	renderEmbed() {
 		const page = this.state.page;
 		let embeds = [];
-		page.acf.embeds.forEach(function(embed, i) {
+		page.strings.embeds.forEach(function(embed, i) {
 			const embed_code = ReactHtmlParser(embed.embed_code);
 			// const embed_code = <div dangerouslySetInnerHTML={{__html: embed.embed_code}}></div>;
 			// let img = embed_code[0].props.children[0];
@@ -111,13 +111,13 @@ class Gallery extends React.Component {
 					<div className='row'>
 						<div className='col col-8 m-auto'>
 							<h1>{ReactHtmlParser(page.post_title)}</h1>
-							<div className='col-content'>
+							<div className='col-content md-text'>
 								{page.post_content ? ReactHtmlParser(page.post_content) : ''}
 							</div>
 						</div>
 					</div>
 					<div className='row' id='gallery-embeds'>
-						{page.acf ? this.renderEmbed() : ''}
+						{page.strings ? this.renderEmbed() : ''}
 					</div>
 				</div>
 			</main>

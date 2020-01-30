@@ -13,20 +13,20 @@ class Creator extends React.Component {
 		super(props);
 		this.state = {
 			// creator: {},
-			page: JSON.parse(siteSettings.current),
-			lang: 'en',
+			page: siteSettings.current,
+			// lang: 'en',
 			// imgLoaded: false,
 			formData: {
-				authorship:{},
-				backstory:{},
-				imagery:{},
-				links:{},
+				authorship: {},
+				backstory: {},
+				imagery: {},
+				links: {},
 				opts: {},
 				photo: {}
 			},
 			mediaData: {
-				imagery:[],
-				backstory:[]
+				imagery: [],
+				backstory: []
 			},
 			activeCorner: null,
 			activeFieldset: 'photo',
@@ -117,7 +117,8 @@ class Creator extends React.Component {
 		localStorage.setItem('FourCornersHistory', JSON.stringify(newHistory));
   }
 
-  setMediaData(mediaData) {
+  setMediaData(newMediaData) {
+  	const mediaData = Object.assign(this.state.mediaData, newMediaData);
 		this.setState({
 			mediaData: mediaData
 		});
@@ -226,7 +227,7 @@ class Creator extends React.Component {
 				</div>*/}
 
 				<div className='max-width'>
-					<div className='row'>
+					<div className='row' id="head-cols">
 						<div className='col col-auto'>
 							<h2>{this.state.page.post_title}</h2>
 						</div>
@@ -243,7 +244,7 @@ class Creator extends React.Component {
 							: '' }
 						</div>
 					</div>
-					<div className='row' data-sticky-container>
+					<div className='row' id='form-cols'>
 						<div className='col col-12 col-md-6 col-lg-5 left col-form'>
 							{ ready ? this.renderFormCol() : null }
 						</div>

@@ -128,11 +128,13 @@ class HistoryRow extends React.Component {
 		rowClass += this.state.active?' expand':' collapse';
 		return (
 			<div key={timestamp} className={rowClass}>
-				<div
-					className='toggle-label'
+				<div className='toggle-label'
 					data-time={timestamp}
 					onClick={this.onClickRow.bind(this)}>
-					<span><strong>{dateString}</strong></span>
+						<div className="toggle-text">
+							<strong>{dateString}</strong>
+						</div>
+						<div className="toggle-icon"></div>
 				</div>
 				<div className='saved-inner'>
 					<div className='row'>

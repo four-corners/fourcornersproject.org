@@ -7,19 +7,16 @@ class Demo extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			nextIndex: 0,
-			activeSlug: null,
+			nextIndex: 1,
+			activeSlug: 'authorship',
 			hoveredSlug: null,
 			fourCorners: null,
-			time: 0
+			time: 0,
+			corners: ['authorship', 'backstory', 'imagery', 'links']
 		};
 	}
 
 	componentDidMount() {
-		// let self = this;
-		// const fourCorners = FourCorners.default.prototype.init();
-		// if(!fourCorners) {return}
-		// self.fourCorners = fourCorners[0];
 		this.interval = setInterval(() => this.cycleCorner(), 1750);
 	}
 
@@ -32,13 +29,12 @@ class Demo extends React.Component {
 	}
 
 	cycleCorner() {
-		const cornersInfo = this.props.cornersInfo;
 		let nextIndex = this.state.nextIndex;
-		const nextCorner = cornersInfo[nextIndex];
+		const nextCorner = this.state.corners[nextIndex];
 		nextIndex++;
 		this.setState({
-			activeSlug: nextCorner.slug,
-			nextIndex: nextIndex < cornersInfo.length ? nextIndex : 0
+			activeSlug: nextCorner,
+			nextIndex: nextIndex < this.state.corners.length ? nextIndex : 0
 		});
 	}
 
@@ -67,17 +63,16 @@ class Demo extends React.Component {
 
 
 	renderCorners() {
-		const corners = [];
-		{this.props.cornersInfo.forEach((corner,i) => {
-			const cornerSlug = corner.slug;
-			let className = 'fc-corner fc-'+cornerSlug;
-			if(this.state.activeSlug == cornerSlug && !this.state.hoveredSlug) {
+		const cornerIcons = [];
+		{this.state.corners.forEach((corner,i) => {
+			let className = 'fc-corner fc-'+corner;
+			if(this.state.activeSlug == corner && !this.state.hoveredSlug) {
 				className += ' active';
 			}
-			corners.push(
+			cornerIcons.push(
 				<div key={i}
 					className={className}
-					data-fc-slug={cornerSlug}
+					data-fc-slug={corner}
 					data-index={i}
 					onMouseOver={this.onHover.bind(this)}
 					onMouseLeave={this.unHover.bind(this)}
@@ -85,26 +80,25 @@ class Demo extends React.Component {
 				 </div>
 			);
 		})}
-		return corners;
+		return cornerIcons;
 	}
 
 	renderTitles() {
-		const corners = [];
-		const strings = this.props.options || {};
-		{this.props.cornersInfo.forEach((corner,i) => {
-			const cornerSlug = corner.slug;
-			let className = 'corner-title';
-			if(this.state.hoveredSlug == cornerSlug
-				|| (this.state.activeSlug == cornerSlug && !this.state.hoveredSlug)) {
-				className += ' active';
-			}
-			corners.push(
-				<div key={i} className={className}>
-					<span>{ReactHtmlParser(strings[cornerSlug+'_brief'])}</span>
-				</div>
-			);
-		})}
-		return corners;
+		const cornerTitles = [];
+		{if(this.props.strings.demo) {
+			{this.state.corners.forEach((corner,i) => {
+				let className = 'corner-title';
+				if(this.state.hoveredSlug == corner || (this.state.activeSlug == corner && !this.state.hoveredSlug)) {
+					className += ' active';
+				}
+				cornerTitles.push(
+					<div key={i} className={className}>
+						{ReactHtmlParser(this.props.strings.demo[corner])}
+					</div>
+				);
+			})}
+		}}
+		return cornerTitles;
 	}
 
 
@@ -115,16 +109,6 @@ class Demo extends React.Component {
 				<div className='fc-embed-demo'>
 					{this.renderCorners()}
 					{this.renderTitles()}
-					{this.props.innerContent ?
-						<div className='inner-content'>
-							{ReactHtmlParser(this.props.innerContent)}
-						</div>
-					: ''}
-					{this.props.photo ?
-						<div className='fc-photo'>
-							{<img className='fc-img' src={this.props.photo}/>}
-						</div>
-					: ''}
 				</div>
 			</React.Fragment>
 		)

@@ -12,18 +12,18 @@ class Module extends React.Component {
 	constructor(props) {
 		super(props);
 		this.corners = ['imagery','links','authorship','backstory'];
+		this.rtlLangs = ['ar','arc','fa','he','ks','kv','ur','yi'];
 		this.state = {
-			fourCorners: null,
+			lang: i18n.language,
 			formData: {},
 			expandPanel: false
 		};
 	}
 
 	componentDidMount() {
-		let self = this;
-		const fourCorners = new FourCorners();
-		if(!fourCorners) {return}
-		self.fourCorners = fourCorners[0];
+		const fourCorners = new FourCorners({
+			selector: '.saved-states .fc-embed'
+		});
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -51,7 +51,7 @@ class Module extends React.Component {
 	}
 
 	onError(e) {
-		console.log('Error', e);
+		console.warn('Error', e);
 	}
 
 	onScroll(e) {
@@ -80,15 +80,15 @@ class Module extends React.Component {
 	}
 
 	renderPanels() {
-		const formData = Object.entries(this.props.formData);
-		const embedData = {};
+		const formData = Object.entries(this.props.formData),
+					embedData = {};
 		{formData.map((obj) => this.corners.includes(obj[0]) ? embedData[obj[0]]=obj[1]:'')}
-		const panels = [];
-		const creator = this.props.creator;
+		const panels = [],
+					creator = this.props.creator;
 		{Object.entries(embedData).forEach((obj,i) => {
-			const cornerSlug = obj[0];
-			const cornerTitleKey = [cornerSlug, 'title'].join('_');
-			const panelData = obj[1];
+			const cornerSlug = obj[0],
+						cornerTitleKey = [cornerSlug, 'title'].join('_'),
+						panelData = obj[1];
 			let panelInner = '';
 			if(Object.keys(panelData).length) {
 				switch(cornerSlug) {
@@ -99,6 +99,7 @@ class Module extends React.Component {
 						panelInner = <Backstory panelData={panelData} mediaData={this.props.mediaData.backstory} />;
 						break;
 					case 'imagery':
+
 						panelInner = <Imagery panelData={panelData} mediaData={this.props.mediaData.imagery} />;
 						break;
 					case 'links':
@@ -107,21 +108,21 @@ class Module extends React.Component {
 				}
 			}
 
-			const title = creator&&creator.acf ? creator.acf[cornerTitleKey] : '&nbsp;';
+			const title = creator&&creator.strings ? creator.strings[cornerTitleKey] : '&nbsp;';
 			let className = 'fc-panel fc-'+cornerSlug;
 			if(this.props.activeCorner === cornerSlug) {
 				className += ' fc-active';
 			}
 			panels.push(
 				<div className={className} data-fc-slug={cornerSlug} key={i}>
-					<div className='fc-panel-title'>
+					<div className="fc-panel-title">
 						{title}
-						<div className='fc-icon fc-expand' onClick={this.toggleExpandPanel.bind(this)}/>
-						<div className='fc-icon fc-close' onClick={this.collapsePanel.bind(this)}/>
+						<div className="fc-icon fc-expand" onClick={this.toggleExpandPanel.bind(this)}/>
+						<div className="fc-icon fc-close" onClick={this.collapsePanel.bind(this)}/>
 					</div>
-					<div className='fc-panel-title fc-pseudo'>{title}</div>
+					<div className="fc-panel-title fc-pseudo">{title}</div>
 					{panelInner ?
-					<div className='fc-scroll'>
+					<div className="fc-scroll">
 						<div className='fc-inner'>
 							{panelInner}
 						</div>
@@ -157,7 +158,7 @@ class Module extends React.Component {
 		const opts = data.opts;
 		if(!opts||(!opts.caption&&!opts.credit&&!opts.logo)){return}
 		return (
-			<div className='fc-cutline'>
+			<div className="fc-cutline">
 				{opts.caption && data.authorship ? <span className="fc-caption">{data.authorship.caption}</span> : ''}
 				{opts.credit && data.authorship ?
 					<span className="fc-credit">
@@ -171,11 +172,13 @@ class Module extends React.Component {
 	}
 
 	render() {
-		const formData = this.props.formData;
-		// const imgLoaded = this.props.imgLoaded;
-		const imgSrc = (formData.photo ? formData.photo.src : null) || null;
-		const opts = formData.opts;
-		let className = 'fc-embed';
+		const lang = this.state.lang,
+					formData = this.props.formData,
+					imgSrc = formData.photo ? formData.photo.src : null,
+					opts = formData.opts;
+		let className = 'fc-embed',
+				textDir = 'ltr';
+
 		if(opts&&opts.dark) {
 			className += ' fc-dark';
 		}
@@ -187,21 +190,26 @@ class Module extends React.Component {
 		} else {
 			className += ' fc-empty';
 		}
+		if(this.rtlLangs.includes(lang)) {
+			textDir = 'rtl';
+		}
 		const activeCorner = this.props.activeCorner;
 		return(
 			<React.Fragment>
-				<div className={className} data-fc-active={this.corners.includes(activeCorner)?activeCorner:''}>
-					{!imgSrc ?
-					<div
-						className="no-photo">
-						<div className="no-photo-text">
-							<h2>No photo added</h2>
-							<h4>Add a link to your image file under "Add your photo"</h4>
-						</div>
-					</div> : ''}
-					<div className={imgSrc?'fc-photo fc-loaded':'fc-photo'}>
-						{ imgSrc ? <img src={imgSrc} className='fc-img'/> : '' }
-					</div>
+				<div className={className} data-fc-active={this.corners.includes(activeCorner) ? activeCorner : ''} lang={lang} dir={textDir}>
+					{imgSrc ?
+						<div className="fc-photo fc-loaded">
+							<img src={imgSrc} className="fc-img"/>
+						</div> :
+						<React.Fragment>
+							<div className="no-photo">
+								<div className="no-photo-text">
+									<h2>No photo added</h2>
+									<h4>Add a link to your image file under "Add your photo"</h4>
+								</div>
+							</div>
+							<div className="fc-photo"></div>
+						</React.Fragment>}
 					{this.renderCorners()}
 					{this.renderPanels()}
 				</div>

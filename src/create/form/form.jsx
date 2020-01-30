@@ -13,6 +13,7 @@ class Form extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			lang: i18n.language,
 			mediaData: this.props.mediaData,
 			formData: {
 				authorship: {},
@@ -23,7 +24,7 @@ class Form extends React.Component {
 				photo: {}
 			},
 		};
-		this.translations = this.props.creator.acf;
+		this.strings = this.props.creator.strings;
 	}
 
 	componentDidMount() {
@@ -86,26 +87,26 @@ class Form extends React.Component {
 		let fieldsets = [];
 		let lang = this.state.lang;
 		const setKeys = Object.keys(Schema);
-		const translations = this.translations;
-		if(!translations) {return}
+		const strings = this.strings;
+		if(!strings) {return}
 		for(let setKey of setKeys) {
 			const fields = Schema[setKey].fields;
 			const fieldKeys = Object.keys(fields);
 			Schema[setKey].strings = {
-				title: translations[[setKey, 'title'].join('_')],
-				desc: translations[[setKey, 'desc'].join('_')]
+				title: strings[[setKey, 'title'].join('_')],
+				desc: strings[[setKey, 'desc'].join('_')]
 			}
 			for(let fieldKey of fieldKeys) {
 				let field = fields[fieldKey];
 				if(field) {
 					Schema[setKey].fields[fieldKey].strings = {
-						label: translations[[setKey, fieldKey, 'label'].join('_')],
-						desc: translations[[setKey, fieldKey, 'desc'].join('_')],
-						placeholder: translations[[setKey, fieldKey, 'placeholder'].join('_')],
+						label: strings[[setKey, fieldKey, 'label'].join('_')],
+						desc: strings[[setKey, fieldKey, 'desc'].join('_')],
+						placeholder: strings[[setKey, fieldKey, 'placeholder'].join('_')],
 					}
 					if(field.type === 'select') {
 
-						const opts = translations[[setKey, fieldKey, 'options'].join('_')];
+						const opts = strings[[setKey, fieldKey, 'options'].join('_')];
 						Schema[setKey].fields[fieldKey].options = opts;
 
 					} else if(field.type === 'checkbox') {
@@ -114,8 +115,8 @@ class Form extends React.Component {
 							Schema[setKey].fields[fieldKey].options = {};
 							for(let optKey of field.fields) {
 								Schema[setKey].fields[fieldKey].options[optKey] = {
-									label: translations[[setKey, fieldKey, optKey, 'label'].join('_')],
-									desc: translations[[setKey, fieldKey, optKey, 'desc'].join('_')]
+									label: strings[[setKey, fieldKey, optKey, 'label'].join('_')],
+									desc: strings[[setKey, fieldKey, optKey, 'desc'].join('_')]
 								};
 							}
 						}
@@ -127,19 +128,19 @@ class Form extends React.Component {
 						const subFieldKeys = Object.keys(subFields);
 						for(let subFieldKey of subFieldKeys) {
 							const subField = subFields[subFieldKey];
-							const blockTypes = translations[[setKey, fieldKey, 'types'].join('_')];
+							const blockTypes = strings[[setKey, fieldKey, 'types'].join('_')];
 							Schema[setKey].fields[fieldKey][objKey] = {};
 							if(blockTypes) { for(let blockType of blockTypes) {
 								let blockTypeSlug = blockType.slug || slugify(blockType.label,{lower:true});
 								Schema[setKey].fields[fieldKey][objKey][blockTypeSlug] = blockType;
 							} }
 							Schema[setKey].fields[fieldKey].fields[subFieldKey].strings = {
-								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
-								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
-								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
+								label: strings[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
+								placeholder: strings[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
+								desc: strings[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
 							}
 							if(subField.type == 'select') {
-								const opts = translations[[setKey, fieldKey, subFieldKey, 'options'].join('_')];
+								const opts = strings[[setKey, fieldKey, subFieldKey, 'options'].join('_')];
 								Schema[setKey].fields[fieldKey].fields[subFieldKey].options = opts;
 							}
 						}
@@ -153,9 +154,9 @@ class Form extends React.Component {
 							const subField = subFields[subFieldKey];
 
 							Schema[setKey].fields[fieldKey].fields[subFieldKey].strings = {
-								label: translations[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
-								placeholder: translations[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
-								desc: translations[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
+								label: strings[[setKey, fieldKey, subFieldKey, 'label'].join('_')],
+								placeholder: strings[[setKey, fieldKey, subFieldKey, 'placeholder'].join('_')],
+								desc: strings[[setKey, fieldKey, subFieldKey, 'desc'].join('_')]
 							}
 
 							if(subField.type === 'group') {
@@ -163,7 +164,7 @@ class Form extends React.Component {
 								Schema[setKey].fields[fieldKey].fields[subFieldKey].fields = subFields;
 							}
 							else if(subField.type === 'select') {
-								const opts = translations[[setKey, fieldKey, subFieldKey, 'options'].join('_')];
+								const opts = strings[[setKey, fieldKey, subFieldKey, 'options'].join('_')];
 								Schema[setKey].fields[fieldKey].fields[subFieldKey].options = opts;
 							}
 						}
@@ -200,14 +201,14 @@ class Form extends React.Component {
 			fieldPath = [fieldPath, subFieldKey].join('_');
 			// return;
 		}
-		const translations = this.translations;
+		const strings = this.strings;
 		const objKey = 'fields';
 		const groupFieldKeys = Object.keys(groupFields);
 		for(let groupFieldKey of groupFieldKeys) {
 			groupFields[groupFieldKey].strings = {
-				label: translations[[fieldPath, groupFieldKey, 'label'].join('_')],
-				placeholder: translations[[fieldPath, groupFieldKey, 'placeholder'].join('_')],
-				desc: translations[[fieldPath, groupFieldKey, 'desc'].join('_')]
+				label: strings[[fieldPath, groupFieldKey, 'label'].join('_')],
+				placeholder: strings[[fieldPath, groupFieldKey, 'placeholder'].join('_')],
+				desc: strings[[fieldPath, groupFieldKey, 'desc'].join('_')]
 			}
 		}
 		return groupFields;

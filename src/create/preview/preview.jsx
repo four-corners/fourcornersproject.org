@@ -51,7 +51,7 @@ class Preview extends React.Component {
 	}
 
 	onError(e) {
-		console.log('Error', e);
+		console.warn('Error', e);
 	}
 
 	onToggle(e) {
@@ -145,13 +145,14 @@ class Preview extends React.Component {
 
 								<fieldset id='addScripts' className={'toggler '+(this.state.expand?'expand':'collapse')}>
 									<legend className='toggle-label' onClick={this.onToggle.bind(this)}>
-										<span>{creator&&creator.acf ? creator.acf['scripts_title'] : null }</span>
+										<div className="toggle-text">{creator&&creator.strings ? creator.strings['scripts_title'] : null }</div>
+										<div className="toggle-icon"></div>
 									</legend>
 									<div className="fieldset-inner">
 										<div className="fields-group">
 											<div className="field">
-												{creator&&creator.acf&&creator.acf['scripts_desc'] ?
-												<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['scripts_desc'] }}></div>
+												{creator&&creator.strings&&creator.strings['scripts_desc'] ?
+												<div className='desc' dangerouslySetInnerHTML={{__html: creator.strings['scripts_desc'] }}></div>
 												: ''}
 												<textarea className='output form-elem'
 													id='libraries'
@@ -167,13 +168,14 @@ class Preview extends React.Component {
 
 								<fieldset id='embedPhoto'>
 									<legend>
-										<span>{creator&&creator.acf ? creator.acf['embed_title'] : null }</span>
+										<div className="toggle-text">{creator&&creator.strings ? creator.strings['embed_title'] : null }</div>
+										{/*<div className="toggle-icon"></div>*/}
 									</legend>
 									<div className="fieldset-inner">
 										<div className="fields-group">
 											<div className="field">
-												{creator&&creator.acf&&creator.acf['embed_desc'] ?
-												<div className='desc' dangerouslySetInnerHTML={{__html: creator.acf['embed_desc'] }}></div>
+												{creator&&creator.strings&&creator.strings['embed_desc'] ?
+												<div className='desc' dangerouslySetInnerHTML={{__html: creator.strings['embed_desc'] }}></div>
 												: ''}
 												<textarea className='output form-elem'
 													id='json'

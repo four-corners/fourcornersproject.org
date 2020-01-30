@@ -10,14 +10,24 @@ footer {
 			border-bottom-color: $darkest;
 		}
 	}
-	nav {
-		ol {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-		li {
-			margin: 0 0 .5rem 0;
-		}
+	ol {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	li {
+		margin: 0 0 .5rem 0;
+	}
+}
+#lang-switch-footer {
+	ol {
+		display: flex;
+		flex-direction: row;
+		padding: 0;
+		margin-left: -.25rem;
+		margin-right: -.25rem;
+	}
+	li {
+		margin: 0 .25rem;
 	}
 }

@@ -17,7 +17,7 @@ class Popup extends React.Component {
 			activeDesc: null,
 			activeTab: null
 		};
-		this.strings = this.props.creator.acf || {};
+		this.strings = this.props.creator.strings || {};
 	}
 
 	toggleDesc(e) {

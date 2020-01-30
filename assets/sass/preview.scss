@@ -68,13 +68,14 @@
 .no-photo-text {
 	display: table;
 	margin: auto;
+	padding: 2rem;
 	color: $medium;
 	user-select: none;
-	text-align: center;
 	@include strong;
 	@include fastTrans;
-	h2 {
+	h2, h4 {
 		margin: 0;
+		text-align: center !important;
 	}
 }
 	// &:not(.has-image) {
@@ -142,15 +143,18 @@
 		// margin: .25rem;
 	}
 	.field {
-		margin-bottom: .25rem;
-		margin-left: 0;
-		margin-right: 0;
-		padding: 0 .25rem;
+		// margin-bottom: .25rem;
+		// margin-left: 0;
+		// margin-right: 0;
+		// padding: 0 .25rem;
 	}
 	textarea {
 		direction: ltr !important;
     word-break: break-all;
 		background-color: $light;
 		@include xsText;
+	}
+	@include md {
+		padding-bottom: 0;
 	}
 }

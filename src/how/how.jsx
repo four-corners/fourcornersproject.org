@@ -11,10 +11,11 @@ class How extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			lang: 'en',
+			lang: i18n.language,
 			embeds: {},
 			embedHtmls: {},
-			page: JSON.parse(siteSettings.current)
+			page: siteSettings.current,
+			strings: siteSettings.current.strings
 		};
 		this.slugs = ['authorship', 'backstory', 'imagery', 'links'];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
@@ -56,11 +57,11 @@ class How extends React.Component {
 	}
 
 	activateEmbeds() {
-		if(this.state.page && this.state.page.acf) {
+		var strings = this.state.strings;
+		if(this.state.page && strings) {
 			this.slugs.forEach((slug, i) => {
 				if(!this.state.embedHtmls[slug]) {
-					const fields = this.state.page.acf;
-					const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
+					const embedHtml = ReactHtmlParser(strings[slug+'_embed']);
 					let embedHtmls = this.state.embedHtmls;
 					embedHtmls[slug] = <div className='embed-wrapper' data-slug={slug}>{embedHtml}</div>;
 					this.setState({
@@ -87,18 +88,11 @@ class How extends React.Component {
 		let lang = this.state.lang;
 		const page = this.state.page;
 		const intro = (
-			<div className='row'>
-				<div className='col col-12 col-lg-6 left'>
+			<div id='how-intro' className='row'>
+				<div className='col col-12'>
 					<div className='col-content'>
-						<div className='content-block'>
-							<h4>By using Four Corners you are able to add contextualizing information so that it is embedded into each of the four corners of your image. When a viewer hovers his or her mouse over the image, the Four Corners symbols appear and each corner is then clickable.</h4>
-						</div>
-					</div>
-				</div>
-				<div className='col col-12 col-lg-6 right'>
-					<div className='col-content'>
-						<div className='content-block'>
-							<h4>You can create your own Four Corners image with our online form. This provides fields you can fill in with various types of text and media. Once you fill in the provided fields, it automatically generates an embeddable code that you can copy and paste into your site.</h4>
+						<div className='content-block md-text'>
+							{ReactHtmlParser(page.post_content)}
 						</div>
 					</div>
 				</div>
@@ -108,9 +102,9 @@ class How extends React.Component {
 	}
 
 	renderEmbed(slug, i) {
-		if(!this.state.page, !this.state.page.acf){return}
-		const fields = this.state.page.acf;
-		const embedHtml = ReactHtmlParser(fields[slug+'_embed']);
+		if(!this.state.page, !this.state.strings){return}
+		const strings = this.state.strings;
+		const embedHtml = ReactHtmlParser(strings[slug+'_embed']);
 		return (
 			<div key={i}
 				className='embed-wrapper'
@@ -128,13 +122,12 @@ class How extends React.Component {
 		let keys = ['title', 'desc', 'embed'];
 
 		keys.forEach((key,i) => {
-			if(page&&page.acf&&page.acf[slug+'_'+key]) {
-				rowData[key] = ReactHtmlParser(page.acf[slug+'_'+key]);
+			if(page&&page.strings&&page.strings[slug+'_'+key]) {
+				rowData[key] = ReactHtmlParser(page.strings[slug+'_'+key]);
 			} else {
 				rowData[key] = '';
 			}
 		});
-
 		return (
 			<div className={rowClass} key={i}>
 				<div className="col col-12 col-md-5 left">

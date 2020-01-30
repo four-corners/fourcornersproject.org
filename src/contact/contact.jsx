@@ -12,7 +12,7 @@ class Contact extends React.Component {
 		super(props);
 		this.state = {
 			lang: 'en',
-			page: JSON.parse(siteSettings.current),
+			page: siteSettings.current,
 		};
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}

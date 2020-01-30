@@ -1,10 +1,18 @@
 <?php
 
+$strings = array(
+	'subscribe' => array(
+		'string' => 'Subscribe'
+	)
+);
+
+
 function four_corners_scripts() {
+	global $strings;
 	global $post;
 
-	$ver = '1.2.82';
-	$fc_ver = '0.2.0';
+	$ver = '1.2.9';
+	$fc_ver = '0.2.1';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
@@ -17,25 +25,30 @@ function four_corners_scripts() {
 	$url = trailingslashit( home_url() );
 	$path = trailingslashit( parse_url( $url, PHP_URL_PATH ) );
 
-
 	if( function_exists( 'get_fields' ) ) {
-		$post->acf = get_fields( $post->ID );
+		$post->strings = get_fields( $post->ID );
+	} else {
+		$post->strings = array();
+	}
+	foreach( $strings as $key => $obj ) {
+		$post->strings[$key] = $obj['string'];
 	}
 	$post->post_content = wpautop( $post->post_content );
 
-
 	wp_scripts()->add_data( 'react_script', 'data', sprintf( 'var siteSettings = %s;', wp_json_encode( 
-			array(
-				'title' => get_bloginfo( 'name', 'display' ),
-				'path' => $path,
-				'url' => array(
-					'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
-					'root' => esc_url_raw( $url ),
-					'theme' => esc_url_raw( get_stylesheet_directory_uri() )
-				),
-				'current' => wp_json_encode( $post )
-			)
+		array(
+			'title' => get_bloginfo( 'name', 'display' ),
+			'path' => $path,
+			'lang' => pll_current_language(),
+			'template' => str_replace( 'page-', '', basename( get_page_template_slug(), '.php' ) ),
+			'url' => array(
+				'api' => esc_url_raw( get_rest_url( null, '/wp/v2/' ) ),
+				'root' => esc_url_raw( $url ),
+				'theme' => esc_url_raw( get_stylesheet_directory_uri() )
+			),
+			'current' => $post
 		)
+	)
 	) );
 
 }

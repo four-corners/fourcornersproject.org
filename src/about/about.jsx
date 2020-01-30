@@ -11,7 +11,8 @@ class About extends React.Component {
 		super(props);
 		this.state = {
 			lang: 'en',
-			page: JSON.parse(siteSettings.current),
+			page: siteSettings.current,
+			strings: siteSettings.current.strings,
 		};
 		// this.onLanguageChanged = this.onLanguageChanged.bind(this);
 	}
@@ -51,9 +52,7 @@ class About extends React.Component {
 
 	renderContribs() {
 		const page = this.state.page;
-		const fields = page.acf;
-		if(!fields){return}
-		const contribs = fields.contributors;
+		const contribs = strings.contributors;
 		let contribBlocks = [];
 		contribs.forEach((contrib, i) => {
 			contribBlocks.push(

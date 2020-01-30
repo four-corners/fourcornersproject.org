@@ -91,10 +91,10 @@ const Schema = {
 						format: 'url'
 					},
 					caption: {
-						type: 'textarea',
+						type: 'textarea'
 					},
 					credit: {
-						type: 'text',
+						type: 'text'
 					}
 				}
 			}

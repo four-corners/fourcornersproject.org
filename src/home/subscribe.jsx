@@ -37,7 +37,7 @@ class Subscribe extends React.Component {
 						<div style={{position: 'absolute', left: '-5000px'}} aria-hidden='true'>
 							<input type='text' name='b_a117064f3864003f8ca77acf1_fffda28ae6' tabIndex='-1'/>
 						</div>
-						<input type='submit' value='Subscribe' name='subscribe' id='mc-embedded-subscribe' className='button'/>
+						<input type='submit' value='' name='subscribe' id='mc-embedded-subscribe' className='button'/>
 					</div>
 				</form>
 			</div>

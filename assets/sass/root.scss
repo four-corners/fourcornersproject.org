@@ -1,35 +1,37 @@
 html, body {
 	width: 100%;
 	height: 100%;
-	font-family: 'Noto Sans', Arial, sans-serif;
+	font-family: 'Rubik', 'Noto Sans', Arial, sans-serif;
 	background-color: $lightest;
 	overflow-x: hidden;
 	@include baseText;
 }
 html {
-	// min-width: 900px;
 	overflow: hidden;
 	overflow-x: auto;
-	// @include sm {
-		// min-width: unset;
-	// }
 }
 body {
 	overflow-y: scroll;
-}
-::-webkit-scrollbar {
-	width: 0px;
-	background: transparent;
-}
-::-webkit-scrollbar-thumb {
-	background: transparent;
 }
 * {
 	box-sizing: border-box;
 	text-rendering: optimizeLegibility;
 }
-.rtl, .rtl * {
+[dir="rtl"], [dir="rtl"] * {
 	text-align: right;
+	// font-family: 'Cairo', 'Rubik', Arial, sans-serif;
+}
+::-webkit-scrollbar {
+  width: .5rem;
+}
+::-webkit-scrollbar-track {
+  background: transparent; 
+}
+::-webkit-scrollbar-thumb {
+  background: $medium;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $darken; 
 }
 #page {
 	width: 100%;
@@ -54,19 +56,23 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
 h1 {
-	@include xlText;
-	@include strong;
 	text-align: center;
 }
 h2 {
-	@include lgText;
 	@include strong;
 	margin-bottom: .5em;
 }
-h3 {
+h1, .xl-text {
+	@include xlText;
+	@include strong;
+}
+h2, .lg-text {
+	@include lgText;
+}
+h3, .md-text {
 	@include mdText;
 }
-h4 {
+h4, .sm-text {
 	@include smText;
 }
 strong {
@@ -146,49 +152,6 @@ iframe {
 	}
 }
 
-.toggler {
-
-}
-.toggle-label {
-	position: relative;
-	&::after {
-		width: 1rem;
-		height: 1rem;
-		position: absolute;
-		right: .75rem;
-		top: calc(50% - .75rem);
-		transform: rotate(45deg);
-		border: solid $medium;
-		border-width: 0 2px 2px 0;
-		content: '';
-		@include fastTrans(border-color);
-	}
-	span::before {
-		opacity: .5;
-	}
-	&:hover {
-		cursor: pointer;
-	}
-	.collapse:hover & {
-		color: $darkest;
-	}
-	.expand & {
-		color: $blue;
-		&::after {
-			top: calc(50% - .25rem);
-			transform: rotate(-135deg);
-		}
-	}
-	.collapse:hover &, .expand & {
-		span::before {
-			opacity: 1;
-		}
-		&::after {
-			border-color: $darkest;
-		}
-	}
-}
-
 .content-block {
 	padding: .5rem .75rem;
 	margin: 0 0 1rem 0;
@@ -196,6 +159,9 @@ iframe {
 	border-radius: $radius;
 	&:empty {
 		min-height: 6em;
+	}
+	p:last-child {
+		margin-bottom: 0; 
 	}
 }
 .border-block {

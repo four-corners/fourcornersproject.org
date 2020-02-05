@@ -119,9 +119,9 @@ class Preview extends React.Component {
 	render() {
 		const creator = this.props.creator;
 		const inputClass = (this.props.imgLoaded?'has-image':'');
-		const cdnVer = '1.1.2';
-		const cssURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+cdnVer+'/dist/four-corners.min.css';
-		const jsURL = 'https://cdn.jsdelivr.net/gh/four-corners/four-corners.js@'+cdnVer+'/dist/four-corners.min.js';
+		const cdnVer = '0.3.3';
+		const jsURL = 'https://cdn.jsdelivr.net/npm/@four-corners/fourcorners.js@'+cdnVer+'/dist/fourcorners.min.js';
+		const cssURL = 'https://cdn.jsdelivr.net/npm/@four-corners/fourcorners.js@'+cdnVer+'/dist/fourcorners.min.css';
 		const cssCDN = '<link href="'+cssURL+'" rel="stylesheet" type="text/css">';
 		const jsCDN = '<script src="'+jsURL+'" type="text/javascript"></script>';
 		const jsInit = '<script type="text/javascript">window.onload=function(){new FourCorners()}</script>';

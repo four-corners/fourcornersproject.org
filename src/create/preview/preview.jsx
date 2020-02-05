@@ -75,7 +75,7 @@ class Preview extends React.Component {
 
 		let stringData = this.sanitizeCode(clonedData);
 
-		let imgHtml = formData.photo ? '<img class=\'fc-img\' src=\''+photoSrc+'\'/>' : '';
+		let imgHtml = formData.photo && photoSrc ? '<img class=\'fc-img\' src=\''+photoSrc+'\'/>' : '';
 		let stringHtml = '<div class=\'fc-embed\' data-fc=\''+stringData+'\'>'+imgHtml+'</div>';
 		return stringHtml;
 	}

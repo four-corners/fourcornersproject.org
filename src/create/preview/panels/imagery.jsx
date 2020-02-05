@@ -1,5 +1,6 @@
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { extractRootDomain } from './../../../utils';
 
 class Imagery extends React.Component {
 
@@ -28,18 +29,26 @@ class Imagery extends React.Component {
 	}
 
 	renderImagery(panelData) {
+		const mediaData = this.props.mediaData;
 		let mediaRows = [];
 		panelData.map((obj,i) => {
-			var mediaHtml = this.renderMedia(obj, i);
+			const mediaHtml = this.renderMedia(obj, i),
+						isExternal = ['instagram', 'youtube', 'vimeo'].includes(obj.source),
+						mediaObj = mediaData ? mediaData[i] : null,
+						isLoaded = mediaObj ? mediaObj.loaded : false;
 			if(obj.url || obj.caption || obj.credit) {
 				mediaRows.push(
 					<div className='fc-row' key={i}>
 						{mediaHtml}
 						{obj.caption ?
-						<div className='fc-sub-caption'>{obj.caption}</div>
+							<div className='fc-sub-caption'>{obj.caption}</div>
 						: ''}
-						{obj.credit ?
-						<div className='fc-sub-credit'>{obj.credit}</div>
+						{obj.credit || isExternal ?
+							<div className='fc-sub-credit'>
+								{isLoaded && isExternal && obj.url ?
+									<a href={obj.url} target="_blank">{obj.credit || 'View on '+extractRootDomain(obj.url)}</a>
+								: obj.credit}
+							</div>
 						: ''}
 					</div>
 				);
@@ -52,7 +61,7 @@ class Imagery extends React.Component {
 		const panelData = this.props.panelData;
 		return (
 			<React.Fragment>
-				{panelData&&panelData.media ? this.renderImagery(panelData.media) : ''}
+				{panelData && panelData.media ? this.renderImagery(panelData.media) : ''}
 			</React.Fragment>
 		);
 	}

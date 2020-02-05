@@ -25,10 +25,9 @@ class Blocks extends React.Component {
 					this.getMediaData(block, setKey, blockIndex);
 				}
 			});
-
 			this.setState({
 				blocks: fieldValue,
-				superIndex: fieldValue.length+1
+				superIndex: fieldValue.length
 			});
 		}
 	}
@@ -44,13 +43,11 @@ class Blocks extends React.Component {
 		const fieldName = [setKey, fieldKey].join('_');
 		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
 		let blocks = this.state.blocks;
-		console.log(blocks);
 		let block = blocks[blockIndex];
 		block[subFieldKey] = value;
-		if(fieldKey === 'media') {
+		if(fieldKey === 'media' && subFieldKey === 'url') {
 			this.getMediaData(block, setKey, blockIndex);
 		}
-
 		this.setState({
 			blocks: blocks
 		});
@@ -106,25 +103,41 @@ class Blocks extends React.Component {
 	      cache: 'default'
 	    })
 			.then(res => {
-				if (!res.ok) {throw Error(res.statusText)}
 				this.setState({
 					blockMedia: blockMedia
 				});
 				mediaData[setKey] = blockMedia;
 				this.props.sendMediaData(mediaData);
+				if (!res.ok) {
+					blockMedia[index] = {
+						source: source,
+						loaded: false
+					};
+					blocks[index] = block;
+					this.setState({
+						blocks: blocks,
+						blockMedia: blockMedia,
+					});
+					throw new Error(res.statusText);
+				}
 				return res.json();
 			})
 			.then(res => {
 				let mediaObj = {
-					source: source
+					source: source,
+					loaded: true
 				};
 				switch(source) {
 					case 'instagram':
 						mediaObj.url = res.thumbnail_url;
 						mediaObj.width = res.thumbnail_width;
 						mediaObj.height = res.thumbnail_height;
-						block.caption = res.title;
-						block.credit = "@"+res.author_name+" on Instagram";
+						if(!block.caption) {
+							block.caption = res.title;
+						}
+						if(!block.credit) {
+							block.credit = "@"+res.author_name+" on Instagram";
+						}
 						blocks[index] = block;
 						this.setState({
 							blocks: blocks
@@ -248,7 +261,7 @@ class Blocks extends React.Component {
 							name={name}
 							className='form-elem'
 							type='text'
-							value={subFieldValue}
+							value={subFieldValue || ''}
 							placeholder={strings.placeholder}
 							onChange={this.onChange.bind(this)}/>
 					: null}
@@ -257,7 +270,7 @@ class Blocks extends React.Component {
 							name={name}
 							className='form-elem'
 							rows='2'
-							value={subFieldValue}
+							value={subFieldValue || ''}
 							placeholder={strings.placeholder}
 							onChange={this.onChange.bind(this)}>
 						</textarea>
@@ -294,6 +307,7 @@ class Blocks extends React.Component {
 	addBlock(e) {
 		e.preventDefault();
 		const fieldName = [this.props.setKey, this.props.fieldKey].join('_');
+
 		const newBlocks = this.state.blocks.concat([{
 			source: e.target.dataset.slug,
 			index: this.state.superIndex
@@ -307,7 +321,7 @@ class Blocks extends React.Component {
 		this.setState({
 			blocks: newBlocks,
 			blockMedia: newBlockMedia,
-			superIndex: this.state.superIndex+1
+			superIndex: this.state.superIndex
 		});
 
 		this.props.onChange(fieldName, newBlocks);
@@ -352,7 +366,7 @@ class Blocks extends React.Component {
 
 		let mediaBlock = newBlockMedia.splice(index, 1)[0];
 		newBlockMedia.splice(newIndex, 0, mediaBlock);
-
+		
 		this.setState({
 			blocks: newBlocks,
 			blockMedia: newBlockMedia

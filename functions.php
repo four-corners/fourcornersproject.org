@@ -11,7 +11,7 @@ function four_corners_scripts() {
 	global $strings;
 	global $post;
 
-	$ver = '1.2.9';
+	$ver = '1.3.0';
 	$fc_ver = '0.2.1';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );

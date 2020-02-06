@@ -37,7 +37,7 @@ class About extends React.Component {
 		let contribBlocks = [];
 		contribs.forEach((contrib, i) => {
 			contribBlocks.push(
-				<div className="col col-6" key={i}>
+				<div className="col col-12 col-md-6" key={i}>
 					<div className="col-content">
 						<div className="content-block contrib-block">
 							<h3>{contrib.name}</h3>
@@ -76,7 +76,7 @@ class About extends React.Component {
 				</div>
 				<div className="max-width">
 					<div className="row">
-						<div className="col col-6">
+						<div className="col col-12 col-md-6">
 							<div className="col-content">
 								<div className="content-block md-text">
 									{ReactHtmlParser(this.state.strings.desc)}

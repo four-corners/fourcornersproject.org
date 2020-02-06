@@ -46,38 +46,44 @@ body.home {
 	background-color: $lightBlue;
 	padding-bottom: 70%;
 	position: relative;
+	transform-origin: center;
+	overflow: hidden;
 	@include smallShadow;
 	@include border;
 	.fc-corner {
 		filter: none;
-		transform: scale(1.5);
-		&::after, &::before {
-			background-color: $blue;
+		&::before, &::after {
+			background-color: $darkest;
+		}
+		&:before {
+			width: 20px;
+			height: 60px;
+		}
+		&:after {
+			width: 60px;
+			height: 20px;
 		}
 		&.fc-authorship {
 			right: 1em;
 			bottom: 1em;
-			transform-origin: bottom right;
 		}
 		&.fc-backstory {
 			left: 1em;
 			bottom: 1em;
-			transform-origin: bottom left;
 		}
 		&.fc-imagery {
 			left: 1em;
 			top: 1em;
-			transform-origin: top left;
 		}
 		&.fc-links {
 			right: 1em;
 			top: 1em;
-			transform-origin: top right;
 		}
 		&:hover, &.active {
 			cursor: default;
+			transform: scale(1.2);
 			&::after, &::before {
-				background-color: $darkest;
+				background-color: $darkBlue;
 			}
 		}
 	}
@@ -91,15 +97,43 @@ body.home {
 		display: flex;
 		flex-direction: column;
 		align-content: center;
+		font-weight: bold;
+		color: $darkest;
 		@include xlText;
-		@include fastTrans;
+		// transition: transform 600ms cubic-bezier(0.47, 0, 0.745, 0.715),
+		// 						opacity 300ms ease;
+		transition: transform 100ms cubic-bezier(0.47, 0, 0.745, 0.715),
+								opacity 100ms ease;
 		&:not(.active) {
 			opacity: 0;
+			// transform: translateY(-100%);
+			transform: scale(.9);
+		}
+		&.active {
+			// animation: popIn 600ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+		strong {
+			color: $darkBlue;
 		}
 		* {
 			text-align: center !important;
 			margin: auto;
 		}
+	}
+}
+
+@keyframes popIn {
+	0% {
+		opacity: 0;
+		transform: translateY(2em);
+	}
+	30% {
+		opacity: 0;
+		transform: translateY(2em);
+	}
+	100% {
+		opacity: 1;
+		transform: translateY(0);
 	}
 }
 

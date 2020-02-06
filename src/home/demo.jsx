@@ -17,7 +17,7 @@ class Demo extends React.Component {
 	}
 
 	componentDidMount() {
-		this.interval = setInterval(() => this.cycleCorner(), 1750);
+		this.interval = setInterval(() => this.cycleCorner(), 1333);
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {

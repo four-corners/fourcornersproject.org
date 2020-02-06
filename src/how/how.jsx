@@ -1,8 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ReactHtmlParser from 'react-html-parser';
-// import SchemaForm from 'react-jsonschema-form';
-
 import i18n from '../i18n.jsx';
 import FourCorners from '../../assets/js/fourcorners.min.js';
 

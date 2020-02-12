@@ -54,26 +54,28 @@
 					The <strong>Four Corners Project</strong> is free and open source. You can view the source code and contribute on <a href="https://github.com/four-corners/four-corners.js" target="_blank">GitHub</a>.
 					<br/><br/>
 					This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
-					<br/><br/>
-					<div id="lang-switch-footer">
-						<ol>
-							<?php
-							$langs = pll_languages_list( array(
-								'fields' => 'locale'
-							) );
-							$lang_names = pll_languages_list( array(
-								'fields' => 'name'
-							) );
-							foreach( $langs as $index => $lang ) { ?>
-								<li>
-									<?php $trans_post_id = pll_get_post( $post->ID, $lang ); ?>
-									<a href="<?= get_permalink( $trans_post_id ); ?>">
-										<?= $lang_names[$index] ?>
-									</a>
-								</li>
-							<?php } ?>
-						</ol>
-					</div>
+					<?php if( is_user_logged_in() ) { ?>
+						<br/><br/>
+						<div id="lang-switch-footer">
+							<ol>
+								<?php
+								$langs = pll_languages_list( array(
+									'fields' => 'locale'
+								) );
+								$lang_names = pll_languages_list( array(
+									'fields' => 'name'
+								) );
+								foreach( $langs as $index => $lang ) { ?>
+									<li>
+										<?php $trans_post_id = pll_get_post( $post->ID, $lang ); ?>
+										<a href="<?= get_permalink( $trans_post_id ); ?>">
+											<?= $lang_names[$index] ?>
+										</a>
+									</li>
+								<?php } ?>
+							</ol>
+						</div>
+					<?php } ?>
 				</div>
 			</div>
 		</div>

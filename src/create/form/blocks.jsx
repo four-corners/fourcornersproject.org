@@ -15,14 +15,19 @@ class Blocks extends React.Component {
 	}
 
 	componentDidUpdate() {
-		const setKey = this.props.setKey;
-		const fieldKey = this.props.fieldKey;
-		const fieldValue = this.props.fieldValue;
+		const self = this,
+					setKey = this.props.setKey,
+					fieldKey = this.props.fieldKey,
+					fieldValue = this.props.fieldValue;
 		if(fieldValue && fieldValue != this.state.blocks) {
 			fieldValue.map((block, blockIndex) => {
 				fieldValue[blockIndex].index = blockIndex;
 				if(fieldKey === 'media') {
-					this.getMediaData(block, setKey, blockIndex);
+					const mediaBlock = self.state.blockMedia[blockIndex];
+					if(!mediaBlock) {
+						this.getMediaData(block, setKey, blockIndex);
+					}
+					
 				}
 			});
 			this.setState({
@@ -33,17 +38,17 @@ class Blocks extends React.Component {
 	}
 
 	onChange(e) {
-		const input = e.target;
-		const name = input.name;
-		const value = input.value;
-		const nameArr = name.split('_');
-		const setKey = nameArr[0];
-		const fieldKey = nameArr[1];
-		const subFieldKey = nameArr[2];
-		const fieldName = [setKey, fieldKey].join('_');
-		const blockIndex = Number(input.parentElement.parentElement.dataset.index);
-		let blocks = this.state.blocks;
-		let block = blocks[blockIndex];
+		const input = e.target,
+					name = input.name,
+					value = input.value,
+					nameArr = name.split('_'),
+					setKey = nameArr[0],
+					fieldKey = nameArr[1],
+					subFieldKey = nameArr[2],
+					fieldName = [setKey, fieldKey].join('_'),
+					blockIndex = Number(input.parentElement.parentElement.dataset.index);
+		let blocks = this.state.blocks,
+				block = blocks[blockIndex];
 		block[subFieldKey] = value;
 		if(fieldKey === 'media' && subFieldKey === 'url') {
 			this.getMediaData(block, setKey, blockIndex);
@@ -66,6 +71,7 @@ class Blocks extends React.Component {
 				blockMedia = this.state.blockMedia,
 				mediaData = Object.assign({}, blockMedia, this.props.blockMedia),
 				url = obj.url, req;
+		if(!url) return;
 		if(source == 'image') {
 			blockMedia[index] = {
 				url: url ? url : null,
@@ -165,7 +171,7 @@ class Blocks extends React.Component {
 	renderBlocks() {
 		let blocks = [];
 		this.state.blocks.forEach((block, i) => {
-			if(block.deleted){return}
+			if(!block || block.deleted){return}
 			blocks.push(
 				this.renderBlock(block, i)
 			);

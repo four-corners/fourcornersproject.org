@@ -61,7 +61,7 @@ class Authorship extends React.Component {
 						<div className="fc-content">
 							{hasCopyright ?
 								<div className="fc-copyright">
-									{panelData.license.year!=null ? <span>{panelData.license.year}</span> : <span>2019</span>}
+									{panelData.license.year!=null ? <span>{panelData.license.year}</span> : ''}
 									<span>
 										{panelData.credit ? panelData.credit : ''}
 										{panelData.license.holder ? (panelData.credit ? '/' : '')+(panelData.license.holder) : ''}
@@ -104,26 +104,26 @@ class Authorship extends React.Component {
 				<div className="fc-field fc-contact">
 
 					{panelData.website ?
-					<div className="fc-field fc-card" data-fc-field="website">
+					<div className="fc-field" data-fc-field="website">
 						<div className="fc-label">Website</div>
 						<div className="fc-content">{this.createLink(panelData.website)}</div>
 					</div> : ''}
 
 					{panelData.contact ?
 
-						<div>
+						<React.Fragment>
 							{panelData.contact.info ?
-							<div className="fc-field fc-card" data-fc-field="contact-info">
+							<div className="fc-field" data-fc-field="contact-info">
 								<div className="fc-label">For more info contact</div>
 								<div className="fc-content">{this.createLink(panelData.contact.info)}</div>
 							</div> : ''}
 
 							{panelData.contact.rights ?
-							<div className="fc-field fc-card" data-fc-field="contact-rights">
+							<div className="fc-field" data-fc-field="contact-rights">
 								<div className="fc-label">For reproduction rights contact</div>
 								<div className="fc-content">{this.createLink(panelData.contact.rights)}</div>
 							</div> : ''}
-						</div>
+						</React.Fragment>
 
 					: ''}
 

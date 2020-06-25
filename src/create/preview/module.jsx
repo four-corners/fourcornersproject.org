@@ -166,7 +166,7 @@ class Module extends React.Component {
 						{data.authorship.license && data.authorship.license.holder ? <span>{data.authorship.license.holder}</span> : ''}
 					</span>
 				: ''}
-				{opts.logo ? <a href="https://fourcornersproject.org" target="_blank"></a> : ''}
+				{opts.logo ? <a href="https://fourcornersproject.org" target="_blank" class="fc-logo"></a> : ''}
 			</div>
 		);
 	}

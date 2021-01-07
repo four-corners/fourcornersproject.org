@@ -2,12 +2,10 @@ import React from 'react';
 import SchemaForm from 'react-jsonschema-form';
 import Dropzone from 'react-dropzone';
 import { renderToStaticMarkup } from 'react-dom/server'
+import { encode } from 'html-entities';
 
 import i18n from '../../i18n.jsx';
 import Module from './module.jsx';
-
-// let placeholderSrc = siteSettings.url.theme + '/assets/images/placeholder.svg';
-// placeholderSrc = 'https://i.guim.co.uk/img/media/fe09d503213527013ae12c489ad7b473f35e7a8c/0_0_6720_4480/master/6720.jpg?width=1020&quality=45&auto=format&fit=max&dpr=2&s=c23858bc511a0bc8ec8c6ab52687b6b2';
 
 class Preview extends React.Component {
 
@@ -67,16 +65,20 @@ class Preview extends React.Component {
 		let imgLoaded = this.props.imgLoaded,
 				auxData = { lang: i18n.language },
 				photoSrc = formData.photo ? formData.photo.src : null,
-				clonedData = JSON.parse(JSON.stringify(Object.assign(formData, auxData), {}));
+				embedData = JSON.parse(JSON.stringify(Object.assign(formData, auxData), {}));
 
-		if(clonedData.photo) {
-			delete clonedData.photo.src;
+		if(embedData.photo) {
+			delete embedData.photo.src;
 		}
+		
+		// console.log(embedData);
+		// let embedDataStr = this.sanitizeCode(embedData);
+		let embedDataStr = JSON.stringify(embedData);
 
-		let stringData = this.sanitizeCode(clonedData);
-
-		let imgHtml = formData.photo && photoSrc ? '<img class=\'fc-img\' src=\''+photoSrc+'\'/>' : '';
-		let stringHtml = '<div class=\'fc-embed\' data-fc=\''+stringData+'\'>'+imgHtml+'</div>';
+		let imgHtml = formData.photo && photoSrc ? `<img class="fc-img" src="${photoSrc}"/>` : '';
+		let scriptTagHtml = `<script type="application/json">${embedDataStr}</script>`
+		// let stringHtml = `<div class="fc-embed" data-fc="${embedDataStr}">${imgHtml}</div>`;
+		let stringHtml = `<div class="fc-embed">${scriptTagHtml}${imgHtml}</div>`;
 		return stringHtml;
 	}
 
@@ -87,7 +89,7 @@ class Preview extends React.Component {
 			const value = dataObj[key];
 			if(typeof value == 'object') {
 				Object.keys(value).forEach(function(subKey) {
-					if(typeof value[subKey] == 'string') {
+					if(typeof value[subKey] === 'string') {
 						dataObj[key][subKey] = self.sanitizeString(value[subKey]);
 					} else if(value[subKey] instanceof Array) {
 						value[subKey].forEach(function(subObj, i) {
@@ -99,8 +101,8 @@ class Preview extends React.Component {
 				});
 			}
 		});
-		let stringData = JSON.stringify(dataObj);
-		return stringData;
+		let embedDataStr = JSON.stringify(dataObj);
+		return embedDataStr;
 	}
 
 	sanitizeString(string) {

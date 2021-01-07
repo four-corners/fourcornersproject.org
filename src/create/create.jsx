@@ -38,23 +38,6 @@ class Creator extends React.Component {
 	}
 
 	componentDidMount() {
-		// let that = this;
-		// let lang = i18n.language;
-		// let req = siteSettings.url.api+'page?slug=create&lang='+lang;
-		// fetch(req)
-		// 	.then(function(res) {
-		// 		if (!res.ok) {
-		// 			throw Error(res.statusText);
-		// 		}
-		// 		return res.json();
-		// 	})
-		// 	.then(function(res) {
-		// 		that.setState({ creator: res });
-		// 	})
-		// 	.catch(function(err) {
-		// 		console.warn(err);
-		// 	});
-
 		const settings = localStorage.getItem('FourCornersSettings');
 		let settingsObj = JSON.parse(settings) || {};
 		const saveHistory = settingsObj.saveHistory;
@@ -68,18 +51,18 @@ class Creator extends React.Component {
 			localStorage.setItem('FourCornersSettings', settingsStr);
 		}
 
-		i18n.on('languageChanged', this.onLanguageChanged);
+		// i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
 	componentWillUnmount() {
-		i18n.off('languageChanged', this.onLanguageChanged);
+		// i18n.off('languageChanged', this.onLanguageChanged);
 	}
 
-	onLanguageChanged(lang) {
-		this.setState({
-			lang: lang
-		});
-	}
+	// onLanguageChanged(lang) {
+	// 	this.setState({
+	// 		lang: lang
+	// 	});
+	// }
 
 	clearFormData() {
 		this.setState({
@@ -89,7 +72,6 @@ class Creator extends React.Component {
 
 	setFormData(newData) {
 		if(!newData){return}
-		// this.loadImage(newData.photo);
 		this.setState({
 			formData: newData
 		});
@@ -139,23 +121,6 @@ class Creator extends React.Component {
 		});
   }
 
- //  loadImage(photo) {
-	// 	let pseudoImg = new Image();
-	// 	pseudoImg.onload = (e) => { 
-	// 		this.setState({
-	//   		imgLoaded: true
-	//   	});
-	// 	}
-	// 	pseudoImg.onerror = (e) => {
-	// 		this.setState({
-	//   		imgLoaded: false
-	//   	});
-	// 	}
-	// 	if(photo && photo.src) {
-	// 		pseudoImg.src = photo.src;
-	// 	}
-	// }
-
 	toggleSave() {
 		const newVal = !this.state.saveHistory;
 		const settings = localStorage.getItem('FourCornersSettings');
@@ -174,7 +139,6 @@ class Creator extends React.Component {
 				lang={this.state.lang}
 				creator={this.state.page}
 				formData={this.state.formData}
-				// imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
@@ -191,7 +155,6 @@ class Creator extends React.Component {
 				creator={this.state.page}
 				formData={this.state.formData}
 				mediaData={this.state.mediaData}
-				// imgLoaded={this.state.imgLoaded}
 				activeCorner={this.state.activeCorner}
 				activeFieldset={this.state.activeFieldset}
 				sendActiveCorner={this.setActiveCorner.bind(this)}
@@ -204,28 +167,6 @@ class Creator extends React.Component {
 		const ready = this.state.page && this.state.page.ID;
 		return (
 			<main id='creator'>
-
-				{/*<div className='max-width'>
-					<div className='row'>
-
-						<div className='col col-12 col-sm-6 left col-creator'>
-							<h2>Create now</h2>
-							<h4>Use our creator tool to quickly build a Four Corners to embed on your website</h4>
-						</div>
-
-						<div className='col col-12 col-sm-6 left col-plugins'>
-							<h2>Create later</h2>
-							<h4>Install Four Corners onto your website or CMS</h4>
-							<h5>Coming soon</h5>
-						</div>
-
-						<div className='col col-12 col-partner'>
-							<h4>Would you like to integrate Four Corners into your publishing platform. Contact us!</h4>
-						</div>
-
-					</div>
-				</div>*/}
-
 				<div className='max-width'>
 					<div className='row' id="head-cols">
 						<div className='col col-auto'>

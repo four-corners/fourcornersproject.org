@@ -1,6 +1,6 @@
 import React from 'react';
 import i18n from '../../i18n.jsx';
-// import FourCorners from '@four-corners/four-corners';
+import FourCorners from '@four-corners/fourcorners.js';
 
 import Authorship from './panels/authorship.jsx';
 import Backstory from './panels/backstory.jsx';
@@ -166,7 +166,7 @@ class Module extends React.Component {
 						{data.authorship.license && data.authorship.license.holder ? <span>{data.authorship.license.holder}</span> : ''}
 					</span>
 				: ''}
-				{opts.logo ? <a href="https://fourcornersproject.org" target="_blank" class="fc-logo"></a> : ''}
+				{opts.logo ? <a href="https://fourcornersproject.org" target="_blank" className="fc-logo"></a> : ''}
 			</div>
 		);
 	}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import ReactDOMServer from 'react-dom/server';
 import ReactHtmlParser from 'react-html-parser';
 import i18n from '../../i18n.jsx';
 import Label from '../form/label.jsx';
@@ -7,6 +8,7 @@ import Import from './import.jsx';
 import History from './history.jsx';
 import Schema from '../form/schema.jsx';
 
+const parse = require('html-react-parser');
 const slugify = require('slugify');
 
 class Popup extends React.Component {
@@ -51,68 +53,38 @@ class Popup extends React.Component {
 		});
 	}
 
-	//NEEDS IMPROVEMENT
-	// updateFormData(value) {
-	// 	try {
-	// 		const embedHtml = ReactHtmlParser(value)[0];
-	// 		const embedChild = embedHtml.props.children[0];
-	// 		const	dataString = embedHtml.props['data-fc'].replace(/\'/g, '"');
-	// 		let formData = JSON.parse(dataString);
-	// 		if(embedChild && embedChild.props.src) {
-	// 			if(!formData.photo) {formData.photo = []}
-	// 			formData.photo.src = embedChild.props.src;
-	// 		}
-	// 		Object.keys(formData).forEach(function(setKey) {
-	// 			const setData = formData[setKey];
-	// 			const setSchema = Schema[setKey];
-	// 			if(typeof setData !== 'object'){return}
-	// 			Object.keys(setData).forEach(function(fieldKey) {
-	// 				const fieldData = setData[fieldKey];
-	// 				const fieldSchema = setSchema.fields[fieldKey];
-	// 				let field = document.getElementsByName(setKey+'_'+fieldKey)[0];
-	// 				if(field) {
-	// 					field.value = fieldData;
-	// 					if(field.nodeName == 'SELECT') {
-	// 						console.log(field, fieldData);
-	// 						field.value = fieldData;
-	// 					}
-	// 				} else {
-	// 					Object.keys(fieldData).forEach(function(subFieldKey) {
-	// 						const subFieldData = fieldData[subFieldKey];
-	// 						let subField;
-	// 						if(fieldSchema.type === 'toggle' && subFieldKey !== 'type') {
-	// 							const subFieldName = [setKey, fieldKey, fieldData.type, subFieldKey].join('_');
-	// 							subField = document.getElementsByName(subFieldName)[0];
-	// 						} else {
-	// 							const subFieldName = [setKey, fieldKey, subFieldKey].join('_');
-	// 							subField = document.getElementsByName(subFieldName)[0];
-	// 						}
-	// 						if(subField && subFieldData) {
-	// 							subField.value = subFieldData;
-	// 						}
-	// 					});
-	// 				}
-	// 			});
-	// 		});
-	// 		this.props.sendFormData(formData);
-			
-	// 		this.closePopup();
-	// 	} catch (e) {
-	// 		console.warn(e);
-	// 	}
-	// }
-
 	updateFormData(value) {
 		const self = this;
 		try {
-			const embedHtml = ReactHtmlParser(value)[0],
-						embedChild = embedHtml.props.children[0],
-						dataString = embedHtml.props['data-fc'];
-			let formData = JSON.parse(dataString);
-			if(embedChild) {
-				const photoSrc = embedChild.props.src;
-				formData = Object.assign(formData, {photo:{src:photoSrc}});
+			const embedElem = parse(value);
+			let embedChildren = embedElem.props.children, dataString, imgElem, scriptElem;
+
+			if(!Array.isArray(embedChildren)) {
+				embedChildren = [embedChildren]
 			}
+
+			embedChildren.forEach((elem) => {
+				if(elem.type === 'script') {
+					scriptElem = elem;
+				}
+				if(elem.type === 'img') {
+					imgElem = elem;
+				}
+			});
+
+			if(scriptElem) {
+				dataString = scriptElem.props.dangerouslySetInnerHTML.__html;
+			} else {
+				dataString = embedElem.props['data-fc'];
+			}
+
+			let formData = JSON.parse(dataString);
+
+			if(imgElem) {
+				const photoSrc = imgElem.props.src;
+				formData = Object.assign(formData, { photo: { src: photoSrc } });
+			}
+
 			self.props.sendFormData(formData);
 			Object.keys(Schema).forEach(function(setKey) {
 				const setSchema = Schema[setKey];

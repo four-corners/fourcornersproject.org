@@ -43,26 +43,28 @@ class Gallery extends React.Component {
 	}
 
 	componentDidUpdate() {
-		const fcEmbeds = new FourCorners(),
-					self = this;
-
+		const self = this;
 		const grid = new Masonry("#gallery-embeds", {
 			itemSelector: ".embed-col",
 			transitionDuration: 0,
 			gutter: 0
 		});
-		
-		fcEmbeds.forEach(function(fcEmbed, i) {
-			let photo = fcEmbed.elems.photo,
-					embed = fcEmbed.elems.embed,
-					parent = embed.parentNode;
-			if(!embed.classList.contains("loaded")) {
-				embed.addEventListener("onImgLoad", function(e) {
-					grid.layout();
-					embed.classList.add("loaded");
-				});
-			}
-		});
+
+		if(!this.state.embeds.length) {
+			const fcEmbeds = new FourCorners();
+			fcEmbeds.forEach(function(fcEmbed, i) {
+				let photo = fcEmbed.elems.photo,
+						embed = fcEmbed.elems.embed,
+						parent = embed.parentNode;
+				if(!embed.classList.contains("loaded")) {
+					embed.addEventListener("onImgLoad", function(e) {
+						grid.layout();
+						embed.classList.add("loaded");
+					});
+				}
+				self.state.embeds.push(embed);
+			});
+		}
 
 		// window.onresize = function(e) {
 			// grid.layout();
@@ -79,17 +81,7 @@ class Gallery extends React.Component {
 		const page = this.state.page;
 		let embeds = [];
 		page.strings.embeds.forEach(function(embed, i) {
-			const embed_code = ReactHtmlParser(embed.embed_code);
-			// const embed_code = <div dangerouslySetInnerHTML={{__html: embed.embed_code}}></div>;
-			// let img = embed_code[0].props.children[0];
-
-			// img.onLoad = function() {
-			// 	conssole.log('!');
-			// };
-			// console.log(embed_code);
-			// const fcEmbed = new FourCorners(embed_code[0]);
-			// console.log(fcEmbed);
-
+			const embed_code = <div dangerouslySetInnerHTML={{__html: embed.embed_code}}></div>;
 			embeds.push(
 				<div className="embed-col col col-12 col-xl-6" key={i}>
 					<div className="embed-wrap">

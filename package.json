@@ -1,6 +1,6 @@
 {
   "name": "fourcornersproject.org",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "WordPress theme for fourcornersproject.org, built with React.",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "author": "Corey Tegeler",
   "license": "ISC",
   "dependencies": {
-    "@four-corners/fourcorners.js": "^0.5.0",
+    "@four-corners/fourcorners.js": "^0.6.1",
     "autoprefixer": "^9.8.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",

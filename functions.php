@@ -12,7 +12,7 @@ function four_corners_scripts() {
 	global $post;
 
 	$ver = '1.4.0';
-	$fc_ver = '0.5.0';
+	$fc_ver = '0.6.0';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );

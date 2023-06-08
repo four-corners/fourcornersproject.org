@@ -52,13 +52,8 @@
 							<div id='site-title'>
 								<!-- <h3> -->
 									<a href="<?php echo bloginfo( 'url' ) ?>">
-										<?#php echo bloginfo( 'name' ); ?>
-										<?php
-										$logo_path = get_stylesheet_directory_uri() . '/assets/images/logo.svg';
-										$svg = file_get_contents( $logo_path );
-										// $svg = str_replace("{{class-name}}", $array[$index], $svg);
-										echo $svg;
-										?>
+										<span class="sr-only"><?php echo bloginfo( 'name' ); ?></span>
+										<?= get_svg( '/assets/images/logo.svg' ); ?>
 									</a>
 								<!-- </h3> -->
 							</div>

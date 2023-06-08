@@ -1,41 +1,41 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Translation } from 'react-i18next';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from "react";
+import { render } from "react-dom";
+import { Translation } from "react-i18next";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
-import Home from './home/home';
-import About from './about/about';
-import How from './how/how';
-import Gallery from './gallery/gallery';
-import Contact from './contact/contact';
-import Creator from './create/create';
-import Page from './page';
-import NotFound from './not-found';
+import Home from "./pages/Home";
+import About from "./pages/About";
+import How from "./pages/How";
+import Gallery from "./pages/Gallery";
+import Contact from "./pages/Contact";
+import Creator from "./pages/Create";
+import NotFound from "./pages/NotFound";
+import Page from "./pages/Page";
 
-// import publicScripts from '../assets/coffee/public.coffee';
-import publicStyles from '../assets/sass/public.scss';
+// import publicScripts from "../assets/coffee/public.coffee";
+import "./sass/style.scss";
 
 
-let App = Page;
+let Component = Page;
 
 switch(siteSettings.template) {
-	case 'index':
-		App = Home;
+	case "index":
+		Component = Home;
 		break;
-	case 'creator':
-		App = Creator;
+	case "creator":
+		Component = Creator;
 		break;
-	case 'about':
-		App = About;
+	case "about":
+		Component = About;
 		break;
-	case 'how':
-		App = How;
+	case "how":
+		Component = How;
 		break;
-	case 'gallery':
-		App = Gallery;
+	case "gallery":
+		Component = Gallery;
 		break;
-	case 'contact':
-		App = Contact;
+	case "contact":
+		Component = Contact;
 		break;
 }
 
@@ -47,7 +47,7 @@ const routes = (
 					<Router>
 						<React.Fragment>
 							<Switch>
-								<Route path='*' component={App} />
+								<Route path="*" component={Component} />
 							</Switch>
 						</React.Fragment>
 					</Router>
@@ -57,5 +57,5 @@ const routes = (
 	</Translation>
 );
 render(
-	(routes), document.getElementById('page')
+	(routes), document.getElementById("page")
 );

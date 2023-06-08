@@ -12,13 +12,13 @@ function four_corners_scripts() {
 	global $post;
 
 	$ver = '1.4.0';
-	$fc_ver = '0.6.0';
+	// $fc_ver = '0.8.5';
 	
 	$env = ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ? 'dev' : 'prod' );
 	wp_enqueue_script( 'vendor_script', get_stylesheet_directory_uri() . '/dist/vendors'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
 	wp_enqueue_script( 'react_script', get_stylesheet_directory_uri() . '/dist/app'.($env=='prod'?'.min':'').'.js' , array(), $ver, true );
 
-	wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/fourcorners.min.js', array(), $fc_ver, true );
+	// wp_enqueue_script( 'four_corners_script', get_stylesheet_directory_uri() . '/assets/js/fourcorners.min.js', array(), $fc_ver, true );
 	wp_enqueue_style( 'four_corners_style', get_stylesheet_directory_uri() . '/assets/css/fourcorners.min.css' );
 
 	wp_enqueue_style( 'app_style', get_stylesheet_directory_uri() . '/dist/app.css' );
@@ -77,6 +77,16 @@ function register_creators() {
 
 }
 add_action( 'init', 'register_creators' );
+
+function get_svg( $path ) {
+	$options = array(
+		"ssl" => array(
+			"verify_peer" => false,
+			"verify_peer_name" => false,
+		),
+	);
+	return file_get_contents( get_template_directory_uri() . $path, false, stream_context_create( $options ) );
+}
 
 function get_alert() {
 	if( $alert = get_field( 'alert', 'option' ) ):

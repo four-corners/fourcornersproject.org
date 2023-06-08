@@ -9,8 +9,15 @@
   "keywords": [],
   "author": "Corey Tegeler",
   "license": "ISC",
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch",
+    "lint:js": "wp-scripts lint-js src/index.js",
+    "lint:js-fix": "wp-scripts lint-js src/index.js --fix",
+    "lint:css": "wp-scripts lint-style '**/*.css'"
+  },
   "dependencies": {
-    "@four-corners/fourcorners.js": "^0.6.1",
+    "@four-corners/fourcorners.js": "^0.6.0",
     "autoprefixer": "^9.8.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -23,7 +30,7 @@
     "css-loader": "^1.0.1",
     "html-entities": "^2.0.2",
     "html-react-parser": "^1.1.1",
-    "i18next": "^12.1.0",
+    "i18next": "^21.6.2",
     "i18next-browser-languagedetector": "^2.2.4",
     "i18next-xhr-backend": "^1.5.1",
     "jquery": "^3.5.1",
@@ -35,7 +42,7 @@
     "postcss-loader": "^3.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
-    "react-i18next": "^11.8.5",
+    "react-i18next": "^11.15.1",
     "react-jsonschema-form": "^1.8.1",
     "react-router-dom": "^4.3.1",
     "sass-loader": "^7.3.1",
@@ -54,12 +61,5 @@
   },
   "browserslist": [
     "last 2 versions"
-  ],
-  "scripts": {
-    "build": "webpack --mode production",
-    "watch": "webpack --mode development --watch",
-    "lint:js": "wp-scripts lint-js src/index.js",
-    "lint:js-fix": "wp-scripts lint-js src/index.js --fix",
-    "lint:css": "wp-scripts lint-style '**/*.css'"
-  }
+  ]
 }

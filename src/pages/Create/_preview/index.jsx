@@ -167,7 +167,7 @@ class Preview extends React.Component {
 		const cssURL = "https://cdn.jsdelivr.net/npm/@four-corners/fourcorners.js@"+cdnVer+"/dist/fourcorners.min.css";
 		const cssCDN = "<link href=\""+cssURL+"\" rel=\"stylesheet\" type=\"text/css\">";
 		const jsCDN = "<script src=\""+jsURL+"\" type=\"text/javascript\"></script>";
-		const jsInit = "<script type=\"text/javascript\">window.onload=function(){new FourCorners()}</script>";
+		const jsInit = "<script type=\"text/javascript\">window.onload=function(){document.querySelectorAll(\".fc-embed\").forEach(function(elem){new FourCorners(elem)})}</script>";
 		return(
 			<div className="col-inner" ref={this.previewColRef} style={this.state.previewColStyle}>
 				<div className="col-content">

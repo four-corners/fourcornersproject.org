@@ -2,8 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import ReactHtmlParser from "react-html-parser";
 import i18n from "../../components/_i18n";
-// import FourCorners from "../../assets/js/fourcorners.min.js";
-// import FourCorners from "@four-corners/fourcorners.js";
+import FourCorners from '@four-corners/fourcorners.js';
 
 class How extends React.Component {
 	
@@ -14,7 +13,7 @@ class How extends React.Component {
 			embeds: {},
 			embedHtmls: {},
 			page: siteSettings.current,
-			strings: siteSettings.current.strings
+			strings: siteSettings.current.strings,
 		};
 		this.slugs = ["authorship", "backstory", "imagery", "links"];
 		this.onLanguageChanged = this.onLanguageChanged.bind(this);
@@ -30,7 +29,9 @@ class How extends React.Component {
 	}
 
 	componentDidUpdate() {
-		this.activateEmbeds();
+		this.slugs.forEach(slug =>
+			this.activateEmbed(slug)
+		)
 	}
 
 	onLanguageChanged(lang) {
@@ -39,33 +40,13 @@ class How extends React.Component {
 		});
 	}
 
-	activateEmbeds() {
-		const strings = this.state.strings;
-		if(this.state.page && strings) {
-			this.slugs.forEach((slug, i) => {
-				const embedElem = document.querySelector("[data-slug="+slug+"] .fc-embed");
-				// if(!this.state.embedHtmls[slug]) {
-				// 	const embedHtml = ReactHtmlParser(strings[slug+"_embed"]);
-				// 	let embedHtmls = this.state.embedHtmls;
-				// 	embedHtmls[slug] = <div className="embed-wrapper" data-slug={slug}>{embedHtml}</div>;
-				// 	this.setState({
-				// 		embedHtmls: embedHtmls
-				// 	});
-				// } else if(!this.state.embeds[slug]) {
-				// 	let embedsObj = this.state.embeds;
-				// 	const embedElem = document.querySelector("[data-slug="+slug+"] .fc-embed");
-				// 	const embedsArr = new FourCorners({
-				// 		selector: embedElem,
-				// 		static: true,
-				// 		active: slug
-				// 	});
-				// 	console.log(slug, embedsArr[embedsArr.length - 1])
-				// 	// console.log(embedsArr, embedsArr.length);
-				// 	// this.setState({
-				// 	// 	embeds: embedsObj
-				// 	// });
-				// }
-			});
+	activateEmbed(slug) {
+		const self = this;
+		if(!this.state.embeds[slug]) {
+			const fcEmbedContainer = document.querySelector(`.embed-wrapper[data-slug="${slug}"] .fc-embed`);
+			const fcEmbed = new FourCorners(fcEmbedContainer);
+			setTimeout(() => fcEmbed.openPanel(slug))
+			self.state.embeds[slug] = fcEmbed;
 		}
 	}
 
@@ -86,19 +67,6 @@ class How extends React.Component {
 		return intro;
 	}
 
-	renderEmbed(slug, i) {
-		if(!this.state.page || !this.state.strings) return;
-		const strings = this.state.strings;
-		const embedHtml = ReactHtmlParser(strings[`${slug}_embed`]);
-		return (
-			<div key={i}
-				className="embed-wrapper"
-				data-slug={slug}>
-				{embedHtml}
-			</div>
-		);
-	}
-
 	renderRow(slug, i) {
 		const side = i % 2 == 0;
 		const rowClass = `row how-block ${side ? "" : "reverse"}`;
@@ -107,7 +75,7 @@ class How extends React.Component {
 
 		["title", "desc", "embed"].forEach((key, i) => {
 			if(page && page.strings && page.strings[`${slug}_${key}`]) {
-				rowData[key] = ReactHtmlParser(page.strings[`${slug}_${key}`]);
+				rowData[key] = page.strings[`${slug}_${key}`];
 			} else {
 				rowData[key] = "";
 			}
@@ -117,15 +85,17 @@ class How extends React.Component {
 			<div className={rowClass} key={i}>
 				<div className="col col-12 col-md-5 left">
 					<div className="col-content">
-						<h2>{rowData.title}</h2>
-						{rowData.desc}
+						<h2
+							dangerouslySetInnerHTML={{ __html: rowData.title }}
+						/>
+						{ReactHtmlParser(rowData.desc)}
 					</div>
 				</div>
 
 				<div className="col col-12 col-md-7 right">
 					<div className="col-content">
-						<div className="embed-wrapper" data-slug={slug}>
-							{rowData.embed}
+						<div className="embed-wrapper" data-slug={slug} dangerouslySetInnerHTML={{ __html: rowData.embed }}>
+							{/*{rowData.embed}*/}
 						</div>
 					</div>
 				</div>

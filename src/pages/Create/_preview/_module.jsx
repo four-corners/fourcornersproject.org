@@ -81,20 +81,21 @@ class Module extends React.Component {
 	}
 
 	renderPanels() {
-		const formData = Object.entries(this.props.formData),
-					embedData = {};
-		{formData.map((obj) => this.corners.includes(obj[0]) ? embedData[obj[0]]=obj[1]:'')}
-		const panels = [],
-					creator = this.props.creator;
-		{Object.entries(embedData).forEach((obj,i) => {
-			const cornerSlug = obj[0],
-						cornerTitleKey = [cornerSlug, 'title'].join('_'),
-						panelData = obj[1];
+		const formData = Object.entries(this.props.formData);
+		const embedData = {};
+		formData.map((obj) => this.corners.includes(obj[0]) ? embedData[obj[0]]=obj[1]:'')
+		const panels = [];
+		const creator = this.props.creator;
+		const imgSrc = this.props.formData.photo.src;
+		Object.entries(embedData).forEach((obj,i) => {
+			const cornerSlug = obj[0];
+			const cornerTitleKey = [cornerSlug, 'title'].join('_');
+			const panelData = obj[1];
 			let panelInner = '';
 			if(Object.keys(panelData).length) {
 				switch(cornerSlug) {
 					case 'authorship':
-						panelInner = <Authorship panelData={panelData} />;
+						panelInner = <Authorship panelData={panelData} imgSrc={imgSrc}/>;
 						break;
 					case 'backstory':
 						panelInner = <Backstory panelData={panelData} mediaData={this.props.mediaData.backstory} />;
@@ -131,7 +132,7 @@ class Module extends React.Component {
 					:''}
 				</div>
 			);
-		})}
+		});
 		return panels;
 	}
 

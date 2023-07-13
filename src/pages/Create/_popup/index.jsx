@@ -55,32 +55,35 @@ class Popup extends React.Component {
 	updateFormData(value) {
 		const self = this;
 		try {
-			const embedElem = parse(value);
-			let embedChildren = embedElem.props.children, dataString, imgElem, scriptElem;
+			const parsedHtml = parse.htmlToDOM(value); 
+			const embedElem = parsedHtml ? parsedHtml[0] : null
+			let embedChildren = embedElem.children;
+			let dataString;
+			let imgElem;
+			let scriptElem;
 
 			if(!Array.isArray(embedChildren)) {
 				embedChildren = [embedChildren]
 			}
-
 			embedChildren.forEach((elem) => {
 				if(elem.type === 'script') {
 					scriptElem = elem;
 				}
-				if(elem.type === 'img') {
+				if(elem.name === 'img') {
 					imgElem = elem;
 				}
 			});
 
-			if(scriptElem) {
-				dataString = scriptElem.props.dangerouslySetInnerHTML.__html;
+			if(scriptElem && scriptElem.children && scriptElem.children.length) {
+				dataString = scriptElem.children[0].data;
 			} else {
-				dataString = embedElem.props['data-fc'];
+				dataString = embedElem.attribs['data-fc'];
 			}
 
 			let formData = JSON.parse(dataString);
 
 			if(imgElem) {
-				const photoSrc = imgElem.props.src;
+				const photoSrc = imgElem.attribs.src;
 				formData = Object.assign(formData, { photo: { src: photoSrc } });
 			}
 

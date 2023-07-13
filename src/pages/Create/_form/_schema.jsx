@@ -75,7 +75,10 @@ const Schema = {
 						type: 'text'
 					}
 				}
-			}
+			},
+			verify: {
+				type: 'checkbox',
+			},
 		}
 	},
 	backstory: {

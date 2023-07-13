@@ -82,7 +82,6 @@ class Form extends React.Component {
 	onError(e) {
 	}
 
-	//NEEDS IMPROVEMENT
 	renderSchema() {
 		let fieldsets = [];
 		let lang = this.state.lang;

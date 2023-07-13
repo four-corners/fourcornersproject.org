@@ -23,21 +23,6 @@ class Gallery extends React.Component {
 	}
 
 	componentDidMount() {
-		// let self = this;
-		// let lang = i18n.language;
-		// let req = siteSettings.url.api+'page?slug=gallery&lang='+lang;
-		// fetch(req)
-		// 	.then(function(res) {
-		// 		if (!res.ok) {
-		// 			throw Error(res.statusText);
-		// 		}
-		// 		return res.json();
-		// 	})
-		// 	.then(function(res) {
-		// 		if(res) {
-		// 			self.setState({ page: res });
-		// 		}
-		// 	});
 		i18n.on('languageChanged', this.onLanguageChanged);
 	}
 
@@ -54,24 +39,20 @@ class Gallery extends React.Component {
 		});
 
 		if(!this.state.embeds.length) {
-			const fcEmbeds = new FourCorners();
-			fcEmbeds.forEach(function(fcEmbed, i) {
-				let photo = fcEmbed.elems.photo,
-						embed = fcEmbed.elems.embed,
-						parent = embed.parentNode;
-				if(!embed.classList.contains("loaded")) {
-					embed.addEventListener("onImgLoad", function(e) {
+			const fcEmbedContainers = document.querySelectorAll(".fc-embed");
+			fcEmbedContainers.forEach(function(fcEmbedContainer, i) {
+				const fcEmbed = new FourCorners(fcEmbedContainer);
+				const img = fcEmbed.elems.img;
+				const embed = fcEmbed.elems.embed;
+				if(!img.classList.contains("loaded")) {
+					img.onload = function(e) {
 						grid.layout();
-						embed.classList.add("loaded");
-					});
+						img.classList.add("loaded");
+					};
 				}
 				self.state.embeds.push(embed);
 			});
 		}
-
-		// window.onresize = function(e) {
-			// grid.layout();
-		// };
 	}
 
 	onLanguageChanged(lang) {

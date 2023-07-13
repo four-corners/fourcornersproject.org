@@ -43,7 +43,8 @@ class Authorship extends React.Component {
 	}
 
 	render() {
-		const panelData = this.props.panelData;	
+		const imgSrc = this.props.imgSrc;
+		const panelData = this.props.panelData;
 		const hasCopyright = panelData.license&&panelData.license.type=='copyright';
 		return (
 
@@ -128,6 +129,12 @@ class Authorship extends React.Component {
 					: ''}
 
 				</div> : ''}
+
+				{panelData.verify ?
+					<div className="fc-field fc-sub-source">
+						Explore more authenticated data and credentials {this.createLink(`https://verify.contentauthenticity.org/inspect?source=${imgSrc}`, `here`)}
+					</div>
+				: ''}
 
 			</div>
 

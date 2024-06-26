@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import How from "./pages/How";
-import Gallery from "./pages/Gallery";
+import Showcase from "./pages/Showcase";
 import Contact from "./pages/Contact";
 import Creator from "./pages/Create";
 import NotFound from "./pages/NotFound";
@@ -31,8 +31,8 @@ switch(siteSettings.template) {
 	case "how":
 		Component = How;
 		break;
-	case "gallery":
-		Component = Gallery;
+	case "showcase":
+		Component = Showcase;
 		break;
 	case "contact":
 		Component = Contact;
@@ -57,5 +57,5 @@ const routes = (
 	</Translation>
 );
 render(
-	(routes), document.getElementById("page")
+	(routes), document.getElementById("app")
 );

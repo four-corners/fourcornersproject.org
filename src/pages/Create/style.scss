@@ -1,6 +1,6 @@
-@import "../../sass/vars";
-@import "form";
-@import "preview";
+@import "/src/sass/_vars.scss";
+@import "./_form.scss";
+@import "./_preview.scss";
 
 #creator {
 	h1 {

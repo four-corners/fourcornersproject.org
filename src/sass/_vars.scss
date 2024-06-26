@@ -33,7 +33,6 @@ $lightestBlue: #F5F7FD;
 
 $radius: 10px;
 
-
 @mixin fastTrans($prop: all) {
 	transition: $prop 200ms ease;
 }
@@ -80,9 +79,9 @@ $radius: 10px;
 @mixin focus {
 	@include medTrans;
 	transition: background 400ms ease,
-							opacity 400ms ease,
-							color 400ms ease,
-							box-shadow 400ms ease;
+				opacity 400ms ease,
+				color 400ms ease,
+				box-shadow 400ms ease;
 	&:focus {
 		@include highlight;
 	}

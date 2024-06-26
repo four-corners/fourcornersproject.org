@@ -1,6 +1,8 @@
-const path = require('path');
+const path = require("path");
+const CopyPlugin = require("copy-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const autoprefixer = require('autoprefixer');
+const distPath = path.join(__dirname, 'four-corners-wp-theme');
 
 module.exports = (env, argv) => ({
 	entry: {
@@ -8,7 +10,7 @@ module.exports = (env, argv) => ({
 	},
 	output: {
 		path: path.resolve(__dirname, 'dist'),
-		filename: '[name]'+(argv.mode==='development'?'':'.min')+'.js'
+		filename: `[name]${argv.mode === 'development' ? '' : '.min'}.js`
 	},
 	module: {
 		rules: [
@@ -71,20 +73,41 @@ module.exports = (env, argv) => ({
 		extensions: ['.js', '.jsx']
 	},
 	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				common: {
-					test: /[\\/]node_modules[\\/]/,
-					name: 'vendors',
-					chunks: 'initial'
-				}
-			}
-		}
+		minimize: false,
+	// 	splitChunks: {
+	// 		cacheGroups: {
+	// 			common: {
+	// 				test: /[\\/]node_modules[\\/]/,
+	// 				name: 'vendors',
+	// 				chunks: 'initial'
+	// 			}
+	// 		}
+	// 	}
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
 			filename: '[name].css',
 			chunkFilename: '[id].css'
-		})
+		}),
+		...(argv.mode === 'production' ? [
+			new CopyPlugin([
+				{
+					from: '*.php',
+					to: distPath,
+				},
+				{
+					from: 'assets/*',
+					to: distPath,
+				},
+				{
+					from: 'dist/*',
+					to: distPath,
+				},
+				{
+					from: './style.css',
+					to: distPath,
+				},
+			])
+		] : []),
 	]
 });

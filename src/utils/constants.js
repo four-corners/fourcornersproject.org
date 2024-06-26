@@ -1,0 +1,1 @@
+export const CORNER_SLUGS = ['authorship', 'backstory', 'imagery', 'links']

@@ -1,6 +1,6 @@
 {
   "name": "fourcornersproject.org",
-  "version": "1.5.2",
+  "version": "2.0.0",
   "description": "WordPress theme for fourcornersproject.org, built with React.",
   "repository": {
     "type": "git",
@@ -11,23 +11,12 @@
   "license": "ISC",
   "scripts": {
     "build": "webpack --mode production",
-    "watch": "webpack --mode development --watch",
-    "lint:js": "wp-scripts lint-js src/index.js",
-    "lint:js-fix": "wp-scripts lint-js src/index.js --fix",
-    "lint:css": "wp-scripts lint-style '**/*.css'"
+    "watch": "webpack --mode development --watch"
   },
   "dependencies": {
     "@four-corners/fourcorners.js": "^0.9.3",
-    "autoprefixer": "^9.8.6",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.5",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "bootstrap": "^4.5.3",
-    "coffee-loader": "^0.9.0",
-    "coffeescript": "^2.5.1",
-    "css-loader": "^1.0.1",
+    "bootstrap": "^5.3.3",
+    "copy-webpack-plugin": "^5.1.1",
     "html-entities": "^2.0.2",
     "html-react-parser": "^1.1.1",
     "i18next": "^21.6.2",
@@ -35,8 +24,6 @@
     "i18next-xhr-backend": "^1.5.1",
     "jquery": "^3.5.1",
     "masonry-layout": "^4.2.2",
-    "mini-css-extract-plugin": "^0.4.5",
-    "optimize-css-assets-webpack-plugin": "^5.0.4",
     "popper.js": "^1.16.1",
     "postcss-loader": "^3.0.0",
     "react": "^16.14.0",
@@ -44,20 +31,29 @@
     "react-i18next": "^11.15.1",
     "react-jsonschema-form": "^1.8.1",
     "react-router-dom": "^4.3.1",
-    "sass": "^1.63.2",
+    "sass": "^1.77.6",
     "sass-loader": "^7.3.1",
     "sticky-js": "^1.3.0",
     "style-loader": "^0.23.1",
-    "validator": "^10.11.0",
-    "webpack": "^4.44.2",
-    "webpack-cli": "^3.3.12"
+    "validator": "^10.11.0"
   },
   "devDependencies": {
+    "autoprefixer": "^9.8.6",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
     "babel-minify-webpack-plugin": "^0.3.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^1.0.1",
+    "mini-css-extract-plugin": "^0.4.5",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
     "react-dropzone": "^7.0.1",
     "react-html-parser": "^2.0.2",
     "slugify": "^1.4.6",
-    "svg-url-loader": "^2.3.3"
+    "svg-url-loader": "^2.3.3",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12"
   },
   "browserslist": [
     "last 2 versions"
